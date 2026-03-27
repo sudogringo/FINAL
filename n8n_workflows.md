@@ -1,12 +1,12 @@
-# n8n Automation Workflows - Design Plan
+# n8n Automation Workflows - Design Plan (Modular Architecture)
 
-This document outlines the architecture for the n8n subroutines planned for the Golden Harvest S.A. digital transformation.
+This document outlines the architecture for the n8n subroutines planned for the Golden Harvest S.A. digital transformation, designed with a modular approach to allow reuse across different web environments.
 
 ---
 
-## 1. Automated Branding (Color Extraction)
-*   **Description:** Extracts the primary color palette from the live website to ensure marketing materials stay updated with brand changes.
-*   **Trigger:** Monthly Schedule or Webhook (on site update).
+## 1. Automated Branding (Agnostic Color Extraction)
+*   **Description:** Extracts the primary color palette from any provided URL to ensure marketing materials stay updated with brand changes dynamically.
+*   **Trigger:** Monthly Schedule, Webhook (on site update), or External Call.
 *   **Design Plan:**
     1.  **HTTP Request:** Fetch the homepage HTML/CSS.
     2.  **Code Node:** Parse CSS variables or compute dominant colors from styles.
@@ -95,11 +95,11 @@ This document outlines the architecture for the n8n subroutines planned for the 
 
 ---
 
-## 6. Personalized Newsletter & Abandoned Carts
-*   **Description:** Sends targeted offers based on purchase history and behavior.
+## 6. Lead Nurturing & Cart Interest
+*   **Description:** Sends targeted follow-ups and offers based on interaction with the catalog (e.g., items added to cart but not sent as a lead).
 *   **Trigger:**
     *   *Newsletter:* Bi-weekly Schedule.
-    *   *Abandoned Cart:* Webhook from E-commerce (Wait 2 hours).
+    *   *Abandoned Interest:* Webhook from Frontend (Wait 2 hours if lead wasn't sent).
 *   **Design Plan:**
     1.  **Customer Data:** Fetch history from DB.
     2.  **Logic (Code):** Match "Frequently bought together" or "Restock" items.
@@ -120,9 +120,9 @@ This document outlines the architecture for the n8n subroutines planned for the 
 ---
 
 ## 7. Logistics & Shipping Automation
-*   **Description:** Generates shipping slips and documentation post-purchase.
-*   **Trigger:** Webhook (Order Paid).
+*   **Description:** Generates shipping slips and documentation after a sales representative confirms a lead/order.
+*   **Trigger:** Webhook (Lead Confirmed by Sales Rep).
 *   **Design Plan:**
-    1.  **Order Data:** Parse SKU, shipping address, and weights.
+    1.  **Lead Data:** Parse SKU, customer address, and confirmed details.
     2.  **PDF Generation:** Create label using a template (e.g., PDFMonkey or HTML node).
     3.  **Logistics Integration:** Notify carrier or send label to the warehouse printer.

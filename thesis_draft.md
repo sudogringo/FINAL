@@ -6,21 +6,21 @@
 **Facultad de Ingeniería**  
 **Carrera:** Técnicatura Universitaria en Programación
 
-**Título:** Implementación de un Ecosistema de E-commerce y Automatización Orientada a Negocios Digitales mediante n8n para Golden Harvest S.A.
+**Título:** Transformación Digital mediante un Catálogo Interactivo y Automatización de Procesos con n8n: El Caso de Golden Harvest S.A.
 
 **Autor:**
 
 - Cunto Boberg, Tiago
 - Rojo, Emiliano
 
-**Director de Tesis:** [Nombre del Director]  
+**Director de Tesis:** Prof. Alberto Cortez  
 **Fecha:** 2026
 
 ---
 
 ## Resumen
 
-Este trabajo presenta el proyecto de transformación digital de Golden Harvest S.A., una empresa cuyo modelo de negocio tradicional se encontraba limitado por una presencia web estática y la ausencia de canales de venta directa digital. La investigación y desarrollo se centran en la migración hacia un ecosistema transaccional robusto, integrando un sitio web e-commerce (frontend y backend) con una capa de automatización avanzada utilizando la herramienta n8n. El enfoque principal es la optimización de procesos críticos como el marketing relacional, la logística de envíos y la gestión de reputación online, garantizando una operación escalable, eficiente y con mínima intervención manual.
+Este trabajo presenta el proyecto de transformación digital de Golden Harvest S.A., migrando de una presencia web estática a un catálogo digital interactivo con sistema de gestión de pedidos asistido. El desarrollo integra un frontend moderno orientado a la conversión (Product List, Cart) que automatiza el cierre de venta mediante el envío de leads calificados a la fuerza de ventas. Se complementa con una arquitectura de automatización modular en n8n, diseñada para ser replicable en diversos entornos de negocio, optimizando procesos de marketing, logística y reputación online de manera eficiente y escalable.
 
 ---
 
@@ -52,15 +52,15 @@ La implementación de un ecosistema digital no solo permite la venta directa (D2
 
 ### 1.4 Objetivo general
 
-Diseñar e implementar un ecosistema de negocio digital para Golden Harvest S.A. que integre una plataforma de e-commerce con flujos de automatización orientados a la optimización de ventas, marketing y logística.
+Diseñar e implementar un ecosistema digital para Golden Harvest S.A. basado en un catálogo interactivo de productos y un motor de automatización modular (n8n) que optimice la captura de leads y la gestión operativa.
 
 ### 1.5 Objetivos específicos
 
-- Desarrollar un sitio web transaccional con capacidades de gestión de inventario y pagos.
-- Implementar flujos de automatización en n8n para el seguimiento de carritos abandonados y marketing directo.
-- Automatizar la generación de documentación logística y etiquetas de envío post-venta.
-- Integrar un sistema de vigilancia y respuesta automatizada para reseñas en Google Maps.
-- Desarrollar un generador automático de contenido visual (Stories) basado en la identidad de marca.
+- Desarrollar una interfaz de catálogo con sistema de carrito de compras que finalice en una solicitud de cotización/pedido vía email interno.
+- Diseñar una arquitectura de flujos en n8n con enfoque modular y desacoplado, facilitando su reutilización en otros proyectos web.
+- Implementar automatizaciones para la gestión de leads, seguimiento de interés de compra y marketing directo.
+- Automatizar la generación de documentación logística a partir de la confirmación del equipo de ventas.
+- Integrar sistemas de respuesta automática para reseñas y generación de contenido visual dinámico.
 
 ### 1.6 Alcance y limitaciones
 
@@ -70,13 +70,13 @@ El proyecto abarca desde el diseño de la arquitectura web hasta la puesta en ma
 
 ## CAPÍTULO 2: Marco Teórico
 
-### 2.1 E-commerce y Negocios Digitales
+### 2.1 Modelos de E-commerce y Catálogos Digitales
 
-Definición de modelos B2C, arquitecturas web modernas (Single Page Applications, APIs REST).
+Evolución del B2C: del "Check-out" transaccional al "Lead-to-Sale" asistido. Arquitecturas web modernas (Single Page Applications, APIs REST).
 
-### 2.2 Automatización de Procesos de Negocio (BPA)
+### 2.2 Automatización Modular de Procesos (BPA)
 
-Concepto de Low-code/No-code. Introducción a n8n como orquestador de flujos de trabajo.
+Concepto de Low-code/No-code. Introducción a n8n como orquestador de flujos de trabajo y la importancia del diseño de flujos genéricos/reutilizables.
 
 ### 2.3 Marketing de Automatización y CRM
 
@@ -113,11 +113,12 @@ Análisis de la web actual de Golden Harvest, entrevistas con stakeholders y rel
 - **Automatización:** n8n (Instancia Docker/Cloud).
 - **Base de Datos:** PostgreSQL/MongoDB.
 
-### 4.2 Implementación de Flujos n8n
+### 4.2 Implementación de Flujos n8n (Arquitectura Modular)
 
-- _Módulo Branding:_ Extracción automática de paleta de colores.
-- _Módulo Social Media:_ Generación de Stories con Geotag.
-- _Módulo Logística:_ Generación de PDFs de envío.
+- _Core de Notificaciones:_ Sistema genérico de envío de leads (Email/WhatsApp).
+- _Módulo Branding:_ Extracción agnóstica de identidad visual para adaptación dinámica.
+- _Módulo Social Media:_ Generador de contenido visual basado en templates configurables.
+- _Módulo Logística:_ Generación de documentación basada en esquemas de datos estándar.
 
 ---
 

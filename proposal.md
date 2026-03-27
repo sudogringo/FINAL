@@ -2,15 +2,16 @@
 
 ## Principal Resumen
 
-transformación digital de Golden Harvest S.A., cuyo modelo de negocio se ve actualmente limitado por una presencia web estática y la ausencia de e-commerce. El objetivo principal es migrar la empresa a un ecosistema de negocio robusto mediante la implementación de un nuevo sitio web transaccional (con frontend y backend) para la venta directa al consumidor. Además, y en estricta alineación con la línea de Automatización Orientada a Negocios Digitales, se aplicará la herramienta n8n para automatizar procesos clave, como el envío automático de correos electrónicos de marketing (promociones, carritos abandonados) y la generación automática de fichas de envío y documentación logística tras cada compra, garantizando una operación end-to-end más eficiente, escalable y libre de errores manuales.
+Transformación digital de Golden Harvest S.A., migrando de una presencia web estática a un catálogo digital interactivo con sistema de gestión de pedidos asistido. El objetivo principal es implementar un frontend moderno (Product List, Cart) que automatice la captura de leads calificados enviándolos directamente al equipo de ventas. En paralelo, se desarrollará una capa de automatización modular con n8n, diseñada para ser reutilizable en otros entornos. Estos flujos optimizarán el marketing relacional, la generación de documentación logística (tras validación de ventas) y la gestión de reputación online, asegurando una operación escalable y eficiente.
 
 [Sitio de Golden Harvest](https://www.goldenharvest.com.ar/silvia)
 
-## Foco en n8n
+## Foco en n8n (Arquitectura Modular)
 
-- Sistema que automaticamente toma los colores principales de la pagina.
-- Analisis de la pagina principal, SEO, Velocidad de carga, uniformidad de programacion
-- vigilancia de reviews en Google maps, con repuesta automatica, y/o pedido a administrador con resumen.
-- Sistema de creacion de historias para wsp y instagram automatica. (Usando colores principales, imagenes brindadas, con geotag, y enfasis en feriados)
-- resumen mensual de actividad en el sitio, describiendo pais de origen de visitantes, y puntos de pico en el mes.
-- newsletter automatica, con contexto, y personalizacion de ofertas basadas en historial de compras.
+- **Módulo de Identidad Visual:** Extracción agnóstica de colores para branding dinámico.
+- **Auditoría de Performance:** Análisis técnico recurrente (SEO, Velocidad).
+- **Gestión de Reputación:** Vigilancia y respuesta automatizada/asistida en Google Maps.
+- **Generador de Contenido:** Creación automática de Stories para redes sociales basada en templates.
+- **Reporte de Actividad:** Resumen mensual de métricas de tráfico y comportamiento.
+- **Lead Nurturing:** Seguimiento de interés (carritos no enviados) y newsletters personalizadas.
+- **Automatización Logística:** Generación de etiquetas y documentación tras confirmación de pedido.
