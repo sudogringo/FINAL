@@ -1,0 +1,55 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "4343:4343"
+    environment:
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=${N8N_PORT:-4343}
+      - N8N_PROTOCOL=${N8N_PROTOCOL:-http}
+      - WEBHOOK_URL=${WEBHOOK_URL:-http://localhost:4343/}
+      - N8N_EDITOR_BASE_URL=${N8N_EDITOR_BASE_URL:-http://localhost:4343}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-America/Argentina/Buenos_Aires}
+      - TZ=${TZ:-America/Argentina/Buenos_Aires}
+    volumes:
+      - ./n8n/data:/home/node/.n8n
+    depends_on:
+      - api
+    networks:
+      - golden_harvest
+
+  api:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    container_name: golden_harvest_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # DB persists here; re-seeded on container restart
+      - api_data:/data
+    networks:
+      - golden_harvest
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: golden_harvest_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    networks:
+      - golden_harvest
+
+networks:
+  golden_harvest:
+    driver: bridge
+
+volumes:
+  api_data:
