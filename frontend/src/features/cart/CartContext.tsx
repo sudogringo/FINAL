@@ -7,6 +7,7 @@ export interface CartItem {
   line: 'roja' | 'dorada'
   size: string
   qty: number
+  stockForSize: number  // stock disponible para esta presentación específica
 }
 
 interface CartState {
@@ -31,6 +32,7 @@ function reducer(state: CartState, action: Action): CartState {
     case 'ADD': {
       const k = key(action.item.id, action.item.size)
       const exists = state.items.find(i => key(i.id, i.size) === k)
+      if (exists && action.item.stockForSize > 0 && exists.qty >= action.item.stockForSize) return state
       return {
         ...state,
         isOpen: true,
@@ -41,10 +43,13 @@ function reducer(state: CartState, action: Action): CartState {
     }
     case 'REMOVE':
       return { ...state, items: state.items.filter(i => !(i.id === action.id && i.size === action.size)) }
-    case 'SET_QTY':
+    case 'SET_QTY': {
       if (action.qty <= 0)
         return { ...state, items: state.items.filter(i => !(i.id === action.id && i.size === action.size)) }
-      return { ...state, items: state.items.map(i => i.id === action.id && i.size === action.size ? { ...i, qty: action.qty } : i) }
+      const item = state.items.find(i => i.id === action.id && i.size === action.size)
+      const capped = item && item.stockForSize > 0 ? Math.min(action.qty, item.stockForSize) : action.qty
+      return { ...state, items: state.items.map(i => i.id === action.id && i.size === action.size ? { ...i, qty: capped } : i) }
+    }
     case 'OPEN_CART':   return { ...state, isOpen: true }
     case 'CLOSE_CART':  return { ...state, isOpen: false }
     case 'OPEN_QUOTE':  return { ...state, isOpen: false, quoteOpen: true }

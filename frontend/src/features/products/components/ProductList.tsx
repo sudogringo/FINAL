@@ -7,7 +7,7 @@ import ProductCard from './ProductCard'
 type Filter = 'all' | 'roja' | 'dorada'
 
 function toProduct(p: ApiProduct): Product {
-  return { id: p.id, name: p.name, line: p.line, description: p.description, sizes: p.sizes, tag: p.tag ?? '' }
+  return { id: p.id, name: p.name, line: p.line, description: p.description, sizes: p.sizes, tag: p.tag ?? '', stockBySize: p.stockBySize ?? {}, imageUrl: p.imageUrl }
 }
 
 export default function ProductList() {

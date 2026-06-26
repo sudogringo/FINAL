@@ -14,6 +14,8 @@ model Product {
   description String
   sizes       String[]
   tag         String?
+  stockBySize Json     @default("{}")
+  imageUrl    String?
   active      Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
