@@ -1,15 +1,32 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Search, X } from 'lucide-react'
-import { ALL_PRODUCTS, RED_PRODUCTS, GOLDEN_PRODUCTS } from '../../../data/products'
+import { fetchProducts, type ApiProduct } from '../../admin/api'
+import type { Product } from '../../../data/products'
 import ProductCard from './ProductCard'
 
 type Filter = 'all' | 'roja' | 'dorada'
 
+function toProduct(p: ApiProduct): Product {
+  return { id: p.id, name: p.name, line: p.line, description: p.description, sizes: p.sizes, tag: p.tag ?? '' }
+}
+
 export default function ProductList() {
+  const [allProducts, setAllProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<Filter>('all')
   const [search, setSearch] = useState('')
 
-  const base = filter === 'roja' ? RED_PRODUCTS : filter === 'dorada' ? GOLDEN_PRODUCTS : ALL_PRODUCTS
+  useEffect(() => {
+    fetchProducts()
+      .then(data => setAllProducts(data.map(toProduct)))
+      .catch(() => setAllProducts([]))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const base = useMemo(
+    () => filter === 'all' ? allProducts : allProducts.filter(p => p.line === filter),
+    [allProducts, filter]
+  )
 
   const products = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -31,7 +48,6 @@ export default function ProductList() {
     <div>
       {/* Controls */}
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
-        {/* Tabs */}
         <div className="flex gap-2 p-1 rounded-full bg-white/5 self-start">
           {TABS.map(t => (
             <button
@@ -39,7 +55,7 @@ export default function ProductList() {
               onClick={() => setFilter(t.id)}
               className="px-4 py-2 rounded-full text-[11px] font-heading font-bold tracking-wide transition-all duration-250"
               style={filter === t.id
-                ? { background: t.color, color: t.id === 'all' ? '#1C1810' : t.id === 'dorada' ? '#1C1810' : '#fff',
+                ? { background: t.color, color: t.id === 'roja' ? '#fff' : '#1C1810',
                     boxShadow: `0 2px 12px ${t.color}40` }
                 : { color: 'rgba(255,255,255,0.35)' }
               }
@@ -49,7 +65,6 @@ export default function ProductList() {
           ))}
         </div>
 
-        {/* Search */}
         <div className="relative flex-1 max-w-xs">
           <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
           <input
@@ -68,8 +83,13 @@ export default function ProductList() {
         </div>
       </div>
 
-      {/* Grid */}
-      {products.length > 0 ? (
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="h-64 rounded-2xl bg-white/5 animate-pulse" />
+          ))}
+        </div>
+      ) : products.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {products.map(p => <ProductCard key={p.id} product={p} />)}
         </div>
@@ -84,7 +104,6 @@ export default function ProductList() {
         </div>
       )}
 
-      {/* Footer note */}
       <div className="mt-10 pt-6 border-t border-white/8 flex flex-col sm:flex-row justify-between gap-2">
         <p className="text-white/20 text-[12px] font-body">
           Precios por cotización según volumen y destino.{' '}

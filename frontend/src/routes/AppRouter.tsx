@@ -7,6 +7,8 @@ import QuoteForm from '../features/quote/components/QuoteForm'
 import HomePage from '../pages/HomePage'
 import CatalogoPage from '../pages/CatalogoPage'
 import ContactoPage from '../pages/ContactoPage'
+import AdminLoginPage from '../pages/admin/AdminLoginPage'
+import AdminProductsPage from '../pages/admin/AdminProductsPage'
 
 function RootLayout() {
   return (
@@ -31,6 +33,8 @@ const router = createBrowserRouter([
       { path: 'contacto',  element: <ContactoPage /> },
     ],
   },
+  { path: '/admin/login',     element: <AdminLoginPage />    },
+  { path: '/admin/productos', element: <AdminProductsPage /> },
 ])
 
 export default function AppRouter() {

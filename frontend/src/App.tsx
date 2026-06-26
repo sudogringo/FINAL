@@ -1,4 +1,5 @@
 import { CartProvider } from './features/cart/CartContext'
+import { AdminProvider } from './features/admin/AdminContext'
 import AppRouter from './routes/AppRouter'
 
 if (!sessionStorage.getItem('gh_session_id')) {
@@ -7,8 +8,10 @@ if (!sessionStorage.getItem('gh_session_id')) {
 
 export default function App() {
   return (
-    <CartProvider>
-      <AppRouter />
-    </CartProvider>
+    <AdminProvider>
+      <CartProvider>
+        <AppRouter />
+      </CartProvider>
+    </AdminProvider>
   )
 }
