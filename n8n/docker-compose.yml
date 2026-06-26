@@ -1,6 +1,8 @@
 services:
   n8n:
-    image: n8nio/n8n:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: n8n
     restart: unless-stopped
     ports:
@@ -15,5 +17,6 @@ services:
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
       - TZ=${TZ}
+      - N8N_CUSTOM_EXTENSIONS=/n8n-custom
     volumes:
       - ./data:/home/node/.n8n
