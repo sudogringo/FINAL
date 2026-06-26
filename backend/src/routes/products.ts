@@ -32,6 +32,7 @@ const productSchema = z.object({
   description: z.string().min(5),
   sizes: z.array(z.string()).min(1),
   tag: z.string().optional(),
+  stockBySize: z.record(z.string(), z.number().int().min(0)).optional(),
   active: z.boolean().optional(),
 })
 

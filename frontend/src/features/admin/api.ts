@@ -7,6 +7,8 @@ export interface ApiProduct {
   description: string
   sizes: string[]
   tag: string | null
+  stockBySize: Record<string, number>
+  imageUrl: string | null
   active: boolean
   createdAt: string
   updatedAt: string
@@ -18,6 +20,8 @@ export interface ProductInput {
   description: string
   sizes: string[]
   tag?: string
+  stockBySize?: Record<string, number>
+  imageUrl?: string | null
   active?: boolean
 }
 
@@ -63,6 +67,19 @@ export async function deleteProduct(token: string, id: string): Promise<void> {
     headers: authHeaders(token),
   })
   if (!res.ok) throw new Error('Error al eliminar producto')
+}
+
+export async function uploadImage(token: string, file: File): Promise<string> {
+  const body = new FormData()
+  body.append('image', file)
+  const res = await fetch(`${BASE}/api/upload`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    body,
+  })
+  if (!res.ok) throw new Error('Error al subir la imagen')
+  const data = await res.json()
+  return data.url as string
 }
 
 export async function adminLogin(email: string, password: string): Promise<string> {

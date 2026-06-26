@@ -89,11 +89,15 @@ export default function CartDrawer() {
                         <button
                           onClick={() => setQty(item.id, item.size, item.qty + 1)}
                           aria-label="Aumentar"
-                          className="w-6 h-6 rounded-full bg-white/8 hover:bg-white/15 flex items-center justify-center transition-colors"
+                          disabled={item.stockForSize > 0 && item.qty >= item.stockForSize}
+                          className="w-6 h-6 rounded-full bg-white/8 hover:bg-white/15 flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                           <Plus size={10} className="text-white/60" />
                         </button>
                       </div>
+                      {item.stockForSize > 0 && item.qty >= item.stockForSize && (
+                        <p className="text-yellow-400/60 text-[9px] font-body mt-1">Límite de stock</p>
+                      )}
                     </div>
 
                     <button

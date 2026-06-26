@@ -7,6 +7,8 @@ export interface Product {
   description: string
   sizes: string[]
   tag: string
+  stockBySize: Record<string, number>
+  imageUrl?: string | null
 }
 
 export const RED_PRODUCTS: Product[] = [
@@ -17,6 +19,7 @@ export const RED_PRODUCTS: Product[] = [
     description: 'En jugo natural, ideal para guisos y salsas caseras. Sabor auténtico del campo.',
     sizes: ['250g', '1kg', '4kg'],
     tag: 'Clásico',
+    stockBySize: {},
   },
   {
     id: 'cubetti',
@@ -25,6 +28,7 @@ export const RED_PRODUCTS: Product[] = [
     description: 'Tomate en cubos perfectos, ideal para preparaciones rápidas sin perder textura.',
     sizes: ['250g', '1kg'],
     tag: 'Popular',
+    stockBySize: {},
   },
   {
     id: 'salsa-clasica',
@@ -33,6 +37,7 @@ export const RED_PRODUCTS: Product[] = [
     description: 'Nuestra receta tradicional con tomates seleccionados y especias naturales.',
     sizes: ['250g', '1kg'],
     tag: 'Premium',
+    stockBySize: {},
   },
   {
     id: 'doble-concentrado',
@@ -41,6 +46,7 @@ export const RED_PRODUCTS: Product[] = [
     description: 'Alta concentración para dar color y sabor intenso a tus preparaciones.',
     sizes: ['250g', '1kg', '4kg'],
     tag: 'Profesional',
+    stockBySize: {},
   },
 ]
 
@@ -52,6 +58,7 @@ export const GOLDEN_PRODUCTS: Product[] = [
     description: 'Duraznos cortados en mitades, en almíbar suave. El clásico de la mesa argentina.',
     sizes: ['250g', '1kg', '4kg'],
     tag: 'Clásico',
+    stockBySize: {},
   },
   {
     id: 'trozos-almibar',
@@ -60,6 +67,7 @@ export const GOLDEN_PRODUCTS: Product[] = [
     description: 'Versátil, ideal para postres, repostería y ensaladas de fruta.',
     sizes: ['250g', '1kg'],
     tag: 'Versátil',
+    stockBySize: {},
   },
   {
     id: 'durazno-light',
@@ -68,6 +76,7 @@ export const GOLDEN_PRODUCTS: Product[] = [
     description: 'Menos azúcar, mismo sabor auténtico. Para quienes cuidan su alimentación.',
     sizes: ['250g', '1kg'],
     tag: 'Light',
+    stockBySize: {},
   },
   {
     id: 'durazno-natural',
@@ -76,6 +85,7 @@ export const GOLDEN_PRODUCTS: Product[] = [
     description: 'Sin azúcar agregada, en agua. Pureza total del durazno de cosecha propia.',
     sizes: ['250g', '1kg', '4kg'],
     tag: 'Natural',
+    stockBySize: {},
   },
 ]
 
