@@ -5,65 +5,55 @@
   "isArchived": false,
   "nodes": [
     {
+      "parameters": {
+        "content": "## 🔴 MODO PRODUCCIÓN\nNodos deshabilitados que requieren credenciales reales:\n- **Webhook** `/order-confirmed` (trigger de producción)\n- **PDFMonkey** (generación de PDF profesional)\n- **API Carrier** (notificación al transportista)\n\nHabilitar estos nodos y configurar credenciales antes de pasar a producción.",
+        "height": 500,
+        "width": 1032
+      },
       "id": "sticky-prod",
       "name": "🔴 MODO PRODUCCIÓN",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        160,
-        60
-      ],
-      "parameters": {
-        "content": "## 🔴 MODO PRODUCCIÓN\nNodos deshabilitados que requieren credenciales reales:\n- **Webhook** `/order-confirmed` (trigger de producción)\n- **PDFMonkey** (generación de PDF profesional)\n- **API Carrier** (notificación al transportista)\n\nHabilitar estos nodos y configurar credenciales antes de pasar a producción.",
-        "height": 500,
-        "width": 600,
-        "color": 1
-      }
+        832,
+        688
+      ]
     },
     {
+      "parameters": {
+        "content": "## 🟢 MODO TESIS\nFlujo de demostración con backend simulado FastAPI.\n- Trigger manual → obtiene órdenes confirmadas\n- Limita a 3 órdenes para la demo\n- Genera remito HTML por orden\n- Imprime resumen por consola",
+        "height": 500,
+        "width": 1564,
+        "color": 3
+      },
       "id": "sticky-thesis",
       "name": "🟢 MODO TESIS",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        820,
-        60
-      ],
-      "parameters": {
-        "content": "## 🟢 MODO TESIS\nFlujo de demostración con backend simulado FastAPI.\n- Trigger manual → obtiene órdenes confirmadas\n- Limita a 3 órdenes para la demo\n- Genera remito HTML por orden\n- Imprime resumen por consola",
-        "height": 500,
-        "width": 700,
-        "color": 3
-      }
+        784,
+        -224
+      ]
     },
     {
-      "id": "node-webhook-prod",
-      "name": "Webhook Producción",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
-      "position": [
-        240,
-        340
-      ],
-      "disabled": true,
       "parameters": {
         "httpMethod": "POST",
         "path": "order-confirmed",
         "responseMode": "responseNode",
         "options": {}
       },
-      "webhookId": "a7dabf40-3d7d-4d1e-b6b4-e3133c6cb2f0"
+      "id": "node-webhook-prod",
+      "name": "Webhook Producción",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        896,
+        960
+      ],
+      "webhookId": "a7dabf40-3d7d-4d1e-b6b4-e3133c6cb2f0",
+      "disabled": true
     },
     {
-      "id": "node-pdfmonkey",
-      "name": "PDFMonkey (Producción)",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        460,
-        340
-      ],
-      "disabled": true,
       "parameters": {
         "method": "POST",
         "url": "https://api.pdfmonkey.io/api/v1/documents",
@@ -77,52 +67,58 @@
           ]
         },
         "sendBody": true,
-        "contentType": "json",
-        "body": "={ \"document\": { \"document_template_id\": \"TEMPLATE_ID\", \"payload\": $json } }",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
         "options": {}
-      }
+      },
+      "id": "node-pdfmonkey",
+      "name": "PDFMonkey (Producción)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        960
+      ],
+      "disabled": true
     },
     {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.carrier.example.com/v1/shipments",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
       "id": "node-carrier",
       "name": "API Carrier (Producción)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        680,
-        340
+        1344,
+        960
       ],
-      "disabled": true,
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.carrier.example.com/v1/shipments",
-        "sendBody": true,
-        "contentType": "json",
-        "body": "={ \"order_id\": $json.order_id, \"address\": $json.localidad }",
-        "options": {}
-      }
+      "disabled": true
     },
     {
+      "parameters": {},
       "id": "node-manual-trigger",
       "name": "Manual Trigger",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        900,
-        300
-      ],
-      "parameters": {}
+        944,
+        32
+      ]
     },
     {
-      "id": "node-get-orders",
-      "name": "Obtener Órdenes Confirmadas",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        1100,
-        300
-      ],
       "parameters": {
-        "method": "GET",
         "url": "http://golden_harvest_api:8000/orders",
         "sendQuery": true,
         "queryParameters": {
@@ -134,62 +130,82 @@
           ]
         },
         "options": {}
-      }
+      },
+      "id": "node-get-orders",
+      "name": "Obtener Órdenes Confirmadas",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1136,
+        32
+      ]
     },
     {
+      "parameters": {
+        "jsCode": "const all = $input.all();\nconst limited = all.slice(0, 3);\nreturn limited;"
+      },
       "id": "node-limit",
       "name": "Limitar a 3 Órdenes (Demo)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1300,
-        300
-      ],
-      "parameters": {
-        "jsCode": "// Tesis demo: only process first 3 confirmed orders\nconst all = $input.all();\nconst limited = all.slice(0, 3);\nconsole.log(`Demo: procesando ${limited.length} de ${all.length} órdenes confirmadas`);\nreturn limited;"
-      }
+        1344,
+        32
+      ]
     },
     {
-      "id": "node-split",
-      "name": "Procesar Cada Orden",
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        1500,
-        300
-      ],
       "parameters": {
-        "batchSize": 1,
+        "sendTo": "tiagoboberg@gmail.com",
+        "subject": "=[Golden Harvest] Remitos Generados — {{ $json.fecha }}",
+        "message": "={{ $json.summary_html }}",
         "options": {}
-      }
-    },
-    {
-      "id": "node-get-items",
-      "name": "Obtener Items de la Orden",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      },
+      "id": "node-gmail-tesis",
+      "name": "Gmail — Enviar Remitos (TESIS)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
       "position": [
-        1700,
-        300
+        1872,
+        32
       ],
-      "parameters": {
-        "method": "GET",
-        "url": "=http://golden_harvest_api:8000/orders/{{ $json.id }}/items",
-        "options": {}
+      "webhookId": "bb9ca6a5-57a1-4115-9ebb-1c5adf7037dd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vKMTOPHBSJvAmTAp",
+          "name": "Gmail account"
+        }
       }
     },
     {
-      "id": "node-remito",
-      "name": "Generar Remito HTML",
+      "parameters": {
+        "sendTo": "logistica@goldenharvest.com.ar",
+        "subject": "=Envío confirmado — Orden #{{ $json.order_id }}",
+        "message": "=<p>Se generó el remito y se notificó al carrier para la orden <strong>#{{ $json.order_id }}</strong>.</p><p>Fecha: {{ new Date().toLocaleDateString('es-AR') }}</p>",
+        "options": {}
+      },
+      "id": "node-gmail-prod",
+      "name": "Gmail — Confirmación de Envío (PROD)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1600,
+        960
+      ],
+      "webhookId": "d791ac50-f2b0-4aad-addf-1b2e625518e3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const orders = $input.all().map(i => i.json);\nconst fecha = new Date().toLocaleDateString('es-AR', { day:'2-digit', month:'long', year:'numeric' });\n\nconst rows = orders.map(o =>\n  `<tr>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">#${o.id}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">${o.customer_nombre}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">${o.localidad}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;\">$${o.total?.toLocaleString('es-AR')}</td>\n  </tr>`\n).join('');\n\nconst summary_html = `\n<div style=\"font-family:sans-serif;max-width:680px;margin:0 auto;padding:24px;\">\n  <h2 style=\"color:#166534;\">Golden Harvest S.A. — Remitos Generados</h2>\n  <p style=\"color:#6b7280;\">Fecha: ${fecha}</p>\n  <p>Se procesaron <strong>${orders.length}</strong> orden(es) confirmada(s):</p>\n  <table style=\"width:100%;border-collapse:collapse;font-size:14px;\">\n    <thead><tr style=\"background:#f3f4f6;\">\n      <th style=\"padding:8px 12px;text-align:left;\">Orden</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Cliente</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Localidad</th>\n      <th style=\"padding:8px 12px;text-align:right;\">Total</th>\n    </tr></thead>\n    <tbody>${rows}</tbody>\n  </table>\n  <p style=\"margin-top:20px;font-size:12px;color:#9ca3af;\">Golden Harvest S.A. — Sistema Automatizado de Logística</p>\n</div>`;\n\nreturn [{ json: { summary_html, total: orders.length, fecha: new Date().toISOString().slice(0,10) } }];"
+      },
+      "id": "node-procesar-todo",
+      "name": "Generar Remitos y Resumen",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1900,
-        300
-      ],
-      "parameters": {
-        "jsCode": "// Retrieve items from this node's input\nconst items = $input.all().map(i => i.json);\n\n// Grab order context from the SplitInBatches node\nconst orderNode = $('Procesar Cada Orden').first().json;\nconst orderId = orderNode.id || 'N/A';\nconst customerNombre = orderNode.customer_nombre || 'N/A';\nconst localidad = orderNode.localidad || 'N/A';\nconst fecha = orderNode.fecha || new Date().toISOString().split('T')[0];\nconst totalOrder = orderNode.total || 0;\n\n// Format ARS currency: 208320.00 → $ 208.320,00\nconst formatARS = (num) => {\n  const n = parseFloat(num) || 0;\n  const parts = n.toFixed(2).split('.');\n  const intPart = parts[0].replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.');\n  return `$ ${intPart},${parts[1]}`;\n};\n\n// Build items table rows\nconst itemRows = items.map(it => {\n  const subtotal = (it.cantidad || 0) * (it.precio_unitario || 0);\n  return `\n    <tr>\n      <td>${it.sku || ''}</td>\n      <td>${it.nombre || ''}</td>\n      <td style=\"text-align:center\">${it.cantidad || 0}</td>\n      <td style=\"text-align:right\">${formatARS(it.precio_unitario)}</td>\n      <td style=\"text-align:right\">${formatARS(subtotal)}</td>\n    </tr>`;\n}).join('');\n\n// Generate remito number with zero-padding\nconst remitoNum = String(orderId).padStart(6, '0');\n\nconst html = `<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Remito N\\u00b0 ${remitoNum} - Golden Harvest S.A.</title>\n  <style>\n    body { font-family: Arial, sans-serif; font-size: 12px; color: #222; margin: 40px; }\n    .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #4a7c2f; padding-bottom: 16px; margin-bottom: 24px; }\n    .company-name { font-size: 22px; font-weight: bold; color: #4a7c2f; }\n    .company-info { font-size: 11px; color: #555; margin-top: 4px; }\n    .doc-title { font-size: 20px; font-weight: bold; text-align: right; }\n    .doc-meta { font-size: 11px; text-align: right; color: #555; margin-top: 4px; }\n    .section { margin-bottom: 20px; }\n    .section-title { font-weight: bold; background: #f0f5eb; padding: 4px 8px; border-left: 4px solid #4a7c2f; margin-bottom: 8px; }\n    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; }\n    .info-row { display: flex; gap: 8px; }\n    .info-label { color: #555; min-width: 120px; }\n    table { width: 100%; border-collapse: collapse; margin-top: 8px; }\n    thead tr { background: #4a7c2f; color: white; }\n    th { padding: 6px 8px; text-align: left; font-size: 11px; }\n    tbody tr:nth-child(even) { background: #f9f9f9; }\n    td { padding: 5px 8px; border-bottom: 1px solid #e0e0e0; }\n    .total-row { font-weight: bold; font-size: 13px; background: #f0f5eb; }\n    .firma-section { display: flex; justify-content: space-between; margin-top: 60px; }\n    .firma-box { text-align: center; width: 200px; }\n    .firma-line { border-top: 1px solid #333; margin-bottom: 6px; }\n    .footer { margin-top: 40px; text-align: center; font-size: 10px; color: #999; border-top: 1px solid #ddd; padding-top: 8px; }\n  </style>\n</head>\n<body>\n  <div class=\"header\">\n    <div>\n      <div class=\"company-name\">Golden Harvest S.A.</div>\n      <div class=\"company-info\">\n        CUIT: 30-12345678-9<br>\n        Ruta Provincial 143 Km 12, San Rafael, Mendoza<br>\n        Tel: (0260) 555-0100 | info@goldenharvest.com.ar\n      </div>\n    </div>\n    <div>\n      <div class=\"doc-title\">REMITO N\\u00b0 ${remitoNum}</div>\n      <div class=\"doc-meta\">\n        Fecha: ${fecha}<br>\n        Tipo: X (sin discriminaci\\u00f3n de IVA)\n      </div>\n    </div>\n  </div>\n\n  <div class=\"section\">\n    <div class=\"section-title\">DATOS DEL DESTINATARIO</div>\n    <div class=\"info-grid\">\n      <div class=\"info-row\"><span class=\"info-label\">Raz\\u00f3n Social:</span><strong>${customerNombre}</strong></div>\n      <div class=\"info-row\"><span class=\"info-label\">Localidad:</span>${localidad}</div>\n    </div>\n  </div>\n\n  <div class=\"section\">\n    <div class=\"section-title\">DETALLE DE MERCANC\\u00cdA</div>\n    <table>\n      <thead>\n        <tr>\n          <th>SKU</th>\n          <th>Producto</th>\n          <th style=\"text-align:center\">Cantidad</th>\n          <th style=\"text-align:right\">Precio Unit.</th>\n          <th style=\"text-align:right\">Subtotal</th>\n        </tr>\n      </thead>\n      <tbody>\n        ${itemRows}\n        <tr class=\"total-row\">\n          <td colspan=\"4\" style=\"text-align:right\">TOTAL:</td>\n          <td style=\"text-align:right\">${formatARS(totalOrder)}</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n\n  <div class=\"firma-section\">\n    <div class=\"firma-box\">\n      <div class=\"firma-line\"></div>\n      <div>Firma y Sello Emisor</div>\n      <div style=\"font-size:10px;color:#666\">Golden Harvest S.A.</div>\n    </div>\n    <div class=\"firma-box\">\n      <div class=\"firma-line\"></div>\n      <div>Firma y Aclaraci\\u00f3n Receptor</div>\n      <div style=\"font-size:10px;color:#666\">Aclaraci\\u00f3n / DNI</div>\n    </div>\n    <div class=\"firma-box\">\n      <div class=\"firma-line\"></div>\n      <div>Transportista</div>\n      <div style=\"font-size:10px;color:#666\">Firma y Sello</div>\n    </div>\n  </div>\n\n  <div class=\"footer\">\n    Documento no v\\u00e1lido como factura \\u2014 Remito interno de despacho | Golden Harvest S.A. \\u00a9 2026\n  </div>\n</body>\n</html>`;\n\n// Log summary to console (not full HTML)\nconsole.log(`[REMITO] Orden #${orderId} | Cliente: ${customerNombre} | Localidad: ${localidad} | Total: ${formatARS(totalOrder)} | Items: ${items.length}`);\n\nreturn [{\n  json: {\n    order_id: orderId,\n    customer_nombre: customerNombre,\n    localidad: localidad,\n    fecha: fecha,\n    total: totalOrder,\n    total_ars: formatARS(totalOrder),\n    items_count: items.length,\n    remito_numero: remitoNum,\n    remito_html: html\n  }\n}];"
-      }
+        1584,
+        32
+      ]
     }
   ],
   "connections": {
@@ -219,40 +235,51 @@
       "main": [
         [
           {
-            "node": "Procesar Cada Orden",
+            "node": "Generar Remitos y Resumen",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Procesar Cada Orden": {
+    "Webhook Producción": {
       "main": [
         [
           {
-            "node": "Obtener Items de la Orden",
+            "node": "PDFMonkey (Producción)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Obtener Items de la Orden": {
+    "PDFMonkey (Producción)": {
       "main": [
         [
           {
-            "node": "Generar Remito HTML",
+            "node": "API Carrier (Producción)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Generar Remito HTML": {
+    "API Carrier (Producción)": {
       "main": [
         [
           {
-            "node": "Procesar Cada Orden",
+            "node": "Gmail — Confirmación de Envío (PROD)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar Remitos y Resumen": {
+      "main": [
+        [
+          {
+            "node": "Gmail — Enviar Remitos (TESIS)",
             "type": "main",
             "index": 0
           }

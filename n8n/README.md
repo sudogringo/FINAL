@@ -35,4 +35,20 @@ Your workflows and credentials are stored in `data/` and will load as-is.
 - Keep `N8N_ENCRYPTION_KEY` stable. If you change it, existing credentials become unreadable.
 - The `data/` folder contains the SQLite DB and instance config. Back it up as a unit.
 
-API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOTA0ZTY1ZS1kODQwLTQ4MjktYmMwMi1kMzg4YzYxNjc3NGYiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwianRpIjoiOGJhMjU2ZjYtZjIxZi00MDZlLWJhYTYtYTNkMTY2ODU1ODdmIiwiaWF0IjoxNzgwNTczMzk4LCJleHAiOjE3ODMxMzQwMDB9.zOldDHaKh6Ty5R7Tp4wimL8fyU7mSYRWfBXf2EvwlfI
+## API Key (for Claude Code / scripts)
+
+Never commit your actual key. To get it:
+
+1. Open http://localhost:4343
+2. Go to **Settings → API → Create an API Key**
+3. Copy the generated JWT and set it in your environment:
+
+```bash
+export N8N_API_KEY=<your-key-here>
+```
+
+Or add it to `n8n/.env` (already gitignored):
+
+```
+N8N_API_KEY=<your-key-here>
+```
