@@ -106,7 +106,8 @@ with urllib.request.urlopen(req) as r: result = json.load(r)
 | 03. Google Maps Review Management | `GqIUYIEcOhioWBfY` |
 | 04. Social Media Content Engine | `Zpr1rt5YATfQix0d` |
 | 05. Monthly Activity Report | `HFEJaY3iBpcBwVek` |
-| 06. Lead Nurturing & Cart Interest | `hcUaHpeXUYfqQMkK` |
+| 06a. Newsletter Quincenal | `hcUaHpeXUYfqQMkK` |
+| 06b. Carrito Abandonado | `V94be0IzqzlUnAyL` |
 | 07. Logistics & Shipping Automation | `pIlvvd0nTN7mfJOL` |
 
 ## Workflow Dual-Mode Pattern
