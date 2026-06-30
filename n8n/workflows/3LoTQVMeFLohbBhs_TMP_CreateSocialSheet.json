@@ -1,0 +1,71 @@
+{
+  "id": "3LoTQVMeFLohbBhs",
+  "name": "_TMP_CreateSocialSheet",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual",
+      "name": "Manual",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "createSpreadsheet",
+        "title": "Golden Harvest — Contenido Social"
+      },
+      "id": "create-sheet",
+      "name": "Crear Planilla",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        220,
+        0
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X2syETMrleq2VzbZ",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual": {
+      "main": [
+        [
+          {
+            "node": "Crear Planilla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-06-30T19:21:15.422Z",
+      "createdAt": "2026-06-30T19:21:15.422Z",
+      "role": "workflow:owner",
+      "workflowId": "3LoTQVMeFLohbBhs",
+      "projectId": "fqt8Sbkc8GWwPwDS"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}

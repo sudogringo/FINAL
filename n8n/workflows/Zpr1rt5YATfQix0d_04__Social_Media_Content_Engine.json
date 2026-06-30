@@ -1,0 +1,1120 @@
+{
+  "id": "Zpr1rt5YATfQix0d",
+  "name": "04. Social Media Content Engine",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🟢 TESIS — Demo Mode\nSin credenciales de producción. Usa Form trigger, Unsplash para imágenes, hashtags rule-based, y envía por Gmail existente.",
+        "height": 120,
+        "width": 900,
+        "color": 3
+      },
+      "id": "sticky-tesis-header",
+      "name": "TESIS Header",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        208
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🔴 PRODUCCIÓN — Disabled\nAI genera captions, hashtags e imágenes. Nodes deshabilitados hasta tener credenciales reales.",
+        "height": 120,
+        "width": 900
+      },
+      "id": "sticky-prod-header",
+      "name": "PRODUCCIÓN Header",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        1312
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 📥 Input\nForm o Sheet\nIF decide el camino",
+        "height": 200,
+        "width": 200,
+        "color": 3
+      },
+      "id": "sticky-input",
+      "name": "Sticky Input",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        352
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 🖼️ Imagen\nUnsplash sin auth\nsource.unsplash.com",
+        "height": 200,
+        "width": 200,
+        "color": 3
+      },
+      "id": "sticky-image",
+      "name": "Sticky Image",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        608,
+        352
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 🏷️ Tags\nRule-based desde\nnombre + descripción",
+        "height": 200,
+        "width": 200,
+        "color": 3
+      },
+      "id": "sticky-tags",
+      "name": "Sticky Tags",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        864,
+        352
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 📝 Formatter\nArma posts por plataforma\nInstagram / WhatsApp / Facebook",
+        "height": 200,
+        "width": 250,
+        "color": 3
+      },
+      "id": "sticky-format",
+      "name": "Sticky Format",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1104,
+        352
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 📤 Output\nForm → Email reply\nSheet → Escribe columnas",
+        "height": 200,
+        "width": 220,
+        "color": 3
+      },
+      "id": "sticky-output",
+      "name": "Sticky Output",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1408,
+        352
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "formTitle": "Golden Harvest — Generador de Contenido Social",
+        "formDescription": "Completá los datos del producto para generar posts listos para copiar y pegar.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombre del producto",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Descripción",
+              "fieldType": "textarea",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "URL de imagen (opcional)"
+            },
+            {
+              "fieldLabel": "Tu email",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Plataformas",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Instagram"
+                  },
+                  {
+                    "option": "WhatsApp Story"
+                  },
+                  {
+                    "option": "Facebook"
+                  }
+                ]
+              },
+              "multiselect": true,
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "respondWithOptions": {
+            "values": {}
+          }
+        }
+      },
+      "id": "form-trigger",
+      "name": "Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [
+        224,
+        560
+      ],
+      "typeVersion": 2.2,
+      "webhookId": "wf4-social-form"
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger (Sheet mode)",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        224,
+        768
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1618377617,
+          "mode": "list",
+          "cachedResultName": "posts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM/edit#gid=1618377617"
+        },
+        "options": {}
+      },
+      "id": "read-sheet",
+      "name": "Leer Sheet de Contenido",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        464,
+        768
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X2syETMrleq2VzbZ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json['Tu email'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-source",
+      "name": "¿Form o Sheet?",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        704,
+        672
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f1",
+              "name": "source",
+              "value": "form",
+              "type": "string"
+            },
+            {
+              "id": "f2",
+              "name": "producto",
+              "value": "={{ $json['Nombre del producto'] }}",
+              "type": "string"
+            },
+            {
+              "id": "f3",
+              "name": "descripcion",
+              "value": "={{ $json['Descripción'] }}",
+              "type": "string"
+            },
+            {
+              "id": "f5",
+              "name": "imagen_url",
+              "value": "={{ $json['URL de imagen (opcional)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "f6",
+              "name": "email",
+              "value": "={{ $json['Tu email'] }}",
+              "type": "string"
+            },
+            {
+              "id": "f7",
+              "name": "plataformas",
+              "value": "={{ $json['Plataformas'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-from-form",
+      "name": "Normalizar datos (Form)",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        944,
+        560
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "s1",
+              "name": "source",
+              "value": "sheet",
+              "type": "string"
+            },
+            {
+              "id": "s2",
+              "name": "producto",
+              "value": "={{ $json['tema'] }}",
+              "type": "string"
+            },
+            {
+              "id": "s3",
+              "name": "descripcion",
+              "value": "={{ $json['descripcion'] }}",
+              "type": "string"
+            },
+            {
+              "id": "s4",
+              "name": "fecha",
+              "value": "={{ $json['fecha_publicacion'] }}",
+              "type": "string"
+            },
+            {
+              "id": "s5",
+              "name": "imagen_url",
+              "value": "={{ $json['imagen_url'] }}",
+              "type": "string"
+            },
+            {
+              "id": "s6",
+              "name": "email",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "s7",
+              "name": "plataformas",
+              "value": "Instagram,WhatsApp Story,Facebook",
+              "type": "string"
+            },
+            {
+              "id": "s8",
+              "name": "row_number",
+              "value": "={{ $json['row_number'] }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-from-sheet",
+      "name": "Normalizar datos (Sheet)",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        944,
+        768
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "\nconst producto = $input.item.json.producto || '';\nconst existing = $input.item.json.imagen_url || '';\n\nlet imageUrl = existing.trim();\nif (!imageUrl) {\n  // Lorem Picsum — reliable free image service, no API key needed\n  // seed from product name so same product always gets same image\n  const seed = producto.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 20) || 'harvest';\n  imageUrl = `https://picsum.photos/seed/${seed}/800/600`;\n}\n\nreturn { ...$input.item.json, imagen_url_final: imageUrl };\n"
+      },
+      "id": "image-resolver",
+      "name": "Resolver Imagen (Unsplash)",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1424,
+        672
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "\nconst BASE_AGRO_TAGS = [\n  'agro', 'agricultura', 'campo', 'agronegocio', 'cosecha',\n  'vino', 'viticultura', 'mendoza', 'argentina', 'export',\n  'calidad', 'sustentable', 'goldenharvestsa'\n];\n\nconst text = ((($input.item.json.producto || '') + ' ' + ($input.item.json.descripcion || ''))).toLowerCase();\nconst words = text.match(/[a-záéíóúüñ]{4,}/gi) || [];\nconst unique = [...new Set(words)].filter(w => !['para','como','este','esta','con','los','las','una','que'].includes(w));\nconst keywordTags = unique.slice(0, 5).map(w => '#' + w);\nconst baseTags = BASE_AGRO_TAGS.map(t => '#' + t);\nconst allTags = [...new Set([...keywordTags, ...baseTags])];\n\nreturn { ...$input.item.json, hashtags: allTags.join(' '), hashtags_array: allTags };\n"
+      },
+      "id": "tag-generator",
+      "name": "Generar Hashtags (Rule-based)",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1664,
+        672
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "\nconst { producto, descripcion, fecha, imagen_url_final, hashtags, hashtags_array, source, email, plataformas, row_number } = $input.item.json;\n\nconst shortDesc = descripcion.length > 120 ? descripcion.substring(0, 117) + '...' : descripcion;\nconst tags5 = (hashtags_array || []).slice(0, 5).join(' ');\nconst tags10 = (hashtags_array || []).slice(0, 10).join(' ');\n\nconst instagram = `🌾 ${producto}\n\n${descripcion}\n\n✨ Disponible ahora. Consultanos por DM o visitá nuestro sitio.\n\n${tags10}\n\n📸 Imagen sugerida: ${imagen_url_final}`;\n\nconst whatsapp = `🌾 *${producto}*\n${shortDesc}\n\n💬 Consultanos por este medio para más info.\n${tags5}`;\n\nconst facebook = `🌾 Golden Harvest S.A. — ${producto}\n\n${descripcion}\n\n📅 Fecha sugerida de publicación: ${fecha || 'A confirmar'}\n🔗 Visitá nuestro sitio para más información.\n\n${tags10}\n\n📸 ${imagen_url_final}`;\n\nreturn {\n  source,\n  email,\n  row_number,\n  producto,\n  fecha,\n  hashtags,\n  imagen_url_final,\n  post_instagram: instagram,\n  post_whatsapp: whatsapp,\n  post_facebook: facebook\n};\n"
+      },
+      "id": "format-posts",
+      "name": "Formatear Posts",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1904,
+        672
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.source }}",
+              "rightValue": "form",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-output",
+      "name": "¿Enviar email o escribir sheet?",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        2144,
+        672
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "={{ '🌾 Posts listos — ' + $json.producto }}",
+        "message": "={{ \n'<h2>🌾 Golden Harvest — Contenido Social Listo</h2>' +\n'<p><b>Producto:</b> ' + $json.producto + '</p>' +\n'<p><b>Imagen sugerida:</b> <a href=\"' + $json.imagen_url_final + '\">' + $json.imagen_url_final + '</a></p>' +\n'<hr>' +\n'<h3>📸 Instagram</h3><pre style=\"background:#f4f4f4;padding:12px;border-radius:6px\">' + $json.post_instagram + '</pre>' +\n'<hr>' +\n'<h3>💬 WhatsApp Story</h3><pre style=\"background:#f4f4f4;padding:12px;border-radius:6px\">' + $json.post_whatsapp + '</pre>' +\n'<hr>' +\n'<h3>👍 Facebook</h3><pre style=\"background:#f4f4f4;padding:12px;border-radius:6px\">' + $json.post_facebook + '</pre>' +\n'<hr><p style=\"color:#999;font-size:12px\">Generado por Golden Harvest Social Content Engine — WF4</p>'\n}}",
+        "options": {}
+      },
+      "id": "gmail-send",
+      "name": "Enviar Email con Posts",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        2384,
+        544
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "c32b2bcd-f568-4285-b513-9c2dca4ed329",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vKMTOPHBSJvAmTAp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1618377617,
+          "mode": "list",
+          "cachedResultName": "posts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM/edit#gid=1618377617"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "fecha_publicacion": "={{ $json.fecha }}",
+            "tema": "={{ $json.producto }}",
+            "tags_sugeridos": "={{ $json.hashtags }}",
+            "imagen_url": "={{ $json.imagen_url_final }}",
+            "instagram_post": "={{ $json.post_instagram }}",
+            "whatsapp_story": "={{ $json.post_whatsapp }}",
+            "facebook_post": "={{ $json.post_facebook }}",
+            "row_number": "={{ $json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "fecha_publicacion",
+              "displayName": "fecha_publicacion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tema",
+              "displayName": "tema",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "descripcion",
+              "displayName": "descripcion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "imagen_url",
+              "displayName": "imagen_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tags_sugeridos",
+              "displayName": "tags_sugeridos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "instagram_post",
+              "displayName": "instagram_post",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "whatsapp_story",
+              "displayName": "whatsapp_story",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "facebook_post",
+              "displayName": "facebook_post",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "sheets-write",
+      "name": "Escribir en Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        2384,
+        784
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X2syETMrleq2VzbZ",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### 📥 Trigger PROD\nWebhook recibe producto\ndesde e-commerce / CRM",
+        "height": 180,
+        "width": 220
+      },
+      "id": "p-sticky-trigger",
+      "name": "P-Sticky Trigger",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        224,
+        1440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 🤖 AI Agent\nGemini genera captions\npor plataforma con tono de marca",
+        "height": 180
+      },
+      "id": "p-sticky-agent",
+      "name": "P-Sticky Agent",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        1440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 🎨 DALL-E\nGenera imagen con\nbranding Golden Harvest",
+        "height": 180,
+        "width": 220
+      },
+      "id": "p-sticky-dalle",
+      "name": "P-Sticky DALL-E",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        1440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 📋 Structured Output\nParsea JSON con posts\npor plataforma",
+        "height": 180,
+        "width": 220
+      },
+      "id": "p-sticky-parser",
+      "name": "P-Sticky Parser",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1264,
+        1440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 📲 Instagram\nGraph API\n(requiere token)",
+        "height": 180,
+        "width": 180
+      },
+      "id": "p-sticky-ig",
+      "name": "P-Sticky IG",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1600,
+        1392
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 💬 WhatsApp\nBusiness API\n(requiere token)",
+        "height": 180,
+        "width": 180
+      },
+      "id": "p-sticky-wa",
+      "name": "P-Sticky WA",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1600,
+        1584
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 👍 Facebook\nPages API\n(requiere token)",
+        "height": 180,
+        "width": 180
+      },
+      "id": "p-sticky-fb",
+      "name": "P-Sticky FB",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1600,
+        1792
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "social-content-prod",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "prod-webhook",
+      "name": "[PROD] Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        224,
+        1648
+      ],
+      "typeVersion": 2,
+      "webhookId": "wf4-social-prod",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ 'Sos el community manager de Golden Harvest S.A., una empresa vitivinícola argentina premium. Generá contenido para redes sociales sobre el siguiente producto:\\n\\nProducto: ' + $json.body.producto + '\\nDescripción: ' + $json.body.descripcion + '\\n\\nGenerá posts optimizados para Instagram (caption + 10 hashtags + emojis), WhatsApp Story (texto corto impactante, máx 200 chars), y Facebook (post completo con CTA). Usá tono cálido, profesional y argentino. Devolvé un JSON con las claves: instagram, whatsapp, facebook, hashtags (array), imagen_prompt.' }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "prod-ai-agent",
+      "name": "[PROD] AI Agent (Gemini)",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        560,
+        1648
+      ],
+      "typeVersion": 1.7,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "id": "prod-gemini",
+      "name": "[PROD] Google Gemini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [
+        480,
+        1840
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\"type\": \"object\", \"properties\": {\"instagram\": {\"type\": \"string\"}, \"whatsapp\": {\"type\": \"string\"}, \"facebook\": {\"type\": \"string\"}, \"hashtags\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}, \"imagen_prompt\": {\"type\": \"string\"}}}"
+      },
+      "id": "prod-output-parser",
+      "name": "[PROD] Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        704,
+        1840
+      ],
+      "typeVersion": 1.2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "prompt": "={{ 'Fotografía publicitaria premium para bodega argentina. ' + $json.output.imagen_prompt + '. Estilo editorial, colores cálidos, fondo con viñedos de Mendoza. Sin texto.' }}",
+        "options": {}
+      },
+      "id": "prod-dalle",
+      "name": "[PROD] DALL-E Image Generation",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        928,
+        1648
+      ],
+      "typeVersion": 1.8,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v19.0/{{ $vars.INSTAGRAM_ACCOUNT_ID }}/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image_url",
+              "value": "={{ $json.data[0].url }}"
+            },
+            {
+              "name": "caption",
+              "value": "={{ $('\\[PROD\\] Structured Output Parser').item.json.output.instagram + '\\n\\n' + $('\\[PROD\\] Structured Output Parser').item.json.output.hashtags.join(' ') }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $vars.INSTAGRAM_ACCESS_TOKEN }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "prod-instagram",
+      "name": "[PROD] Post a Instagram",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1600,
+        1488
+      ],
+      "typeVersion": 4.2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v19.0/{{ $vars.WHATSAPP_PHONE_ID }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ messaging_product: 'whatsapp', to: $vars.WHATSAPP_BROADCAST_LIST, type: 'text', text: { body: $('\\[PROD\\] Structured Output Parser').item.json.output.whatsapp } }) }}",
+        "options": {}
+      },
+      "id": "prod-whatsapp",
+      "name": "[PROD] Post a WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1600,
+        1680
+      ],
+      "typeVersion": 4.2,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v19.0/{{ $vars.FACEBOOK_PAGE_ID }}/photos",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.data[0].url }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $('\\[PROD\\] Structured Output Parser').item.json.output.facebook }}"
+            },
+            {
+              "name": "access_token",
+              "value": "={{ $vars.FACEBOOK_PAGE_TOKEN }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "prod-facebook",
+      "name": "[PROD] Post a Facebook",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1600,
+        1888
+      ],
+      "typeVersion": 4.2,
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "¿Form o Sheet?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger (Sheet mode)": {
+      "main": [
+        [
+          {
+            "node": "Leer Sheet de Contenido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Sheet de Contenido": {
+      "main": [
+        [
+          {
+            "node": "¿Form o Sheet?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Form o Sheet?": {
+      "main": [
+        [
+          {
+            "node": "Normalizar datos (Form)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normalizar datos (Sheet)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar datos (Form)": {
+      "main": [
+        [
+          {
+            "node": "Resolver Imagen (Unsplash)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar datos (Sheet)": {
+      "main": [
+        [
+          {
+            "node": "Resolver Imagen (Unsplash)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolver Imagen (Unsplash)": {
+      "main": [
+        [
+          {
+            "node": "Generar Hashtags (Rule-based)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar Hashtags (Rule-based)": {
+      "main": [
+        [
+          {
+            "node": "Formatear Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear Posts": {
+      "main": [
+        [
+          {
+            "node": "¿Enviar email o escribir sheet?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Enviar email o escribir sheet?": {
+      "main": [
+        [
+          {
+            "node": "Enviar Email con Posts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Escribir en Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Email con Posts": {
+      "main": [
+        []
+      ]
+    },
+    "[PROD] Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "[PROD] AI Agent (Gemini)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "[PROD] AI Agent (Gemini)": {
+      "main": [
+        [
+          {
+            "node": "[PROD] DALL-E Image Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "[PROD] Google Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "[PROD] AI Agent (Gemini)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "[PROD] Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "[PROD] AI Agent (Gemini)",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "[PROD] DALL-E Image Generation": {
+      "main": [
+        [
+          {
+            "node": "[PROD] Post a Instagram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "[PROD] Post a WhatsApp",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "[PROD] Post a Facebook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "Form Trigger": [
+      {
+        "json": {
+          "Nombre del producto": "can of peaches",
+          "Descripción": "sale for new product",
+          "Fecha de publicación sugerida": "2026-07-01",
+          "URL de imagen (opcional)": "",
+          "Tu email": "tiagoboberg@gmail.com",
+          "Plataformas": [
+            "Instagram",
+            "WhatsApp Story",
+            "Facebook"
+          ],
+          "submittedAt": "2026-06-30T16:29:42.994-03:00",
+          "formMode": "test"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "activeVersionId": null,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-06-16T20:49:52.062Z",
+      "createdAt": "2026-06-16T20:49:52.062Z",
+      "role": "workflow:owner",
+      "workflowId": "Zpr1rt5YATfQix0d",
+      "projectId": "fqt8Sbkc8GWwPwDS"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}

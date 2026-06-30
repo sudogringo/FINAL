@@ -78,27 +78,45 @@ PUT  /workflows/{id}     # update a workflow (body = workflow JSON)
 POST /workflows          # create a workflow
 ```
 
-### PUT quirks (fields to strip before sending)
-The API rejects these fields as read-only or invalid:
-- `id`, `active`, `isArchived`, `meta`, `tags`
-- `description` must be a string (convert `null` → `""`)
-- `settings.binaryMode` is not in the public schema — remove it
+### PUT quirks — send ONLY these fields
+The API uses `additionalProperties: false` — sending any extra field returns 400. Build the payload from scratch:
 
-Use Python `urllib.request` (not curl/wget — blocked by hook). Pattern:
 ```python
 import json, urllib.request
-data.pop('id', None); data.pop('active', None); ...  # strip read-only fields
-req = urllib.request.Request(url, data=json.dumps(data).encode(), method="PUT",
+payload = {
+    "name": wf["name"],
+    "nodes": wf["nodes"],
+    "connections": wf["connections"],
+    "settings": wf.get("settings", {}),
+    "staticData": wf.get("staticData"),
+    "description": wf.get("description") or "",
+    "pinData": wf.get("pinData", {}),
+}
+payload["settings"].pop("binaryMode", None)  # not in public schema
+req = urllib.request.Request(url, data=json.dumps(payload).encode(), method="PUT",
       headers={"X-N8N-API-KEY": KEY, "Content-Type": "application/json"})
 with urllib.request.urlopen(req) as r: result = json.load(r)
 ```
 
 **Workflow IDs** (n8n internal IDs, needed for API calls):
-| File | n8n ID |
-|------|--------|
-| WF1_updated.json | `Yvoc3v8PN45TaRAD` |
+| Workflow | n8n ID |
+|----------|--------|
+| 01. Automated Branding | `Yvoc3v8PN45TaRAD` |
+| 02. Website Health & SEO Monitor | `7zorYUSLKel4UkbC` |
+| 03. Google Maps Review Management | `GqIUYIEcOhioWBfY` |
+| 04. Social Media Content Engine | `Zpr1rt5YATfQix0d` |
+| 05. Monthly Activity Report | `HFEJaY3iBpcBwVek` |
+| 06. Lead Nurturing & Cart Interest | `hcUaHpeXUYfqQMkK` |
+| 07. Logistics & Shipping Automation | `pIlvvd0nTN7mfJOL` |
 
-> Add other IDs here as discovered via `GET /workflows`.
+## Workflow Dual-Mode Pattern
+
+Every workflow has two parallel flows inside it, labeled with sticky notes:
+
+- 🟢 **TESIS (demo)** — runs without credentials or external auth. Uses public APIs, manual triggers, and `console.log` nodes. Must be self-contained and runnable for academic presentation.
+- 🔴 **PRODUCCIÓN** — full integrations (Google OAuth, Gmail, Drive, Sheets, etc.). These nodes are always **DISABLED** because they require real credentials or control of company accounts that don't exist yet.
+
+When editing workflows: keep production nodes disabled, keep demo flow connected and runnable. Never enable production nodes unless the user explicitly sets up the credentials.
 
 ## Architecture Notes
 

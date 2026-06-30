@@ -36,16 +36,6 @@ services:
     networks:
       - golden_harvest
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: golden_harvest_frontend
-    restart: unless-stopped
-    ports:
-      - "3000:80"
-    networks:
-      - golden_harvest
 
 networks:
   golden_harvest:
