@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  line        Line
+  description String
+  sizes       String[]
+  tag         String?
+  stockBySize Json     @default("{}")
+  imageUrl    String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Quote {
+  id        String      @id @default(cuid())
+  sessionId String
+  contact   Json
+  items     Json
+  status    QuoteStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@map("quotes")
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  @@map("admins")
+}
+
+enum Line {
+  roja
+  dorada
+}
+
+enum QuoteStatus {
+  PENDING
+  CONTACTED
+  CLOSED
+}
