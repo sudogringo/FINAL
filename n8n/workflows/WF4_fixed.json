@@ -82,7 +82,7 @@
       "position": [520, 500],
       "parameters": {
         "method": "GET",
-        "url": "http://golden_harvest_api:8000/products",
+        "url": "http://backend:3001/api/products",
         "options": {}
       }
     },
@@ -94,7 +94,7 @@
       "position": [520, 660],
       "parameters": {
         "method": "GET",
-        "url": "http://golden_harvest_api:8000/products",
+        "url": "http://backend:3001/api/products",
         "options": {}
       }
     },

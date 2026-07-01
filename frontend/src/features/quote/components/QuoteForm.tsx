@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -27,6 +27,10 @@ export default function QuoteForm() {
     resolver: zodResolver(schema),
   })
 
+  useEffect(() => {
+    if (!quoteOpen) { setStatus('idle'); reset() }
+  }, [quoteOpen, reset])
+
   const onSubmit = async (data: FormData) => {
     setStatus('sending')
     try {
@@ -37,13 +41,12 @@ export default function QuoteForm() {
       })
       setStatus('done')
       reset()
-      clearCart()
     } catch {
       setStatus('error')
     }
   }
 
-  const handleClose = () => { closeQuote(); setStatus('idle'); reset() }
+  const handleClose = () => { clearCart(); closeQuote(); setStatus('idle'); reset() }
 
   if (!quoteOpen) return null
 
