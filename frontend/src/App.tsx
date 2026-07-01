@@ -1,29 +1,17 @@
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import ProductLines from './components/ProductLines'
-import Production from './components/Production'
-import Certifications from './components/Certifications'
-import About from './components/About'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
-import WhatsAppFab from './components/WhatsAppFab'
+import { CartProvider } from './features/cart/CartContext'
+import { AdminProvider } from './features/admin/AdminContext'
+import AppRouter from './routes/AppRouter'
 
-function App() {
-  return (
-    <>
-      <Navbar />
-      <main>
-        <Hero />
-        <ProductLines />
-        <Production />
-        <Certifications />
-        <About />
-        <Contact />
-      </main>
-      <Footer />
-      <WhatsAppFab />
-    </>
-  )
+if (!sessionStorage.getItem('gh_session_id')) {
+  sessionStorage.setItem('gh_session_id', crypto.randomUUID())
 }
 
-export default App
+export default function App() {
+  return (
+    <AdminProvider>
+      <CartProvider>
+        <AppRouter />
+      </CartProvider>
+    </AdminProvider>
+  )
+}
