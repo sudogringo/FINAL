@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { X, Send, CheckCircle2, Loader2 } from 'lucide-react'
 import { useCart } from '../../cart/CartContext'
-import { N8N_QUOTE_WEBHOOK } from '../../../config'
+import { submitQuote } from '../../admin/api'
 
 const schema = z.object({
   nombre:   z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
@@ -29,22 +29,12 @@ export default function QuoteForm() {
 
   const onSubmit = async (data: FormData) => {
     setStatus('sending')
-    const payload = {
-      contact: data,
-      items: items.map(i => ({ id: i.id, name: i.name, line: i.line, size: i.size, qty: i.qty })),
-      metadata: {
-        timestamp: new Date().toISOString(),
-        sessionId: sessionStorage.getItem('gh_session_id') ?? 'unknown',
-      },
-    }
     try {
-      if (N8N_QUOTE_WEBHOOK) {
-        await fetch(N8N_QUOTE_WEBHOOK, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        })
-      }
+      await submitQuote({
+        sessionId: sessionStorage.getItem('gh_session_id') ?? crypto.randomUUID(),
+        contact:   data as Record<string, string>,
+        items:     items.map(i => ({ id: i.id, name: i.name, line: i.line, size: i.size, qty: i.qty })),
+      })
       setStatus('done')
       reset()
       clearCart()
