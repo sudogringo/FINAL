@@ -14,7 +14,7 @@ customersRouter.get('/', requireAuth, async (req: Request, res: Response) => {
 })
 
 customersRouter.get('/:id', requireAuth, async (req: Request, res: Response) => {
-  const customer = await prisma.customer.findUnique({ where: { id: req.params.id } })
+  const customer = await prisma.customer.findUnique({ where: { id: String(req.params.id) } })
   if (!customer) { res.status(404).json({ error: 'Cliente no encontrado' }); return }
   res.json(customer)
 })

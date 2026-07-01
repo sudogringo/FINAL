@@ -1,4 +1,5 @@
 {
+  "id": "GH_WF5_MonthlyReport",
   "name": "05. Monthly Activity Report",
   "nodes": [
     {
@@ -53,7 +54,7 @@
       "typeVersion": 1,
       "position": [60, 60],
       "parameters": {
-        "content": "## 🟢 MODO TESIS — Monthly Activity Report\n\nFlujo activo para demo universitaria.\nUsa la API local FastAPI en lugar de Google Analytics 4 real.\n\n**Fuente de datos:** `http://golden_harvest_api:8000`\n- `GET /stats/monthly` → pedidos, revenue, top productos, interacciones web\n- `GET /orders` → listado de pedidos del mes\n\n**Salida:** reporte HTML + texto en español con métricas del mes actual.\nEl reporte se loguea en el nodo de código para verificación.\n\n**Trigger:** Schedule (1ro de cada mes 08:00) + Manual para testing.",
+        "content": "## 🟢 MODO TESIS — Monthly Activity Report\n\nFlujo activo para demo universitaria.\nUsa la API local FastAPI en lugar de Google Analytics 4 real.\n\n**Fuente de datos:** `http://backend:3001/api`\n- `GET /stats/monthly` → pedidos, revenue, top productos, interacciones web\n- `GET /orders` → listado de pedidos del mes\n\n**Salida:** reporte HTML + texto en español con métricas del mes actual.\nEl reporte se loguea en el nodo de código para verificación.\n\n**Trigger:** Schedule (1ro de cada mes 08:00) + Manual para testing.",
         "height": 540,
         "width": 1080,
         "color": 3
@@ -91,7 +92,7 @@
       "position": [420, 340],
       "parameters": {
         "method": "GET",
-        "url": "http://golden_harvest_api:8000/stats/monthly",
+        "url": "http://backend:3001/api/stats/monthly",
         "options": {}
       }
     },
@@ -103,7 +104,7 @@
       "position": [420, 480],
       "parameters": {
         "method": "GET",
-        "url": "http://golden_harvest_api:8000/orders",
+        "url": "http://backend:3001/api/orders",
         "options": {}
       }
     },

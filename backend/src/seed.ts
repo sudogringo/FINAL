@@ -19,7 +19,7 @@ async function main() {
       description: 'En jugo natural, ideal para guisos y salsas caseras. Sabor auténtico del campo.',
       sizes: ['250g', '1kg', '4kg'],
       tag: 'Clásico',
-      stock: 10000,
+      stockBySize: {},
     },
     {
       name: 'Cubetti di Pomodoro',
@@ -27,7 +27,7 @@ async function main() {
       description: 'Tomate en cubos perfectos, ideal para preparaciones rápidas sin perder textura.',
       sizes: ['250g', '1kg'],
       tag: 'Popular',
-      stock: 10000,
+      stockBySize: {},
     },
     {
       name: 'Salsa Clásica',
@@ -35,7 +35,7 @@ async function main() {
       description: 'Nuestra receta tradicional con tomates seleccionados y especias naturales.',
       sizes: ['250g', '1kg'],
       tag: 'Premium',
-      stock: 10000,
+      stockBySize: {},
     },
     {
       name: 'Doble Concentrado',
@@ -43,7 +43,7 @@ async function main() {
       description: 'Alta concentración para dar color y sabor intenso a tus preparaciones.',
       sizes: ['250g', '1kg', '4kg'],
       tag: 'Profesional',
-      stock: 10000,
+      stockBySize: {},
     },
     {
       name: 'Mitades en Almíbar',
@@ -51,7 +51,7 @@ async function main() {
       description: 'Duraznos cortados en mitades, en almíbar suave. El clásico de la mesa argentina.',
       sizes: ['250g', '1kg', '4kg'],
       tag: 'Clásico',
-      stock: 10000,
+      stockBySize: {},
     },
     {
       name: 'Trozos en Almíbar',
@@ -59,7 +59,7 @@ async function main() {
       description: 'Versátil, ideal para postres, repostería y ensaladas de fruta.',
       sizes: ['250g', '1kg'],
       tag: 'Versátil',
-      stock: 10000,
+      stockBySize: {},
     },
     {
       name: 'Durazno Light',
@@ -67,7 +67,7 @@ async function main() {
       description: 'Menos azúcar, mismo sabor auténtico. Para quienes cuidan su alimentación.',
       sizes: ['250g', '1kg'],
       tag: 'Light',
-      stock: 10000,
+      stockBySize: {},
     },
     {
       name: 'Durazno al Natural',
@@ -75,7 +75,7 @@ async function main() {
       description: 'Sin azúcar agregada, en agua. Pureza total del durazno de cosecha propia.',
       sizes: ['250g', '1kg', '4kg'],
       tag: 'Natural',
-      stock: 10000,
+      stockBySize: {},
     },
   ]
 

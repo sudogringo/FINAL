@@ -31,6 +31,7 @@ services:
       - JWT_SECRET=${JWT_SECRET:-changeme_jwt_secret}
       - N8N_QUOTE_WEBHOOK=${N8N_QUOTE_WEBHOOK:-}
       - N8N_ABANDONED_WEBHOOK=${N8N_ABANDONED_WEBHOOK:-}
+      - ABANDONED_CART_THRESHOLD_MS=${ABANDONED_CART_THRESHOLD_MS:-60000}
     depends_on:
       postgres:
         condition: service_healthy

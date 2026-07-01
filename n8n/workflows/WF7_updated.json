@@ -1,4 +1,5 @@
 {
+  "id": "GH_WF7_Logistics",
   "name": "07. Logistics & Shipping Automation",
   "nodes": [
     {
@@ -96,7 +97,7 @@
       "position": [1100, 300],
       "parameters": {
         "method": "GET",
-        "url": "http://golden_harvest_api:8000/orders",
+        "url": "http://backend:3001/api/orders",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
@@ -113,7 +114,7 @@
       "typeVersion": 2,
       "position": [1300, 300],
       "parameters": {
-        "jsCode": "// Tesis demo: only process first 3 confirmed orders\nconst all = $input.all();\nconst limited = all.slice(0, 3);\nconsole.log(`Demo: procesando ${limited.length} de ${all.length} órdenes confirmadas`);\nreturn limited;"
+        "jsCode": "// HTTP Request devuelve el array como 1 item de n8n — lo expandimos\nconst raw = $input.all();\nlet orders = [];\nif (raw.length === 1 && Array.isArray(raw[0].json)) {\n  orders = raw[0].json.map(o => ({ json: o }));\n} else {\n  orders = raw;\n}\nconst limited = orders.slice(0, 3);\nconsole.log(`Demo: procesando ${limited.length} de ${orders.length} órdenes confirmadas`);\nreturn limited;"
       }
     },
     {
@@ -135,7 +136,7 @@
       "position": [1700, 300],
       "parameters": {
         "method": "GET",
-        "url": "=http://golden_harvest_api:8000/orders/{{ $json.id }}/items",
+        "url": "=http://backend:3001/api/orders/{{ $json.id }}/items",
         "options": {}
       }
     },

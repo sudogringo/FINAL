@@ -39,7 +39,7 @@ const router = createBrowserRouter([
   { path: '/admin',               element: <AdminDashboardPage /> },
   { path: '/admin/cotizaciones',  element: <AdminQuotesPage />    },
   { path: '/admin/productos',     element: <AdminProductsPage />  },
-])
+], { basename: '/FINAL' })
 
 export default function AppRouter() {
   return <RouterProvider router={router} />

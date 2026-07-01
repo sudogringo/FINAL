@@ -97,7 +97,7 @@ quotesRouter.patch('/:id/status', requireAuth, async (req: Request, res: Respons
   }
 
   const existing = await prisma.quote.findUnique({
-    where: { id: req.params.id },
+    where: { id: String(req.params.id) },
     include: { customer: true },
   })
   if (!existing) {
@@ -147,6 +147,6 @@ quotesRouter.patch('/:id/status', requireAuth, async (req: Request, res: Respons
     }
   }
 
-  const quote = await prisma.quote.update({ where: { id: req.params.id }, data: { status } })
+  const quote = await prisma.quote.update({ where: { id: String(req.params.id) }, data: { status } })
   res.json(quote)
 })

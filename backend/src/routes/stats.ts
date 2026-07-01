@@ -5,7 +5,7 @@ import { requireAuth } from '../middleware/auth'
 export const statsRouter = Router()
 
 // GET /api/stats/monthly?month=YYYY-MM
-statsRouter.get('/monthly', requireAuth, async (req: Request, res: Response) => {
+statsRouter.get('/monthly', async (req: Request, res: Response) => {
   const month = String(req.query.month ?? new Date().toISOString().slice(0, 7))
   const [year, m] = month.split('-').map(Number)
   const from = new Date(year, m - 1, 1)
@@ -54,8 +54,9 @@ statsRouter.get('/monthly', requireAuth, async (req: Request, res: Response) => 
 
 // GET /api/stats/abandoned-carts
 // Cotizaciones PENDING de más de 2 horas sin cerrar
-statsRouter.get('/abandoned-carts', requireAuth, async (req: Request, res: Response) => {
-  const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000)
+statsRouter.get('/abandoned-carts', async (req: Request, res: Response) => {
+  const thresholdMs = Number(process.env.ABANDONED_CART_THRESHOLD_MS ?? 2 * 60 * 60 * 1000)
+  const twoHoursAgo = new Date(Date.now() - thresholdMs)
 
   const quotes = await prisma.quote.findMany({
     where: {
