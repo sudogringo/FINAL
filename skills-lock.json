@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "n8n-workflow-patterns": {
+      "source": "czlonkowski/n8n-skills",
+      "sourceType": "github",
+      "skillPath": "skills/n8n-workflow-patterns/SKILL.md",
+      "computedHash": "cf28d3c39ca33cc380e065e5c31dbd7dd83cc8d154b1bf1797353cee6b84db47"
+    }
+  }
+}

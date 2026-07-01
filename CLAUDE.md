@@ -7,78 +7,112 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Golden Harvest S.A. — Digital Transformation** (UTN Final Project, 2026)
 Authors: Cunto Boberg, Tiago & Rojo, Emiliano. Director: Prof. Alberto Cortez.
 
-This repository currently contains only planning and academic documentation. No application code exists yet.
+## Architecture
 
-## Planned Architecture
+Decoupled system with three layers:
 
-The solution is a **decoupled** system with three layers:
+1. **Frontend (React SPA / Vite)** — Interactive catalog with Lead-to-Sale cart. The cart submits a quote request to the backend, which saves it to PostgreSQL and fires a webhook to n8n. Client-side abandoned cart detection triggers a separate webhook 2h after cart activity.
 
-1. **Frontend (React SPA / Next.js)** — Interactive catalog with a "Lead-to-Sale" cart model. The cart does NOT redirect to a payment gateway; instead it fires a webhook to n8n with a structured quote request. This is the core architectural decision: consultative sales, not transactional checkout.
+2. **Backend (Express + Prisma + PostgreSQL)** — REST API. Handles products, quotes, customers, orders, interactions, and stats. The single source of truth for all data consumed by both the frontend and n8n workflows.
 
-2. **Process Orchestrator (n8n, self-hosted via Docker)** — The central automation engine. All business logic (marketing, logistics, social media) runs here as independent, modular workflows. Triggered by webhooks from the frontend or schedules.
-
-3. **Data Layer (PostgreSQL / MongoDB)** — Stores leads, brand configurations, and product catalog data consumed by n8n workflows.
-
-## n8n Workflow Modules (designed in `n8n_workflows.md`)
-
-Seven independent subroutines, each designed to be reusable across projects:
-
-| Module | Trigger | Purpose |
-|---|---|---|
-| Branding / Color Extraction | Monthly schedule or webhook | Extracts brand color palette from site URL; stores to DB for other flows |
-| SEO & Performance Monitor | Weekly (Mon 08:00) | Calls PageSpeed API; alerts if scores < 80 |
-| Google Maps Reputation | Poll every 6h | Auto-replies positive reviews; escalates negatives to admin |
-| Social Media Content Engine | Webhook (new product) or schedule | Generates Stories/Posts for Instagram, TikTok, Facebook via image API + WhatsApp Business |
-| Monthly Activity Report | 1st of month | Aggregates GA4 data into PDF/HTML report |
-| Lead Nurturing & Cart Interest | Bi-weekly + webhook (2h after abandoned cart) | Sends personalized follow-ups via SendGrid/Postmark |
-| Logistics Automation | Webhook (lead confirmed by sales rep) | Generates PDF shipping labels/remitos via PDFMonkey or HTML node |
-
-The **Branding module** feeds color data to the **Social Media Content Engine** — this is the only inter-workflow dependency.
-
-## Key Files
-
-- `proposal.md` — Project scope and n8n module descriptions (Spanish, authoritative)
-- `thesis_draft.md` — Full academic thesis draft; Chapters 5 & 6 are pending implementation
-- `n8n_workflows.md` — Detailed n8n workflow designs with JS code snippets for Code Nodes
-- `Docs/Modelo de Tesis.docx` — UTN thesis template
-- `Docs/rubica.docs` — Evaluation rubric
+3. **Process Orchestrator (n8n, self-hosted via Docker on port 4343)** — Seven independent automation workflows for marketing, logistics, and CRM. All workflows read data from the backend API (`GH_API_BASE_URL=http://backend:3001/api`).
 
 ## Frontend Commands
 
-All commands run from `frontend/`:
+```bash
+cd frontend
+npm install
+npm run dev       # Dev server (Vite, HMR) — http://localhost:5173
+npm run build     # tsc -b && vite build
+npm run preview   # Preview production build
+npm run lint      # ESLint
+npm run test      # Jest tests
+```
+
+## Backend Commands
 
 ```bash
-npm run dev       # Dev server (Vite, HMR)
-npm run build     # tsc -b && vite build (type-check + bundle)
-npm run preview   # Preview production build locally
-npm run lint      # ESLint
+cd backend
+npm install
+npm run dev       # ts-node-dev with hot reload — http://localhost:3001
+npx prisma migrate dev   # Run pending migrations
+npx prisma db seed       # Seed admin + products
+```
+
+## n8n Commands
+
+```bash
+cd n8n
+docker compose up -d      # Start n8n at http://localhost:4343
+docker compose down
+docker compose logs -f
+```
+
+**Port:** 4343. All OAuth/webhook URLs must point to `:4343`.
+
+## Full Stack (Docker)
+
+```bash
+docker compose up -d      # Postgres + Backend + n8n
 ```
 
 ## Frontend Stack
 
-- React 19 + TypeScript
-- Vite 8 (bundler)
-- ESLint with react-hooks and react-refresh plugins
+- React 19 + TypeScript + Vite 8
+- Tailwind CSS v4 with `@theme` (custom --font-heading, --font-body, --color-gold)
+- Feature-based architecture under `src/features/`
+
+## Backend Stack
+
+- Express + TypeScript
+- Prisma ORM → PostgreSQL
+- JWT auth for admin routes
+- Zod validation on all endpoints
+
+## n8n Workflow Modules
+
+| # | Module | Trigger | n8n reads from backend |
+|---|---|---|---|
+| 1 | Automated Branding | Monthly / webhook | — |
+| 2 | SEO & Performance Monitor | Weekly Mon 08:00 | — |
+| 3 | Google Maps Reputation | Poll every 6h | — |
+| 4 | Social Media Content Engine | Webhook (new product) | `GET /api/products` |
+| 5 | Monthly Activity Report | 1st of month | `GET /api/stats/monthly` |
+| 6 | Lead Nurturing & Cart Interest | Bi-weekly + webhook | `GET /api/stats/abandoned-carts` |
+| 7 | Logistics Automation | Webhook (order confirmed) | `GET /api/orders/:id/items` |
+
+## Key Files
+
+| File | Purpose |
+|------|---------|
+| `proposal.md` | Project scope (Spanish, authoritative) |
+| `thesis_draft.md` | Academic thesis draft |
+| `n8n_workflows.md` | Detailed n8n workflow designs |
+| `n8n/workflows/*.json` | Exported n8n workflow definitions |
+| `backend/prisma/schema.prisma` | DB schema |
+| `docker-compose.yml` | Full stack orchestration |
+
+## Lead-to-Sale Flow
+
+```
+User adds to cart → submits quote form
+  → POST /api/quotes (backend saves to DB, upserts Customer)
+    → backend fires N8N_QUOTE_WEBHOOK
+      → n8n notifies sales rep (WhatsApp + Email)
+        → sales rep confirms → Quote status → CLOSED → Order created
+          → n8n triggers Logistics workflow (PDF label generation)
+```
+
+2h abandoned cart: if no quote submitted 2h after cart activity, frontend fires `N8N_ABANDONED_WEBHOOK`.
 
 ## Development Status
 
-- [x] Proposal defined
-- [x] Thesis draft written (Chapters 1–4)
-- [x] n8n workflow architecture designed
-- [x] React + TS + Vite scaffolded (`frontend/`)
-- [ ] React frontend development
-- [ ] n8n workflow implementation
-- [ ] Integration and testing
-- [ ] Chapters 5 & 6 of thesis (Results & Conclusions)
-
-## Lead-to-Sale Flow (Core Business Logic)
-
-```
-User browses catalog → adds items to cart → submits quote request
-  → webhook fires to n8n
-    → n8n notifies sales rep (WhatsApp + Email)
-      → sales rep confirms order
-        → n8n triggers Logistics module (PDF label generation)
-```
-
-The 2-hour abandoned cart detection runs client-side: if a quote is not submitted within 2 hours of cart activity, the frontend fires a separate webhook to trigger the Lead Nurturing flow.
+- [x] Frontend React + TS + Vite (feature-based, cart, quote, admin panel)
+- [x] Backend Express + Prisma + PostgreSQL (products, quotes, admin auth, upload)
+- [x] n8n Docker setup + 7 workflow definitions
+- [x] docker-compose full stack
+- [ ] Prisma models: Customer, Order, OrderItem, WebInteraction
+- [ ] Backend routes: /api/customers, /api/orders, /api/interactions, /api/stats/*
+- [ ] Frontend → Backend connection (QuoteForm via submitQuote())
+- [ ] Backend → n8n webhook forwarding on quote submit
+- [ ] n8n workflows pointing to backend API instead of mock
