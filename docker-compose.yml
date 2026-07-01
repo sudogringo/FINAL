@@ -15,6 +15,57 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - golden_harvest
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: golden_harvest_backend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgresql://gharvest:gharvest_pass@postgres:5432/golden_harvest
+      - JWT_SECRET=${JWT_SECRET:-changeme_jwt_secret}
+      - N8N_QUOTE_WEBHOOK=${N8N_QUOTE_WEBHOOK:-}
+      - N8N_ABANDONED_WEBHOOK=${N8N_ABANDONED_WEBHOOK:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - golden_harvest
+
+  n8n:
+    build:
+      context: ./n8n
+      dockerfile: Dockerfile
+    container_name: golden_harvest_n8n
+    restart: unless-stopped
+    ports:
+      - "4343:4343"
+    environment:
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY:-changeme_n8n_key}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=${N8N_PORT:-4343}
+      - N8N_PROTOCOL=${N8N_PROTOCOL:-http}
+      - WEBHOOK_URL=${WEBHOOK_URL:-http://localhost:4343/}
+      - N8N_EDITOR_BASE_URL=${N8N_EDITOR_BASE_URL:-http://localhost:4343}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-America/Argentina/Buenos_Aires}
+      - TZ=${TZ:-America/Argentina/Buenos_Aires}
+      - GH_API_BASE_URL=http://backend:3001/api
+    volumes:
+      - ./n8n/data:/home/node/.n8n
+    depends_on:
+      - backend
+    networks:
+      - golden_harvest
+
+networks:
+  golden_harvest:
+    driver: bridge
 
 volumes:
   postgres_data:

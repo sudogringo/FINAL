@@ -1,0 +1,336 @@
+{
+  "id": "GqIUYIEcOhioWBfY",
+  "name": "03. Google Maps Review Management",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "hours", "hoursInterval": 6}]
+        }
+      },
+      "id": "node-schedule",
+      "name": "Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 304]
+    },
+    {
+      "parameters": {
+        "url": "https://mybusiness.googleapis.com/v4/accounts/{{$vars.GOOGLE_ACCOUNT_ID}}/locations/{{$vars.GOOGLE_LOCATION_ID}}/reviews",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "orderBy", "value": "updateTime desc"},
+            {"name": "pageSize", "value": "50"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-fetch-reviews",
+      "name": "Fetch Google Reviews",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [464, 160],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "node-split",
+      "name": "Split Reviews",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [1136, 448]
+    },
+    {
+      "parameters": {
+        "jsCode": "const review = $input.first().json;\nconst stars = review.starRating;\nconst comment = (review.comment || \"\").toLowerCase();\n\nlet action = \"notify_admin\";\nlet reply = \"\";\nlet priority = \"normal\";\n\nif (stars >= 4) {\n  action = \"auto_reply\";\n  reply = \"\\u00a1Gracias por tu rese\\u00f1a! Nos alegra que hayas disfrutado de Golden Harvest. Tu opini\\u00f3n nos motiva a seguir mejorando.\";\n} else {\n  if (comment.includes(\"demora\") || comment.includes(\"roto\") || comment.includes(\"p\\u00e9simo\") || comment.includes(\"horrible\")) {\n    action = \"urgent_admin\";\n    priority = \"urgent\";\n  }\n}\n\nreturn [{\n  json: {\n    ...review,\n    action,\n    priority,\n    suggested_reply: reply,\n    reviewer_name: review.reviewer?.displayName || review.reviewerDisplayName || \"Cliente\",\n    stars_numeric: typeof stars === 'number' ? stars : ([\"ONE\", \"TWO\", \"THREE\", \"FOUR\", \"FIVE\"].indexOf(stars) + 1)\n  }\n}];"
+      },
+      "id": "node-sentiment",
+      "name": "Sentiment Analysis",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1360, 448]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cond-positive",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "auto_reply",
+              "operator": {"type": "string", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-branch",
+      "name": "Positive or Negative?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1584, 448]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://mybusiness.googleapis.com/v4/accounts/{{$vars.GOOGLE_ACCOUNT_ID}}/locations/{{$vars.GOOGLE_LOCATION_ID}}/reviews/{{ $json.reviewId }}/reply",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleApi",
+        "sendBody": true,
+        "bodyParameters": {"parameters": [{}]},
+        "options": {"response": {"response": {"neverError": true}}}
+      },
+      "id": "node-auto-reply",
+      "name": "Post Auto-Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1776, 80],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "fromEmail": "n8n@goldenharvest.com",
+        "toEmail": "={{ $vars.ADMIN_EMAIL }}",
+        "subject": "={{ $json.priority === \"urgent\" ? \"URGENTE\" : \"Atencion\" }} - Resena Negativa en Google Maps - {{ $json.stars_numeric }} estrella(s)",
+        "options": {"appendAttribution": false}
+      },
+      "id": "node-email-admin",
+      "name": "Email Admin - Negative Review",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1808, 592],
+      "webhookId": "cd676d50-79bb-442a-b17f-5908e879ba50",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "node-loop-back",
+      "name": "Loop Back",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [2032, 448]
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/details/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "place_id", "value": "={{$vars.GOOGLE_PLACE_ID}}"},
+            {"name": "fields", "value": "reviews"},
+            {"name": "key", "value": "={{$vars.GOOGLE_MAPS_API_KEY}}"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-fetch-public",
+      "name": "Fetch Public Reviews",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [464, 448],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const reviews = $input.first().json.result?.reviews ?? [];\nreturn reviews.map(r => ({\n  json: {\n    reviewId: `places_${r.time}`,\n    reviewer: { displayName: r.author_name },\n    starRating: ['ONE','TWO','THREE','FOUR','FIVE'][r.rating - 1],\n    comment: r.text,\n    source: 'places_api'\n  }\n}));"
+      },
+      "id": "node-normalize-public",
+      "name": "Normalize Public Reviews",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [688, 448],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "options": {}
+      },
+      "id": "node-merge",
+      "name": "Merge Reviews",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [912, 448],
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "node-would-autoreply",
+      "name": "[DISABLED] Would Auto-Reply",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1808, 288]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign-reviews",
+              "name": "reviews",
+              "value": "={{ [\n  {\"reviewId\": \"rev001\", \"starRating\": 5, \"comment\": \"Excelentes productos, el pesto de oliva es incre\\u00edble. Muy buena atenci\\u00f3n.\", \"reviewerDisplayName\": \"Mar\\u00eda Gonz\\u00e1lez\"},\n  {\"reviewId\": \"rev002\", \"starRating\": 2, \"comment\": \"La entrega demor\\u00f3 m\\u00e1s de lo esperado y el frasco lleg\\u00f3 con la tapa floja.\", \"reviewerDisplayName\": \"Carlos P\\u00e9rez\"},\n  {\"reviewId\": \"rev003\", \"starRating\": 4, \"comment\": \"Muy buenas mermeladas artesanales. El chutney de ciruela es delicioso.\", \"reviewerDisplayName\": \"Ana Rodr\\u00edguez\"},\n  {\"reviewId\": \"rev004\", \"starRating\": 1, \"comment\": \"El producto vino roto. P\\u00e9sima experiencia de compra.\", \"reviewerDisplayName\": \"Luis Fern\\u00e1ndez\"},\n  {\"reviewId\": \"rev005\", \"starRating\": 5, \"comment\": \"Golden Harvest tiene los mejores productos gourmet de la regi\\u00f3n. Muy recomendable.\", \"reviewerDisplayName\": \"Sofia Mart\\u00ednez\"}\n] }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-mock-reviews",
+      "name": "[TESIS] Mock Reviews",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [464, 680]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Expand the reviews array into individual items for splitInBatches\nconst reviews = $input.first().json.reviews;\nreturn reviews.map(r => ({ json: r }));"
+      },
+      "id": "node-expand-reviews",
+      "name": "[TESIS] Expand Reviews",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [688, 680]
+    },
+    {
+      "parameters": {
+        "jsCode": "// [TESIS] Generate polite Spanish reply — do NOT post to GMB\nconst review = $input.first().json;\nconst name = review.reviewer_name || review.reviewerDisplayName || 'Cliente';\nconst stars = review.stars_numeric || review.starRating;\n\nlet reply;\nif (stars === 5) {\n  reply = `\\u00a1Muchas gracias ${name}! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opini\\u00f3n es muy valiosa para nosotros.`;\n} else {\n  reply = `\\u00a1Gracias ${name} por tu rese\\u00f1a! Nos alegra que hayas disfrutado de Golden Harvest. Tu opini\\u00f3n nos motiva a seguir mejorando.`;\n}\n\nreturn [{\n  json: {\n    ...review,\n    tesis_reply: reply,\n    tesis_action: 'reply_generated_not_posted',\n    processed_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "node-tesis-positive",
+      "name": "[TESIS] Generate Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1808, 288]
+    },
+    {
+      "parameters": {
+        "jsCode": "// [TESIS] Format escalation summary — do NOT send email\nconst review = $input.first().json;\nconst name = review.reviewer_name || review.reviewerDisplayName || 'Cliente';\nconst stars = review.stars_numeric || review.starRating;\nconst isUrgent = review.priority === 'urgent';\n\nconst summary = {\n  tipo: isUrgent ? 'URGENTE' : 'Atenci\\u00f3n requerida',\n  revisor: name,\n  estrellas: stars,\n  comentario: review.comment,\n  sugerencia: `Contactar a ${name} para resolver su experiencia negativa y ofrecer compensaci\\u00f3n si corresponde.`,\n  tesis_action: 'escalation_formatted_not_emailed',\n  processed_at: new Date().toISOString()\n};\n\nreturn [{ json: { ...review, escalation_summary: summary } }];"
+      },
+      "id": "node-tesis-negative",
+      "name": "[TESIS] Format Escalation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1808, 680]
+    },
+    {
+      "parameters": {
+        "jsCode": "// [TESIS] Collect all processed reviews and write to file\nconst allItems = $input.all();\nconst results = allItems.map(item => item.json);\n\nconst positive = results.filter(r => r.action === 'auto_reply');\nconst negative = results.filter(r => r.action !== 'auto_reply');\nconst urgent = results.filter(r => r.priority === 'urgent');\n\nconst output = {\n  timestamp: new Date().toISOString(),\n  workflow: '03. Google Maps Review Management',\n  modo: 'TESIS (simulado)',\n  summary: {\n    total: results.length,\n    positivas: positive.length,\n    negativas: negative.length,\n    urgentes: urgent.length\n  },\n  reviews: results\n};\n\nconst fs = require('fs');\nconst path = '/home/node/.n8n/reviews_processed.json';\nfs.writeFileSync(path, JSON.stringify(output, null, 2));\n\nconsole.log(`[WF3 TESIS] Reviews procesadas: ${results.length} total`);\nconsole.log(`  Positivas: ${positive.length} | Negativas: ${negative.length} | Urgentes: ${urgent.length}`);\nconsole.log(`  Archivo escrito en: ${path}`);\n\nreturn [{ json: output.summary }];"
+      },
+      "id": "node-write-results",
+      "name": "[TESIS] Write Results File",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2080, 480]
+    },
+    {
+      "parameters": {
+        "content": "## 🔴 MODO PRODUCCIÓN\n\n**Requiere credenciales reales de Google My Business**\n\nEstos nodos están **deshabilitados** para el demo de tesis.\nEn producción, esta ruta:\n- Obtiene reseñas via Google My Business API\n- Publica respuestas automáticas en Google Maps\n- Envía emails al administrador para reseñas negativas\n\n**Para activar:** configurar credenciales OAuth de Google My Business y habilitar los nodos.",
+        "height": 560,
+        "width": 680,
+        "color": 1
+      },
+      "id": "sticky-production",
+      "name": "Sticky Note — PRODUCCIÓN",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [380, 0]
+    },
+    {
+      "parameters": {
+        "content": "## 🟢 MODO TESIS\n\n**Simulación sin credenciales reales**\n\nEsta ruta usa 5 reseñas de muestra en español para demostrar el flujo completo:\n- 3 reseñas positivas (4-5 estrellas) → genera respuesta amable\n- 2 reseñas negativas (1-2 estrellas) → formatea escalación\n\nEl resultado final se escribe en `/home/node/.n8n/reviews_processed.json`\n\n**NO** se realizan llamadas a APIs externas ni se envían emails.",
+        "height": 460,
+        "width": 680,
+        "color": 3
+      },
+      "id": "sticky-tesis",
+      "name": "Sticky Note — TESIS",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [380, 580]
+    }
+  ],
+  "connections": {
+    "Every 6 Hours": {
+      "main": [[
+        {"node": "Fetch Google Reviews", "type": "main", "index": 0},
+        {"node": "Fetch Public Reviews", "type": "main", "index": 0},
+        {"node": "[TESIS] Mock Reviews", "type": "main", "index": 0}
+      ]]
+    },
+    "Fetch Google Reviews": {
+      "main": [[{"node": "Split Reviews", "type": "main", "index": 0}]]
+    },
+    "Fetch Public Reviews": {
+      "main": [[{"node": "Normalize Public Reviews", "type": "main", "index": 0}]]
+    },
+    "Normalize Public Reviews": {
+      "main": [[{"node": "Merge Reviews", "type": "main", "index": 1}]]
+    },
+    "Merge Reviews": {
+      "main": [[{"node": "Split Reviews", "type": "main", "index": 0}]]
+    },
+    "[TESIS] Mock Reviews": {
+      "main": [[{"node": "[TESIS] Expand Reviews", "type": "main", "index": 0}]]
+    },
+    "[TESIS] Expand Reviews": {
+      "main": [[{"node": "Split Reviews", "type": "main", "index": 0}]]
+    },
+    "Split Reviews": {
+      "main": [
+        [{"node": "Loop Back", "type": "main", "index": 0}],
+        [{"node": "Sentiment Analysis", "type": "main", "index": 0}]
+      ]
+    },
+    "Sentiment Analysis": {
+      "main": [[{"node": "Positive or Negative?", "type": "main", "index": 0}]]
+    },
+    "Positive or Negative?": {
+      "main": [
+        [
+          {"node": "Post Auto-Reply", "type": "main", "index": 0},
+          {"node": "[TESIS] Generate Reply", "type": "main", "index": 0}
+        ],
+        [
+          {"node": "Email Admin - Negative Review", "type": "main", "index": 0},
+          {"node": "[TESIS] Format Escalation", "type": "main", "index": 0}
+        ]
+      ]
+    },
+    "Post Auto-Reply": {
+      "main": [[{"node": "Split Reviews", "type": "main", "index": 0}]]
+    },
+    "Email Admin - Negative Review": {
+      "main": [[{"node": "Split Reviews", "type": "main", "index": 0}]]
+    },
+    "[DISABLED] Would Auto-Reply": {
+      "main": [[{"node": "Loop Back", "type": "main", "index": 0}]]
+    },
+    "[TESIS] Generate Reply": {
+      "main": [[{"node": "[TESIS] Write Results File", "type": "main", "index": 0}]]
+    },
+    "[TESIS] Format Escalation": {
+      "main": [[{"node": "[TESIS] Write Results File", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {}
+}

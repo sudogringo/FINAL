@@ -1,0 +1,168 @@
+### ═══════════════════════════════════════════
+### DATA API — Golden Harvest (puerto 8000)
+### ═══════════════════════════════════════════
+
+### Catálogo de productos
+GET http://localhost:8000/products
+
+###
+
+### Clientes
+GET http://localhost:8000/customers
+
+###
+
+### Pedidos del mes actual
+GET http://localhost:8000/orders?month=2026-06
+
+###
+
+### Estadísticas mensuales
+GET http://localhost:8000/stats/monthly?month=2026-06
+
+###
+
+### Carritos abandonados
+GET http://localhost:8000/stats/abandoned-carts
+
+###
+
+
+### ═══════════════════════════════════════════
+### WORKFLOW 04 — Social Media Content Engine
+### Webhook: POST /webhook/social/generate-content
+### ═══════════════════════════════════════════
+
+### Generar post para Instagram (formal)
+POST http://localhost:4343/webhook/social/generate-content
+Content-Type: application/json
+
+{
+  "platform": "instagram",
+  "tone": "formal",
+  "product_sku": "ACE-001"
+}
+
+###
+
+### Generar post para WhatsApp (casual)
+POST http://localhost:4343/webhook/social/generate-content
+Content-Type: application/json
+
+{
+  "platform": "whatsapp",
+  "tone": "casual",
+  "product_sku": "MER-001"
+}
+
+###
+
+### Generar post con producto aleatorio
+POST http://localhost:4343/webhook/social/generate-content
+Content-Type: application/json
+
+{
+  "platform": "instagram",
+  "tone": "casual"
+}
+
+###
+
+
+### ═══════════════════════════════════════════
+### WORKFLOW 05 — Monthly Activity Report
+### Webhook: POST /webhook/reports/monthly-trigger
+### ═══════════════════════════════════════════
+
+### Disparar reporte del mes actual
+POST http://localhost:4343/webhook/reports/monthly-trigger
+Content-Type: application/json
+
+{}
+
+###
+
+
+### ═══════════════════════════════════════════
+### WORKFLOW 06 — Lead Nurturing & Cart Interest
+### Webhook: POST /webhook/leads/cart-interest
+### ═══════════════════════════════════════════
+
+### Disparar análisis de carritos abandonados
+POST http://localhost:4343/webhook/leads/cart-interest
+Content-Type: application/json
+
+{}
+
+###
+
+
+### ═══════════════════════════════════════════
+### WORKFLOW 07 — Logistics & Shipping Automation
+### Webhook: POST /webhook/logistics/shipping-confirm
+### ═══════════════════════════════════════════
+
+### Pedido estándar — múltiples productos
+POST http://localhost:4343/webhook/logistics/shipping-confirm
+Content-Type: application/json
+
+{
+  "order_id": "ORD-2026-001",
+  "customer": {
+    "name": "Bodega Los Álamos",
+    "address": "Ruta 7 Km 1040, Luján de Cuyo, Mendoza",
+    "email": "compras@losalamos.com.ar"
+  },
+  "items": [
+    { "sku": "ACE-001", "name": "Aceitunas Negras en Conserva 380g", "qty": 120, "unit": "unidades" },
+    { "sku": "CHI-001", "name": "Chutney de Tomate y Albahaca 250g", "qty": 48, "unit": "unidades" },
+    { "sku": "PES-001", "name": "Pesto Casero en Aceite de Oliva 190g", "qty": 24, "unit": "unidades" }
+  ],
+  "confirmed_by": "Carlos Méndez",
+  "confirmed_at": "2026-06-16T10:00:00Z"
+}
+
+###
+
+### Pedido edge case — ítem único, gran cantidad
+POST http://localhost:4343/webhook/logistics/shipping-confirm
+Content-Type: application/json
+
+{
+  "order_id": "ORD-2026-002",
+  "customer": {
+    "name": "Supermercados Norte S.A.",
+    "address": "Av. Corrientes 1234, CABA",
+    "email": "logistica@norte.com.ar"
+  },
+  "items": [
+    { "sku": "MER-001", "name": "Mermelada Artesanal de Higo 300g", "qty": 600, "unit": "unidades" }
+  ],
+  "confirmed_by": "Ana Ríos",
+  "confirmed_at": "2026-06-16T14:30:00Z"
+}
+
+###
+
+### Pedido edge case — orden grande mixta
+POST http://localhost:4343/webhook/logistics/shipping-confirm
+Content-Type: application/json
+
+{
+  "order_id": "ORD-2026-003",
+  "customer": {
+    "name": "Distribuidora Del Sur",
+    "address": "Ruta Nacional 40, San Rafael, Mendoza",
+    "email": "pedidos@delsur.com.ar"
+  },
+  "items": [
+    { "sku": "ACE-001", "name": "Aceitunas Negras en Conserva 380g", "qty": 240, "unit": "unidades" },
+    { "sku": "ACE-002", "name": "Aceitunas Verdes Rellenas con Morrón 370g", "qty": 120, "unit": "unidades" },
+    { "sku": "CHI-002", "name": "Chutney de Ciruela y Jengibre 250g", "qty": 96, "unit": "unidades" },
+    { "sku": "MER-001", "name": "Mermelada Artesanal de Higo 300g", "qty": 48, "unit": "unidades" }
+  ],
+  "confirmed_by": "Luis Fernández",
+  "confirmed_at": "2026-06-16T16:00:00Z"
+}
+
+###
