@@ -9,6 +9,8 @@ import CatalogoPage from '../pages/CatalogoPage'
 import ContactoPage from '../pages/ContactoPage'
 import AdminLoginPage from '../pages/admin/AdminLoginPage'
 import AdminProductsPage from '../pages/admin/AdminProductsPage'
+import AdminQuotesPage from '../pages/admin/AdminQuotesPage'
+import AdminDashboardPage from '../pages/admin/AdminDashboardPage'
 
 function RootLayout() {
   return (
@@ -28,13 +30,15 @@ const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     children: [
-      { index: true,       element: <HomePage />     },
-      { path: 'catalogo',  element: <CatalogoPage /> },
-      { path: 'contacto',  element: <ContactoPage /> },
+      { index: true,      element: <HomePage />     },
+      { path: 'catalogo', element: <CatalogoPage /> },
+      { path: 'contacto', element: <ContactoPage /> },
     ],
   },
-  { path: '/admin/login',     element: <AdminLoginPage />    },
-  { path: '/admin/productos', element: <AdminProductsPage /> },
+  { path: '/admin/login',         element: <AdminLoginPage />     },
+  { path: '/admin',               element: <AdminDashboardPage /> },
+  { path: '/admin/cotizaciones',  element: <AdminQuotesPage />    },
+  { path: '/admin/productos',     element: <AdminProductsPage />  },
 ])
 
 export default function AppRouter() {
