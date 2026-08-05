@@ -27,7 +27,7 @@ The solution is a **decoupled** system with three layers:
 
 3. **Process Orchestrator (n8n, self-hosted via Docker)** — The central automation engine. All business logic (marketing, logistics, social media) runs here as independent, modular workflows. Triggered by webhooks from the frontend or schedules. Detail: [`docs/architecture/n8n.md`](docs/architecture/n8n.md).
 
-## n8n Workflow Modules (designed in `n8n_workflows.md`)
+## n8n Workflow Modules (designed in `docs/architecture/n8n_workflows.md`)
 
 Seven independent subroutines, each designed to be reusable across projects:
 
@@ -45,9 +45,9 @@ The **Branding module** feeds color data to the **Social Media Content Engine** 
 
 ## Key Files
 
-- `proposal.md` — Project scope and n8n module descriptions (Spanish, authoritative)
+- `docs/thesis/proposal.md` — Project scope and n8n module descriptions (Spanish, authoritative)
 - `docs/thesis/thesis_draft.md` — Full academic thesis draft; Chapters 5 & 6 are pending implementation
-- `n8n_workflows.md` — Detailed n8n workflow designs with JS code snippets for Code Nodes
+- `docs/architecture/n8n_workflows.md` — Detailed n8n workflow designs with JS code snippets for Code Nodes
 - `Docs/Modelo de Tesis.docx` — UTN thesis template
 - `Docs/rubica.docs` — Evaluation rubric
 
