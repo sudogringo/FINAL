@@ -3,6 +3,7 @@ Docs/otro.pdf
 # Environment variables — never commit real secrets
 .env
 .env.*
+**/.env
 !.env.example
 
 # Dependencies

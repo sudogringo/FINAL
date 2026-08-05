@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ShoppingBag, Check, Plus, Minus } from 'lucide-react'
 import { type Product } from '../../../data/products'
 import { useCart } from '../../cart/CartContext'
+import { logInteraction } from '../../admin/api'
 
 
 interface Props {
@@ -13,6 +14,12 @@ export default function ProductCard({ product }: Props) {
   const [size, setSize]   = useState(product.sizes[0])
   const [qty, setQty]     = useState(1)
   const [added, setAdded] = useState(false)
+
+  const sessionId = sessionStorage.getItem('gh_session_id') ?? 'unknown'
+
+  useEffect(() => {
+    logInteraction({ sessionId, productId: product.id, tipo: 'vista' })
+  }, [product.id])
 
   const isRed    = product.line === 'roja'
   const accent   = isRed ? '#C0392B' : '#A89D4F'
@@ -29,6 +36,7 @@ export default function ProductCard({ product }: Props) {
     for (let i = 0; i < safeQty; i++) {
       addItem({ id: product.id, name: product.name, line: product.line, size, stockForSize })
     }
+    logInteraction({ sessionId, productId: product.id, tipo: 'carrito' })
     setAdded(true)
     setTimeout(() => { setAdded(false); setQty(1) }, 1800)
   }

@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { X, Send, CheckCircle2, Loader2 } from 'lucide-react'
 import { useCart } from '../../cart/CartContext'
-import { N8N_QUOTE_WEBHOOK } from '../../../config'
+import { submitQuote } from '../../admin/api'
 
 const schema = z.object({
   nombre:   z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
@@ -27,33 +27,26 @@ export default function QuoteForm() {
     resolver: zodResolver(schema),
   })
 
+  useEffect(() => {
+    if (!quoteOpen) { setStatus('idle'); reset() }
+  }, [quoteOpen, reset])
+
   const onSubmit = async (data: FormData) => {
     setStatus('sending')
-    const payload = {
-      contact: data,
-      items: items.map(i => ({ id: i.id, name: i.name, line: i.line, size: i.size, qty: i.qty })),
-      metadata: {
-        timestamp: new Date().toISOString(),
-        sessionId: sessionStorage.getItem('gh_session_id') ?? 'unknown',
-      },
-    }
     try {
-      if (N8N_QUOTE_WEBHOOK) {
-        await fetch(N8N_QUOTE_WEBHOOK, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        })
-      }
+      await submitQuote({
+        sessionId: sessionStorage.getItem('gh_session_id') ?? crypto.randomUUID(),
+        contact:   data as Record<string, string>,
+        items:     items.map(i => ({ id: i.id, name: i.name, line: i.line, size: i.size, qty: i.qty })),
+      })
       setStatus('done')
       reset()
-      clearCart()
     } catch {
       setStatus('error')
     }
   }
 
-  const handleClose = () => { closeQuote(); setStatus('idle'); reset() }
+  const handleClose = () => { clearCart(); closeQuote(); setStatus('idle'); reset() }
 
   if (!quoteOpen) return null
 

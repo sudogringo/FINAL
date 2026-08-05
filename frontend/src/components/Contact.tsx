@@ -151,7 +151,7 @@ export default function Contact() {
               </h4>
               {[
                 { icon: Mail, text: 'info@goldenharvest.com.ar' },
-                { icon: MapPin, text: 'Argentina' },
+                { icon: MapPin, text: 'Mendoza, Argentina' },
               ].map((item) => (
                 <div key={item.text} className="flex items-center gap-3">
                   <item.icon size={16} className="text-[#CABC6B] shrink-0" />

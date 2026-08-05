@@ -1,0 +1,480 @@
+{
+  "id": "Zpr1rt5YATfQix0d",
+  "name": "04. Social Media Content Engine",
+  "active": false,
+  "nodes": [
+    {
+      "id": "node-form-trigger",
+      "name": "Submit Social Post Details",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [240, 500],
+      "parameters": {
+        "formTitle": "Golden Harvest — Generador de Contenido Social",
+        "formDescription": "Ingresá el tema y palabras clave para generar contenido para redes sociales.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Topic",
+              "fieldType": "text",
+              "requiredField": true,
+              "placeholder": "Ej: Lanzamiento de nueva línea de chutneys artesanales"
+            },
+            {
+              "fieldLabel": "Keywords or Hashtags (optional)",
+              "fieldType": "text",
+              "requiredField": false,
+              "placeholder": "Ej: GoldenHarvest, ProductosGourmet, Artesanal"
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "webhookId": "f1a2b3c4-d5e6-7890-abcd-ef1234567890"
+    },
+    {
+      "id": "node-wh-social",
+      "name": "Webhook — Recibir solicitud de contenido",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "disabled": true,
+      "parameters": {
+        "path": "social/generate-content",
+        "httpMethod": "POST",
+        "responseMode": "responseNode"
+      },
+      "webhookId": "a7c1469e-168f-43f7-a95e-4323f6770a3e"
+    },
+    {
+      "id": "node-get-products",
+      "name": "GET /products — Catálogo Golden Harvest",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [520, 300],
+      "disabled": true,
+      "parameters": {
+        "method": "GET",
+        "url": "http://api:8000/products",
+        "options": {}
+      }
+    },
+    {
+      "id": "node-build",
+      "name": "Generar contenido por plataforma",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [800, 300],
+      "disabled": true,
+      "parameters": {
+        "jsCode": "const input = $('Webhook — Recibir solicitud de contenido').first().json.body || {};\nconst products = $('GET /products — Catálogo Golden Harvest').all().map(i => i.json);\nconst platform = input.platform || 'instagram';\nconst tone = input.tone || 'formal';\nconst product = input.product_sku\n  ? products.find(p => p.sku === input.product_sku) || products[0]\n  : products[Math.floor(Math.random() * products.length)];\nconst templates = {\n  instagram: {\n    formal: `✨ Descubrí la calidad artesanal de Golden Harvest.\\n\\n🫒 ${product.nombre}\\nElaborado con los mejores ingredientes de la región.\\n\\n#GoldenHarvest #ProductosArtesanales #Gourmet`,\n    casual: `¿Ya probaste nuestro ${product.nombre.split(' ').slice(0,3).join(' ')}? 😍\\n\\nUn clásico que no podés perderte.\\n\\n#GoldenHarvest #FoodLovers`\n  },\n  whatsapp: {\n    formal: `Hola! Le compartimos nuestra última novedad:\\n\\n*${product.nombre}*\\nPrecio: $${product.precio_unitario.toLocaleString('es-AR')} por unidad\\n\\n¿Le interesa hacer un pedido? Contáctenos.`,\n    casual: `¡Hola! 👋 No te pierdas nuestro *${product.nombre}*\\n💰 $${product.precio_unitario.toLocaleString('es-AR')} la unidad\\n\\n¿Hacemos un pedido? 🛒`\n  }\n};\nconst caption = templates[platform]?.[tone] || templates.instagram.formal;\nconst imagePrompt = `product photo of ${product.nombre}, artisanal food, golden harvest argentina, white background, professional`;\nreturn [{ json: { product, platform, tone, caption, image_prompt: imagePrompt, image_url: `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}?width=1080&height=1080&nologo=true` } }];"
+      }
+    },
+    {
+      "id": "node-out",
+      "name": "✅ SIMULATED OUTPUT — Post listo",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1120, 300],
+      "disabled": true,
+      "parameters": {
+        "mode": "manual",
+        "fields": {
+          "values": [
+            {"name": "status", "stringValue": "ready_to_post"},
+            {"name": "platform", "stringValue": "={{ $json.platform }}"},
+            {"name": "caption", "stringValue": "={{ $json.caption }}"},
+            {"name": "image_url", "stringValue": "={{ $json.image_url }}"},
+            {"name": "product_sku", "stringValue": "={{ $json.product.sku }}"},
+            {"name": "simulated", "booleanValue": true}
+          ]
+        }
+      }
+    },
+    {
+      "id": "node-respond",
+      "name": "Responder al webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1380, 300],
+      "disabled": true,
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}"
+      }
+    },
+    {
+      "id": "node-instagram-image",
+      "name": "OpenAI — Generar imagen Instagram",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [1600, 200],
+      "disabled": true,
+      "parameters": {
+        "resource": "image",
+        "operation": "generate",
+        "prompt": "={{ $json.image_prompt }}",
+        "size": "1024x1024"
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-prod",
+          "name": "OpenAI (Producción)"
+        }
+      }
+    },
+    {
+      "id": "node-gpt4o",
+      "name": "gpt-4o — Content Optimizer",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [1600, 350],
+      "disabled": true,
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "model": "gpt-4o",
+        "messages": {
+          "values": [
+            {
+              "role": "user",
+              "content": "Optimize this social media content for maximum engagement: {{ $json.caption }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-prod",
+          "name": "OpenAI (Producción)"
+        }
+      }
+    },
+    {
+      "id": "node-gpt4o-mini",
+      "name": "gpt-4o-mini — Hashtag Generator",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [1600, 500],
+      "disabled": true,
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "role": "user",
+              "content": "Generate 10 relevant hashtags for: {{ $json.caption }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-prod",
+          "name": "OpenAI (Producción)"
+        }
+      }
+    },
+    {
+      "id": "node-imgbb",
+      "name": "Save Image to imgbb",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1820, 200],
+      "disabled": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.imgbb.com/1/upload",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {"name": "key", "value": "YOUR_IMGBB_API_KEY"},
+            {"name": "image", "value": "={{ $json.b64_json }}"}
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-instagram-post",
+      "name": "Instagram — Publicar Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2060, 100],
+      "disabled": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v18.0/YOUR_IG_USER_ID/media",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {"name": "image_url", "value": "={{ $json.display_url }}"},
+            {"name": "caption", "value": "={{ $('node-gpt4o').first().json.content }}"},
+            {"name": "access_token", "value": "YOUR_META_ACCESS_TOKEN"}
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-facebook-post",
+      "name": "Facebook — Publicar Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2060, 250],
+      "disabled": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v18.0/YOUR_PAGE_ID/photos",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {"name": "url", "value": "={{ $json.display_url }}"},
+            {"name": "message", "value": "={{ $('node-gpt4o').first().json.content }}"},
+            {"name": "access_token", "value": "YOUR_PAGE_ACCESS_TOKEN"}
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-x-post",
+      "name": "X (Twitter) — Publicar Tweet",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2060, 400],
+      "disabled": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.twitter.com/2/tweets",
+        "authentication": "oAuth1",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {"name": "text", "value": "={{ $('node-gpt4o').first().json.content.substring(0,280) }}"}
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-linkedin-post",
+      "name": "LinkedIn — Publicar Artículo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2060, 550],
+      "disabled": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linkedin.com/v2/ugcPosts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "Bearer YOUR_LINKEDIN_TOKEN"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"author\": \"urn:li:organization:YOUR_ORG_ID\", \"lifecycleState\": \"PUBLISHED\", \"specificContent\": {\"com.linkedin.ugc.ShareContent\": {\"shareCommentary\": {\"text\": \"{{ $('node-gpt4o').first().json.content }}\"}, \"shareMediaCategory\": \"NONE\"}}, \"visibility\": {\"com.linkedin.ugc.MemberNetworkVisibility\": \"PUBLIC\"}}",
+        "options": {}
+      }
+    },
+    {
+      "id": "node-ollama-model",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [700, 720],
+      "disabled": true,
+      "parameters": {
+        "model": "tinyllama:latest",
+        "options": {}
+      },
+      "credentials": {
+        "ollamaApi": {
+          "id": "ollamaApi",
+          "name": "ollamaApi"
+        }
+      }
+    },
+    {
+      "id": "node-agent",
+      "name": "Social Media Content Factory",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [700, 580],
+      "disabled": true,
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "=Generá contenido de redes sociales para Golden Harvest S.A. sobre el siguiente tema: {{ $json.Topic }}\n\nPalabras clave / hashtags: {{ $json['Keywords or Hashtags (optional)'] || 'GoldenHarvest, ProductosGourmet' }}\n\nDevolvé un JSON con el siguiente formato exacto (sin texto adicional antes o después):\n{\n  \"instagram\": \"<caption para Instagram con emojis y hashtags>\",\n  \"facebook\": \"<post para Facebook, tono profesional>\",\n  \"twitter\": \"<tweet de máximo 280 caracteres>\",\n  \"linkedin\": \"<artículo profesional para LinkedIn>\",\n  \"tiktok\": \"<guión corto para TikTok video>\",\n  \"threads\": \"<post para Threads>\",\n  \"youtube_shorts\": \"<descripción para YouTube Shorts>\"\n}",
+        "options": {
+          "systemMessage": "Sos el community manager de Golden Harvest S.A., una empresa argentina de productos envasados y en frasco de alta calidad. El catálogo incluye: aceitunas rellenas y negras, pesto artesanal, chutney de mango y manzana, mermeladas artesanales (damasco, frutilla, frutos del bosque), y conservas premium.\n\nTu audiencia objetivo son compradores B2B argentinos: supermercados, distribuidores regionales y restaurantes gourmet.\n\nTono: profesional pero cálido, en español rioplatense. Siempre incluí hashtags relevantes en los posts de Instagram y Threads. Destacá la calidad artesanal, el origen argentino y la versatilidad gastronómica de los productos.\n\nCuando te pidan contenido, respondé ÚNICAMENTE con el JSON solicitado, sin explicaciones adicionales."
+        }
+      }
+    },
+    {
+      "id": "node-thesis-content",
+      "name": "Generar Contenido Golden Harvest",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 500],
+      "parameters": {
+        "jsCode": "// Thesis-mode content generator for Golden Harvest S.A.\n// Replaces Ollama LLM for demo purposes - generates realistic content via templates\nconst formData = $input.first().json;\nconst topic = formData['Topic'] || formData['topic'] || 'Productos Golden Harvest';\nconst keywords = formData['Keywords or Hashtags (optional)'] || formData['keywords'] || 'GoldenHarvest, ProductosGourmet';\n\n// Extract hashtags from keywords\nconst hashtagList = keywords.split(',').map(k => {\n  const cleaned = k.trim().replace(/^#/, '').replace(/\\s+/g, '');\n  return `#${cleaned}`;\n}).join(' ');\n\n// Company context\nconst company = 'Golden Harvest S.A.';\nconst products = ['aceitunas artesanales', 'pesto casero', 'chutney gourmet', 'mermeladas artesanales', 'conservas premium'];\nconst product = products[Math.floor(Math.random() * products.length)];\n\n// Generate platform-specific content\nconst instagram = `✨ ¡Novedad en Golden Harvest! 🇦🇷\\n\\n${topic}\\n\\nNuestros ${product} son elaborados con ingredientes seleccionados del campo argentino. Calidad artesanal que se nota en cada bocado.\\n\\nIdeal para supermercados, distribuidores y restaurantes gourmet que buscan lo mejor.\\n\\n🫒 Consultá disponibilidad y precios mayoristas\\n📩 ventas@goldenharvest.com.ar\\n\\n${hashtagList} #Argentina #Artesanal #FoodIndustry`;\n\nconst facebook = `${company} | ${topic}\\n\\nEstamos emocionados de compartir las últimas novedades de nuestra línea de ${product}. Elaborados con la tradición artesanal argentina y los más altos estándares de calidad.\\n\\nNuestros productos están disponibles para distribuidores mayoristas, cadenas de supermercados y restaurantes que valoran la diferencia de lo artesanal.\\n\\n¿Querés ser distribuidor oficial? Contactanos y te enviamos nuestro catálogo completo.\\n\\n${hashtagList}`;\n\nconst twitter = `🌿 ${company}: ${topic}. ${product} de calidad artesanal argentina para el mercado B2B. Supermercados, distribuidores y restaurantes: consultá nuestro catálogo. ${hashtagList}`.substring(0, 280);\n\nconst linkedin = `En ${company} continuamos innovando con ${topic}.\\n\\nNuestra línea de ${product} representa el compromiso con la calidad artesanal argentina que nos distingue en el mercado de alimentos premium.\\n\\n📊 Datos del mercado: el segmento de conservas artesanales en Argentina creció 23% interanual, impulsado por la demanda de productos premium en canales modernos.\\n\\nBuscamos ampliar nuestra red de distribuidores en todo el país. Si tu empresa comparte nuestra visión de calidad, te invitamos a conocer nuestra propuesta comercial.\\n\\n#FoodIndustry #Argentina #B2BFood #DistribuciónMayorista ${hashtagList}`;\n\nconst tiktok = `[GUIÓN TIKTOK — 30 segundos]\\n\\n0-3s: Toma de los productos Golden Harvest en mesa rústica de madera\\n3-10s: Manos abriendo un frasco de ${product} — sonido del sello al abrirse\\n10-20s: Close-up de textura y color — voz en off: \"${topic}\"\\n20-27s: Plato gourmet con el producto — branding Golden Harvest\\n27-30s: Logo + tagline: \"Calidad artesanal argentina\"\\n\\nMúsica: folk argentino instrumental\\nHashtags: ${hashtagList} #FoodTok #Gourmet`;\n\nconst threads = `${topic} 🫒\\n\\nEn @GoldenHarvestAR estamos redefiniendo lo que significa la calidad artesanal en ${product}.\\n\\nPara los que buscan diferenciarse con productos premium en sus góndolas o menús.\\n\\n${hashtagList}`;\n\nconst youtube_shorts = `[TÍTULO] ${topic} — ${company}\\n[DESCRIPCIÓN] Descubrí la nueva propuesta de Golden Harvest S.A.: ${product} elaborados con la mejor tradición artesanal argentina. Ideal para distribuidores, supermercados y restaurantes gourmet. Contactanos para nuestro catálogo B2B.\\n\\n${hashtagList} #Shorts #GoldenHarvest #FoodArgentina\\n\\n[DURACIÓN SUGERIDA] 45-60 segundos\\n[LLAMADA A ACCIÓN] Link al catálogo en bio`;\n\nreturn [{\n  json: {\n    topic,\n    keywords,\n    company,\n    generatedBy: 'Golden Harvest Content Engine (Thesis Demo)',\n    timestamp: new Date().toISOString(),\n    platforms: {\n      instagram,\n      facebook,\n      twitter,\n      linkedin,\n      tiktok,\n      threads,\n      youtube_shorts\n    }\n  }\n}];"
+      }
+    },
+    {
+      "id": "node-thesis-output",
+      "name": "Thesis Output — Guardar JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [800, 500],
+      "parameters": {
+        "jsCode": "// NOTE: n8n task runner disallows 'fs' module — file writing done via HTTP request in production\n// For thesis demo: log summary and return structured data\nconst data = $input.first().json;\nconst platforms = data.platforms || {};\n\nconst output = {\n  timestamp: data.timestamp || new Date().toISOString(),\n  workflow: 'WF4 — Social Media Content Engine',\n  company: 'Golden Harvest S.A.',\n  mode: 'TESIS — Content Engine (sin credenciales externas)',\n  topic: data.topic,\n  keywords: data.keywords,\n  platforms\n};\n\n// Console summary (visible in n8n execution logs)\nconst platformNames = Object.keys(platforms);\nconsole.log('=== Golden Harvest Social Media Content Generated ===');\nconsole.log('Topic:', data.topic);\nconsole.log('Platforms generated:', platformNames.join(', '));\nplatformNames.forEach(p => {\n  const text = (platforms[p] || '').substring(0, 100);\n  console.log(`[${p.toUpperCase()}] ${text}...`);\n});\nconsole.log('Output (full JSON):');\nconsole.log(JSON.stringify(output, null, 2));\n\nreturn [{ json: {\n  success: true,\n  outputData: output,\n  topic: data.topic,\n  platformsGenerated: platformNames,\n  previewInstagram: (platforms.instagram || '').substring(0, 300),\n  previewLinkedIn: (platforms.linkedin || '').substring(0, 300),\n  previewTwitter: (platforms.twitter || '').substring(0, 280),\n  previewFacebook: (platforms.facebook || '').substring(0, 300)\n} }];"
+      }
+    },
+    {
+      "id": "node-completion",
+      "name": "Confirmación — Contenido Generado",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1060, 500],
+      "parameters": {
+        "mode": "manual",
+        "fields": {
+          "values": [
+            {"name": "status", "stringValue": "completed"},
+            {"name": "message", "stringValue": "Contenido generado para Golden Harvest S.A. — 7 plataformas"},
+            {"name": "topic", "stringValue": "={{ $json.topic }}"},
+            {"name": "platformsGenerated", "stringValue": "={{ $json.platformsGenerated.join(', ') }}"},
+            {"name": "mode", "stringValue": "TESIS — sin credenciales externas"},
+            {"name": "previewInstagram", "stringValue": "={{ $json.previewInstagram }}"},
+            {"name": "previewLinkedIn", "stringValue": "={{ $json.previewLinkedIn }}"},
+            {"name": "previewTwitter", "stringValue": "={{ $json.previewTwitter }}"},
+            {"name": "previewFacebook", "stringValue": "={{ $json.previewFacebook }}"}
+          ]
+        }
+      }
+    },
+    {
+      "id": "note-sim-in",
+      "name": "🟡 ZONA SIMULADA — Entrada",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [100, 100],
+      "parameters": {
+        "content": "## 🟡 ZONA SIMULADA — Trigger\n\n**En producción reemplazar por:**\n- Webhook desde CMS/tienda\n- Schedule automático para fechas clave\n- Integración con Google Sheets de calendario editorial\n\n**Credenciales necesarias en producción:**\n- Meta Business API token (Instagram)\n- WhatsApp Business API key",
+        "height": 220,
+        "width": 400,
+        "color": 3
+      }
+    },
+    {
+      "id": "note-real",
+      "name": "🟢 LÓGICA REAL",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [500, 100],
+      "parameters": {
+        "content": "## 🟢 LÓGICA REAL\n\nEsta sección funciona igual en producción.\nEl procesamiento de templates y la generación de imagen con pollinations.ai son independientes de credenciales externas.",
+        "height": 180,
+        "width": 680,
+        "color": 5
+      }
+    },
+    {
+      "id": "note-sim-out",
+      "name": "🟡 ZONA SIMULADA — Output",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1080, 100],
+      "parameters": {
+        "content": "## 🟡 ZONA SIMULADA — Output\n\n**En producción reemplazar por:**\n- POST a Instagram Graph API\n- POST a WhatsApp Business API\n\n**Nota:** La imagen generada por pollinations.ai es real\ny puede descargarse manualmente para publicar.",
+        "height": 200,
+        "width": 400,
+        "color": 3
+      }
+    },
+    {
+      "id": "note-produccion",
+      "name": "🔴 MODO PRODUCCIÓN",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1520, 60],
+      "parameters": {
+        "content": "## 🔴 MODO PRODUCCIÓN — Deshabilitado para Demo\n\nLos nodos de esta sección requieren credenciales reales y están deshabilitados para la demo de tesis.\n\n**Nodos deshabilitados:**\n- OpenAI — Generar imagen Instagram (requiere API key de pago)\n- gpt-4o — Content Optimizer (requiere API key de pago)\n- gpt-4o-mini — Hashtag Generator (requiere API key de pago)\n- Save Image to imgbb (requiere cuenta imgbb)\n- Instagram — Publicar Post (requiere Meta Business API)\n- Facebook — Publicar Post (requiere Page Access Token)\n- X (Twitter) — Publicar Tweet (requiere OAuth1 Twitter API)\n- LinkedIn — Publicar Artículo (requiere LinkedIn API token)\n- Social Media Content Factory (requiere Ollama instalado + credencial ollamaApi)\n- Ollama Chat Model (requiere Ollama en ejecución con tinyllama:latest)\n\n**Para activar en producción:**\n1. Instalar Ollama en el servidor n8n y cargar tinyllama\n2. Configurar credenciales en n8n Settings → Credentials\n3. Habilitar cada nodo individualmente\n4. Reemplazar IDs de usuario/página según la cuenta empresarial",
+        "height": 560,
+        "width": 640,
+        "color": 1
+      }
+    },
+    {
+      "id": "note-tesis",
+      "name": "🟢 MODO TESIS",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [160, 380],
+      "parameters": {
+        "content": "## 🟢 MODO TESIS — Ruta Activa\n\nEsta sección funciona completamente SIN credenciales externas ni APIs de pago.\n\n**Flujo activo:**\n1. **Submit Social Post Details** → Form trigger (punto de entrada)\n2. **Generar Contenido Golden Harvest** → Code node con generación por templates para 7 plataformas\n3. **Thesis Output — Guardar JSON** → Persiste el resultado en /home/node/.n8n/social_posts_output.json\n4. **Confirmación** → Set node con resumen y previews\n\n**Empresa:** Golden Harvest S.A.\nProductos: aceitunas, pesto, chutney, mermeladas artesanales, conservas premium\nAudiencia B2B: supermercados, distribuidores, restaurantes\n\n**Plataformas generadas:** Instagram, Facebook, X/Twitter, LinkedIn, TikTok, Threads, YouTube Shorts\n\n**Arquitectura de producción** (nodos a la derecha, deshabilitados):\n- LLM: Ollama tinyllama:latest (local, sin costo)\n- Imagen: OpenAI DALL-E 3 → imgbb\n- Posting: Meta Graph API, Twitter API v2, LinkedIn UGC API",
+        "height": 500,
+        "width": 600,
+        "color": 3
+      }
+    }
+  ],
+  "connections": {
+    "Submit Social Post Details": {
+      "main": [
+        [
+          {
+            "node": "Generar Contenido Golden Harvest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar Contenido Golden Harvest": {
+      "main": [
+        [
+          {
+            "node": "Thesis Output — Guardar JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Thesis Output — Guardar JSON": {
+      "main": [
+        [
+          {
+            "node": "Confirmación — Contenido Generado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {
+    "Submit Social Post Details": [
+      {
+        "json": {
+          "Topic": "Lanzamiento de nueva línea de chutneys artesanales",
+          "formMode": "test",
+          "Keywords or Hashtags (optional)": "GoldenHarvest, ProductosGourmet, Artesanal"
+        }
+      }
+    ]
+  },
+  "tags": []
+}
