@@ -1,0 +1,13 @@
+# Local n8n runtime data — never commit. See docs/architecture/n8n.md for how
+# credentials and workflow state are shared between collaborators instead.
+.env
+.env.*
+!.env.example
+
+data/database.sqlite
+data/database.sqlite-shm
+data/database.sqlite-wal
+data/config
+data/*.log
+data/crash.journal
+data/nodes/node_modules/
