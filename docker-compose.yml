@@ -16,5 +16,24 @@ services:
       timeout: 5s
       retries: 5
 
+  n8n:
+    # Using the official image since n8n/Dockerfile doesn't exist yet.
+    # Swap to `build: {context: ./n8n, dockerfile: Dockerfile}` if a custom
+    # image (e.g. for pre-installed community nodes) is needed later.
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    env_file:
+      - ./n8n/.env
+    ports:
+      - "4343:4343"
+    volumes:
+      - ./n8n/data:/home/node/.n8n
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:4343/healthz || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
 volumes:
   postgres_data:
