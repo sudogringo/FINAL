@@ -16,7 +16,7 @@ productsRouter.get('/', async (_req: Request, res: Response) => {
 })
 
 productsRouter.get('/:id', async (req: Request, res: Response) => {
-  const product = await prisma.product.findUnique({ where: { id: req.params.id } })
+  const product = await prisma.product.findUnique({ where: { id: String(req.params.id) } })
   if (!product || !product.active) {
     res.status(404).json({ error: 'Producto no encontrado' })
     return
@@ -59,7 +59,7 @@ productsRouter.put('/admin/:id', requireAuth, async (req: Request, res: Response
   }
   try {
     const product = await prisma.product.update({
-      where: { id: req.params.id },
+      where: { id: String(req.params.id) },
       data: result.data,
     })
     res.json(product)
@@ -71,7 +71,7 @@ productsRouter.put('/admin/:id', requireAuth, async (req: Request, res: Response
 productsRouter.delete('/admin/:id', requireAuth, async (req: Request, res: Response) => {
   try {
     await prisma.product.update({
-      where: { id: req.params.id },
+      where: { id: String(req.params.id) },
       data: { active: false },
     })
     res.json({ ok: true })

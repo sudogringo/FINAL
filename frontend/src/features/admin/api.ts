@@ -25,9 +25,39 @@ export interface ProductInput {
   active?: boolean
 }
 
+export type QuoteStatus = 'PENDING' | 'CONTACTED' | 'CLOSED'
+
+export interface ApiQuote {
+  id: string
+  sessionId: string
+  contact: {
+    nombre: string
+    empresa?: string
+    telefono?: string
+    email: string
+    notas?: string
+  }
+  items: Array<{ id: string; name: string; line: string; size: string; qty: number }>
+  status: QuoteStatus
+  customerId: string | null
+  customer: { nombre: string; email: string } | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface MonthlyStats {
+  month: string
+  quotes: { total: number; pending: number; contacted: number; closed: number }
+  orders: { total: number }
+  topProducts: Array<{ nombre: string; units: number }>
+  webInteractions: Array<{ tipo: string; count: number }>
+}
+
 function authHeaders(token: string) {
   return { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
 }
+
+// ─── Products ────────────────────────────────────────────────────────────────
 
 export async function fetchProducts(): Promise<ApiProduct[]> {
   const res = await fetch(`${BASE}/api/products`)
@@ -82,6 +112,8 @@ export async function uploadImage(token: string, file: File): Promise<string> {
   return data.url as string
 }
 
+// ─── Auth ─────────────────────────────────────────────────────────────────────
+
 export async function adminLogin(email: string, password: string): Promise<string> {
   const res = await fetch(`${BASE}/api/auth/login`, {
     method: 'POST',
@@ -92,6 +124,8 @@ export async function adminLogin(email: string, password: string): Promise<strin
   const data = await res.json()
   return data.token
 }
+
+// ─── Quotes ──────────────────────────────────────────────────────────────────
 
 export async function submitQuote(payload: {
   sessionId: string
@@ -105,4 +139,43 @@ export async function submitQuote(payload: {
   })
   if (!res.ok) throw new Error('Error al enviar cotización')
   return res.json()
+}
+
+export async function fetchQuotes(token: string): Promise<ApiQuote[]> {
+  const res = await fetch(`${BASE}/api/quotes`, { headers: authHeaders(token) })
+  if (!res.ok) throw new Error('Error al obtener cotizaciones')
+  return res.json()
+}
+
+export async function updateQuoteStatus(token: string, id: string, status: QuoteStatus): Promise<ApiQuote> {
+  const res = await fetch(`${BASE}/api/quotes/${id}/status`, {
+    method: 'PATCH',
+    headers: authHeaders(token),
+    body: JSON.stringify({ status }),
+  })
+  if (!res.ok) throw new Error('Error al actualizar estado')
+  return res.json()
+}
+
+// ─── Stats ───────────────────────────────────────────────────────────────────
+
+export async function fetchMonthlyStats(token: string, month?: string): Promise<MonthlyStats> {
+  const url = month ? `${BASE}/api/stats/monthly?month=${month}` : `${BASE}/api/stats/monthly`
+  const res = await fetch(url, { headers: authHeaders(token) })
+  if (!res.ok) throw new Error('Error al obtener estadísticas')
+  return res.json()
+}
+
+// ─── Interactions (public) ───────────────────────────────────────────────────
+
+export async function logInteraction(payload: {
+  sessionId: string
+  productId?: string
+  tipo: 'vista' | 'carrito' | 'compra'
+}): Promise<void> {
+  await fetch(`${BASE}/api/interactions`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  }).catch(() => {}) // fire-and-forget, nunca bloquea UI
 }
