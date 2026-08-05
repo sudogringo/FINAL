@@ -34,8 +34,8 @@ User browses catalog → adds items to cart → submits quote request
 | `docs/assets/` | Graphs, tables, screenshots for insertion into the thesis document. |
 | `docs/architecture/` | Per-layer design docs: need, design, what's implemented, relations to other layers. |
 | `Docs/` | UTN thesis template (`.docx`) and evaluation rubric — reference files, not authored content. |
-| `proposal.md` | Original project proposal and n8n module scope (Spanish, authoritative). |
-| `n8n_workflows.md` | Detailed design for all 7 n8n workflow modules. |
+| `docs/thesis/proposal.md` | Original project proposal and n8n module scope (Spanish, authoritative). |
+| `docs/architecture/n8n_workflows.md` | Detailed design for all 7 n8n workflow modules. |
 
 ## Setup
 

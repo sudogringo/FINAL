@@ -9,7 +9,7 @@ All the business logic that isn't "serve the catalog and store a quote" — mark
 ## Design
 
 - **Self-hosted via Docker**, `docker-compose.yml` `n8n` service (official `docker.n8n.io/n8nio/n8n` image — no custom Dockerfile exists), SQLite storage under `n8n/data/` (bind-mounted, portable — see `n8n/README.md` if present for migration notes), public URL fixed to `localhost:4343` via env vars in `n8n/.env` (`N8N_PORT`, `WEBHOOK_URL`, etc.) so OAuth redirects resolve correctly instead of n8n's default `5678`.
-- **Modular, independent workflows** — the seven modules designed in `n8n_workflows.md` are built as separate n8n workflows, each importable/exportable on its own. The only designed inter-workflow dependency is Branding → Social Media Content Engine (color palette feeds post generation).
+- **Modular, independent workflows** — the seven modules designed in [`n8n_workflows.md`](n8n_workflows.md) are built as separate n8n workflows, each importable/exportable on its own. The only designed inter-workflow dependency is Branding → Social Media Content Engine (color palette feeds post generation).
 - **Credentials manager workaround**: n8n's built-in credentials UI is awkward to work with for this project's needs (frequent recreation, poor portability across machines). Where reasonable, config is passed via `.env` files or webhook payloads instead of n8n's credentials store.
 
 ## Implemented
