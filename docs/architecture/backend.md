@@ -41,6 +41,8 @@ Routes under `backend/src/routes/`:
 - **Backend → n8n**: none currently wired. The intended flow (frontend fires a webhook straight to n8n on quote submit, bypassing the backend) means n8n and the backend don't talk to each other yet — a quote is written to Postgres by the backend *and separately* triggers an n8n webhook from the frontend. There's no current mechanism for n8n's Logistics module to read the quote back out of Postgres; if/when that's built, it'll need either a new backend endpoint n8n calls, or n8n gaining direct DB access (currently avoided — see `docker-compose.yml`, no `depends_on` between the `n8n` and `postgres` services).
 - **Backend → Data layer**: owns the only Postgres connection (via `DATABASE_URL`, Prisma). n8n's `docker-compose.yml` service does not currently share this database.
 
+See [`docs/architecture/diagram.md`](./diagram.md) for the full system diagram (target vs. as-built).
+
 ## Commands
 
 All commands run from `backend/`:

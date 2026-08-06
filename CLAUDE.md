@@ -54,7 +54,7 @@ The **Branding module** feeds color data to the **Social Media Content Engine** 
 | `docs/thesis/` | The thesis draft itself. |
 | `docs/research/` | Benchmarks, original-site vs. new-site comparisons, raw test data — the source material for Chapters 5–6. **Lighthouse performance data lives in `docs/research/lighthouse/` — re-run it (see that folder's README "Re-running after a frontend change" playbook) any time `frontend/` changes in a way that could move performance/accessibility/SEO scores, so Chapter 5 doesn't go stale.** |
 | `docs/assets/` | Graphs, tables, screenshots for insertion into the thesis `.docx`. Generate visuals from `docs/research/` data and save rendered output here. |
-| `docs/architecture/` | One file per layer (`frontend.md`, `backend.md`, `n8n.md`), each covering: need, design, what's implemented, and relations to the other layers. Read these before making cross-layer changes. |
+| `docs/architecture/` | One file per layer (`frontend.md`, `backend.md`, `n8n.md`), each covering: need, design, what's implemented, and relations to the other layers. `diagram.md` holds the system-wide Mermaid diagrams (target architecture vs. as-built/demo). Read these before making cross-layer changes. |
 | `Docs/` (capital D, root) | Pre-existing folder with the UTN thesis template and rubric — binary/reference files, distinct from `docs/`. |
 
 This table mirrors the one in `README.md` — keep both in sync if the layout changes.
