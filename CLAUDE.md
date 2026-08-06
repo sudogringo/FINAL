@@ -36,8 +36,11 @@ Decoupled system with three layers:
 | 3 | Google Maps Reputation | Poll every 6h | — |
 | 4 | Social Media Content Engine | Webhook (new product) | `GET /api/products` |
 | 5 | Monthly Activity Report | 1st of month | `GET /api/stats/monthly` |
-| 6 | Lead Nurturing & Cart Interest | Bi-weekly + webhook (2h after abandoned cart) | `GET /api/stats/abandoned-carts` |
+| 6a | Newsletter Quincenal | Bi-weekly (1st/15th) | `GET /api/mock/newsletter-subscribers` |
+| 6b | Carrito Abandonado | Webhook (2h after abandoned cart) | `GET /api/stats/abandoned-carts` |
 | 7 | Logistics Automation | Webhook (order confirmed) | `GET /api/orders/:id/items` |
+
+Module 6 ("Lead Nurturing & Cart Interest" in the original design) was split into two independent n8n workflows: **6a** (newsletter, schedule-driven) and **6b** (abandoned-cart follow-up, webhook-driven). See [`docs/architecture/n8n.md`](docs/architecture/n8n.md) for details.
 
 The **Branding module** feeds color data to the **Social Media Content Engine** — this is the only inter-workflow dependency.
 
@@ -138,7 +141,7 @@ User browses catalog → adds items to cart → submits quote request
           → n8n triggers Logistics workflow (PDF label generation)
 ```
 
-The 2-hour abandoned cart detection runs client-side: if a quote is not submitted within 2 hours of cart activity, the frontend fires a separate webhook (`N8N_ABANDONED_WEBHOOK`) to trigger the Lead Nurturing flow.
+The 2-hour abandoned cart detection runs client-side: if a quote is not submitted within 2 hours of cart activity, the frontend fires a separate webhook (`N8N_ABANDONED_WEBHOOK`) to trigger the **6b. Carrito Abandonado** workflow.
 
 ## Development Status
 
