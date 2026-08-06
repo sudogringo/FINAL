@@ -35,7 +35,6 @@ function reducer(state: CartState, action: Action): CartState {
       if (exists && action.item.stockForSize > 0 && exists.qty >= action.item.stockForSize) return state
       return {
         ...state,
-        isOpen: true,
         items: exists
           ? state.items.map(i => key(i.id, i.size) === k ? { ...i, qty: i.qty + 1 } : i)
           : [...state.items, { ...action.item, qty: 1 }],

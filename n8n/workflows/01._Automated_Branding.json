@@ -1,0 +1,348 @@
+{
+  "updatedAt": "2026-08-04T20:22:29.665Z",
+  "createdAt": "2026-06-04T12:16:01.847Z",
+  "id": "Yvoc3v8PN45TaRAD",
+  "name": "01. Automated Branding",
+  "description": "",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Monthly Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        912
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "url",
+              "value": "https://www.goldenharvest.com.ar/silvia",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "email",
+              "value": "tiagoboberg@gmail.com",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "schedule-set-url",
+      "name": "Set Hardcoded URL",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        496,
+        912
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "formTitle": "Brand Color Extractor",
+        "formDescription": "Enter a URL to extract its brand color palette",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "url",
+              "placeholder": "https://example.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "email",
+              "fieldType": "email",
+              "placeholder": "you@example.com",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "form-trigger",
+      "name": "Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        736,
+        480
+      ],
+      "webhookId": "brand-color-form"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "waitUntil": "networkidle2"
+        }
+      },
+      "id": "http-request",
+      "name": "Fetch HTML",
+      "type": "n8n-nodes-puppeteer.puppeteer",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let meta = {};\ntry { meta = $('Set Hardcoded URL').first().json; } catch(e) {}\ntry { if (!meta.url) meta = $('Form Trigger').first().json; } catch(e) {}\ntry { if (!meta.url) meta = $('Set Thesis URL').first().json; } catch(e) {}\n\nconst raw = $input.first().json;\nconst html = raw.html || raw.data || raw.body || raw.content || '';\n\nconst toHex = (r, g, b) =>\n  '#' + [r, g, b].map(x => parseInt(x).toString(16).padStart(2, '0')).join('');\n\n// --- Extract brand palette (exclude black/white) ---\nconst colorCounts = {};\nlet m;\nconst rgbaRegex2 = /rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)(?:,\\s*[\\d.]+)?\\)/g;\nwhile ((m = rgbaRegex2.exec(html)) !== null) {\n  const hex = toHex(m[1], m[2], m[3]);\n  if (['#000000','#ffffff','#000'].includes(hex)) continue;\n  colorCounts[hex] = (colorCounts[hex] || 0) + 1;\n}\nconst hexRegex = /#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})(?![A-Fa-f0-9])/g;\nwhile ((m = hexRegex.exec(html)) !== null) {\n  const hex = m[0].toLowerCase();\n  if (['#000000','#ffffff','#000','#fff'].includes(hex)) continue;\n  colorCounts[hex] = (colorCounts[hex] || 0) + 1;\n}\n\nconst sortedColors = Object.entries(colorCounts)\n  .sort((a, b) => b[1] - a[1])\n  .slice(0, 5)\n  .map(e => e[0]);\n\n// --- Detect background color ---\nlet bgColor = null;\n\n// 1. Check body inline style: <body style=\"background-color:...\"> or background:...\nconst bodyInline = html.match(/<body[^>]+style=[\"'][^\"']*background(?:-color)?\\s*:\\s*([^;\"'\\s]+)/i);\nif (bodyInline) bgColor = bodyInline[1].toLowerCase();\n\n// 2. Check <style> blocks for body { background... }\nif (!bgColor) {\n  const styleBlocks = [];\n  const styleRe = /<style[^>]*>([\\s\\S]*?)<\\/style>/gi;\n  let sm;\n  while ((sm = styleRe.exec(html)) !== null) styleBlocks.push(sm[1]);\n  const styleText = styleBlocks.join('\\n');\n  const bodyBgRe = /body\\s*\\{[^}]*background(?:-color)?\\s*:\\s*([^;}\\/]+)/i;\n  const bm = styleText.match(bodyBgRe);\n  if (bm) bgColor = bm[1].trim().toLowerCase();\n}\n\n// Normalize common color names\nconst namedColors = { white: '#ffffff', black: '#000000', transparent: 'transparent' };\nif (bgColor && namedColors[bgColor]) bgColor = namedColors[bgColor];\n\nconst bgLabel = bgColor\n  ? bgColor === '#ffffff' ? '#ffffff (white)'\n  : bgColor === '#000000' ? '#000000 (black)'\n  : bgColor === 'transparent' ? 'transparent'\n  : bgColor\n  : 'not detected';\n\n// --- Build email ---\nconst labels = ['Primary', 'Secondary', 'Color 3', 'Color 4', 'Color 5'];\nconst rows = sortedColors.map((hex, i) =>\n  '<tr>' +\n  '<td style=\"padding:10px 16px 10px 0;font-family:sans-serif;font-weight:bold;\">' + labels[i] + '</td>' +\n  '<td style=\"padding:10px 12px;\">' +\n    '<span style=\"display:inline-block;width:72px;height:36px;background:' + hex + ';border:1px solid #ddd;border-radius:4px;\"></span>' +\n  '</td>' +\n  '<td style=\"padding:10px 0;font-family:monospace;font-size:14px;\">' + hex + '</td>' +\n  '</tr>'\n).join('');\n\nconst bgSwatch = bgColor && bgColor !== 'transparent' && bgColor !== 'not detected'\n  ? '<span style=\"display:inline-block;width:72px;height:36px;background:' + bgColor + ';border:1px solid #ddd;border-radius:4px;margin-right:12px;\"></span>'\n  : '';\n\nconst emailHtml =\n  '<div style=\"font-family:sans-serif;max-width:500px;\">' +\n  '<h2 style=\"margin-bottom:4px;\">Brand Palette</h2>' +\n  '<p style=\"color:#666;margin-top:0;\">Extracted from <a href=\"' + meta.url + '\">' + meta.url + '</a></p>' +\n  '<table cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;\">' +\n  rows +\n  '</table>' +\n  '<hr style=\"margin:16px 0;border:none;border-top:1px solid #eee;\">' +\n  '<p style=\"margin:0 0 6px;\"><strong>Background:</strong></p>' +\n  '<p style=\"margin:0;font-family:monospace;font-size:14px;display:flex;align-items:center;gap:12px;\">' +\n  bgSwatch + bgLabel +\n  '</p>' +\n  '</div>';\n\nreturn [{ json: {\n  url: meta.url || 'unknown',\n  email: meta.email || 'unknown',\n  primary: sortedColors[0] || null,\n  secondary: sortedColors[1] || null,\n  palette: sortedColors,\n  background: bgColor || 'not detected',\n  emailHtml\n} }];"
+      },
+      "id": "code",
+      "name": "Extract Colors",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "=Brand Palette \u2014 {{ $json.url }}",
+        "message": "={{ $json.emailHtml }}",
+        "options": {}
+      },
+      "id": "gmail",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1456,
+        480
+      ],
+      "webhookId": "9ea6beda-1040-475f-a639-0ec8cfd521d8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vKMTOPHBSJvAmTAp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        736,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "t1",
+              "name": "url",
+              "value": "https://sudogringo.github.io/FINAL/",
+              "type": "string"
+            },
+            {
+              "id": "t2",
+              "name": "email",
+              "value": "tiagoboberg@gmail.com",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-thesis-url",
+      "name": "Set Thesis URL",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        928,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## \ud83d\udfe2 MODO TESIS\n\nFlujo activo para demo universitaria.\n\n**Entrada:** Manual Trigger\n**URL:** https://tiago-cunto.github.io/golden-harvest/\n\n1. Set Thesis URL \u2014 fija la URL del sitio GitHub Pages\n2. Fetch HTML \u2014 descarga el HTML de la p\u00e1gina\n3. Extract Colors \u2014 regex hex + rgba \u2192 top 5 colores\n4. Send Email \u2014 env\u00eda la paleta al email configurado\n\nNo requiere credenciales externas (excepto Gmail OAuth para prod).",
+        "height": 380,
+        "width": 1492,
+        "color": 3
+      },
+      "id": "sticky-thesis",
+      "name": "Sticky Note \u2014 Tesis",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## \ud83d\udd34 MODO PRODUCCI\u00d3N \u2014 DESHABILITADO\n\nEste bloque requiere credenciales reales de la empresa.\n\n- **Monthly Schedule** \u2014 trigger mensual (requiere n8n activo en prod)\n- **Form Trigger** \u2014 formulario web (requiere dominio p\u00fablico)\n- **Set Hardcoded URL** \u2014 URL interna goldenharvest.com.ar\n- **Send Email (Gmail)** \u2014 requiere OAuth2 de Gmail corporativo\n\n\u26a0\ufe0f Todos los nodos est\u00e1n `disabled: true` para el entorno de tesis.",
+        "height": 460,
+        "width": 1492
+      },
+      "id": "sticky-prod",
+      "name": "Sticky Note \u2014 Producci\u00f3n",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# WF1 \u2014 Automated Branding (Color Extraction)\n\nExtrae la paleta de colores dominantes del sitio web de Golden Harvest S.A. y la persiste para ser consumida por otros workflows (WF2, WF4).\n\n**Colores filtrados:** negro (#000000), blanco (#ffffff) \u2014 se retienen solo colores de marca.\n**Salida:** top 5 hex por frecuencia.",
+        "height": 180,
+        "width": 1496,
+        "color": 4
+      },
+      "id": "sticky-info",
+      "name": "Sticky Note \u2014 Info",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        48
+      ]
+    }
+  ],
+  "connections": {
+    "Monthly Schedule": {
+      "main": [
+        [
+          {
+            "node": "Set Hardcoded URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Hardcoded URL": {
+      "main": [
+        [
+          {
+            "node": "Fetch HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Thesis URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Thesis URL": {
+      "main": [
+        [
+          {
+            "node": "Fetch HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch HTML": {
+      "main": [
+        [
+          {
+            "node": "Extract Colors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Colors": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "2867c1b3-7044-4461-afce-55b2f560b375",
+  "activeVersionId": null,
+  "versionCounter": 64,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "shared": [
+    {
+      "updatedAt": "2026-06-04T12:16:01.853Z",
+      "createdAt": "2026-06-04T12:16:01.853Z",
+      "role": "workflow:owner",
+      "workflowId": "Yvoc3v8PN45TaRAD",
+      "projectId": "fqt8Sbkc8GWwPwDS",
+      "project": {
+        "updatedAt": "2026-04-21T17:40:00.062Z",
+        "createdAt": "2026-04-21T17:36:32.601Z",
+        "id": "fqt8Sbkc8GWwPwDS",
+        "name": "Tiago Cunto Boberg <tiagoboberg@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "e904e65e-d840-4829-bc02-d388c616774f"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}
