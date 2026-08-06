@@ -51,6 +51,8 @@ Known gaps (not yet covered): most of `admin/api.ts`'s remaining CRUD endpoints 
 - **Frontend ↔ Backend**: reads the product catalog from the backend API; the admin panel (`features/admin/`) performs authenticated CRUD against the backend for products and quote status. Regular (non-admin) quote submission's relationship to the backend vs. the direct n8n webhook is not yet fully reconciled — see `docs/architecture/backend.md` Relations section.
 - **Frontend → Data layer**: no direct DB access; always goes through the backend API.
 
+See [`docs/architecture/diagram.md`](./diagram.md) for the full system diagram (target vs. as-built).
+
 ## Commands
 
 All commands run from `frontend/`:

@@ -53,3 +53,5 @@ Data status per workflow (fill in / correct as work continues — this is the se
 - **n8n ← Frontend**: webhook triggers on quote submission and on abandoned-cart detection (client-side 2h timer).
 - **n8n → Backend**: none currently. n8n does not read or write the Postgres database the backend owns — no `depends_on` between the two services in `docker-compose.yml`, and no HTTP calls from n8n workflows into backend routes exist yet. If Logistics Automation (07) needs quote data, it currently must get it from the triggering webhook payload, not a backend lookup.
 - **n8n → external services**: SendGrid/Postmark (nurturing emails), WhatsApp Business + email (sales rep notification), PDFMonkey or HTML node (shipping labels/remitos), PageSpeed API (SEO monitor), Google Maps (reputation). Per the zero-budget constraint, each of these should be using a free tier or a simulated stand-in — see the audit table above.
+
+See [`docs/architecture/diagram.md`](./diagram.md) for the full system diagram (target vs. as-built).
