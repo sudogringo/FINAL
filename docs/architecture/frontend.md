@@ -22,10 +22,26 @@ frontend/src/
 ├── pages/            — HomePage, CatalogoPage, ContactoPage, admin/AdminLoginPage, admin/AdminProductsPage
 ├── routes/AppRouter.tsx
 ├── data/products.ts
-└── __tests__/         — CartDrawer.test.tsx, ProductCard.test.tsx, QuoteForm.test.tsx (Jest)
+└── __tests__/         — 10 suites, 70 tests (Jest + Testing Library) — see Testing below
 ```
 
-Tests cover the three highest-risk interactive pieces: the cart drawer, product cards, and the quote form.
+### Testing
+
+Jest + `jsdom` + React Testing Library, run from `frontend/` with `npm run test`. As of 2026-08-06: **10 suites / 70 tests, all passing**, coverage **74.71% statements / 68.62% branches / 72.07% functions / 78.47% lines**.
+
+| Suite | Covers |
+|---|---|
+| `ProductCard.test.tsx` | Render, size selection, quantity limits, sold-out/at-stock-cap branches |
+| `CartDrawer.test.tsx` | Drawer open/close, item display, empty state |
+| `CartContext.test.tsx` | Reducer: stock-capped `addItem`, `setQty` (incl. remove-on-zero and cap), `removeItem`, `clearCart`, `totalItems`, open/close toggles, and the 2-hour abandoned-cart webhook timer (via `jest.useFakeTimers()`) |
+| `QuoteForm.test.tsx` | Modal open/close, Zod validation (name, email, notes length) |
+| `api.test.ts` | `submitQuote`, `adminLogin`, `fetchMonthlyStats`, and `logInteraction`'s fire-and-forget behavior (never rejects even on network failure) |
+| `AdminContext.test.tsx` | Login/logout persist to and clear `localStorage`, `isAuthenticated` derivation |
+| `AdminLoginPage.test.tsx` | Submit → `adminLogin`, success navigates + stores token, failure shows error and doesn't navigate |
+| `AdminQuotesPage.test.tsx` | `NEXT_STATUS` state machine (PENDING→CONTACTED→CLOSED), `window.confirm`-gated close |
+| `AdminProductsPage.test.tsx` + `AdminProductsPage.webhookConfigured.test.tsx` | Create/edit/delete/restore CRUD, search/line/status filtering, `triggerSocialMedia()` webhook call and its unset-webhook alert fallback |
+
+Known gaps (not yet covered): most of `admin/api.ts`'s remaining CRUD endpoints (`fetchQuotes`, `updateQuoteStatus`, `uploadImage`, `fetchAllProductsAdmin`, `updateProduct`), `ProductFormModal.tsx`, `AdminLayout.tsx`, `ProductList.tsx`. `jest.config.js` needed a `TextEncoder`/`TextDecoder` polyfill (`__tests__/jest.setup.ts`) added for suites importing real `react-router-dom`, since `jest-environment-jsdom` doesn't provide those globals.
 
 **Known issue**: `src/components/` contains files (`Navbar.tsx`, `Footer.tsx`, `WhatsAppFab.tsx`, etc.) that are duplicated under `src/components/layout/`. Not yet resolved — check actual imports before assuming either location is canonical.
 

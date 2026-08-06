@@ -28,14 +28,14 @@ User browses catalog → adds items to cart → submits quote request
 |---|---|
 | `frontend/` | React + TS + Vite SPA. See [`docs/architecture/frontend.md`](docs/architecture/frontend.md). |
 | `backend/` | Express + Prisma + PostgreSQL API. See [`docs/architecture/backend.md`](docs/architecture/backend.md). |
-| `n8n/` | Local n8n instance data (SQLite, workflow exports, logs). See [`docs/architecture/n8n.md`](docs/architecture/n8n.md). |
+| `n8n/` | Local n8n instance data (SQLite, workflow exports, logs). `n8n/workflows/*.json` holds the canonical exported definitions — 8 workflows (module 6 ships as two: `06a`/`06b`). See [`docs/architecture/n8n.md`](docs/architecture/n8n.md). |
 | `docs/thesis/` | The thesis draft itself. |
 | `docs/research/` | Benchmarks, original-site vs. new-site comparisons, raw test data for Chapters 5–6. |
 | `docs/assets/` | Graphs, tables, screenshots for insertion into the thesis document. |
 | `docs/architecture/` | Per-layer design docs: need, design, what's implemented, relations to other layers. |
 | `Docs/` | UTN thesis template (`.docx`) and evaluation rubric — reference files, not authored content. |
 | `docs/thesis/proposal.md` | Original project proposal and n8n module scope (Spanish, authoritative). |
-| `docs/architecture/n8n_workflows.md` | Detailed design for all 7 n8n workflow modules. |
+| `docs/architecture/n8n_workflows.md` | Detailed design for all 7 n8n workflow modules (module 6 shipped as two separate workflows, 6a/6b — see `n8n.md`). |
 
 ## Setup
 
