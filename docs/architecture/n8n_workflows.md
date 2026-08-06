@@ -1743,6 +1743,7 @@ This document outlines the architecture for the n8n subroutines planned for the 
 ---
 
 ## 6. Lead Nurturing & Cart Interest
+> **Implementation note:** built as two independent n8n workflows — `6a. Newsletter Quincenal` (schedule-driven) and `6b. Carrito Abandonado` (webhook-driven). See [`docs/architecture/n8n.md`](n8n.md) for the as-built split.
 *   **Description:** Sends targeted follow-ups and offers based on interaction with the catalog (e.g., items added to cart but not sent as a lead).
 *   **Trigger:**
     *   *Newsletter:* Bi-weekly Schedule.
