@@ -51,6 +51,29 @@ function toCsv(rows) {
   return lines.join('\n') + '\n';
 }
 
+const MEDIAN_COLUMNS = [
+  'label', 'device', 'n_runs',
+  'performance', 'accessibility', 'best_practices', 'seo',
+  'lcp_ms', 'cls', 'tbt_ms', 'fcp_ms', 'speed_index_ms',
+];
+
+function toMedianCsv(nested) {
+  const lines = [MEDIAN_COLUMNS.join(',')];
+  for (const label of Object.keys(nested)) {
+    for (const device of Object.keys(nested[label])) {
+      const entry = nested[label][device];
+      const row = {
+        label,
+        device,
+        n_runs: entry.runs.length,
+        ...entry.medians,
+      };
+      lines.push(MEDIAN_COLUMNS.map((col) => row[col] ?? '').join(','));
+    }
+  }
+  return lines.join('\n') + '\n';
+}
+
 function buildNestedSummary(rows) {
   const nested = {};
   for (const row of rows) {
@@ -122,8 +145,9 @@ function main() {
 
   fs.writeFileSync(path.join(RESULTS_DIR, 'summary.json'), JSON.stringify(nested, null, 2));
   fs.writeFileSync(path.join(RESULTS_DIR, 'summary.csv'), toCsv(rows));
+  fs.writeFileSync(path.join(RESULTS_DIR, 'summary-medians.csv'), toMedianCsv(nested));
 
-  console.log(`Wrote summary.json and summary.csv (${rows.length} runs across ${files.length} files).`);
+  console.log(`Wrote summary.json, summary.csv, and summary-medians.csv (${rows.length} runs across ${files.length} files).`);
   printComparisonTable(nested);
 }
 

@@ -30,7 +30,7 @@ User browses catalog → adds items to cart → submits quote request
 | `backend/` | Express + Prisma + PostgreSQL API. See [`docs/architecture/backend.md`](docs/architecture/backend.md). |
 | `n8n/` | Local n8n instance data (SQLite, workflow exports, logs). `n8n/workflows/*.json` holds the canonical exported definitions — 8 workflows (module 6 ships as two: `06a`/`06b`). See [`docs/architecture/n8n.md`](docs/architecture/n8n.md). |
 | `docs/thesis/` | The thesis draft itself. |
-| `docs/research/` | Benchmarks, original-site vs. new-site comparisons, raw test data for Chapters 5–6. |
+| `docs/research/` | Benchmarks, original-site vs. new-site comparisons, raw test data for Chapters 5–6. Lighthouse toolkit + re-run playbook: [`docs/research/lighthouse/README.md`](docs/research/lighthouse/README.md). |
 | `docs/assets/` | Graphs, tables, screenshots for insertion into the thesis document. |
 | `docs/architecture/` | Per-layer design docs: need, design, what's implemented, relations to other layers. |
 | `Docs/` | UTN thesis template (`.docx`) and evaluation rubric — reference files, not authored content. |
