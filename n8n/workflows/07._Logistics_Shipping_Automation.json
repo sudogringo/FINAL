@@ -1,0 +1,332 @@
+{
+  "updatedAt": "2026-08-04T20:31:25.048Z",
+  "createdAt": "2026-06-04T12:54:08.074Z",
+  "id": "pIlvvd0nTN7mfJOL",
+  "name": "07. Logistics & Shipping Automation",
+  "description": "",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## \ud83d\udd34 MODO PRODUCCI\u00d3N\nNodos deshabilitados que requieren credenciales reales:\n- **Webhook** `/order-confirmed` (trigger de producci\u00f3n)\n- **PDFMonkey** (generaci\u00f3n de PDF profesional)\n- **API Carrier** (notificaci\u00f3n al transportista)\n\nHabilitar estos nodos y configurar credenciales antes de pasar a producci\u00f3n.",
+        "height": 500,
+        "width": 1560
+      },
+      "id": "sticky-prod",
+      "name": "\ud83d\udd34 MODO PRODUCCI\u00d3N",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        784,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## \ud83d\udfe2 MODO TESIS\nFlujo de demostraci\u00f3n con backend simulado FastAPI.\n- Trigger manual \u2192 obtiene \u00f3rdenes confirmadas\n- Limita a 3 \u00f3rdenes para la demo\n- Genera remito HTML por orden\n- Imprime resumen por consola",
+        "height": 500,
+        "width": 1564,
+        "color": 3
+      },
+      "id": "sticky-thesis",
+      "name": "\ud83d\udfe2 MODO TESIS",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        784,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "order-confirmed",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-webhook-prod",
+      "name": "Webhook Producci\u00f3n",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        848,
+        560
+      ],
+      "webhookId": "a7dabf40-3d7d-4d1e-b6b4-e3133c6cb2f0",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdfmonkey.io/api/v1/documents",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_PDFMONKEY_KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-pdfmonkey",
+      "name": "PDFMonkey (Producci\u00f3n)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1072,
+        560
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.carrier.example.com/v1/shipments",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-carrier",
+      "name": "API Carrier (Producci\u00f3n)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1296,
+        560
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "node-manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        944,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://golden_harvest_api:8000/orders",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "estado",
+              "value": "confirmado"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-get-orders",
+      "name": "Obtener \u00d3rdenes Confirmadas",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1136,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const all = $input.all();\nconst limited = all.slice(0, 3);\nreturn limited;"
+      },
+      "id": "node-limit",
+      "name": "Limitar a 3 \u00d3rdenes (Demo)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "tiagoboberg@gmail.com",
+        "subject": "=[Golden Harvest] Remitos Generados \u2014 {{ $json.fecha }}",
+        "message": "={{ $json.summary_html }}",
+        "options": {}
+      },
+      "id": "node-gmail-tesis",
+      "name": "Gmail \u2014 Enviar Remitos (TESIS)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1872,
+        32
+      ],
+      "webhookId": "bb9ca6a5-57a1-4115-9ebb-1c5adf7037dd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vKMTOPHBSJvAmTAp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "logistica@goldenharvest.com.ar",
+        "subject": "=Env\u00edo confirmado \u2014 Orden #{{ $json.order_id }}",
+        "message": "=<p>Se gener\u00f3 el remito y se notific\u00f3 al carrier para la orden <strong>#{{ $json.order_id }}</strong>.</p><p>Fecha: {{ new Date().toLocaleDateString('es-AR') }}</p>",
+        "options": {}
+      },
+      "id": "node-gmail-prod",
+      "name": "Gmail \u2014 Confirmaci\u00f3n de Env\u00edo (PROD)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1552,
+        560
+      ],
+      "webhookId": "d791ac50-f2b0-4aad-addf-1b2e625518e3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const orders = $input.all().map(i => i.json);\nconst fecha = new Date().toLocaleDateString('es-AR', { day:'2-digit', month:'long', year:'numeric' });\n\nconst rows = orders.map(o =>\n  `<tr>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">#${o.id}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">${o.customer_nombre}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">${o.localidad}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;\">$${o.total?.toLocaleString('es-AR')}</td>\n  </tr>`\n).join('');\n\nconst summary_html = `\n<div style=\"font-family:sans-serif;max-width:680px;margin:0 auto;padding:24px;\">\n  <h2 style=\"color:#166534;\">Golden Harvest S.A. \u2014 Remitos Generados</h2>\n  <p style=\"color:#6b7280;\">Fecha: ${fecha}</p>\n  <p>Se procesaron <strong>${orders.length}</strong> orden(es) confirmada(s):</p>\n  <table style=\"width:100%;border-collapse:collapse;font-size:14px;\">\n    <thead><tr style=\"background:#f3f4f6;\">\n      <th style=\"padding:8px 12px;text-align:left;\">Orden</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Cliente</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Localidad</th>\n      <th style=\"padding:8px 12px;text-align:right;\">Total</th>\n    </tr></thead>\n    <tbody>${rows}</tbody>\n  </table>\n  <p style=\"margin-top:20px;font-size:12px;color:#9ca3af;\">Golden Harvest S.A. \u2014 Sistema Automatizado de Log\u00edstica</p>\n</div>`;\n\nreturn [{ json: { summary_html, total: orders.length, fecha: new Date().toISOString().slice(0,10) } }];"
+      },
+      "id": "node-procesar-todo",
+      "name": "Generar Remitos y Resumen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1584,
+        32
+      ]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Obtener \u00d3rdenes Confirmadas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener \u00d3rdenes Confirmadas": {
+      "main": [
+        [
+          {
+            "node": "Limitar a 3 \u00d3rdenes (Demo)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limitar a 3 \u00d3rdenes (Demo)": {
+      "main": [
+        [
+          {
+            "node": "Generar Remitos y Resumen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Producci\u00f3n": {
+      "main": [
+        [
+          {
+            "node": "PDFMonkey (Producci\u00f3n)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFMonkey (Producci\u00f3n)": {
+      "main": [
+        [
+          {
+            "node": "API Carrier (Producci\u00f3n)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "API Carrier (Producci\u00f3n)": {
+      "main": [
+        [
+          {
+            "node": "Gmail \u2014 Confirmaci\u00f3n de Env\u00edo (PROD)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar Remitos y Resumen": {
+      "main": [
+        [
+          {
+            "node": "Gmail \u2014 Enviar Remitos (TESIS)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all"
+  },
+  "staticData": null,
+  "meta": null,
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "2e418c1a-60c5-4af6-a33f-c4a3a982814c",
+  "activeVersionId": null,
+  "versionCounter": 32,
+  "triggerCount": 1,
+  "sourceWorkflowId": null,
+  "shared": [
+    {
+      "updatedAt": "2026-06-04T12:54:08.078Z",
+      "createdAt": "2026-06-04T12:54:08.078Z",
+      "role": "workflow:owner",
+      "workflowId": "pIlvvd0nTN7mfJOL",
+      "projectId": "fqt8Sbkc8GWwPwDS",
+      "project": {
+        "updatedAt": "2026-04-21T17:40:00.062Z",
+        "createdAt": "2026-04-21T17:36:32.601Z",
+        "id": "fqt8Sbkc8GWwPwDS",
+        "name": "Tiago Cunto Boberg <tiagoboberg@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "e904e65e-d840-4829-bc02-d388c616774f"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}

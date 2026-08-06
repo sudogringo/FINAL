@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-06-16T20:57:29.061Z",
+  "updatedAt": "2026-08-04T20:23:16.594Z",
   "createdAt": "2026-04-21T17:41:26.399Z",
   "id": "7zorYUSLKel4UkbC",
   "name": "02. Website Health & SEO Monitor",
-  "description": null,
+  "description": "",
   "active": false,
   "isArchived": false,
   "nodes": [
@@ -19,21 +19,6 @@
       "position": [
         400,
         240
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "# **Node Breakdown & Descriptions:**\n\n# 1. **Daily 9 AM Trigger**\n\n## Triggers the workflow **every day at 9 AM** to start the SEO health monitoring pipeline.\n\n# 2. **Fetch Website Links**\n\n## Reads a list of **website URLs** from a predefined Google Sheet where domains to be monitored are stored.\n\n# 3. **Attach Config & Timeout**\n\n## Takes the website links and attaches configuration values like **timeout** and other metadata for each request.\n\n# 4. **Fetch Website HTML**\n\n## Fetches the **raw HTML content** of each website URL to prepare it for SEO analysis.\n\n# 5. **Analyze HTML (SEO Basics)**\n\n## Parses the HTML content and extracts SEO-related fields like **title, meta description, H1 count, canonical link, robots tag, and image alt attributes**.\n\n# 6. **SEO Health Check & Score**\n\n## Runs a **health scoring algorithm** on the extracted SEO content, checking for issues and calculating the final **performance score**.\n\n# 7. **Check Performance < 50**\n\n## Evaluates whether the website’s SEO **performance score is below 50**.\n\n## * **True branch** → Alert email + log poor performance.\n## * **False branch** → Generate full report + store results.\n\n# 8. **Send Alert Email (Low SEO Score)**\n\n## If performance is **< 50**, sends an **alert email** to the monitoring team with details of the failed SEO health check.\n\n# 9. **Merge Alert & Normal Results**\n\n## Merges results from both branches (low-performing and acceptable-performing sites) so all can be logged in the sheet.\n\n# 10. **Update Performance Log**\n\n## Updates the Google Sheet with the **performance score and timestamp** for each domain that was analyzed.\n\n# 11. **Generate SEO Report (HTML)**\n\n## For websites that passed the performance threshold, generates a **detailed HTML SEO report** with findings and summary.\n\n# 12. **Convert HTML to PDF**\n\n## Sends the generated HTML to **PDF.co API** to convert it into a **PDF SEO report**.\n\n# 13. **Download PDF File**\n\n## Downloads the **generated PDF file** from the PDF.co temporary storage URL.\n\n# 14. **Save SEO Report to Drive**\n\n## Uploads the **PDF SEO Report** into the configured Google Drive folder for record-keeping and future reference.\n",
-        "height": 2300,
-        "width": 2460
-      },
-      "id": "2733c633-858e-4a0f-807f-79727f3bd178",
-      "name": "Sticky Note1",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        384,
-        1152
       ],
       "typeVersion": 1
     },
@@ -201,7 +186,7 @@
       "parameters": {
         "sendTo": "tiagoboberg@gmail.com",
         "subject": "Website Health & SEO Audit",
-        "message": "=<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>SEO & Performance Report</title>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  </head>\n  <body style=\"margin:0; padding:0; background:#f6f9fc;\">\n    <!-- Wrapper -->\n    <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background:#f6f9fc;\">\n      <tr>\n        <td align=\"center\" style=\"padding:24px 12px;\">\n          <!-- Container -->\n          <table role=\"presentation\" width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px; max-width:100%; background:#ffffff; border-radius:10px; overflow:hidden; font-family:Arial, Helvetica, sans-serif; color:#111827;\">\n            <!-- Header -->\n            <tr>\n              <td style=\"padding:20px 24px; background:#0f172a; color:#ffffff;\">\n                <div style=\"font-size:18px; font-weight:bold;\">SEO & Performance Report</div>\n                <div style=\"font-size:12px; opacity:0.85; margin-top:4px;\">Generated for: <a href=\"https://www.weblineindia.com/\" style=\"color:#93c5fd; text-decoration:none;\">{{ $json.summary.url }}</a></div>\n              </td>\n            </tr>\n\n            <!-- Site Overview -->\n            <tr>\n              <td style=\"padding:16px 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n                  <tr>\n                    <td style=\"padding:12px 0;\">\n                      <div style=\"font-size:14px; color:#6b7280;\">Page Title</div>\n                      <div style=\"font-size:16px; font-weight:600;\">{{ $json.seo.title }}</div>\n                    </td>\n                  </tr>\n                  <tr>\n                    <td style=\"padding:6px 0;\">\n                      <span style=\"display:inline-block; font-size:12px; background:#e5f4ff; color:#075985; padding:6px 10px; border-radius:999px; margin-right:6px;\">robots: {{ $json.seo.robots }}</span>\n                      <span style=\"display:inline-block; font-size:12px; background:#e5f4ff; color:#075985; padding:6px 10px; border-radius:999px; margin-right:6px;\">canonical present: {{ $json.seo.canonical }}</span>\n                      <span style=\"display:inline-block; font-size:12px; background:#ecfdf5; color:#065f46; padding:6px 10px; border-radius:999px;\">critical: {{ $json.critical }}</span>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- KPI Row -->\n            <tr>\n              <td style=\"padding:0 24px 8px 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n                  <tr>\n                    <!-- PSI Score -->\n                    <td valign=\"top\" width=\"50%\" style=\"padding:12px; border:1px solid #e5e7eb; border-radius:8px;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">PageSpeed Insights (mobile)</div>\n                      <div style=\"font-size:32px; font-weight:700; line-height:1; color:#b45309;\">{{ $json.psi.performance }}</div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:6px;\">Status: <span style=\"color:#16a34a;\">ok</span></div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:2px;\">Tested URL: <a href=\"{{ $json.psi.testedUrl }}\" style=\"color:#2563eb; text-decoration:none;\">{{ $json.psi.testedUrl }}</a></div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:2px;\">Fetched at: 2025-08-14 11:22:47 UTC</div>\n                      <!-- Legend -->\n                      <div style=\"font-size:11px; color:#6b7280; margin-top:10px;\">\n                        <span style=\"color:#16a34a; font-weight:bold;\">90–100</span> Good &nbsp;|&nbsp;\n                        <span style=\"color:#b45309; font-weight:bold;\">50–89</span> Needs Improvement &nbsp;|&nbsp;\n                        <span style=\"color:#dc2626; font-weight:bold;\">0–49</span> Poor\n                      </div>\n                    </td>\n\n                    <!-- SEO Summary -->\n                    <td valign=\"top\" width=\"50%\" style=\"padding:12px; border:1px solid #e5e7eb; border-radius:8px; vertical-align:top;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">SEO Summary</div>\n                      <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-size:13px;\">\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Meta Description</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">present</span>\n                            <span style=\"color:#6b7280; margin-left:6px;\">({{ $json.summary.metaDescriptionLength }} chars)</span>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">H1 Count</td>\n                          <td style=\"padding:4px 0; text-align:right;\">{{ $json.summary.h1Count }}</td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Images missing alt</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">{{ $json.summary.imagesMissingAlt }}</span>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Broken links</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">{{ $json.summary.brokenLinksCount }}</span>\n                          </td>\n                        </tr>\n                      </table>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Details: Meta Description -->\n            <tr>\n              <td style=\"padding:8px 24px 0 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border:1px solid #e5e7eb; border-radius:8px;\">\n                  <tr>\n                    <td style=\"padding:12px;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">Meta Description</div>\n                      <div style=\"font-size:14px; color:#111827;\">\n                        {{ $json.seo.metaDesc }}\n                      </div>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Canonical / Robots -->\n            <tr>\n              <td style=\"padding:12px 24px 0 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border:1px solid #e5e7eb; border-radius:8px;\">\n                  <tr>\n                    <td style=\"padding:12px;\">\n                      <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-size:13px;\">\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Canonical URL</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <a href=\"{{ $json.seo.canonical }}\" style=\"color:#2563eb; text-decoration:none;\">{{ $json.seo.canonical }}</a>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Robots</td>\n                          <td style=\"padding:4px 0; text-align:right;\">{{ $json.seo.robots }}</td>\n                        </tr>\n                      </table>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Footer -->\n            <tr>\n              <td style=\"padding:18px 24px 22px 24px; color:#6b7280; font-size:12px;\">\n                This automated report is based on the latest crawl & PSI test (mobile). If you’d like this email to include multiple URLs or a trend chart, reply and I’ll add it.\n              </td>\n            </tr>\n          </table>\n          <!-- /Container -->\n        </td>\n      </tr>\n    </table>\n    <!-- /Wrapper -->\n  </body>\n</html>",
+        "message": "=<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>SEO & Performance Report</title>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  </head>\n  <body style=\"margin:0; padding:0; background:#f6f9fc;\">\n    <!-- Wrapper -->\n    <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background:#f6f9fc;\">\n      <tr>\n        <td align=\"center\" style=\"padding:24px 12px;\">\n          <!-- Container -->\n          <table role=\"presentation\" width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px; max-width:100%; background:#ffffff; border-radius:10px; overflow:hidden; font-family:Arial, Helvetica, sans-serif; color:#111827;\">\n            <!-- Header -->\n            <tr>\n              <td style=\"padding:20px 24px; background:#0f172a; color:#ffffff;\">\n                <div style=\"font-size:18px; font-weight:bold;\">SEO & Performance Report</div>\n                <div style=\"font-size:12px; opacity:0.85; margin-top:4px;\">Generated for: <a href=\"https://www.weblineindia.com/\" style=\"color:#93c5fd; text-decoration:none;\">{{ $json.summary.url }}</a></div>\n              </td>\n            </tr>\n\n            <!-- Site Overview -->\n            <tr>\n              <td style=\"padding:16px 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n                  <tr>\n                    <td style=\"padding:12px 0;\">\n                      <div style=\"font-size:14px; color:#6b7280;\">Page Title</div>\n                      <div style=\"font-size:16px; font-weight:600;\">{{ $json.seo.title }}</div>\n                    </td>\n                  </tr>\n                  <tr>\n                    <td style=\"padding:6px 0;\">\n                      <span style=\"display:inline-block; font-size:12px; background:#e5f4ff; color:#075985; padding:6px 10px; border-radius:999px; margin-right:6px;\">robots: {{ $json.seo.robots }}</span>\n                      <span style=\"display:inline-block; font-size:12px; background:#e5f4ff; color:#075985; padding:6px 10px; border-radius:999px; margin-right:6px;\">canonical present: {{ $json.seo.canonical }}</span>\n                      <span style=\"display:inline-block; font-size:12px; background:#ecfdf5; color:#065f46; padding:6px 10px; border-radius:999px;\">critical: {{ $json.critical }}</span>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- KPI Row -->\n            <tr>\n              <td style=\"padding:0 24px 8px 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n                  <tr>\n                    <!-- PSI Score -->\n                    <td valign=\"top\" width=\"50%\" style=\"padding:12px; border:1px solid #e5e7eb; border-radius:8px;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">PageSpeed Insights (mobile)</div>\n                      <div style=\"font-size:32px; font-weight:700; line-height:1; color:#b45309;\">{{ $json.psi.performance }}</div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:6px;\">Status: <span style=\"color:#16a34a;\">ok</span></div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:2px;\">Tested URL: <a href=\"{{ $json.psi.testedUrl }}\" style=\"color:#2563eb; text-decoration:none;\">{{ $json.psi.testedUrl }}</a></div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:2px;\">Fetched at: 2025-08-14 11:22:47 UTC</div>\n                      <!-- Legend -->\n                      <div style=\"font-size:11px; color:#6b7280; margin-top:10px;\">\n                        <span style=\"color:#16a34a; font-weight:bold;\">90\u2013100</span> Good &nbsp;|&nbsp;\n                        <span style=\"color:#b45309; font-weight:bold;\">50\u201389</span> Needs Improvement &nbsp;|&nbsp;\n                        <span style=\"color:#dc2626; font-weight:bold;\">0\u201349</span> Poor\n                      </div>\n                    </td>\n\n                    <!-- SEO Summary -->\n                    <td valign=\"top\" width=\"50%\" style=\"padding:12px; border:1px solid #e5e7eb; border-radius:8px; vertical-align:top;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">SEO Summary</div>\n                      <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-size:13px;\">\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Meta Description</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">present</span>\n                            <span style=\"color:#6b7280; margin-left:6px;\">({{ $json.summary.metaDescriptionLength }} chars)</span>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">H1 Count</td>\n                          <td style=\"padding:4px 0; text-align:right;\">{{ $json.summary.h1Count }}</td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Images missing alt</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">{{ $json.summary.imagesMissingAlt }}</span>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Broken links</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">{{ $json.summary.brokenLinksCount }}</span>\n                          </td>\n                        </tr>\n                      </table>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Details: Meta Description -->\n            <tr>\n              <td style=\"padding:8px 24px 0 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border:1px solid #e5e7eb; border-radius:8px;\">\n                  <tr>\n                    <td style=\"padding:12px;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">Meta Description</div>\n                      <div style=\"font-size:14px; color:#111827;\">\n                        {{ $json.seo.metaDesc }}\n                      </div>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Canonical / Robots -->\n            <tr>\n              <td style=\"padding:12px 24px 0 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border:1px solid #e5e7eb; border-radius:8px;\">\n                  <tr>\n                    <td style=\"padding:12px;\">\n                      <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-size:13px;\">\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Canonical URL</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <a href=\"{{ $json.seo.canonical }}\" style=\"color:#2563eb; text-decoration:none;\">{{ $json.seo.canonical }}</a>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Robots</td>\n                          <td style=\"padding:4px 0; text-align:right;\">{{ $json.seo.robots }}</td>\n                        </tr>\n                      </table>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Footer -->\n            <tr>\n              <td style=\"padding:18px 24px 22px 24px; color:#6b7280; font-size:12px;\">\n                This automated report is based on the latest crawl & PSI test (mobile). If you\u2019d like this email to include multiple URLs or a trend chart, reply and I\u2019ll add it.\n              </td>\n            </tr>\n          </table>\n          <!-- /Container -->\n        </td>\n      </tr>\n    </table>\n    <!-- /Wrapper -->\n  </body>\n</html>",
         "options": {}
       },
       "id": "daed86d5-0796-4272-b685-0e48910307a2",
@@ -450,13 +435,13 @@
     },
     {
       "parameters": {
-        "html": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>SEO & Performance Report</title>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  </head>\n  <body style=\"margin:0; padding:0; background:#f6f9fc;\">\n    <!-- Wrapper -->\n    <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background:#f6f9fc;\">\n      <tr>\n        <td align=\"center\" style=\"padding:24px 12px;\">\n          <!-- Container -->\n          <table role=\"presentation\" width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px; max-width:100%; background:#ffffff; border-radius:10px; overflow:hidden; font-family:Arial, Helvetica, sans-serif; color:#111827;\">\n            <!-- Header -->\n            <tr>\n              <td style=\"padding:20px 24px; background:#0f172a; color:#ffffff;\">\n                <div style=\"font-size:18px; font-weight:bold;\">SEO & Performance Report</div>\n                <div style=\"font-size:12px; opacity:0.85; margin-top:4px;\">Generated for: <a href=\"https://www.weblineindia.com/\" style=\"color:#93c5fd; text-decoration:none;\">{{ $json.summary.url }}</a></div>\n              </td>\n            </tr>\n\n            <!-- Site Overview -->\n            <tr>\n              <td style=\"padding:16px 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n                  <tr>\n                    <td style=\"padding:12px 0;\">\n                      <div style=\"font-size:14px; color:#6b7280;\">Page Title</div>\n                      <div style=\"font-size:16px; font-weight:600;\">{{ $json.seo.title }}</div>\n                    </td>\n                  </tr>\n                  <tr>\n                    <td style=\"padding:6px 0;\">\n                      <span style=\"display:inline-block; font-size:12px; background:#e5f4ff; color:#075985; padding:6px 10px; border-radius:999px; margin-right:6px;\">robots: {{ $json.seo.robots }}</span>\n                      <span style=\"display:inline-block; font-size:12px; background:#e5f4ff; color:#075985; padding:6px 10px; border-radius:999px; margin-right:6px;\">canonical present: {{ $json.seo.canonical }}</span>\n                      <span style=\"display:inline-block; font-size:12px; background:#ecfdf5; color:#065f46; padding:6px 10px; border-radius:999px;\">critical: {{ $json.critical }}</span>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- KPI Row -->\n            <tr>\n              <td style=\"padding:0 24px 8px 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n                  <tr>\n                    <!-- PSI Score -->\n                    <td valign=\"top\" width=\"50%\" style=\"padding:12px; border:1px solid #e5e7eb; border-radius:8px;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">PageSpeed Insights (mobile)</div>\n                      <div style=\"font-size:32px; font-weight:700; line-height:1; color:#b45309;\">{{ $json.psi.performance }}</div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:6px;\">Status: <span style=\"color:#16a34a;\">ok</span></div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:2px;\">Tested URL: <a href=\"{{ $json.psi.testedUrl }}\" style=\"color:#2563eb; text-decoration:none;\">{{ $json.psi.testedUrl }}</a></div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:2px;\">Fetched at: 2025-08-14 11:22:47 UTC</div>\n                      <!-- Legend -->\n                      <div style=\"font-size:11px; color:#6b7280; margin-top:10px;\">\n                        <span style=\"color:#16a34a; font-weight:bold;\">90–100</span> Good &nbsp;|&nbsp;\n                        <span style=\"color:#b45309; font-weight:bold;\">50–89</span> Needs Improvement &nbsp;|&nbsp;\n                        <span style=\"color:#dc2626; font-weight:bold;\">0–49</span> Poor\n                      </div>\n                    </td>\n\n                    <!-- SEO Summary -->\n                    <td valign=\"top\" width=\"50%\" style=\"padding:12px; border:1px solid #e5e7eb; border-radius:8px; vertical-align:top;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">SEO Summary</div>\n                      <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-size:13px;\">\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Meta Description</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">present</span>\n                            <span style=\"color:#6b7280; margin-left:6px;\">({{ $json.summary.metaDescriptionLength }} chars)</span>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">H1 Count</td>\n                          <td style=\"padding:4px 0; text-align:right;\">{{ $json.summary.h1Count }}</td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Images missing alt</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">{{ $json.summary.imagesMissingAlt }}</span>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Broken links</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">{{ $json.summary.brokenLinksCount }}</span>\n                          </td>\n                        </tr>\n                      </table>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Details: Meta Description -->\n            <tr>\n              <td style=\"padding:8px 24px 0 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border:1px solid #e5e7eb; border-radius:8px;\">\n                  <tr>\n                    <td style=\"padding:12px;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">Meta Description</div>\n                      <div style=\"font-size:14px; color:#111827;\">\n                        {{ $json.seo.metaDesc }}\n                      </div>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Canonical / Robots -->\n            <tr>\n              <td style=\"padding:12px 24px 0 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border:1px solid #e5e7eb; border-radius:8px;\">\n                  <tr>\n                    <td style=\"padding:12px;\">\n                      <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-size:13px;\">\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Canonical URL</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <a href=\"{{ $json.seo.canonical }}\" style=\"color:#2563eb; text-decoration:none;\">{{ $json.seo.canonical }}</a>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Robots</td>\n                          <td style=\"padding:4px 0; text-align:right;\">{{ $json.seo.robots }}</td>\n                        </tr>\n                      </table>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Footer -->\n            <tr>\n              <td style=\"padding:18px 24px 22px 24px; color:#6b7280; font-size:12px;\">\n                This automated report is based on the latest crawl & PSI test (mobile). If you’d like this email to include multiple URLs or a trend chart, reply and I’ll add it.\n              </td>\n            </tr>\n          </table>\n          <!-- /Container -->\n        </td>\n      </tr>\n    </table>\n    <!-- /Wrapper -->\n  </body>\n</html>"
+        "html": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>SEO & Performance Report</title>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  </head>\n  <body style=\"margin:0; padding:0; background:#f6f9fc;\">\n    <!-- Wrapper -->\n    <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background:#f6f9fc;\">\n      <tr>\n        <td align=\"center\" style=\"padding:24px 12px;\">\n          <!-- Container -->\n          <table role=\"presentation\" width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:600px; max-width:100%; background:#ffffff; border-radius:10px; overflow:hidden; font-family:Arial, Helvetica, sans-serif; color:#111827;\">\n            <!-- Header -->\n            <tr>\n              <td style=\"padding:20px 24px; background:#0f172a; color:#ffffff;\">\n                <div style=\"font-size:18px; font-weight:bold;\">SEO & Performance Report</div>\n                <div style=\"font-size:12px; opacity:0.85; margin-top:4px;\">Generated for: <a href=\"https://www.weblineindia.com/\" style=\"color:#93c5fd; text-decoration:none;\">{{ $json.summary.url }}</a></div>\n              </td>\n            </tr>\n\n            <!-- Site Overview -->\n            <tr>\n              <td style=\"padding:16px 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n                  <tr>\n                    <td style=\"padding:12px 0;\">\n                      <div style=\"font-size:14px; color:#6b7280;\">Page Title</div>\n                      <div style=\"font-size:16px; font-weight:600;\">{{ $json.seo.title }}</div>\n                    </td>\n                  </tr>\n                  <tr>\n                    <td style=\"padding:6px 0;\">\n                      <span style=\"display:inline-block; font-size:12px; background:#e5f4ff; color:#075985; padding:6px 10px; border-radius:999px; margin-right:6px;\">robots: {{ $json.seo.robots }}</span>\n                      <span style=\"display:inline-block; font-size:12px; background:#e5f4ff; color:#075985; padding:6px 10px; border-radius:999px; margin-right:6px;\">canonical present: {{ $json.seo.canonical }}</span>\n                      <span style=\"display:inline-block; font-size:12px; background:#ecfdf5; color:#065f46; padding:6px 10px; border-radius:999px;\">critical: {{ $json.critical }}</span>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- KPI Row -->\n            <tr>\n              <td style=\"padding:0 24px 8px 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n                  <tr>\n                    <!-- PSI Score -->\n                    <td valign=\"top\" width=\"50%\" style=\"padding:12px; border:1px solid #e5e7eb; border-radius:8px;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">PageSpeed Insights (mobile)</div>\n                      <div style=\"font-size:32px; font-weight:700; line-height:1; color:#b45309;\">{{ $json.psi.performance }}</div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:6px;\">Status: <span style=\"color:#16a34a;\">ok</span></div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:2px;\">Tested URL: <a href=\"{{ $json.psi.testedUrl }}\" style=\"color:#2563eb; text-decoration:none;\">{{ $json.psi.testedUrl }}</a></div>\n                      <div style=\"font-size:12px; color:#6b7280; margin-top:2px;\">Fetched at: 2025-08-14 11:22:47 UTC</div>\n                      <!-- Legend -->\n                      <div style=\"font-size:11px; color:#6b7280; margin-top:10px;\">\n                        <span style=\"color:#16a34a; font-weight:bold;\">90\u2013100</span> Good &nbsp;|&nbsp;\n                        <span style=\"color:#b45309; font-weight:bold;\">50\u201389</span> Needs Improvement &nbsp;|&nbsp;\n                        <span style=\"color:#dc2626; font-weight:bold;\">0\u201349</span> Poor\n                      </div>\n                    </td>\n\n                    <!-- SEO Summary -->\n                    <td valign=\"top\" width=\"50%\" style=\"padding:12px; border:1px solid #e5e7eb; border-radius:8px; vertical-align:top;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">SEO Summary</div>\n                      <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-size:13px;\">\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Meta Description</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">present</span>\n                            <span style=\"color:#6b7280; margin-left:6px;\">({{ $json.summary.metaDescriptionLength }} chars)</span>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">H1 Count</td>\n                          <td style=\"padding:4px 0; text-align:right;\">{{ $json.summary.h1Count }}</td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Images missing alt</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">{{ $json.summary.imagesMissingAlt }}</span>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Broken links</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <span style=\"background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:999px;\">{{ $json.summary.brokenLinksCount }}</span>\n                          </td>\n                        </tr>\n                      </table>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Details: Meta Description -->\n            <tr>\n              <td style=\"padding:8px 24px 0 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border:1px solid #e5e7eb; border-radius:8px;\">\n                  <tr>\n                    <td style=\"padding:12px;\">\n                      <div style=\"font-size:14px; color:#6b7280; margin-bottom:6px;\">Meta Description</div>\n                      <div style=\"font-size:14px; color:#111827;\">\n                        {{ $json.seo.metaDesc }}\n                      </div>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Canonical / Robots -->\n            <tr>\n              <td style=\"padding:12px 24px 0 24px;\">\n                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border:1px solid #e5e7eb; border-radius:8px;\">\n                  <tr>\n                    <td style=\"padding:12px;\">\n                      <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-size:13px;\">\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Canonical URL</td>\n                          <td style=\"padding:4px 0; text-align:right;\">\n                            <a href=\"{{ $json.seo.canonical }}\" style=\"color:#2563eb; text-decoration:none;\">{{ $json.seo.canonical }}</a>\n                          </td>\n                        </tr>\n                        <tr>\n                          <td style=\"padding:4px 0; color:#374151;\">Robots</td>\n                          <td style=\"padding:4px 0; text-align:right;\">{{ $json.seo.robots }}</td>\n                        </tr>\n                      </table>\n                    </td>\n                  </tr>\n                </table>\n              </td>\n            </tr>\n\n            <!-- Footer -->\n            <tr>\n              <td style=\"padding:18px 24px 22px 24px; color:#6b7280; font-size:12px;\">\n                This automated report is based on the latest crawl & PSI test (mobile). If you\u2019d like this email to include multiple URLs or a trend chart, reply and I\u2019ll add it.\n              </td>\n            </tr>\n          </table>\n          <!-- /Container -->\n        </td>\n      </tr>\n    </table>\n    <!-- /Wrapper -->\n  </body>\n</html>"
       },
       "id": "9355a6c8-da5c-40b4-8999-a0a0eb50d9d5",
       "name": "Generate SEO Report (HTML)",
       "type": "n8n-nodes-base.html",
       "position": [
-        1984,
+        1968,
         880
       ],
       "typeVersion": 1.2,
@@ -579,91 +564,32 @@
     },
     {
       "parameters": {
-        "url": "https://pagespeedonline.googleapis.com/pagespeedonline/v5/runPagespeed",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "key",
-              "value": "AIzaSyC5iZ2CE-dzD7XjhgH0-IQ2ZkpLIAvudv0"
-            },
-            {
-              "name": "=url",
-              "value": "={{ $json.siteUrl }}"
-            },
-            {
-              "name": "category",
-              "value": "performance"
-            },
-            {
-              "name": "stategy",
-              "value": "mobile"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.4,
-      "position": [
-        1328,
-        880
-      ],
-      "id": "4ce1e32f-0d98-4855-9e55-c12d29dc496c",
-      "name": "HTTP Request"
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "advanced": true,
-        "mergeByFields": {
-          "values": [
-            {
-              "field1": "url",
-              "field2": "id"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        1584,
-        688
-      ],
-      "id": "f0d5e759-3a92-42eb-9d2e-eaa0581f44e6",
-      "name": "Merge"
-    },
-    {
-      "parameters": {
-        "content": "## 🔴 MODO PRODUCCIÓN\n\n**Estos nodos requieren credenciales reales:**\n- Google Sheets (lista de URLs a monitorear)\n- Gmail (alertas por email cuando score < 50)\n- Google Sheets (log de performance)\n- Google Drive (guardado de reportes PDF)\n- PDF.co API (conversión HTML→PDF)\n\n⚠️ **Deshabilitados para demo de tesis.**\nActivar y configurar credenciales en producción real.",
+        "content": "## \ud83d\udd34 MODO PRODUCCI\u00d3N\n\n**Estos nodos requieren credenciales reales:**\n- Google Sheets (lista de URLs a monitorear)\n- Gmail (alertas por email cuando score < 50)\n- Google Sheets (log de performance)\n- Google Drive (guardado de reportes PDF)\n- PDF.co API (conversi\u00f3n HTML\u2192PDF)\n\n\u26a0\ufe0f **Deshabilitados para demo de tesis.**\nActivar y configurar credenciales en producci\u00f3n real.",
         "height": 460,
-        "width": 860,
-        "color": 1
+        "width": 860
       },
       "id": "aaa00001-0001-0001-0001-000000000001",
       "name": "Sticky Note PRODUCCION",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1900,
-        380
+        400,
+        384
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "content": "## 🟢 MODO TESIS — Demo Académica\n\n**Flujo activo sin credenciales:**\n1. **Manual Trigger** → disparo manual para demo\n2. **PSI Mobile** → Google PageSpeed API (móvil, gratis)\n3. **PSI Desktop** → Google PageSpeed API (desktop, gratis)\n4. **Merge PSI Results** → combina ambos resultados\n5. **Generar Reporte SEO** → extrae scores, formatea reporte en español\n6. **Score < 80?** → bifurca en alerta vs. ok\n   - **Log Alerta** → registra advertencia en consola\n   - **Log OK** → confirma buen rendimiento\n\n✅ **No requiere credenciales.** API pública de Google.\n📊 URL analizada: https://tiago-cunto.github.io/golden-harvest/",
-        "height": 500,
-        "width": 1440,
+        "content": "## \ud83d\udfe2 MODO TESIS \u2014 Demo Acad\u00e9mica\n\n**Flujo activo sin credenciales:**\n1. **Manual Trigger** \u2192 disparo manual para demo\n2. **PSI Mobile** \u2192 Google PageSpeed API (m\u00f3vil, gratis)\n3. **PSI Desktop** \u2192 Google PageSpeed API (desktop, gratis)\n4. **Merge PSI Results** \u2192 combina ambos resultados\n5. **Generar Reporte SEO** \u2192 extrae scores, formatea reporte en espa\u00f1ol\n6. **Score < 80?** \u2192 bifurca en alerta vs. ok\n   - **Log Alerta** \u2192 registra advertencia en consola\n   - **Log OK** \u2192 confirma buen rendimiento\n\n\u2705 **No requiere credenciales.** API p\u00fablica de Google.\n\ud83d\udcca URL analizada: https://tiago-cunto.github.io/golden-harvest/",
+        "height": 484,
+        "width": 2464,
         "color": 3
       },
       "id": "aaa00002-0002-0002-0002-000000000002",
       "name": "Sticky Note TESIS",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        380,
-        1620
+        400,
+        1120
       ],
       "typeVersion": 1
     },
@@ -673,14 +599,16 @@
       "name": "Manual Trigger",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        460,
-        1840
+        1072,
+        1296
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
         "url": "https://www.googleapis.com/pagespeedonline/v5/runPagespeed",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
@@ -700,14 +628,25 @@
       "name": "PSI Mobile",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        700,
-        1760
+        1312,
+        1296
       ],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "bbjsxolIOOEGysNb",
+          "name": "Google API Key (PageSpeed)"
+        }
+      }
     },
     {
       "parameters": {
         "url": "https://www.googleapis.com/pagespeedonline/v5/runPagespeed",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
@@ -727,36 +666,41 @@
       "name": "PSI Desktop",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        700,
-        1920
+        1760,
+        1296
       ],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "bbjsxolIOOEGysNb",
+          "name": "Google API Key (PageSpeed)"
+        }
+      }
     },
     {
-      "parameters": {
-        "mode": "combine",
-        "combinationMode": "mergeByPosition",
-        "options": {}
-      },
+      "parameters": {},
       "id": "bbb00004-0004-0004-0004-000000000004",
       "name": "Merge PSI Results",
       "type": "n8n-nodes-base.merge",
       "position": [
-        960,
-        1840
+        1984,
+        1296
       ],
       "typeVersion": 3
     },
     {
       "parameters": {
-        "jsCode": "// Extraer scores de Google PageSpeed Insights\n// Input 0 (first): resultado mobile\n// Input 1 (last): resultado desktop\n\nconst allItems = $input.all();\nconst mobileData = allItems[0]?.json || {};\nconst desktopData = allItems[1]?.json || {};\n\nconst mobileScore = Math.round((mobileData?.lighthouseResult?.categories?.performance?.score || 0) * 100);\nconst desktopScore = Math.round((desktopData?.lighthouseResult?.categories?.performance?.score || 0) * 100);\n\nconst url = 'https://tiago-cunto.github.io/golden-harvest/';\nconst fecha = new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });\nconst estado = (mobileScore >= 80 && desktopScore >= 80) ? 'OK' : 'ATENCIÓN REQUERIDA';\n\nconst reporte = [\n  '=== REPORTE SEO - Golden Harvest S.A. ===',\n  'URL: ' + url,\n  'Mobile:  ' + mobileScore + '/100',\n  'Desktop: ' + desktopScore + '/100',\n  'Estado:  ' + estado,\n  '=========================================='\n].join('\\n');\n\nconsole.log(reporte);\n\nreturn [{ json: { mobileScore, desktopScore, url, fecha, estado, reporte, alerta: mobileScore < 80 || desktopScore < 80 } }];\n"
+        "jsCode": "const allItems = $input.all();\nconst mob = allItems[0]?.json || {};\nconst desk = allItems[1]?.json || {};\n\nconst score = (data, key) => Math.round((data?.lighthouseResult?.categories?.[key]?.score || 0) * 100);\nconst audit = (data, key) => data?.lighthouseResult?.audits?.[key]?.displayValue || 'N/A';\n\nconst mobileScore   = score(mob, 'performance');\nconst desktopScore  = score(desk, 'performance');\nconst mobileAccess  = score(mob, 'accessibility');\nconst desktopAccess = score(desk, 'accessibility');\nconst mobileBP      = score(mob, 'best-practices');\nconst desktopBP     = score(desk, 'best-practices');\nconst mobileSEO     = score(mob, 'seo');\nconst desktopSEO    = score(desk, 'seo');\n\nconst mobileFCP  = audit(mob, 'first-contentful-paint');\nconst desktopFCP = audit(desk, 'first-contentful-paint');\nconst mobileLCP  = audit(mob, 'largest-contentful-paint');\nconst desktopLCP = audit(desk, 'largest-contentful-paint');\nconst mobileTBT  = audit(mob, 'total-blocking-time');\nconst desktopTBT = audit(desk, 'total-blocking-time');\nconst mobileCLS  = audit(mob, 'cumulative-layout-shift');\nconst desktopCLS = audit(desk, 'cumulative-layout-shift');\nconst mobileSI   = audit(mob, 'speed-index');\nconst desktopSI  = audit(desk, 'speed-index');\n\nconst url   = 'https://tiago-cunto.github.io/golden-harvest/';\nconst fecha = new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });\nconst alerta = mobileScore < 80 || desktopScore < 80;\nconst estado = alerta ? 'ATENCION REQUERIDA' : 'OK';\n\nconst scoreColor = (s) => s >= 90 ? '#0cce6b' : s >= 50 ? '#ffa400' : '#ff4e42';\nconst scoreCell = (val) => `<td style=\"text-align:center;color:${scoreColor(val)};font-weight:bold\">${val}/100</td>`;\nconst textCell  = (val) => `<td style=\"text-align:center\">${val}</td>`;\nconst row = (label, m, d, isScore, alt) => {\n  const bg = alt ? 'background:#f7f7f7' : '';\n  return `<tr style=\"${bg}\"><td>${label}</td>${isScore ? scoreCell(m)+scoreCell(d) : textCell(m)+textCell(d)}</tr>`;\n};\n\nconst htmlEmail = `<div style=\"font-family:Arial,sans-serif;max-width:680px;margin:0 auto\">\n<h2 style=\"color:#2d6a4f\">Reporte SEO - Golden Harvest S.A.</h2>\n<p><b>URL:</b> <a href=\"${url}\">${url}</a></p>\n<p><b>Fecha:</b> ${fecha} | <b>Estado:</b> ${estado}</p>\n<table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse;width:100%;font-size:14px\">\n<tr style=\"background:#2d6a4f;color:white\"><th style=\"text-align:left\">Metrica</th><th>Mobile</th><th>Desktop</th></tr>\n${row('Performance', mobileScore, desktopScore, true, false)}\n${row('Accessibility', mobileAccess, desktopAccess, true, true)}\n${row('Best Practices', mobileBP, desktopBP, true, false)}\n${row('SEO', mobileSEO, desktopSEO, true, true)}\n${row('First Contentful Paint', mobileFCP, desktopFCP, false, false)}\n${row('Largest Contentful Paint', mobileLCP, desktopLCP, false, true)}\n${row('Total Blocking Time', mobileTBT, desktopTBT, false, false)}\n${row('Cumulative Layout Shift', mobileCLS, desktopCLS, false, true)}\n${row('Speed Index', mobileSI, desktopSI, false, false)}\n</table>\n<p style=\"font-size:12px;color:#888;margin-top:16px\">Generado automaticamente por n8n - Golden Harvest S.A.</p>\n</div>`;\n\nconst subjectAlerta = `ALERTA SEO Golden Harvest - Performance Mobile:${mobileScore} Desktop:${desktopScore}`;\nconst subjectOK     = `SEO OK - Golden Harvest (Mobile:${mobileScore} Desktop:${desktopScore})`;\n\nreturn [{ json: {\n  mobileScore, desktopScore, mobileAccess, desktopAccess,\n  mobileBP, desktopBP, mobileSEO, desktopSEO,\n  mobileFCP, desktopFCP, mobileLCP, desktopLCP,\n  mobileTBT, desktopTBT, mobileCLS, desktopCLS, mobileSI, desktopSI,\n  url, fecha, estado, alerta, htmlEmail, subjectAlerta, subjectOK\n}}];\n"
       },
       "id": "bbb00005-0005-0005-0005-000000000005",
       "name": "Generar Reporte SEO",
       "type": "n8n-nodes-base.code",
       "position": [
-        1220,
-        1840
+        2192,
+        1296
       ],
       "typeVersion": 2
     },
@@ -788,77 +732,79 @@
       "name": "Score < 80?",
       "type": "n8n-nodes-base.if",
       "position": [
-        1480,
-        1840
+        2416,
+        1296
       ],
       "typeVersion": 2
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json;\nconst msg = '⚠️ ALERTA SEO Golden Harvest: Mobile=' + data.mobileScore + '/100 Desktop=' + data.desktopScore + '/100 — Performance por debajo del umbral mínimo (80/100).';\nconsole.log(msg);\nreturn [{ json: { ...data, alertaEnviada: true, mensaje: msg } }];\n"
+        "sendTo": "tiagoboberg@gmail.com",
+        "subject": "={{ $json.subjectAlerta }}",
+        "message": "={{ $json.htmlEmail }}",
+        "options": {}
       },
       "id": "bbb00007-0007-0007-0007-000000000007",
       "name": "Log Alerta",
-      "type": "n8n-nodes-base.code",
+      "type": "n8n-nodes-base.gmail",
       "position": [
-        1720,
-        1760
+        2640,
+        1216
       ],
-      "typeVersion": 2
+      "typeVersion": 2.1,
+      "webhookId": "a167c2ad-8dc2-4b36-9525-5b766b0062f6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vKMTOPHBSJvAmTAp",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json;\nconsole.log('✅ SEO OK - Golden Harvest: Mobile=' + data.mobileScore + '/100 Desktop=' + data.desktopScore + '/100');\nreturn [{ json: { ...data, alertaEnviada: false } }];\n"
+        "sendTo": "tiagoboberg@gmail.com",
+        "subject": "={{ $json.subjectOK }}",
+        "message": "={{ $json.htmlEmail }}",
+        "options": {}
       },
       "id": "bbb00008-0008-0008-0008-000000000008",
       "name": "Log OK",
-      "type": "n8n-nodes-base.code",
+      "type": "n8n-nodes-base.gmail",
       "position": [
-        1720,
-        1920
+        2640,
+        1376
       ],
-      "typeVersion": 2
+      "typeVersion": 2.1,
+      "webhookId": "106ce787-bc8b-4098-a12c-e0486e140e73",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vKMTOPHBSJvAmTAp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      },
+      "id": "wait-psi-rate-limit-001",
+      "name": "Wait (Rate Limit)",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        1536,
+        1296
+      ],
+      "typeVersion": 1,
+      "webhookId": "wait-psi-rate-limit-001"
     }
   ],
   "connections": {
-    "Download PDF File": {
-      "main": [
-        [
-          {
-            "node": "Save SEO Report to Drive",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Daily 9 AM Trigger": {
       "main": [
         [
           {
             "node": "Fetch Website Links",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Fetch Website HTML": {
-      "main": [
-        [
-          {
-            "node": "Analyze HTML (SEO Basics)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Convert HTML to PDF": {
-      "main": [
-        [
-          {
-            "node": "Download PDF File",
             "type": "main",
             "index": 0
           }
@@ -876,16 +822,55 @@
         ]
       ]
     },
+    "Attach Config & Timeout": {
+      "main": [
+        [
+          {
+            "node": "Fetch Website HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Website HTML": {
+      "main": [
+        [
+          {
+            "node": "Analyze HTML (SEO Basics)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze HTML (SEO Basics)": {
+      "main": [
+        [
+          {
+            "node": "SEO Health Check & Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEO Health Check & Score": {
+      "main": [
+        [
+          {
+            "node": "Check Performance < 50",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Check Performance < 50": {
       "main": [
         [
           {
             "node": "Send Alert Email (Low SEO Score)",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Merge Alert & Normal Results",
             "type": "main",
             "index": 0
           }
@@ -899,48 +884,11 @@
         ]
       ]
     },
-    "Attach Config & Timeout": {
+    "Send Alert Email (Low SEO Score)": {
       "main": [
         [
           {
-            "node": "Fetch Website HTML",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "SEO Health Check & Score": {
-      "main": [
-        []
-      ]
-    },
-    "Save SEO Report to Drive": {
-      "main": [
-        []
-      ]
-    },
-    "Analyze HTML (SEO Basics)": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Generate SEO Report (HTML)": {
-      "main": [
-        [
-          {
-            "node": "Convert HTML to PDF",
+            "node": "Merge Alert & Normal Results",
             "type": "main",
             "index": 0
           }
@@ -958,22 +906,44 @@
         ]
       ]
     },
-    "HTTP Request": {
+    "Update Performance Log": {
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Generate SEO Report (HTML)",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
     },
-    "Merge": {
+    "Generate SEO Report (HTML)": {
       "main": [
         [
           {
-            "node": "Check Performance < 50",
+            "node": "Convert HTML to PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert HTML to PDF": {
+      "main": [
+        [
+          {
+            "node": "Download PDF File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download PDF File": {
+      "main": [
+        [
+          {
+            "node": "Save SEO Report to Drive",
             "type": "main",
             "index": 0
           }
@@ -987,11 +957,6 @@
             "node": "PSI Mobile",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "PSI Desktop",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -999,6 +964,11 @@
     "PSI Mobile": {
       "main": [
         [
+          {
+            "node": "Wait (Rate Limit)",
+            "type": "main",
+            "index": 0
+          },
           {
             "node": "Merge PSI Results",
             "type": "main",
@@ -1057,6 +1027,17 @@
           }
         ]
       ]
+    },
+    "Wait (Rate Limit)": {
+      "main": [
+        [
+          {
+            "node": "PSI Desktop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -1068,6 +1049,7 @@
     "templateId": "7989",
     "templateCredsSetupCompleted": true
   },
+  "nodeGroups": [],
   "pinData": {
     "HTTP Request": [
       {
@@ -1980,7 +1962,7 @@
                       "priority": "Low",
                       "finished": true,
                       "sessionTargetType": "page",
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "transferSize": 0,
                       "resourceSize": 4752,
                       "protocol": "data",
@@ -2240,7 +2222,7 @@
                       "statusCode": 200,
                       "protocol": "data",
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "resourceSize": 1599
                     },
                     {
@@ -2250,7 +2232,7 @@
                       "networkEndTime": 2723.4669999927282,
                       "finished": true,
                       "sessionTargetType": "page",
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%20…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%20\u2026",
                       "transferSize": 0,
                       "resourceSize": 589,
                       "protocol": "data",
@@ -2264,7 +2246,7 @@
                       "networkRequestTime": 2724.865999996662,
                       "protocol": "data",
                       "resourceSize": 160,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2018%20…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2018%20\u2026",
                       "transferSize": 0,
                       "sessionTargetType": "page",
                       "finished": true,
@@ -2276,7 +2258,7 @@
                     {
                       "protocol": "data",
                       "resourceSize": 160,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2018%20…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2018%20\u2026",
                       "transferSize": 0,
                       "rendererStartTime": 2726.490999996662,
                       "statusCode": 200,
@@ -2295,7 +2277,7 @@
                       "protocol": "data",
                       "resourceSize": 160,
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2018%20…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2018%20\u2026",
                       "sessionTargetType": "page",
                       "finished": true,
                       "priority": "Low",
@@ -2331,12 +2313,12 @@
                       "networkRequestTime": 2761.548999994993,
                       "resourceSize": 140,
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "protocol": "data"
                     },
                     {
                       "protocol": "data",
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "transferSize": 0,
                       "resourceSize": 140,
                       "networkRequestTime": 2762.8009999990463,
@@ -2352,7 +2334,7 @@
                     {
                       "protocol": "data",
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "resourceSize": 143,
                       "networkRequestTime": 2763.89699999243,
                       "statusCode": 200,
@@ -2375,7 +2357,7 @@
                       "rendererStartTime": 2765.0369999930263,
                       "statusCode": 200,
                       "protocol": "data",
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "transferSize": 0,
                       "resourceSize": 141
                     },
@@ -2390,13 +2372,13 @@
                       "rendererStartTime": 2766.1639999970794,
                       "networkRequestTime": 2766.1639999970794,
                       "resourceSize": 141,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "transferSize": 0,
                       "protocol": "data"
                     },
                     {
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "resourceSize": 144,
                       "protocol": "data",
                       "networkRequestTime": 2767.4139999970794,
@@ -2411,7 +2393,7 @@
                     },
                     {
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "resourceSize": 138,
                       "protocol": "data",
                       "networkRequestTime": 2768.5629999935627,
@@ -2429,7 +2411,7 @@
                       "rendererStartTime": 2769.9349999949336,
                       "statusCode": 200,
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "resourceSize": 138,
                       "protocol": "data",
                       "finished": true,
@@ -2443,7 +2425,7 @@
                       "protocol": "data",
                       "resourceSize": 141,
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "statusCode": 200,
                       "rendererStartTime": 2771.167999997735,
                       "networkRequestTime": 2771.167999997735,
@@ -2456,7 +2438,7 @@
                     },
                     {
                       "resourceSize": 143,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "transferSize": 0,
                       "protocol": "data",
                       "rendererStartTime": 2772.380000002682,
@@ -2475,7 +2457,7 @@
                       "networkRequestTime": 2773.552999995649,
                       "protocol": "data",
                       "resourceSize": 143,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "transferSize": 0,
                       "sessionTargetType": "page",
                       "finished": true,
@@ -2487,7 +2469,7 @@
                     {
                       "resourceSize": 147,
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23666%22%20view…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23666%22%20view\u2026",
                       "protocol": "data",
                       "statusCode": 200,
                       "rendererStartTime": 2774.762999996543,
@@ -2504,7 +2486,7 @@
                       "statusCode": 200,
                       "networkRequestTime": 2775.9839999973774,
                       "resourceSize": 147,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23333%22%20view…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23333%22%20view\u2026",
                       "transferSize": 0,
                       "protocol": "data",
                       "finished": true,
@@ -2516,7 +2498,7 @@
                     },
                     {
                       "resourceSize": 147,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23111%22%20view…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23111%22%20view\u2026",
                       "transferSize": 0,
                       "protocol": "data",
                       "rendererStartTime": 2777.1840000003576,
@@ -2541,7 +2523,7 @@
                       "networkRequestTime": 2778.52499999851,
                       "resourceSize": 150,
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23d1d1d1%22%20v…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23d1d1d1%22%20v\u2026",
                       "protocol": "data"
                     },
                     {
@@ -2553,7 +2535,7 @@
                       "sessionTargetType": "page",
                       "resourceSize": 115,
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23666%22%20view…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23666%22%20view\u2026",
                       "protocol": "data",
                       "rendererStartTime": 2779.875,
                       "statusCode": 200,
@@ -2565,7 +2547,7 @@
                       "networkRequestTime": 2781.179999999702,
                       "protocol": "data",
                       "resourceSize": 115,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23333%22%20view…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23333%22%20view\u2026",
                       "transferSize": 0,
                       "sessionTargetType": "page",
                       "finished": true,
@@ -2582,7 +2564,7 @@
                       "finished": true,
                       "sessionTargetType": "page",
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23111%22%20view…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23111%22%20view\u2026",
                       "resourceSize": 115,
                       "protocol": "data",
                       "networkRequestTime": 2782.4449999928474,
@@ -2601,7 +2583,7 @@
                       "rendererStartTime": 2783.7039999961853,
                       "protocol": "data",
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23d1d1d1%22%20v…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22%23d1d1d1%22%20v\u2026",
                       "resourceSize": 118
                     },
                     {
@@ -2615,7 +2597,7 @@
                       "statusCode": 200,
                       "rendererStartTime": 2784.9249999970198,
                       "transferSize": 0,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "resourceSize": 333,
                       "protocol": "data"
                     },
@@ -2623,7 +2605,7 @@
                       "networkRequestTime": 2786.237999998033,
                       "rendererStartTime": 2786.237999998033,
                       "statusCode": 200,
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "transferSize": 0,
                       "resourceSize": 336,
                       "protocol": "data",
@@ -2635,7 +2617,7 @@
                       "networkEndTime": 2786.43599999696
                     },
                     {
-                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo…",
+                      "url": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20viewBo\u2026",
                       "transferSize": 0,
                       "resourceSize": 336,
                       "protocol": "data",
@@ -3042,7 +3024,7 @@
                 "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/).",
                 "score": 0,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Est savings of 182 KiB",
+                "displayValue": "Est savings of 182\u00a0KiB",
                 "metricSavings": {
                   "LCP": 150,
                   "FCP": 100
@@ -3199,7 +3181,7 @@
                 "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.",
                 "score": 0,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Est savings of 320 ms",
+                "displayValue": "Est savings of 320\u00a0ms",
                 "metricSavings": {
                   "LCP": 0,
                   "FCP": 300
@@ -3261,7 +3243,7 @@
                   "type": "table",
                   "items": [
                     {
-                      "score": 0.000032,
+                      "score": 3.2e-05,
                       "node": {
                         "snippet": "<div style=\"margin: 10px; z-index: 1; position: absolute; left: 0px; bottom: 0px;\">",
                         "selector": "div > div.gm-style > div > div",
@@ -3280,7 +3262,7 @@
                       }
                     },
                     {
-                      "score": 0.000004,
+                      "score": 4e-06,
                       "node": {
                         "nodeLabel": "Google Sites\nReport abuse",
                         "boundingRect": {
@@ -3299,7 +3281,7 @@
                       }
                     },
                     {
-                      "score": 0.000004,
+                      "score": 4e-06,
                       "node": {
                         "lhId": "page-11-DIV",
                         "type": "node",
@@ -3318,7 +3300,7 @@
                       }
                     },
                     {
-                      "score": 0.000004,
+                      "score": 4e-06,
                       "node": {
                         "nodeLabel": "Google Sites\nReport abuse",
                         "boundingRect": {
@@ -3337,7 +3319,7 @@
                       }
                     },
                     {
-                      "score": 0.000003,
+                      "score": 3e-06,
                       "node": {
                         "snippet": "<div jsname=\"bN97Pc\" class=\"hBW7Hb\">",
                         "selector": "div.QZ3zWd > div.fktJzd > div.LqzjUe > div.hBW7Hb",
@@ -3356,7 +3338,7 @@
                       }
                     },
                     {
-                      "score": 0.000003,
+                      "score": 3e-06,
                       "node": {
                         "lhId": "page-11-DIV",
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,5,DIV,1,DIV",
@@ -3375,7 +3357,7 @@
                       }
                     },
                     {
-                      "score": 0.000002,
+                      "score": 2e-06,
                       "node": {
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,5,DIV,1,DIV",
                         "type": "node",
@@ -3394,7 +3376,7 @@
                       }
                     },
                     {
-                      "score": 0.000002,
+                      "score": 2e-06,
                       "node": {
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,5,DIV,1,DIV",
                         "type": "node",
@@ -3413,7 +3395,7 @@
                       }
                     },
                     {
-                      "score": 0.000002,
+                      "score": 2e-06,
                       "node": {
                         "lhId": "page-11-DIV",
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,5,DIV,1,DIV",
@@ -3432,7 +3414,7 @@
                       }
                     },
                     {
-                      "score": 0.000001,
+                      "score": 1e-06,
                       "node": {
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,5,DIV,1,DIV",
                         "type": "node",
@@ -3467,7 +3449,7 @@
                         "snippet": "<div jsname=\"bN97Pc\" class=\"hBW7Hb\">",
                         "selector": "div.QZ3zWd > div.fktJzd > div.LqzjUe > div.hBW7Hb"
                       },
-                      "score": 0.000001
+                      "score": 1e-06
                     }
                   ],
                   "headings": [
@@ -3498,7 +3480,7 @@
                 "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://developer.chrome.com/docs/lighthouse/performance/interactive/).",
                 "score": 0.74,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "3.3 s",
+                "displayValue": "3.3\u00a0s",
                 "numericValue": 3280.974162991585,
                 "numericUnit": "millisecond"
               },
@@ -3508,7 +3490,7 @@
                 "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/).",
                 "score": 0.87,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "160 ms",
+                "displayValue": "160\u00a0ms",
                 "numericValue": 164.50000000000023,
                 "numericUnit": "millisecond"
               },
@@ -3608,14 +3590,14 @@
                     {
                       "items": [
                         {
-                          "score": 0.000058,
+                          "score": 5.8e-05,
                           "node": {
                             "type": "text",
                             "value": "Total"
                           }
                         },
                         {
-                          "score": 0.000032,
+                          "score": 3.2e-05,
                           "node": {
                             "snippet": "<div style=\"margin: 10px; z-index: 1; position: absolute; left: 0px; bottom: 0px;\">",
                             "selector": "div > div.gm-style > div > div",
@@ -3634,7 +3616,7 @@
                           }
                         },
                         {
-                          "score": 0.000004,
+                          "score": 4e-06,
                           "node": {
                             "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,5,DIV,1,DIV",
                             "type": "node",
@@ -3653,7 +3635,7 @@
                           }
                         },
                         {
-                          "score": 0.000004,
+                          "score": 4e-06,
                           "node": {
                             "nodeLabel": "Google Sites\nReport abuse",
                             "boundingRect": {
@@ -3672,7 +3654,7 @@
                           }
                         },
                         {
-                          "score": 0.000004,
+                          "score": 4e-06,
                           "node": {
                             "type": "node",
                             "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,5,DIV,1,DIV",
@@ -3691,7 +3673,7 @@
                           }
                         },
                         {
-                          "score": 0.000003,
+                          "score": 3e-06,
                           "node": {
                             "snippet": "<div jsname=\"bN97Pc\" class=\"hBW7Hb\">",
                             "selector": "div.QZ3zWd > div.fktJzd > div.LqzjUe > div.hBW7Hb",
@@ -3805,7 +3787,7 @@
                 "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://developer.chrome.com/docs/lighthouse/performance/speed-index/).",
                 "score": 0.64,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "2.0 s",
+                "displayValue": "2.0\u00a0s",
                 "numericValue": 1959.6276578018858,
                 "numericUnit": "millisecond"
               },
@@ -3815,7 +3797,7 @@
                 "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).",
                 "score": 0.5,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Total size was 3,055 KiB",
+                "displayValue": "Total size was 3,055\u00a0KiB",
                 "details": {
                   "type": "table",
                   "sortedBy": [
@@ -3882,7 +3864,7 @@
               "viewport-insight": {
                 "id": "viewport-insight",
                 "title": "Optimize viewport for mobile",
-                "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/docs/performance/insights/viewport) if the viewport is not optimized for mobile.",
+                "description": "Tap interactions may be [delayed by up to 300\u00a0ms](https://developer.chrome.com/docs/performance/insights/viewport) if the viewport is not optimized for mobile.",
                 "score": 1,
                 "scoreDisplayMode": "numeric",
                 "metricSavings": {
@@ -4226,48 +4208,48 @@
                       "children": [
                         {
                           "resourceBytes": 4718,
-                          "name": "(inline) window['ppConfi…",
+                          "name": "(inline) window['ppConfi\u2026",
                           "unusedBytes": 1344
                         },
                         {
                           "unusedBytes": 0,
                           "resourceBytes": 59,
-                          "name": "(inline) var DOCS_timing…"
+                          "name": "(inline) var DOCS_timing\u2026"
                         },
                         {
                           "resourceBytes": 37,
-                          "name": "(inline) function _DumpE…",
+                          "name": "(inline) function _DumpE\u2026",
                           "unusedBytes": 37
                         },
                         {
                           "unusedBytes": 0,
                           "resourceBytes": 182,
-                          "name": "(inline) window.WIZ_glob…"
+                          "name": "(inline) window.WIZ_glob\u2026"
                         },
                         {
                           "resourceBytes": 10151,
-                          "name": "(inline) _docs_flag_init…",
+                          "name": "(inline) _docs_flag_init\u2026",
                           "unusedBytes": 0
                         },
                         {
                           "unusedBytes": 97,
                           "resourceBytes": 9233,
-                          "name": "(inline) _at_config = [n…"
+                          "name": "(inline) _at_config = [n\u2026"
                         },
                         {
-                          "name": "(inline) (function(){var…",
+                          "name": "(inline) (function(){var\u2026",
                           "resourceBytes": 33195,
                           "unusedBytes": 11845
                         },
                         {
                           "resourceBytes": 463,
-                          "name": "(inline) const imageUrl …",
+                          "name": "(inline) const imageUrl \u2026",
                           "unusedBytes": 200
                         },
                         {
                           "unusedBytes": 0,
                           "resourceBytes": 40,
-                          "name": "(inline) DOCS_timing['co…"
+                          "name": "(inline) DOCS_timing['co\u2026"
                         }
                       ],
                       "unusedBytes": 13523
@@ -4301,7 +4283,7 @@
                         {
                           "unusedBytes": 0,
                           "resourceBytes": 1543,
-                          "name": "(inline) function onEmbe…"
+                          "name": "(inline) function onEmbe\u2026"
                         }
                       ],
                       "resourceBytes": 1543,
@@ -4572,16 +4554,16 @@
                   "items": [
                     {
                       "newEngineResultDiffered": false,
-                      "cumulativeLayoutShiftMainFrame": 0.000026000000000000002,
+                      "cumulativeLayoutShiftMainFrame": 2.6000000000000002e-05,
                       "newEngineResult": {
-                        "cumulativeLayoutShiftMainFrame": 0.000026000000000000002,
-                        "cumulativeLayoutShift": 0.000058
+                        "cumulativeLayoutShiftMainFrame": 2.6000000000000002e-05,
+                        "cumulativeLayoutShift": 5.8e-05
                       }
                     }
                   ],
                   "type": "debugdata"
                 },
-                "numericValue": 0.000058,
+                "numericValue": 5.8e-05,
                 "numericUnit": "unitless"
               },
               "unsized-images": {
@@ -4598,7 +4580,7 @@
                     {
                       "node": {
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCfazSaA-xIGPN2vpt2MoHSMOKjS…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCfazSaA-xIGPN2vpt2MoHSMOKjS\u2026\" class=\"CENy8b\" role=\"img\">",
                         "nodeLabel": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "boundingRect": {
                           "right": 458,
@@ -4630,7 +4612,7 @@
                           "bottom": 203
                         },
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCmcL4j6XjfsRaB-CMUAE1o3eEAp…\" class=\"CENy8b\" role=\"img\">"
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCmcL4j6XjfsRaB-CMUAE1o3eEAp\u2026\" class=\"CENy8b\" role=\"img\">"
                       }
                     },
                     {
@@ -4638,7 +4620,7 @@
                         "lhId": "1-6-IMG",
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,1,DIV,0,SECTION,1,DIV,0,DIV,4,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,IMG",
                         "type": "node",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUA6ax_5J_PeNZQpoQubLII1cLvbn…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUA6ax_5J_PeNZQpoQubLII1cLvbn\u2026\" class=\"CENy8b\" role=\"img\">",
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "nodeLabel": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "boundingRect": {
@@ -4655,7 +4637,7 @@
                     {
                       "node": {
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBo5FFmpoXjmRYfJ0JAn7yj6HWf1…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBo5FFmpoXjmRYfJ0JAn7yj6HWf1\u2026\" class=\"CENy8b\" role=\"img\">",
                         "nodeLabel": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "boundingRect": {
                           "top": 251,
@@ -4685,7 +4667,7 @@
                           "top": 0,
                           "left": 16
                         },
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUC0ojDtMQpfQDcLQ1bzd_Xl0XuHs…\" class=\"lzy1Td\" role=\"img\" aria-label=\"Site home\" jsname=\"SwcDWb\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUC0ojDtMQpfQDcLQ1bzd_Xl0XuHs\u2026\" class=\"lzy1Td\" role=\"img\" aria-label=\"Site home\" jsname=\"SwcDWb\">",
                         "selector": "div.Pvc6xe > div.TlfmSc > a.GAuSPc > img.lzy1Td"
                       },
                       "url": "https://lh3.googleusercontent.com/sitesv/AA5AbUC0ojDtMQpfQDcLQ1bzd_Xl0XuHsF7UNAXFS3S5LuJdq_l9T7SjeL6g9xva2zMKVhB6hwujz99hMAaDRYQsoCPDX0lzD6xBukvwoSPdyJLVBFPuP7J0h_Z06ZPEK-Oy0hCsLtTkIURazIkn5VtNWOKoBlYcNefAkq-BJnBLhLm4gg_N8ReMdE7T=w16383"
@@ -4693,7 +4675,7 @@
                     {
                       "url": "https://lh3.googleusercontent.com/sitesv/AA5AbUBrDXk90WNoav5MN4e8WHwCqKDZImBe18FXM3BAdkRD7Ji9MdvEqAYX5UOS3hOc8zLJ6L--NpxjhXJoHduFdtOIzMuxczStkH-I3c-pNXGBMJKHyq11XEalXvWpaO059e5Z7U413j3mJ33g6BjX0u_xuzC62Y24_0MJs23e3wWA2zYE79v_38GYk8omyYDucH_qT5SLs9Mkbnn9pxwkGNW1LYJBxxvVwAuz8PA=w1280",
                       "node": {
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBrDXk90WNoav5MN4e8WHwCqKDZI…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBrDXk90WNoav5MN4e8WHwCqKDZI\u2026\" class=\"CENy8b\" role=\"img\">",
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "nodeLabel": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "boundingRect": {
@@ -4723,7 +4705,7 @@
                           "right": 1149,
                           "top": 251
                         },
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCINq5gQJMGuZiSEpRHWFdLdg8UV…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCINq5gQJMGuZiSEpRHWFdLdg8UV\u2026\" class=\"CENy8b\" role=\"img\">",
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b"
                       },
                       "url": "https://lh3.googleusercontent.com/sitesv/AA5AbUCINq5gQJMGuZiSEpRHWFdLdg8UV63reK-z_KZA_9lQO4TvuNPzmPlm_R8Q492cH-keJXJNILbgbMUCh70G5T_4LFw87gCqG8v-qlAgNCJ5OHDnM8ggHD_P2JhPLwiHJZT3OQ4Dvs2hVdYi6WKfYfpj1WFGjIhbWbBuEshXkbOcp6fjtxL_4PNzATqrOmEi33-x3zgAAqIRDk1P3TWr_KxUvgMGdj2evWc-Q0M=w1280"
@@ -4734,7 +4716,7 @@
                         "type": "node",
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,1,DIV,0,SECTION,1,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,IMG",
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUDVN-UmgLBeOlTIIpJeV146MYd7D…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUDVN-UmgLBeOlTIIpJeV146MYd7D\u2026\" class=\"CENy8b\" role=\"img\">",
                         "nodeLabel": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "boundingRect": {
                           "width": 168,
@@ -4749,7 +4731,7 @@
                     },
                     {
                       "node": {
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUAgQgbdjJJan4Ho-kfmxnE7DcbnE…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUAgQgbdjJJan4Ho-kfmxnE7DcbnE\u2026\" class=\"CENy8b\" role=\"img\">",
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "nodeLabel": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "boundingRect": {
@@ -4787,7 +4769,7 @@
                 "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more about the Maximum Potential First Input Delay metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/).",
                 "score": 0.54,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "240 ms",
+                "displayValue": "240\u00a0ms",
                 "numericValue": 235.00000000000045,
                 "numericUnit": "millisecond"
               },
@@ -4866,7 +4848,7 @@
                 "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more about the Time to First Byte metric](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/).",
                 "score": 1,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Root document took 0 ms",
+                "displayValue": "Root document took 0\u00a0ms",
                 "metricSavings": {
                   "LCP": 0,
                   "FCP": 0
@@ -5371,7 +5353,7 @@
                         "height": 352,
                         "width": 1341
                       },
-                      "snippet": "<div class=\"IFuOkc\" style=\"background-position: center center; background-image: url(&quot;https://lh3.goog…&quot;);\">",
+                      "snippet": "<div class=\"IFuOkc\" style=\"background-position: center center; background-image: url(&quot;https://lh3.goog\u2026&quot;);\">",
                       "selector": "div.fktJzd > footer > section#h.3ad6d1540273481b_146 > div.IFuOkc"
                     }
                   ],
@@ -5445,7 +5427,7 @@
                 "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more about the Largest Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)",
                 "score": 0.74,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "1.7 s",
+                "displayValue": "1.7\u00a0s",
                 "numericValue": 1671.2679848984376,
                 "numericUnit": "millisecond"
               },
@@ -5566,7 +5548,7 @@
                 "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/).",
                 "score": 0.92,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "0.9 s",
+                "displayValue": "0.9\u00a0s",
                 "numericValue": 885.9702315489469,
                 "numericUnit": "millisecond"
               },
@@ -5629,7 +5611,7 @@
                 "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)",
                 "score": 0,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "2.0 s",
+                "displayValue": "2.0\u00a0s",
                 "metricSavings": {
                   "TBT": 150
                 },
@@ -5698,7 +5680,7 @@
                 "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/).",
                 "score": 1,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "1.2 s",
+                "displayValue": "1.2\u00a0s",
                 "metricSavings": {
                   "TBT": 250
                 },
@@ -5807,7 +5789,7 @@
                 "description": "Network round trip times (RTT) have a large impact on performance. If the RTT to an origin is high, it's an indication that servers closer to the user could improve performance. [Learn more about the Round Trip Time](https://hpbn.co/primer-on-latency-and-bandwidth/).",
                 "score": 1,
                 "scoreDisplayMode": "informative",
-                "displayValue": "0 ms",
+                "displayValue": "0\u00a0ms",
                 "details": {
                   "sortedBy": [
                     "rtt"
@@ -5886,7 +5868,7 @@
                 "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
                 "score": 0,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Est savings of 774 KiB",
+                "displayValue": "Est savings of 774\u00a0KiB",
                 "metricSavings": {
                   "LCP": 50,
                   "FCP": 0
@@ -6010,7 +5992,7 @@
                       "observedFirstContentfulPaint": 1094,
                       "lcpLoadDelay": 1396,
                       "observedLastVisualChange": 3139,
-                      "observedCumulativeLayoutShiftMainFrame": 0.000026000000000000002,
+                      "observedCumulativeLayoutShiftMainFrame": 2.6000000000000002e-05,
                       "observedFirstContentfulPaintTs": 58584639851,
                       "observedLargestContentfulPaintAllFramesTs": 58584639851,
                       "observedTimeOriginTs": 58583546215,
@@ -6019,13 +6001,13 @@
                       "lcpLoadDuration": 1438,
                       "observedTimeOrigin": 0,
                       "observedLoad": 2307,
-                      "cumulativeLayoutShiftMainFrame": 0.000026000000000000002,
+                      "cumulativeLayoutShiftMainFrame": 2.6000000000000002e-05,
                       "observedLoadTs": 58585853039,
                       "observedNavigationStart": 0,
                       "observedSpeedIndexTs": 58584839061,
                       "observedNavigationStartTs": 58583546215,
                       "maxPotentialFID": 235,
-                      "cumulativeLayoutShift": 0.000058,
+                      "cumulativeLayoutShift": 5.8e-05,
                       "observedDomContentLoaded": 1108,
                       "speedIndex": 1960,
                       "interactive": 3281,
@@ -6034,7 +6016,7 @@
                       "observedDomContentLoadedTs": 58584654117,
                       "observedFirstPaintTs": 58584639851,
                       "observedFirstContentfulPaintAllFramesTs": 58584639851,
-                      "observedCumulativeLayoutShift": 0.000058
+                      "observedCumulativeLayoutShift": 5.8e-05
                     },
                     {
                       "lcpInvalidated": false
@@ -6050,7 +6032,7 @@
                 "description": "Server latencies can impact web performance. If the server latency of an origin is high, it's an indication the server is overloaded or has poor backend performance. [Learn more about server response time](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).",
                 "score": 1,
                 "scoreDisplayMode": "informative",
-                "displayValue": "10 ms",
+                "displayValue": "10\u00a0ms",
                 "details": {
                   "sortedBy": [
                     "serverResponseTime"
@@ -6160,7 +6142,7 @@
                 "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about caching](https://developer.chrome.com/docs/performance/insights/cache).",
                 "score": 0,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Est savings of 536 KiB",
+                "displayValue": "Est savings of 536\u00a0KiB",
                 "metricSavings": {
                   "LCP": 300,
                   "FCP": 0
@@ -6315,7 +6297,7 @@
                 "description": "Consider setting [font-display](https://developer.chrome.com/docs/performance/insights/font-display) to swap or optional to ensure text is consistently visible. swap can be further optimized to mitigate layout shifts with [font metric overrides](https://developer.chrome.com/blog/font-fallbacks).",
                 "score": 0.5,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Est savings of 10 ms",
+                "displayValue": "Est savings of 10\u00a0ms",
                 "metricSavings": {
                   "FCP": 0,
                   "INP": 0
@@ -6351,7 +6333,7 @@
                 "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/performance/insights/image-delivery)",
                 "score": 0,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Est savings of 1,058 KiB",
+                "displayValue": "Est savings of 1,058\u00a0KiB",
                 "metricSavings": {
                   "LCP": 650,
                   "FCP": 0
@@ -6393,7 +6375,7 @@
                           "top": 80
                         },
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCfazSaA-xIGPN2vpt2MoHSMOKjS…\" class=\"CENy8b\" role=\"img\">"
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCfazSaA-xIGPN2vpt2MoHSMOKjS\u2026\" class=\"CENy8b\" role=\"img\">"
                       },
                       "wastedBytes": 225756
                     },
@@ -6413,7 +6395,7 @@
                           "width": 168
                         },
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUA6ax_5J_PeNZQpoQubLII1cLvbn…\" class=\"CENy8b\" role=\"img\">"
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUA6ax_5J_PeNZQpoQubLII1cLvbn\u2026\" class=\"CENy8b\" role=\"img\">"
                       },
                       "wastedBytes": 212157,
                       "url": "https://lh3.googleusercontent.com/sitesv/AA5AbUA6ax_5J_PeNZQpoQubLII1cLvbnVNySyfLBzl42YX0IDzwbIFbG7cASh9zgUMVdpmQnUNW-On69HpeNWsgTFYWQtLtjwpGNWO_pXmWdc19QcdH0IFg-jvAyuCt5gmVeykoEY4ENcJB2e1iSXU9dJ9umUqODC4oXYJjKHH5FFQAV9rrkjwQ6EoKmEcgJpWXC0S-f4DvscUjaMb0kHblA8rjfea7hoeefItsgFw=w1280",
@@ -6458,7 +6440,7 @@
                           "right": 1050
                         },
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCmcL4j6XjfsRaB-CMUAE1o3eEAp…\" class=\"CENy8b\" role=\"img\">"
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCmcL4j6XjfsRaB-CMUAE1o3eEAp\u2026\" class=\"CENy8b\" role=\"img\">"
                       }
                     },
                     {
@@ -6473,7 +6455,7 @@
                           "left": 192
                         },
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBo5FFmpoXjmRYfJ0JAn7yj6HWf1…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBo5FFmpoXjmRYfJ0JAn7yj6HWf1\u2026\" class=\"CENy8b\" role=\"img\">",
                         "type": "node",
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,1,DIV,1,SECTION,1,DIV,0,DIV,1,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,IMG",
                         "lhId": "page-3-IMG"
@@ -6510,7 +6492,7 @@
                           "bottom": 56,
                           "height": 56
                         },
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUC0ojDtMQpfQDcLQ1bzd_Xl0XuHs…\" class=\"lzy1Td\" role=\"img\" aria-label=\"Site home\" jsname=\"SwcDWb\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUC0ojDtMQpfQDcLQ1bzd_Xl0XuHs\u2026\" class=\"lzy1Td\" role=\"img\" aria-label=\"Site home\" jsname=\"SwcDWb\">",
                         "selector": "div.Pvc6xe > div.TlfmSc > a.GAuSPc > img.lzy1Td"
                       },
                       "wastedBytes": 86074,
@@ -6548,7 +6530,7 @@
                           "top": 80
                         },
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBrDXk90WNoav5MN4e8WHwCqKDZI…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBrDXk90WNoav5MN4e8WHwCqKDZI\u2026\" class=\"CENy8b\" role=\"img\">",
                         "type": "node",
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,1,DIV,0,SECTION,1,DIV,0,DIV,2,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,IMG",
                         "lhId": "page-5-IMG"
@@ -6582,7 +6564,7 @@
                           "top": 80,
                           "left": 93
                         },
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUDVN-UmgLBeOlTIIpJeV146MYd7D…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUDVN-UmgLBeOlTIIpJeV146MYd7D\u2026\" class=\"CENy8b\" role=\"img\">",
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,1,DIV,0,SECTION,1,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,IMG",
                         "type": "node",
@@ -6603,7 +6585,7 @@
                       "totalBytes": 65373,
                       "node": {
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCINq5gQJMGuZiSEpRHWFdLdg8UV…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUCINq5gQJMGuZiSEpRHWFdLdg8UV\u2026\" class=\"CENy8b\" role=\"img\">",
                         "nodeLabel": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "boundingRect": {
                           "width": 365,
@@ -6641,7 +6623,7 @@
                         },
                         "nodeLabel": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
                         "selector": "div.jXK9ad-SmKAyb > div.tyJCtd > div.t3iYD > img.CENy8b",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUAgQgbdjJJan4Ho-kfmxnE7DcbnE…\" class=\"CENy8b\" role=\"img\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUAgQgbdjJJan4Ho-kfmxnE7DcbnE\u2026\" class=\"CENy8b\" role=\"img\">",
                         "type": "node",
                         "path": "1,HTML,1,BODY,0,DIV,0,DIV,1,DIV,3,DIV,0,DIV,1,DIV,1,SECTION,1,DIV,0,DIV,2,DIV,0,DIV,0,DIV,1,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,IMG",
                         "lhId": "page-8-IMG"
@@ -6665,7 +6647,7 @@
                           "right": 224
                         },
                         "selector": "div > div > div > img",
-                        "snippet": "<img draggable=\"false\" alt=\"\" role=\"presentation\" src=\"/maps/vt?pb=!1m5!1m4!1i14!2i5062!3i9781!4i256!2m1!1e1!3m12!2sen-US!3sUS!5e…\" style=\"width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px;\">"
+                        "snippet": "<img draggable=\"false\" alt=\"\" role=\"presentation\" src=\"/maps/vt?pb=!1m5!1m4!1i14!2i5062!3i9781!4i256!2m1!1e1!3m12!2sen-US!3sUS!5e\u2026\" style=\"width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px;\">"
                       },
                       "totalBytes": 25970,
                       "subItems": {
@@ -6692,7 +6674,7 @@
                       "url": "https://lh3.googleusercontent.com/sitesv/AA5AbUBF2fxxY-NrRi19xhICF7_Vn-WW_f4AmDrAAhTXzYV5yqbPXQrH-WtZn_R4LADiBQk661n0XkzQgNH3Jnf-chpv-OGqaHMKs8wJPKuz7JxKT-f9T-nqP7dV6or1H8xzjBH3kn213kquhpI8CPjUvCBmo1Rz4UhCEwazMkYohbycLHzdDnVry-uPk_KeGvwe0kyROms9Kd7OBTiu",
                       "node": {
                         "selector": "div.tyJCtd > div.i2gjFc > a.RNpQXe > img.xbGufb",
-                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBF2fxxY-NrRi19xhICF7_Vn-WW_…\" alt=\"Link\" class=\"xbGufb\" style=\"width: 32px; height: 32px;\" width=\"32\" height=\"32\">",
+                        "snippet": "<img src=\"https://lh3.googleusercontent.com/sitesv/AA5AbUBF2fxxY-NrRi19xhICF7_Vn-WW_\u2026\" alt=\"Link\" class=\"xbGufb\" style=\"width: 32px; height: 32px;\" width=\"32\" height=\"32\">",
                         "nodeLabel": "Link",
                         "boundingRect": {
                           "width": 32,
@@ -6803,7 +6785,7 @@
                         "right": 1341,
                         "top": 640
                       },
-                      "snippet": "<div class=\"IFuOkc\" style=\"background-position: center center; background-image: url(&quot;https://lh3.goog…&quot;);\">",
+                      "snippet": "<div class=\"IFuOkc\" style=\"background-position: center center; background-image: url(&quot;https://lh3.goog\u2026&quot;);\">",
                       "selector": "div.fktJzd > footer > section#h.3ad6d1540273481b_146 > div.IFuOkc"
                     }
                   ]
@@ -7084,7 +7066,7 @@
               },
               "seo-content": {
                 "title": "Content Best Practices",
-                "description": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+                "description": "Format your HTML in a way that enables crawlers to better understand your app\u2019s content."
               },
               "a11y-tables-lists": {
                 "title": "Tables and lists",
@@ -7100,7 +7082,7 @@
               },
               "seo-mobile": {
                 "title": "Mobile Friendly",
-                "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
+                "description": "Make sure your pages are mobile friendly so users don\u2019t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
               },
               "diagnostics": {
                 "title": "Diagnostics",
@@ -7722,7 +7704,7 @@
                 "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/).",
                 "score": 1,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "0.1 s",
+                "displayValue": "0.1\u00a0s",
                 "metricSavings": {
                   "TBT": 0
                 },
@@ -7789,7 +7771,7 @@
                 "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.",
                 "score": 0,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Est savings of 360 ms",
+                "displayValue": "Est savings of 360\u00a0ms",
                 "metricSavings": {
                   "LCP": 350,
                   "FCP": 350
@@ -7833,7 +7815,7 @@
                 "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more about the Largest Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)",
                 "score": 0.98,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "0.7 s",
+                "displayValue": "0.7\u00a0s",
                 "numericValue": 746.4563685335569,
                 "numericUnit": "millisecond"
               },
@@ -7895,7 +7877,7 @@
                       },
                       "node": {
                         "type": "node",
-                        "nodeLabel": "es un estándar.",
+                        "nodeLabel": "es un est\u00e1ndar.",
                         "boundingRect": {
                           "left": 64,
                           "right": 413,
@@ -8007,7 +7989,7 @@
                         "path": "1,HTML,1,BODY,0,DIV,1,MAIN,1,SECTION,0,DIV,0,DIV,1,H2,1,SPAN",
                         "lhId": "page-5-SPAN",
                         "type": "node",
-                        "nodeLabel": "Líneas Premium",
+                        "nodeLabel": "L\u00edneas Premium",
                         "boundingRect": {
                           "left": 599,
                           "right": 966,
@@ -8066,7 +8048,7 @@
                 "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)",
                 "score": 1,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "0.8 s",
+                "displayValue": "0.8\u00a0s",
                 "metricSavings": {
                   "TBT": 0
                 },
@@ -8130,7 +8112,7 @@
                 "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://developer.chrome.com/docs/lighthouse/performance/interactive/).",
                 "score": 1,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "0.7 s",
+                "displayValue": "0.7\u00a0s",
                 "numericValue": 746.456368533557,
                 "numericUnit": "millisecond"
               },
@@ -8140,7 +8122,7 @@
                 "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more about the Maximum Potential First Input Delay metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/).",
                 "score": 1,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "20 ms",
+                "displayValue": "20\u00a0ms",
                 "numericValue": 16,
                 "numericUnit": "millisecond"
               },
@@ -8150,7 +8132,7 @@
                 "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/).",
                 "score": 0.96,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "0.7 s",
+                "displayValue": "0.7\u00a0s",
                 "numericValue": 746.4563685335569,
                 "numericUnit": "millisecond"
               },
@@ -8179,7 +8161,7 @@
                 "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/).",
                 "score": 1,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "0 ms",
+                "displayValue": "0\u00a0ms",
                 "numericValue": 0,
                 "numericUnit": "millisecond"
               },
@@ -8314,7 +8296,7 @@
                 "description": "Network round trip times (RTT) have a large impact on performance. If the RTT to an origin is high, it's an indication that servers closer to the user could improve performance. [Learn more about the Round Trip Time](https://hpbn.co/primer-on-latency-and-bandwidth/).",
                 "score": 1,
                 "scoreDisplayMode": "informative",
-                "displayValue": "0 ms",
+                "displayValue": "0\u00a0ms",
                 "details": {
                   "sortedBy": [
                     "rtt"
@@ -8471,7 +8453,7 @@
                       "path": "1,HTML,1,BODY,0,DIV,1,MAIN,0,SECTION,1,DIV,0,DIV,0,DIV,1,H1",
                       "lhId": "page-0-H1",
                       "type": "node",
-                      "nodeLabel": "La Tradición\ndel Campo,\nen tu Mesa.",
+                      "nodeLabel": "La Tradici\u00f3n\ndel Campo,\nen tu Mesa.",
                       "boundingRect": {
                         "height": 227,
                         "left": 64,
@@ -8480,7 +8462,7 @@
                         "top": 241,
                         "width": 568
                       },
-                      "snippet": "<h1 class=\"animate-fade-in-up delay-100 text-5xl lg:text-7xl font-bold leading-[1.05]…\" style=\"font-family: Quicksand, sans-serif;\">"
+                      "snippet": "<h1 class=\"animate-fade-in-up delay-100 text-5xl lg:text-7xl font-bold leading-[1.05]\u2026\" style=\"font-family: Quicksand, sans-serif;\">"
                     }
                   ],
                   "type": "list"
@@ -8492,7 +8474,7 @@
                 "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about caching](https://developer.chrome.com/docs/performance/insights/cache).",
                 "score": 0.5,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Est savings of 71 KiB",
+                "displayValue": "Est savings of 71\u00a0KiB",
                 "metricSavings": {
                   "LCP": 0,
                   "FCP": 0
@@ -8621,7 +8603,7 @@
                         "granularity": 1
                       },
                       "node": {
-                        "snippet": "<path d=\"m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l…\">",
+                        "snippet": "<path d=\"m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l\u2026\">",
                         "type": "node",
                         "nodeLabel": "div.bg-[#212121] > div.flex > svg.lucide > path",
                         "boundingRect": {
@@ -8804,7 +8786,7 @@
                       "networkEndTime": 392.7680000066757,
                       "statusCode": 200,
                       "resourceSize": 242,
-                      "url": "data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='…",
+                      "url": "data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='\u2026",
                       "rendererStartTime": 392.57999999821186,
                       "transferSize": 0,
                       "finished": true,
@@ -8923,7 +8905,7 @@
               "viewport-insight": {
                 "id": "viewport-insight",
                 "title": "Optimize viewport for mobile",
-                "description": "Tap interactions may be [delayed by up to 300 ms](https://developer.chrome.com/docs/performance/insights/viewport) if the viewport is not optimized for mobile.",
+                "description": "Tap interactions may be [delayed by up to 300\u00a0ms](https://developer.chrome.com/docs/performance/insights/viewport) if the viewport is not optimized for mobile.",
                 "score": 1,
                 "scoreDisplayMode": "numeric",
                 "metricSavings": {
@@ -8973,7 +8955,7 @@
                 "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).",
                 "score": 1,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Total size was 154 KiB",
+                "displayValue": "Total size was 154\u00a0KiB",
                 "details": {
                   "items": [
                     {
@@ -9238,7 +9220,7 @@
                 "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://developer.chrome.com/docs/lighthouse/performance/speed-index/).",
                 "score": 0.99,
                 "scoreDisplayMode": "numeric",
-                "displayValue": "0.9 s",
+                "displayValue": "0.9\u00a0s",
                 "numericValue": 857.506255028338,
                 "numericUnit": "millisecond"
               },
@@ -9358,7 +9340,7 @@
                 "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
                 "score": 0.5,
                 "scoreDisplayMode": "metricSavings",
-                "displayValue": "Est savings of 30 KiB",
+                "displayValue": "Est savings of 30\u00a0KiB",
                 "metricSavings": {
                   "LCP": 0,
                   "FCP": 0
@@ -9422,7 +9404,7 @@
                 "description": "Server latencies can impact web performance. If the server latency of an origin is high, it's an indication the server is overloaded or has poor backend performance. [Learn more about server response time](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).",
                 "score": 1,
                 "scoreDisplayMode": "informative",
-                "displayValue": "0 ms",
+                "displayValue": "0\u00a0ms",
                 "details": {
                   "sortedBy": [
                     "serverResponseTime"
@@ -10063,7 +10045,7 @@
               },
               "seo-mobile": {
                 "title": "Mobile Friendly",
-                "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
+                "description": "Make sure your pages are mobile friendly so users don\u2019t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
               },
               "best-practices-trust-safety": {
                 "title": "Trust and Safety"
@@ -10074,7 +10056,7 @@
               },
               "seo-content": {
                 "title": "Content Best Practices",
-                "description": "Format your HTML in a way that enables crawlers to better understand your app’s content."
+                "description": "Format your HTML in a way that enables crawlers to better understand your app\u2019s content."
               },
               "best-practices-browser-compat": {
                 "title": "Browser Compatibility"
@@ -10370,88 +10352,13 @@
           "item": 1
         }
       }
-    ],
-    "Analyze HTML (SEO Basics)": [
-      {
-        "json": {
-          "url": "https://www.goldenharvest.com.ar/",
-          "seo": {
-            "title": "GOLDEN HARVEST",
-            "metaDesc": null,
-            "robots": null,
-            "canonical": null,
-            "h1Count": 0
-          },
-          "summary": {
-            "titlePresent": true,
-            "hasMetaDescription": false,
-            "h1Count": 0,
-            "imagesMissingAlt": 10,
-            "internalLinksChecked": 0,
-            "brokenLinksCount": 0,
-            "htmlSource": "json.data"
-          },
-          "brokenLinks": [],
-          "issues": [
-            {
-              "level": "warning",
-              "msg": "Missing meta description."
-            },
-            {
-              "level": "warning",
-              "msg": "Missing <h1>."
-            },
-            {
-              "level": "warning",
-              "msg": "10 image(s) without alt."
-            }
-          ],
-          "critical": false,
-          "timeoutMs": 2000,
-          "psiStrategy": "mobile"
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      },
-      {
-        "json": {
-          "url": "https://sudogringo.github.io/FINAL/",
-          "status": "No data available",
-          "seo": {
-            "title": "N/A",
-            "metaDesc": "N/A",
-            "robots": null,
-            "canonical": null,
-            "h1Count": 0
-          },
-          "summary": {
-            "htmlSource": "json.data",
-            "error": "JavaScript-only Skeleton detected",
-            "internalLinksChecked": 0,
-            "brokenLinksCount": 0
-          },
-          "brokenLinks": [],
-          "issues": [
-            {
-              "level": "critical",
-              "msg": "Site requires JavaScript rendering. No data extracted."
-            }
-          ],
-          "critical": true,
-          "timeoutMs": 2000,
-          "psiStrategy": "mobile"
-        },
-        "pairedItem": {
-          "item": 1
-        }
-      }
     ]
   },
-  "versionId": "a44c0f90-4492-44ba-9679-9ff865194596",
+  "versionId": "3824330f-ee45-4edb-8ded-cb6c1ad4701d",
   "activeVersionId": null,
-  "versionCounter": 216,
+  "versionCounter": 235,
   "triggerCount": 0,
+  "sourceWorkflowId": null,
   "shared": [
     {
       "updatedAt": "2026-04-21T17:41:26.424Z",
@@ -10467,6 +10374,7 @@
         "type": "personal",
         "icon": null,
         "description": null,
+        "customTelemetryTags": [],
         "creatorId": "e904e65e-d840-4829-bc02-d388c616774f"
       }
     }
