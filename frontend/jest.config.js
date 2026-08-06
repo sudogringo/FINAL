@@ -1,6 +1,7 @@
 /** @type {import('jest').Config} */
 export default {
   testEnvironment: 'jsdom',
+  setupFiles: ['<rootDir>/src/__tests__/jest.setup.ts'],
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
   },
