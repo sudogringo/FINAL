@@ -5,10 +5,10 @@ import { CartProvider, useCart } from '../features/cart/CartContext'
 import { act } from 'react'
 
 function DrawerWithItem() {
-  const { addItem } = useCart()
+  const { addItem, openCart } = useCart()
   return (
     <>
-      <button onClick={() => addItem({ id: 'p1', name: 'Tomate Entero', line: 'roja', size: '1kg' })}>
+      <button onClick={() => { addItem({ id: 'p1', name: 'Tomate Entero', line: 'roja', size: '1kg' }); openCart() }}>
         Agregar item
       </button>
       <CartDrawer />
@@ -31,7 +31,7 @@ describe('CartDrawer', () => {
     expect(drawer).toHaveClass('translate-x-full')
   })
 
-  it('opens and shows item after adding', () => {
+  it('shows item after adding and opening the drawer', () => {
     renderDrawer()
     act(() => { fireEvent.click(screen.getByText('Agregar item')) })
     const drawer = screen.getByRole('complementary', { name: 'Carrito de pedido' })

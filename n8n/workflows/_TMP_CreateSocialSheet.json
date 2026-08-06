@@ -1,0 +1,89 @@
+{
+  "updatedAt": "2026-06-30T19:25:07.000Z",
+  "createdAt": "2026-06-30T19:21:15.419Z",
+  "id": "3LoTQVMeFLohbBhs",
+  "name": "_TMP_CreateSocialSheet",
+  "description": null,
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual",
+      "name": "Manual",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "createSpreadsheet",
+        "title": "Golden Harvest \u2014 Contenido Social"
+      },
+      "id": "create-sheet",
+      "name": "Crear Planilla",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        220,
+        0
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X2syETMrleq2VzbZ",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual": {
+      "main": [
+        [
+          {
+            "node": "Crear Planilla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "e661b753-271a-420f-bbb0-40a63b4477f9",
+  "activeVersionId": null,
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "shared": [
+    {
+      "updatedAt": "2026-06-30T19:21:15.422Z",
+      "createdAt": "2026-06-30T19:21:15.422Z",
+      "role": "workflow:owner",
+      "workflowId": "3LoTQVMeFLohbBhs",
+      "projectId": "fqt8Sbkc8GWwPwDS",
+      "project": {
+        "updatedAt": "2026-04-21T17:40:00.062Z",
+        "createdAt": "2026-04-21T17:36:32.601Z",
+        "id": "fqt8Sbkc8GWwPwDS",
+        "name": "Tiago Cunto Boberg <tiagoboberg@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "e904e65e-d840-4829-bc02-d388c616774f"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}

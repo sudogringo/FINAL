@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-06-23T15:40:42.528Z",
+  "workflow": "03. Google Maps Review Management",
+  "modo": "TESIS (simulado)",
+  "summary": {
+    "total": 5,
+    "positivas": 3,
+    "negativas": 2,
+    "urgentes": 1
+  },
+  "reviews": [
+    {
+      "reviewId": "rev001",
+      "starRating": 5,
+      "comment": "Excelentes productos, el pesto de oliva es increíble. Muy buena atención.",
+      "reviewerDisplayName": "María González",
+      "action": "auto_reply",
+      "priority": "normal",
+      "suggested_reply": "¡Gracias por tu reseña! Nos alegra que hayas disfrutado de Golden Harvest. Tu opinión nos motiva a seguir mejorando.",
+      "reviewer_name": "María González",
+      "stars_numeric": 5,
+      "tesis_reply": "¡Muchas gracias María González! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opinión es muy valiosa para nosotros.",
+      "tesis_action": "reply_generated_not_posted",
+      "processed_at": "2026-06-23T15:40:42.527Z"
+    },
+    {
+      "reviewId": "rev002",
+      "starRating": 2,
+      "comment": "La entrega demoró más de lo esperado y el frasco llegó con la tapa floja.",
+      "reviewerDisplayName": "Carlos Pérez",
+      "action": "notify_admin",
+      "priority": "normal",
+      "suggested_reply": "",
+      "reviewer_name": "Carlos Pérez",
+      "stars_numeric": 2,
+      "escalation_summary": {
+        "tipo": "Atención requerida",
+        "revisor": "Carlos Pérez",
+        "estrellas": 2,
+        "comentario": "La entrega demoró más de lo esperado y el frasco llegó con la tapa floja.",
+        "sugerencia": "Contactar a Carlos Pérez para resolver su experiencia negativa y ofrecer compensación si corresponde.",
+        "tesis_action": "escalation_formatted_not_emailed",
+        "processed_at": "2026-06-23T15:40:42.528Z"
+      }
+    },
+    {
+      "reviewId": "rev003",
+      "starRating": 4,
+      "comment": "Muy buenas mermeladas artesanales. El chutney de ciruela es delicioso.",
+      "reviewerDisplayName": "Ana Rodríguez",
+      "action": "auto_reply",
+      "priority": "normal",
+      "suggested_reply": "¡Gracias por tu reseña! Nos alegra que hayas disfrutado de Golden Harvest. Tu opinión nos motiva a seguir mejorando.",
+      "reviewer_name": "Ana Rodríguez",
+      "stars_numeric": 4,
+      "tesis_reply": "¡Gracias Ana Rodríguez por tu reseña! Nos alegra que hayas disfrutado de Golden Harvest. Tu opinión nos motiva a seguir mejorando.",
+      "tesis_action": "reply_generated_not_posted",
+      "processed_at": "2026-06-23T15:40:42.528Z"
+    },
+    {
+      "reviewId": "rev004",
+      "starRating": 1,
+      "comment": "El producto vino roto. Pésima experiencia de compra.",
+      "reviewerDisplayName": "Luis Fernández",
+      "action": "urgent_admin",
+      "priority": "urgent",
+      "suggested_reply": "",
+      "reviewer_name": "Luis Fernández",
+      "stars_numeric": 1,
+      "escalation_summary": {
+        "tipo": "URGENTE",
+        "revisor": "Luis Fernández",
+        "estrellas": 1,
+        "comentario": "El producto vino roto. Pésima experiencia de compra.",
+        "sugerencia": "Contactar a Luis Fernández para resolver su experiencia negativa y ofrecer compensación si corresponde.",
+        "tesis_action": "escalation_formatted_not_emailed",
+        "processed_at": "2026-06-23T15:40:42.528Z"
+      }
+    },
+    {
+      "reviewId": "rev005",
+      "starRating": 5,
+      "comment": "Golden Harvest tiene los mejores productos gourmet de la región. Muy recomendable.",
+      "reviewerDisplayName": "Sofía Martínez",
+      "action": "auto_reply",
+      "priority": "normal",
+      "suggested_reply": "¡Gracias por tu reseña! Nos alegra que hayas disfrutado de Golden Harvest. Tu opinión nos motiva a seguir mejorando.",
+      "reviewer_name": "Sofía Martínez",
+      "stars_numeric": 5,
+      "tesis_reply": "¡Muchas gracias Sofía Martínez! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opinión es muy valiosa para nosotros.",
+      "tesis_action": "reply_generated_not_posted",
+      "processed_at": "2026-06-23T15:40:42.528Z"
+    }
+  ]
+}
