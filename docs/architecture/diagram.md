@@ -6,6 +6,7 @@ Se descompone en varias láminas chicas en vez de un único diagrama grande — 
 - **[1] Frontend** — estructura interna de `src/features/`.
 - **[2] Backend** — rutas, modelos y Postgres.
 - **[3] n8n** — los 7 módulos agrupados por función de negocio.
+- **Secuencia — flujo de leads** — diagrama de secuencia (no flowchart) del envío de cotización y del carrito abandonado, verificado contra `quotes.ts` y `CartContext.tsx`.
 
 Cada set se presenta dos veces: **Arquitectura objetivo** (diseño completo) y **Arquitectura demo / as-built** (lo que corre hoy). Los diagramas de detalle [1]/[2]/[3] no cambian de estructura interna entre ambos — el código es el mismo — así que solo se repiten cuando hay una diferencia real que mostrar; si no, se indica "igual al diagrama objetivo".
 
@@ -193,6 +194,51 @@ flowchart TD
 **[1] Frontend** — igual al diagrama objetivo, sin cambios.
 **[2] Backend** — igual al diagrama objetivo, sin cambios.
 **[3] n8n** — misma agrupación por función de negocio que el objetivo; los 8 workflows existen y están importados en la instancia, pero ninguno está activo (`active: false`) ni hace las llamadas HTTP al backend indicadas en la tabla — ver gaps arriba.
+
+---
+
+## Diagrama de secuencia — flujo de leads (Figura 2, Bloqueante 2)
+
+Verificado línea por línea contra `backend/src/routes/quotes.ts` y `frontend/src/features/cart/CartContext.tsx`. Cubre las dos ramas reales: la cotización enviada a tiempo y el carrito abandonado (2h sin cotizar).
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente (navegador)
+    participant FE as Frontend<br/>QuoteForm / CartContext
+    participant BE as Backend<br/>Express + Prisma
+    participant DB as PostgreSQL
+    participant N8N as n8n
+
+    C->>FE: agrega ítems al carrito
+    activate FE
+    FE->>FE: arranca timer de 2h (ABANDONMENT_MS)
+
+    alt Cliente envía la cotización antes de las 2h
+        C->>FE: completa y envía QuoteForm
+        FE->>FE: cancela el timer de abandono
+        FE->>BE: POST /api/quotes (submitQuote)
+        activate BE
+        BE->>DB: upsert Customer (por email)
+        BE->>DB: create Quote (sessionId, contact, items)
+        BE-->>FE: 201 { id }
+        BE-)N8N: fireWebhook(N8N_QUOTE_WEBHOOK) [fire-and-forget]
+        deactivate BE
+        N8N-->>N8N: notifica a vendedor (WhatsApp + Email)
+
+        Note over BE,N8N: — más tarde, fuera de este request —
+        BE->>BE: admin marca Quote → CLOSED (PATCH /api/quotes/:id/status)
+        BE->>DB: descuenta stock, create Order
+        BE-)N8N: fireWebhook(N8N_LOGISTICS_WEBHOOK)
+    else Pasan 2h sin cotización
+        FE->>FE: dispara el timer (ABANDONMENT_MS vencido)
+        FE-)N8N: fetch(N8N_ABANDONED_WEBHOOK) [fire-and-forget, directo desde el cliente]
+        deactivate FE
+    end
+```
+
+**Por qué hay dos flechas que van directo al cliente hacia n8n** (`fireWebhook` desde el backend vs. `fetch` directo desde `CartContext`): la cotización pasa siempre por el backend porque necesita persistir el lead en Postgres antes de notificar; el webhook de carrito abandonado no persiste nada — es un evento efímero del lado del cliente — así que dispara directo, sin pasar por el backend. Ambos son *fire-and-forget*: ninguno de los dos bloquea la respuesta al usuario ni espera confirmación de n8n.
+
+Render estático para inserción directa en el `.docx` de la tesis: [`../assets/sequence-lead-flow.png`](../assets/sequence-lead-flow.png).
 
 ---
 
