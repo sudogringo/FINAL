@@ -1,0 +1,121 @@
+$ cd frontend && npx jest --verbose
+Date: 2026-08-07
+Node: v22.14.0
+
+PASS src/__tests__/api.test.ts
+  admin/api
+    submitQuote
+      √ sends a POST to the correct URL with serialized body
+      √ throws when res.ok is false
+    adminLogin
+      √ returns the token from the response JSON on success
+      √ throws the expected Spanish error message when response is not ok
+    fetchMonthlyStats
+      √ builds the URL without the month query param when omitted
+      √ builds the URL with the month query param when provided
+    logInteraction
+      √ does not throw when fetch rejects (network failure)
+      √ does not throw when fetch resolves with a non-ok response
+      √ calls fetch with the correct URL and body
+    createProduct
+      √ happy path: calls fetch with the right method/URL and returns the created product
+      √ throws the expected message when res.ok is false
+    deleteProduct
+      √ happy path: calls fetch with the right method/URL
+      √ throws the expected message when res.ok is false
+
+PASS src/__tests__/CartDrawer.test.tsx
+  CartDrawer
+    √ drawer is hidden initially
+    √ shows item after adding and opening the drawer
+    √ displays item size and quantity
+    √ shows empty state message when cart is empty
+    √ "Solicitar Cotización" button appears when items exist
+
+PASS src/__tests__/CartContext.test.tsx
+  CartContext
+    √ addItem is blocked at the per-size stock cap
+    √ setQty(0) removes the item entirely
+    √ setQty caps at the stock limit when set above it
+    √ setQty sets a valid in-range quantity normally
+    √ removeItem removes the specified item
+    √ clearCart empties the cart and resets isOpen/quoteOpen
+    √ totalItems sums quantities across multiple distinct items
+    √ openCart/closeCart/openQuote/closeQuote toggle state directly
+    abandoned cart webhook
+      √ fires the webhook after the abandonment threshold when the cart has items
+      √ does not fire the webhook when the cart is empty
+
+PASS src/__tests__/ProductCard.test.tsx
+  ProductCard
+    √ renders product name and description
+    √ renders all size buttons
+    √ first size is selected by default
+    √ changes selected size on click
+    √ shows "Agregar al Pedido" button
+    √ qty cannot go below 1
+    √ renders correctly for Línea Dorada
+    √ disables add-to-cart and shows "Sin stock" when selected size has 0 stock
+    √ blocks qty increment past stock cap for the selected size
+    √ does not disable qty controls or add-to-cart when the other size has 0 stock
+
+PASS src/__tests__/AdminContext.test.tsx
+  AdminContext
+    √ starts unauthenticated with no token when localStorage is empty
+    √ initializes token from localStorage if present
+    √ login persists token to localStorage and flips isAuthenticated to true
+    √ logout clears localStorage and flips isAuthenticated to false
+    √ useAdmin throws when used outside AdminProvider
+
+PASS src/__tests__/AdminProductsPage.webhookConfigured.test.tsx
+  AdminProductsPage — triggerSocialMedia with VITE_N8N_WF4_WEBHOOK configured
+    √ POSTs to the configured webhook and shows the success alert
+
+PASS src/__tests__/AdminQuotesPage.test.tsx
+  AdminQuotesPage
+    √ redirects to /admin/login when not authenticated
+    √ loads and displays quotes on mount
+    √ clicking status-advance calls updateQuoteStatus with PENDING -> CONTACTED and updates the list
+    √ closing a quote (CONTACTED -> CLOSED) is gated behind window.confirm: confirmed proceeds
+    √ closing a quote is a no-op when window.confirm is cancelled
+    √ CLOSED quotes have no advance action button
+
+PASS src/__tests__/AdminLoginPage.test.tsx
+  AdminLoginPage
+    √ calls adminLogin with entered email/password on submit
+    √ success path stores the token and navigates away from login
+    √ failure path shows the Spanish error message and does not navigate
+
+PASS src/__tests__/QuoteForm.test.tsx
+  QuoteForm
+    √ is not rendered when quoteOpen is false
+    √ renders the form when quote is open
+    √ shows validation error for empty nombre
+    √ shows validation error for invalid email
+    √ shows notas max 500 chars label
+    √ closes the form when X button is clicked
+
+PASS src/__tests__/AdminProductsPage.test.tsx
+  AdminProductsPage
+    √ redirects to /admin/login when not authenticated
+    √ loads and displays products on mount (active filter default)
+    handleSave
+      √ create branch: opens empty modal via "Nuevo producto" and calls createProduct (no id)
+      √ edit branch: opens modal via edit pencil (with id) and calls updateProduct with existing id
+    handleDelete
+      √ proceeds when window.confirm returns true
+      √ is a no-op when window.confirm returns false
+    handleRestore
+      √ calls updateProduct with active: true for an inactive product
+    search / line / status filters
+      √ search input narrows the list by name
+      √ line filter narrows the list to "roja" only
+      √ status filter "all" reveals inactive products, combined with line filter "roja"
+    triggerSocialMedia (via "Publicar en redes" button)
+      √ calls window.alert when the webhook env var is unset/empty
+
+Test Suites: 10 passed, 10 total
+Tests:       70 passed, 70 total
+Snapshots:   0 total
+Time:        42.818 s
+Ran all test suites.

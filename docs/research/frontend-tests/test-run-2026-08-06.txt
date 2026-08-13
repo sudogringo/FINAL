@@ -1,0 +1,23 @@
+$ cd frontend && npm run test
+Date: 2026-08-06 18:17:59 -0300
+Node: v22.14.0 | npm: 10.9.2
+
+> frontend@0.0.0 test
+> jest
+
+PASS src/__tests__/api.test.ts
+PASS src/__tests__/CartContext.test.tsx (8.11 s)
+PASS src/__tests__/CartDrawer.test.tsx (8.116 s)
+PASS src/__tests__/ProductCard.test.tsx (8.304 s)
+PASS src/__tests__/AdminContext.test.tsx (8.388 s)
+PASS src/__tests__/AdminProductsPage.webhookConfigured.test.tsx (10.31 s)
+PASS src/__tests__/QuoteForm.test.tsx (10.565 s)
+PASS src/__tests__/AdminQuotesPage.test.tsx (10.629 s)
+PASS src/__tests__/AdminLoginPage.test.tsx (12.08 s)
+PASS src/__tests__/AdminProductsPage.test.tsx (12.603 s)
+
+Test Suites: 10 passed, 10 total
+Tests:       70 passed, 70 total
+Snapshots:   0 total
+Time:        17.068 s
+Ran all test suites.
