@@ -150,13 +150,13 @@ export default function ProductCard({ product }: Props) {
           onClick={handleAdd}
           data-testid="add-to-cart"
           disabled={added || noStock}
-          className="w-full py-3.5 rounded-full font-heading font-bold text-[13px] transition-all duration-300 disabled:cursor-not-allowed"
-          style={noStock
-            ? { background: '#FFFFFF', color: 'rgba(27,27,27,0.3)' }
-            : added
-              ? { background: '#166534', color: '#fff' }
-              : { background: '#CABC6B', color: '#1B1B1B' }
-          }
+          className={`w-full py-3.5 rounded-full font-heading font-bold text-[13px] transition-all duration-200 disabled:cursor-not-allowed ${
+            noStock
+              ? 'bg-white text-dark/30'
+              : added
+                ? 'bg-[#166534] text-white'
+                : 'bg-gold text-dark hover:bg-gold-dark hover:shadow-lg hover:shadow-gold/30 hover:scale-[1.02] active:scale-[0.98]'
+          }`}
         >
           {noStock
             ? 'Sin stock'
