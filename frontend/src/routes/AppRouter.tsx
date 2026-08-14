@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import WhatsAppFab from '../components/layout/WhatsAppFab'
+import ScrollToTop from '../components/layout/ScrollToTop'
 import CartDrawer from '../features/cart/components/CartDrawer'
 import QuoteForm from '../features/quote/components/QuoteForm'
 import HomePage from '../pages/HomePage'
@@ -15,6 +16,7 @@ import AdminDashboardPage from '../pages/admin/AdminDashboardPage'
 function RootLayout() {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <Outlet />
       <Footer />
