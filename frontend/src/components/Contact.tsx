@@ -1,169 +1,122 @@
 import { MessageCircle, Mail, MapPin } from 'lucide-react'
-
-function InstagramIcon({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-    </svg>
-  )
-}
-
-function FacebookIcon({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-    </svg>
-  )
-}
+import { Link } from 'react-router-dom'
 
 export default function Contact() {
   const whatsappUrl = 'https://wa.me/54?text=Hola%20Golden%20Harvest%2C%20me%20gustar%C3%ADa%20consultar%20sobre%20sus%20productos.'
 
   return (
-    <section id="contacto" className="py-28 bg-[#1B1B1B]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
-        {/* Header */}
-        <div className="text-center mb-16">
-          <span
-            className="inline-block text-[#CABC6B] text-xs font-semibold tracking-[0.35em] uppercase mb-4"
-            style={{ fontFamily: 'Quicksand, sans-serif' }}
-          >
-            Contacto
+    <section id="contacto" className="w-full max-w-7xl mx-auto px-6 lg:px-8">
+      {/* Header */}
+      <div className="pb-8 border-b border-dark/15 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <span className="text-[11px] font-heading font-bold tracking-[0.35em] text-gold uppercase">
+            Golden Harvest S.A.
           </span>
-          <h2
-            className="text-4xl lg:text-5xl font-bold text-white leading-tight"
-            style={{ fontFamily: 'Quicksand, sans-serif' }}
-          >
-            ¿Te interesa un producto?
-            <br />
-            <span className="text-gradient-gold">Hablemos.</span>
-          </h2>
-          <p
-            className="mt-4 text-white/50 text-lg max-w-lg mx-auto"
-            style={{ fontFamily: 'Source Sans 3, sans-serif' }}
-          >
-            Nuestro equipo de ventas está listo para asesorarte y armar
-            tu pedido personalizado.
+          <h1 className="text-4xl font-heading font-bold text-dark mt-2">SILVIA</h1>
+        </div>
+        <div className="sm:text-right">
+          <p className="text-dark/40 text-[11px] font-heading font-semibold tracking-[0.2em] uppercase">
+            Mendoza · Argentina
+          </p>
+          <p className="text-dark/40 text-[11px] font-heading font-semibold tracking-[0.2em] uppercase mt-1">
+            Atención a comercios y distribuidores
           </p>
         </div>
+      </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* WhatsApp CTA — main */}
-          <div className="lg:col-span-2 relative overflow-hidden rounded-3xl bg-[#212121] border border-[#25D366]/30 p-10 flex flex-col justify-between group hover:border-[#25D366]/60 hover:shadow-2xl hover:shadow-[#25D366]/10 transition-all duration-500">
-            <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-[#25D366]/5" />
-            <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-[#25D366]/5" />
+      <div className="grid lg:grid-cols-3 gap-16 mt-16">
+        {/* Left */}
+        <div className="lg:col-span-2">
+          <h2 className="text-5xl lg:text-6xl font-heading text-dark leading-[1.1]">
+            ¿Te interesa un producto?
+            <br />
+            <span className="font-bold">Hablemos.</span>
+          </h2>
+          <p className="mt-6 text-dark/50 font-body text-xl max-w-xl leading-relaxed">
+            Armá tu pedido en el catálogo y un asesor te responde con la cotización, stock y logística.{' '}
+            <em>Sin formularios, sin esperas.</em>
+          </p>
 
-            <div className="relative">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-[#25D366]/20 flex items-center justify-center">
-                  <MessageCircle size={24} className="text-[#25D366]" />
-                </div>
-                <div>
-                  <div className="text-white font-bold" style={{ fontFamily: 'Quicksand, sans-serif' }}>WhatsApp</div>
-                  <div className="text-white/40 text-sm">Respuesta inmediata</div>
-                </div>
-              </div>
-
-              <h3
-                className="text-2xl lg:text-3xl font-bold text-white mb-3 leading-tight"
-                style={{ fontFamily: 'Quicksand, sans-serif' }}
-              >
-                Consultá tu pedido<br />en minutos
-              </h3>
-              <p
-                className="text-white/50 text-base leading-relaxed mb-8 max-w-md"
-                style={{ fontFamily: 'Source Sans 3, sans-serif' }}
-              >
-                Armá tu carrito, elegí los productos que querés y te ayudamos
-                a cerrar tu compra con atención personalizada — sin formularios
-                ni esperas.
-              </p>
-            </div>
-
+          <div className="flex flex-wrap items-center gap-5 mt-10">
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#128C7E] text-white font-bold text-base px-8 py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-[#25D366]/30 hover:shadow-[#25D366]/50 hover:scale-[1.02] self-start"
-              style={{ fontFamily: 'Quicksand, sans-serif' }}
+              className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#128C7E] text-white font-heading font-bold px-8 py-4 rounded-full shadow-lg shadow-[#25D366]/25 hover:shadow-[#25D366]/40 hover:scale-[1.02] transition-all duration-300 text-base"
             >
               <MessageCircle size={20} />
-              Iniciar Consulta por WhatsApp
+              Iniciar consulta por WhatsApp
             </a>
+            <Link
+              to="/catalogo"
+              className="inline-flex items-center gap-2 border border-dark/20 hover:border-gold/60 text-dark font-heading font-semibold px-8 py-4 rounded-full transition-all duration-300 text-base"
+            >
+              Ver el catálogo
+            </Link>
           </div>
 
-          {/* Social + Info */}
-          <div className="flex flex-col gap-6">
-            {/* Redes */}
-            <div className="rounded-3xl bg-[#212121] border border-white/8 p-6 flex flex-col gap-4">
-              <h4
-                className="text-white font-bold text-sm tracking-widest uppercase"
-                style={{ fontFamily: 'Quicksand, sans-serif' }}
+          {/* Info row */}
+          <div className="mt-20 pt-8 border-t border-dark/10 flex flex-wrap gap-x-16 gap-y-6">
+            <div>
+              <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
+                Correo
+              </p>
+              <a
+                href="mailto:info@goldenharvest.com.ar"
+                className="flex items-center gap-2 text-dark/70 hover:text-gold-dark text-sm transition-colors"
               >
+                <Mail size={14} />
+                info@goldenharvest.com.ar
+              </a>
+            </div>
+            <div className="border-l border-dark/10 pl-16">
+              <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
+                Planta
+              </p>
+              <span className="flex items-center gap-2 text-dark/70 text-sm">
+                <MapPin size={14} />
+                Mendoza, Argentina
+              </span>
+            </div>
+            <div className="border-l border-dark/10 pl-16">
+              <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
                 Seguinos
-              </h4>
+              </p>
               <a
                 href="https://www.instagram.com/silvia_golden_harvest"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors duration-200 group/link"
+                className="text-dark/70 hover:text-gold-dark text-sm transition-colors"
               >
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#E1306C] to-[#833AB4] flex items-center justify-center text-white">
-                  <InstagramIcon size={18} />
-                </div>
-                <div>
-                  <div className="text-white text-sm font-semibold group-hover/link:text-[#CABC6B] transition-colors"
-                    style={{ fontFamily: 'Quicksand, sans-serif' }}>
-                    Instagram
-                  </div>
-                  <div className="text-white/40 text-xs">@silvia_golden_harvest</div>
-                </div>
-              </a>
-              <a
-                href="https://www.facebook.com/silvia.goldenharvestsa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors duration-200 group/link"
-              >
-                <div className="w-9 h-9 rounded-xl bg-[#1877F2] flex items-center justify-center text-white">
-                  <FacebookIcon size={18} />
-                </div>
-                <div>
-                  <div className="text-white text-sm font-semibold group-hover/link:text-[#CABC6B] transition-colors"
-                    style={{ fontFamily: 'Quicksand, sans-serif' }}>
-                    Facebook
-                  </div>
-                  <div className="text-white/40 text-xs">silvia.goldenharvestsa</div>
-                </div>
+                @silvia_golden_harvest
               </a>
             </div>
+          </div>
+        </div>
 
-            {/* Info */}
-            <div className="rounded-3xl bg-[#212121] border border-white/8 p-6 flex flex-col gap-4">
-              <h4
-                className="text-white font-bold text-sm tracking-widest uppercase"
-                style={{ fontFamily: 'Quicksand, sans-serif' }}
-              >
-                Información
-              </h4>
-              {[
-                { icon: Mail, text: 'info@goldenharvest.com.ar' },
-                { icon: MapPin, text: 'Mendoza, Argentina' },
-              ].map((item) => (
-                <div key={item.text} className="flex items-center gap-3">
-                  <item.icon size={16} className="text-[#CABC6B] shrink-0" />
-                  <span
-                    className="text-white/60 text-sm"
-                    style={{ fontFamily: 'Source Sans 3, sans-serif' }}
-                  >
-                    {item.text}
-                  </span>
-                </div>
-              ))}
+        {/* Right */}
+        <div className="flex flex-col items-center lg:items-end gap-8">
+          <div className="relative w-64 h-64 shrink-0">
+            <div className="absolute -inset-5 rounded-full border border-dashed border-gold/25 animate-spin-slow" />
+            <div className="relative w-full h-full rounded-full border border-[#25D366]/30 bg-white/40 flex flex-col items-center justify-center text-center gap-1.5 shadow-sm">
+              <MessageCircle size={20} className="text-[#25D366] mb-1" />
+              <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase">
+                Respuesta
+              </p>
+              <p className="text-dark font-heading font-bold text-2xl">en minutos</p>
+              <span className="h-px w-10 bg-dark/15 my-1.5" />
+              <p className="text-dark/40 text-xs font-body">Lun a Vie · 9 a 18h</p>
             </div>
+          </div>
+
+          <div className="w-full border border-dark/10 rounded-3xl p-7 bg-white/50">
+            <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-3">
+              Cómo trabajamos
+            </p>
+            <p className="text-dark/60 text-sm font-body leading-relaxed">
+              Venta consultiva: elegís los productos, un asesor confirma stock por lote y arma la
+              cotización a medida de tu negocio.
+            </p>
           </div>
         </div>
       </div>
