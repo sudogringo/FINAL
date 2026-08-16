@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Menu, X, ShoppingCart } from 'lucide-react'
 import { useCart } from '../../features/cart/CartContext'
 
@@ -11,6 +11,7 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const { totalItems, openCart } = useCart()
+  const { pathname } = useLocation()
   const [scrolled, setScrolled]  = useState(false)
   const [menuOpen, setMenuOpen]  = useState(false)
 
@@ -19,6 +20,12 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // El cambio de ruta ya resetea el scroll (ScrollToTop), pero clickear un link
+  // hacia la página en la que ya estás no navega — sin esto no pasa nada.
+  const scrollToTopIfSamePage = (to: string) => {
+    if (pathname === to) window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   const linkCls = ({ isActive }: { isActive: boolean }) =>
     `text-[11px] font-heading font-bold tracking-[0.2em] uppercase transition-colors duration-300 ${
@@ -35,7 +42,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
 
           {/* Logo */}
-          <Link to="/" className="flex flex-col leading-none group">
+          <Link to="/" onClick={() => scrollToTopIfSamePage('/')} className="flex flex-col leading-none group">
             <span className="text-[10px] font-heading font-semibold tracking-[0.35em] text-gold uppercase">
               Golden Harvest
             </span>
@@ -47,7 +54,13 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-8" aria-label="Navegación principal">
             {NAV_LINKS.map(l => (
-              <NavLink key={l.to} to={l.to} end={l.to === '/'} className={linkCls}>
+              <NavLink
+                key={l.to}
+                to={l.to}
+                end={l.to === '/'}
+                className={linkCls}
+                onClick={() => scrollToTopIfSamePage(l.to)}
+              >
                 {l.label}
               </NavLink>
             ))}
@@ -94,7 +107,7 @@ export default function Navbar() {
               to={l.to}
               end={l.to === '/'}
               className={linkCls}
-              onClick={() => setMenuOpen(false)}
+              onClick={() => { setMenuOpen(false); scrollToTopIfSamePage(l.to) }}
             >
               {l.label}
             </NavLink>
