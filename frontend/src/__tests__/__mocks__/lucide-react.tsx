@@ -3,6 +3,7 @@ import React from 'react'
 type IconProps = { size?: number; className?: string; strokeWidth?: number; [key: string]: unknown }
 
 const icon = (name: string) =>
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- destructured to strip size/strokeWidth before spreading onto the DOM node
   function Icon({ size: _s, strokeWidth: _sw, className, ...rest }: IconProps) {
     return React.createElement('svg', { 'data-testid': `icon-${name}`, className, ...rest })
   }

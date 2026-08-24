@@ -31,6 +31,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- Context+hook pattern; splitting into two files is out of scope
 export function useAdmin() {
   const ctx = useContext(AdminContext)
   if (!ctx) throw new Error('useAdmin debe usarse dentro de AdminProvider')

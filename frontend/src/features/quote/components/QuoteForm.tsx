@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -10,7 +10,7 @@ const schema = z.object({
   nombre:   z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
   empresa:  z.string().optional(),
   telefono: z.string()
-    .regex(/^\+?[\d\s\-]{8,15}$/, 'Teléfono inválido (8-15 dígitos)')
+    .regex(/^\+?[\d\s-]{8,15}$/, 'Teléfono inválido (8-15 dígitos)')
     .optional()
     .or(z.literal('')),
   email:    z.string().email('Email inválido'),
@@ -19,6 +19,20 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
+function Field({
+  id, label, error, required = false, children,
+}: { id: string; label: string; error?: string; required?: boolean; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={id} className="text-white/60 text-[11px] font-heading font-semibold tracking-[0.15em] uppercase">
+        {label}{required && <span className="text-[#C0392B] ml-0.5">*</span>}
+      </label>
+      {children}
+      {error && <p role="alert" className="text-[#C0392B] text-[11px] font-body">{error}</p>}
+    </div>
+  )
+}
+
 export default function QuoteForm() {
   const { items, quoteOpen, closeQuote, clearCart } = useCart()
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
@@ -26,10 +40,6 @@ export default function QuoteForm() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
     resolver: zodResolver(schema),
   })
-
-  useEffect(() => {
-    if (!quoteOpen) { setStatus('idle'); reset() }
-  }, [quoteOpen, reset])
 
   const onSubmit = async (data: FormData) => {
     setStatus('sending')
@@ -49,18 +59,6 @@ export default function QuoteForm() {
   const handleClose = () => { clearCart(); closeQuote(); setStatus('idle'); reset() }
 
   if (!quoteOpen) return null
-
-  const Field = ({
-    id, label, error, required = false, children,
-  }: { id: string; label: string; error?: string; required?: boolean; children: React.ReactNode }) => (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-white/60 text-[11px] font-heading font-semibold tracking-[0.15em] uppercase">
-        {label}{required && <span className="text-[#C0392B] ml-0.5">*</span>}
-      </label>
-      {children}
-      {error && <p role="alert" className="text-[#C0392B] text-[11px] font-body">{error}</p>}
-    </div>
-  )
 
   const inputCls = (hasErr: boolean) =>
     `w-full bg-white/5 border rounded-xl px-4 py-3 text-white text-[13px] font-body placeholder:text-white/20 focus:outline-none transition-colors ${

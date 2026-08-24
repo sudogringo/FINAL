@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Golden Harvest Silvia</title>
+    <!--
+      GitHub Pages serves this file for any unmatched path (deep link or hard
+      refresh into a client-side route, e.g. /FINAL/catalogo). It re-encodes
+      the intended path into index.html's query string, which index.html then
+      decodes and restores via history.replaceState before React Router mounts.
+      Standard SPA-on-GitHub-Pages technique: https://github.com/rafgraph/spa-github-pages
+    -->
+    <script type="text/javascript">
+      var pathSegmentsToKeep = 1; // keep '/FINAL' (the repo name segment)
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
