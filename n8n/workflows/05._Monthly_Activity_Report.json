@@ -107,7 +107,7 @@
     },
     {
       "parameters": {
-        "url": "http://golden_harvest_api:8000/stats/monthly",
+        "url": "http://backend:3001/api/stats/monthly",
         "options": {}
       },
       "id": "node-get-stats",
@@ -121,7 +121,7 @@
     },
     {
       "parameters": {
-        "url": "http://golden_harvest_api:8000/orders",
+        "url": "http://backend:3001/api/orders",
         "options": {}
       },
       "id": "node-get-orders",

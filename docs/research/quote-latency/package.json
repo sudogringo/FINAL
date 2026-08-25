@@ -1,0 +1,11 @@
+{
+  "name": "gh-quote-latency-baseline",
+  "private": true,
+  "type": "module",
+  "description": "Standalone scripts to measure VD2 (§3.2) — end-to-end lead processing latency, from quote submit to n8n notification — against the local demo stack.",
+  "scripts": {
+    "batch": "node run-batch.mjs",
+    "summarize": "node summarize.mjs"
+  },
+  "dependencies": {}
+}

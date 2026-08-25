@@ -1,0 +1,13 @@
+[
+  {
+    "batch": "batch-2026-08-25",
+    "n_runs": 18,
+    "n_failed": 0,
+    "median_ms": 746.5,
+    "min_ms": 662,
+    "max_ms": 1203,
+    "p95_ms": 1203,
+    "criterion_ms": 15000,
+    "meets_criterion": true
+  }
+]

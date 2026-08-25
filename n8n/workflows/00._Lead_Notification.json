@@ -1,0 +1,222 @@
+{
+  "name": "00. Lead Notification (Instrumentación VD2)",
+  "description": "No es un módulo de negocio de la tabla 1-7 — es infraestructura de instrumentación para medir VD2 (tiempo de procesamiento de un lead, §3.2). Recibe el webhook que el backend dispara en POST /api/quotes (N8N_QUOTE_WEBHOOK) y responde con los timestamps de inicio/fin de la notificación, para que el script de medición en docs/research/quote-latency/ pueda calcular la latencia end-to-end.",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🔴 MODO PRODUCCIÓN\nNodos deshabilitados que requieren credenciales reales:\n- **WhatsApp Business API** (notificación al vendedor por WhatsApp — requiere cuenta Meta Business verificada)\n- **SendGrid** (email transaccional — requiere API key paga más allá del free tier)\n\nEn producción, ambos envíos irían en paralelo tras el webhook, y el Respond to Webhook esperaría\na que ambos confirmen entrega antes de devolver el timestamp final — igual que en la rama TESIS,\npero con proveedores reales en lugar de Gmail simulado. Habilitar y configurar credenciales antes\nde pasar a producción.",
+        "height": 460,
+        "width": 1560
+      },
+      "id": "sticky-prod",
+      "name": "🔴 MODO PRODUCCIÓN",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [784, 592]
+    },
+    {
+      "parameters": {
+        "content": "## 🟢 MODO TESIS\nFlujo de demostración que corre de verdad, sin costo.\n- Webhook recibe el POST del backend (N8N_QUOTE_WEBHOOK) con { quoteId, sessionId, contact, items,\n  createdAt, clientSubmittedAt }\n- Arma un mensaje de notificación simulado (texto que representaría el WhatsApp + Email al vendedor)\n- Lo manda por Gmail real a la cuenta del autor, como evidencia tangible de que el circuito\n  end-to-end funciona\n- Responde al backend con t1_start/t1_end para que el script de medición calcule la latencia\n  T0 (click del usuario) -> T1 (fin de esta ejecución)",
+        "height": 460,
+        "width": 1560,
+        "color": 3
+      },
+      "id": "sticky-thesis",
+      "name": "🟢 MODO TESIS",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [784, 96]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "quote",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-webhook-tesis",
+      "name": "Webhook — Quote (TESIS)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [848, 176],
+      "webhookId": "c4e2f6a1-8b3d-4c5e-9f1a-2d6b7e8a9c10"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body ?? $input.first().json;\nreturn [{\n  json: {\n    ...body,\n    t1_start: new Date().toISOString(),\n  },\n}];"
+      },
+      "id": "node-t1-start",
+      "name": "Registrar t1_start",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1072, 176]
+    },
+    {
+      "parameters": {
+        "jsCode": "const d = $input.first().json;\nconst itemsList = (d.items ?? []).map(i => `- ${i.qty}x ${i.name} (${i.line}, talle ${i.size})`).join('\\n');\n\nconst message_text = `Nuevo lead recibido — Golden Harvest S.A.\\n\\n` +\n  `Cliente: ${d.contact?.nombre ?? '(sin nombre)'}\\n` +\n  `Empresa: ${d.contact?.empresa ?? '-'}\\n` +\n  `Email: ${d.contact?.email ?? '-'}\\n` +\n  `Teléfono: ${d.contact?.telefono ?? '-'}\\n\\n` +\n  `Productos solicitados:\\n${itemsList}\\n\\n` +\n  `Quote ID: ${d.quoteId}\\n` +\n  `[SIMULADO] Este mensaje representa la notificación que en producción se enviaría por WhatsApp Business API y SendGrid al equipo de ventas.`;\n\nreturn [{ json: { ...d, message_text } }];"
+      },
+      "id": "node-build-message",
+      "name": "Armar Mensaje (Simulado)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1296, 176]
+    },
+    {
+      "parameters": {
+        "sendTo": "tiagoboberg@gmail.com",
+        "subject": "=[SIMULADO] Nuevo Lead — Quote {{ $json.quoteId }}",
+        "message": "={{ $json.message_text.replace(/\\n/g, '<br>') }}",
+        "options": {}
+      },
+      "id": "node-gmail-tesis",
+      "name": "Gmail — Notificar Lead (TESIS)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1520, 176],
+      "webhookId": "e3f5a7c9-1b2d-4e6f-8a9c-3d5b7e9f1a2c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vKMTOPHBSJvAmTAp",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// El nodo Gmail reemplaza el JSON de entrada por la respuesta de la API de Gmail\n// ({id, threadId, labelIds}), así que quoteId/t1_start/clientSubmittedAt no sobreviven\n// si se leen de $input. Se leen del nodo anterior a Gmail en su lugar.\nconst d = $('Armar Mensaje (Simulado)').first().json;\nconst t1_end = new Date().toISOString();\nconst latency_ms_n8n_internal = new Date(t1_end).getTime() - new Date(d.t1_start).getTime();\nreturn [{\n  json: {\n    quoteId: d.quoteId,\n    sessionId: d.sessionId,\n    clientSubmittedAt: d.clientSubmittedAt ?? null,\n    t1_start: d.t1_start,\n    t1_end,\n    latency_ms_n8n_internal,\n  },\n}];"
+      },
+      "id": "node-t1-end",
+      "name": "Registrar t1_end",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1744, 176]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "node-respond-tesis",
+      "name": "Respond to Webhook (TESIS)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1968, 176]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "quote-prod",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-webhook-prod",
+      "name": "Webhook — Quote (Producción)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [848, 672],
+      "webhookId": "f6a8c1d3-4e7f-4a9b-8c1d-5e7f9a1b3c4d",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v19.0/YOUR_PHONE_NUMBER_ID/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer YOUR_WHATSAPP_BUSINESS_TOKEN" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": { "parameters": [{}] },
+        "options": {}
+      },
+      "id": "node-whatsapp-prod",
+      "name": "WhatsApp Business API (Producción)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1072, 672],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.sendgrid.com/v3/mail/send",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer YOUR_SENDGRID_API_KEY" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": { "parameters": [{}] },
+        "options": {}
+      },
+      "id": "node-sendgrid-prod",
+      "name": "SendGrid (Producción)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1296, 672],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "node-respond-prod",
+      "name": "Respond to Webhook (Producción)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1520, 672],
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Webhook — Quote (TESIS)": {
+      "main": [[{ "node": "Registrar t1_start", "type": "main", "index": 0 }]]
+    },
+    "Registrar t1_start": {
+      "main": [[{ "node": "Armar Mensaje (Simulado)", "type": "main", "index": 0 }]]
+    },
+    "Armar Mensaje (Simulado)": {
+      "main": [[{ "node": "Gmail — Notificar Lead (TESIS)", "type": "main", "index": 0 }]]
+    },
+    "Gmail — Notificar Lead (TESIS)": {
+      "main": [[{ "node": "Registrar t1_end", "type": "main", "index": 0 }]]
+    },
+    "Registrar t1_end": {
+      "main": [[{ "node": "Respond to Webhook (TESIS)", "type": "main", "index": 0 }]]
+    },
+    "Webhook — Quote (Producción)": {
+      "main": [[
+        { "node": "WhatsApp Business API (Producción)", "type": "main", "index": 0 },
+        { "node": "SendGrid (Producción)", "type": "main", "index": 0 }
+      ]]
+    },
+    "WhatsApp Business API (Producción)": {
+      "main": [[{ "node": "Respond to Webhook (Producción)", "type": "main", "index": 0 }]]
+    },
+    "SendGrid (Producción)": {
+      "main": [[{ "node": "Respond to Webhook (Producción)", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all"
+  },
+  "staticData": null,
+  "meta": null,
+  "nodeGroups": [],
+  "pinData": {},
+  "triggerCount": 1,
+  "tags": []
+}

@@ -32,6 +32,7 @@ services:
       - N8N_QUOTE_WEBHOOK=${N8N_QUOTE_WEBHOOK:-}
       - N8N_ABANDONED_WEBHOOK=${N8N_ABANDONED_WEBHOOK:-}
       - ABANDONED_CART_THRESHOLD_MS=${ABANDONED_CART_THRESHOLD_MS:-60000}
+      - MEASURE_LATENCY=${MEASURE_LATENCY:-false}
     depends_on:
       postgres:
         condition: service_healthy
