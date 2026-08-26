@@ -122,7 +122,7 @@
     },
     {
       "parameters": {
-        "url": "http://golden_harvest_api:8000/orders",
+        "url": "http://backend:3001/api/orders",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [

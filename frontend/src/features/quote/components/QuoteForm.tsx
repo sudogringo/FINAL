@@ -46,6 +46,8 @@ export default function QuoteForm() {
     try {
       await submitQuote({
         sessionId: sessionStorage.getItem('gh_session_id') ?? crypto.randomUUID(),
+        // T0 de VD2 (§3.2): capturado lo más cerca posible del click real del usuario.
+        clientSubmittedAt: new Date().toISOString(),
         contact:   data as Record<string, string>,
         items:     items.map(i => ({ id: i.id, name: i.name, line: i.line, size: i.size, qty: i.qty })),
       })

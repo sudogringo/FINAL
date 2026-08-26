@@ -129,6 +129,8 @@ export async function adminLogin(email: string, password: string): Promise<strin
 
 export async function submitQuote(payload: {
   sessionId: string
+  // T0 de VD2 (§3.2) — momento del click de submit, capturado en el caller.
+  clientSubmittedAt?: string
   contact: Record<string, string>
   items: Array<{ id: string; name: string; line: string; size: string; qty: number }>
 }): Promise<{ id: string }> {

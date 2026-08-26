@@ -1,0 +1,2 @@
+batch,n_runs,n_failed,median_ms,min_ms,max_ms,p95_ms,criterion_ms,meets_criterion
+batch-2026-08-25,18,0,746.5,662,1203,1203,15000,true
