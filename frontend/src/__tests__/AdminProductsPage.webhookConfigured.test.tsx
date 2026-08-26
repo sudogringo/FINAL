@@ -24,7 +24,7 @@ jest.mock('../features/admin/api', () => ({
 // process.env here and then statically importing the page would silently run the import first.
 // Using require() (not hoisted) after setting the env var guarantees ordering.
 process.env.VITE_N8N_WF4_WEBHOOK = 'https://n8n.example.com/webhook/wf4'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const AdminProductsPage = require('../pages/admin/AdminProductsPage').default as typeof import('../pages/admin/AdminProductsPage').default
 
 import { fetchAllProductsAdmin } from '../features/admin/api'

@@ -116,6 +116,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   return <CartContext.Provider value={ctx}>{children}</CartContext.Provider>
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- Context+hook pattern; splitting into two files is out of scope
 export function useCart() {
   const ctx = useContext(CartContext)
   if (!ctx) throw new Error('useCart must be used inside CartProvider')
