@@ -1,0 +1,6 @@
+participante,fecha,moderador,rango_etario,dispositivo,tiempo_seg,item1,item2,item3,item4,item5,item6,item7,item8,item9,item10,sus_score
+P1,2026-09-02,Emiliano,18-29,Notebook,94,5,1,5,1,5,1,5,1,5,1,100.0
+P2,2026-09-02,Emiliano,30-44,Notebook,69,5,1,5,1,5,1,5,1,5,1,100.0
+P3,2026-09-02,Emiliano,+60,Notebook,126,4,1,5,1,5,1,5,1,5,1,97.5
+P4,2026-09-03,Tiago,18-29,PC,40,5,1,5,1,5,1,4,1,5,1,97.5
+P5,2026-09-03,Tiago,60+,PC,381,3,2,3,1,5,2,4,2,4,1,77.5
