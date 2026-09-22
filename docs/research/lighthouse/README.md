@@ -119,6 +119,56 @@ before/after comparison instead of silently overwriting it.
   and looks in the right ballpark vs. the previous archived batch (a step change is a
   real signal worth reporting, not something to explain away).
 
+## 2026-09-08 — symmetric remeasurement against GitHub Pages (`new-hosted`)
+
+Once `sudogringo.github.io/FINAL/` went live (GitHub Pages enabled on the repo, served by the
+existing `.github/workflows/deploy.yml` pipeline), the original `new` batch above — measured
+against `vite preview` on `localhost:4173` — stopped being a fair comparison: `original` was
+always measured against its real production host, so `new` was the only side missing real
+network latency. This understated `original`'s relative disadvantage on LCP/Performance and is
+exactly the asymmetry flagged in the 2nd-instance devolución (R2-C-04).
+
+Re-ran the same protocol (5 runs/device, same throttling profile, `run-audit.mjs --runs=1` per
+call since GitHub Pages is a non-local URL) against `https://sudogringo.github.io/FINAL/` under
+label `new-hosted`. Both category scores that don't depend on network timing (accessibility,
+best-practices, seo) came out identical to the `localhost` batch — 83/83/100/100/100/100 in both
+— confirming those numbers are a property of the build, not the host. Only the
+network-timing-dependent metrics moved:
+
+```
+=== mobile ===          perf  a11y  bp   seo  lcp_ms  cls    tbt_ms
+new (localhost)          92    83   100  100   2921   0.010    75
+new-hosted (real)         75    83   100  100   6243   0.001    21
+original (real)           18    94   57   82   8888   0.861   689
+
+=== desktop ===          perf  a11y  bp   seo  lcp_ms  cls    tbt_ms
+new (localhost)          71    83   100  100   2797   0.010    57
+new-hosted (real)         64    83   100  100   6069   0.000    23
+original (real)           29    89   74   82  11514   0.120   555
+```
+
+`new-hosted` is now the number cited in Chapter 5 — it's the only one measured under the same
+conditions as `original` (both real hosts, no localhost shortcut). The `new` (localhost) batch is
+kept in `results/` for reference/methodology discussion (it's what surfaced the asymmetry in the
+first place) but is no longer the cited comparison.
+
+Re-run command used:
+
+```bash
+for i in 1 2 3 4 5; do
+  node run-audit.mjs --url=https://sudogringo.github.io/FINAL/ --label=new-hosted --runs=1 --device=desktop
+  mv results/new-hosted-desktop.json results/new-hosted-desktop-$i.json
+  mv results/new-hosted-desktop.html results/new-hosted-desktop-$i.html
+done
+for i in 1 2 3 4 5; do
+  node run-audit.mjs --url=https://sudogringo.github.io/FINAL/ --label=new-hosted --runs=1 --device=mobile
+  mv results/new-hosted-mobile.json results/new-hosted-mobile-$i.json
+  mv results/new-hosted-mobile.html results/new-hosted-mobile-$i.html
+done
+node summarize.mjs
+node generate-charts.mjs
+```
+
 ## Output
 
 Each run writes `results/<label>-<device>[-<run>].json` (full Lighthouse report) and the

@@ -13,10 +13,23 @@ const ASSETS_DIR = path.join(__dirname, '..', '..', 'assets');
 
 const COLORS = {
   new: '#2f8f4e',
+  'new-hosted': '#2f8f4e',
   original: '#b8412f',
   grid: '#d9d9d9',
   text: '#222222',
   bar: '#3b6fd1',
+};
+
+const METRIC_LABELS_ES = {
+  performance: 'Performance',
+  accessibility: 'Accesibilidad',
+  best_practices: 'Buenas prácticas',
+  seo: 'SEO',
+};
+
+const DEVICE_LABELS_ES = {
+  desktop: 'escritorio',
+  mobile: 'móvil',
 };
 
 function readCsv(file) {
@@ -49,8 +62,8 @@ ${body}
 function chartMedianComparison(rows) {
   const metrics = ['performance', 'accessibility', 'best_practices', 'seo'];
   const devices = ['desktop', 'mobile'];
-  const width = 900, height = 420;
-  const marginLeft = 60, marginBottom = 60, marginTop = 60;
+  const width = 962, height = 420;
+  const marginLeft = 60, marginBottom = 60, marginTop = 80;
   const plotW = width - marginLeft - 40;
   const plotH = height - marginTop - marginBottom;
   const groupW = plotW / (devices.length * metrics.length);
@@ -64,12 +77,14 @@ function chartMedianComparison(rows) {
     body += `<line x1="${marginLeft}" y1="${y}" x2="${width - 40}" y2="${y}" stroke="${COLORS.grid}" stroke-dasharray="4,4"/>`;
     body += `<text x="${marginLeft - 10}" y="${y + 4}" text-anchor="end" font-size="11" fill="${COLORS.text}">${g}</text>`;
   }
+  const yAxisCenter = marginTop + plotH / 2;
+  body += `<text x="18" y="${yAxisCenter}" text-anchor="middle" font-size="11" fill="${COLORS.text}" transform="rotate(-90 18 ${yAxisCenter})">Puntaje (0–100)</text>`;
 
   let gi = 0;
   for (const device of devices) {
     for (const metric of metrics) {
       const groupX = marginLeft + gi * groupW;
-      const labels = ['original', 'new'];
+      const labels = ['original', 'new-hosted'];
       labels.forEach((label, li) => {
         const matching = rows.filter((r) => r.label === label && r.device === device);
         const values = matching.map((r) => Number(r[metric]));
@@ -82,29 +97,29 @@ function chartMedianComparison(rows) {
         body += `<text x="${x + (barW - 4) / 2}" y="${y - 4}" text-anchor="middle" font-size="10" fill="${COLORS.text}">${Math.round(med)}</text>`;
       });
       const labelX = groupX + groupW / 2;
-      body += `<text x="${labelX}" y="${marginTop + plotH + 16}" text-anchor="middle" font-size="10" fill="${COLORS.text}" transform="rotate(0)">${metric.replace('_', ' ')}</text>`;
-      body += `<text x="${labelX}" y="${marginTop + plotH + 30}" text-anchor="middle" font-size="9" fill="#888">${device}</text>`;
+      body += `<text x="${labelX}" y="${marginTop + plotH + 16}" text-anchor="middle" font-size="10" fill="${COLORS.text}" transform="rotate(0)">${METRIC_LABELS_ES[metric]}</text>`;
+      body += `<text x="${labelX}" y="${marginTop + plotH + 30}" text-anchor="middle" font-size="9" fill="#888">${DEVICE_LABELS_ES[device]}</text>`;
       gi++;
     }
   }
 
   // legend
-  body += `<rect x="${width - 180}" y="${marginTop - 40}" width="12" height="12" fill="${COLORS.original}"/>`;
-  body += `<text x="${width - 162}" y="${marginTop - 30}" font-size="11" fill="${COLORS.text}">original site (n=1)</text>`;
-  body += `<rect x="${width - 180}" y="${marginTop - 22}" width="12" height="12" fill="${COLORS.new}"/>`;
-  body += `<text x="${width - 162}" y="${marginTop - 12}" font-size="11" fill="${COLORS.text}">new frontend (median, n=5)</text>`;
+  body += `<rect x="${marginLeft}" y="${marginTop - 36}" width="12" height="12" fill="${COLORS.original}"/>`;
+  body += `<text x="${marginLeft + 18}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">sitio original (n=1)</text>`;
+  body += `<rect x="${marginLeft + 200}" y="${marginTop - 36}" width="12" height="12" fill="${COLORS['new-hosted']}"/>`;
+  body += `<text x="${marginLeft + 218}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">catálogo nuevo, alojado en GitHub Pages (mediana, n=5)</text>`;
 
-  return svgWrap(width, height, body, 'Lighthouse median scores — original vs. new frontend');
+  return svgWrap(width, height, body, 'Puntajes medianos de Lighthouse — sitio original vs. catálogo nuevo');
 }
 
-// --- Chart 2: per-run performance spread for "new", both devices ---
+// --- Chart 2: per-run performance spread for "new-hosted", both devices ---
 function chartRunSpread(rows) {
   const width = 900, height = 420;
   const marginLeft = 50, marginBottom = 50, marginTop = 60, marginRight = 40;
   const plotW = width - marginLeft - marginRight;
   const plotH = height - marginTop - marginBottom;
 
-  const newRows = rows.filter((r) => r.label === 'new');
+  const newRows = rows.filter((r) => r.label === 'new-hosted');
   const devices = ['desktop', 'mobile'];
   const maxRun = 5;
 
@@ -129,7 +144,7 @@ function chartRunSpread(rows) {
     body += `<text x="${marginLeft - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="${COLORS.text}">${g}</text>`;
   }
   for (let run = 1; run <= maxRun; run++) {
-    body += `<text x="${xFor(run)}" y="${marginTop + plotH + 20}" text-anchor="middle" font-size="11" fill="${COLORS.text}">run ${run}</text>`;
+    body += `<text x="${xFor(run)}" y="${marginTop + plotH + 20}" text-anchor="middle" font-size="11" fill="${COLORS.text}">corrida ${run}</text>`;
   }
 
   const deviceColor = { desktop: '#3b6fd1', mobile: '#d1893b' };
@@ -143,15 +158,15 @@ function chartRunSpread(rows) {
     const med = median(devRows.map((r) => Number(r.performance)));
     const medY = yFor(med);
     body += `<line x1="${marginLeft}" y1="${medY}" x2="${width - marginRight}" y2="${medY}" stroke="${deviceColor[device]}" stroke-dasharray="6,3" opacity="0.5"/>`;
-    body += `<text x="${width - marginRight + 2}" y="${medY + 4}" font-size="10" fill="${deviceColor[device]}">med ${Math.round(med)}</text>`;
+    body += `<text x="${width - marginRight + 2}" y="${medY + 4}" font-size="10" fill="${deviceColor[device]}">mediana ${Math.round(med)}</text>`;
   }
 
   body += `<circle cx="${width - 200}" cy="${marginTop - 15}" r="4" fill="${deviceColor.desktop}"/>`;
-  body += `<text x="${width - 190}" y="${marginTop - 11}" font-size="11" fill="${COLORS.text}">desktop</text>`;
+  body += `<text x="${width - 190}" y="${marginTop - 11}" font-size="11" fill="${COLORS.text}">escritorio</text>`;
   body += `<circle cx="${width - 120}" cy="${marginTop - 15}" r="4" fill="${deviceColor.mobile}"/>`;
-  body += `<text x="${width - 110}" y="${marginTop - 11}" font-size="11" fill="${COLORS.text}">mobile</text>`;
+  body += `<text x="${width - 110}" y="${marginTop - 11}" font-size="11" fill="${COLORS.text}">móvil</text>`;
 
-  return svgWrap(width, height, body, 'Performance score across 5 runs — new frontend (dashed = median)');
+  return svgWrap(width, height, body, 'Puntaje de Performance en 5 corridas — catálogo nuevo, GitHub Pages (línea punteada = mediana)');
 }
 
 function main() {
