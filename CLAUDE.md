@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Context
 
 **Golden Harvest S.A. — Digital Transformation** (UTN Final Project, 2026)
-Authors: Cunto Boberg, Tiago & Rojo, Emiliano. Director: Prof. Alberto Cortez.
+Authors: Cunto Boberg, Tiago & Rojo, Emiliano. Directores: Prof. Alberto Cortez, Ariel Enferrel.
 
 Backend (`backend/`), frontend (`frontend/`), and n8n are fully wired together — quotes flow from the cart through the backend into n8n, and n8n reads back from the backend API. n8n runs locally as a live instance with real (simulated-data) workflow runs under `n8n/data/`. See `docs/architecture/` for per-layer detail.
 
