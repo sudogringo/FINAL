@@ -8,8 +8,8 @@ All the business logic that isn't "serve the catalog and store a quote" — mark
 
 ## Design
 
-- **Self-hosted via Docker**, `docker-compose.yml` `n8n` service (official `docker.n8n.io/n8nio/n8n` image — no custom Dockerfile exists), SQLite storage under `n8n/data/` (bind-mounted, portable — see `n8n/README.md` if present for migration notes), public URL fixed to `localhost:4343` via env vars in `n8n/.env` (`N8N_PORT`, `WEBHOOK_URL`, etc.) so OAuth redirects resolve correctly instead of n8n's default `5678`.
-- **Modular, independent workflows** — the seven modules designed in [`n8n_workflows.md`](n8n_workflows.md) are built as separate n8n workflows, each importable/exportable on its own. The only designed inter-workflow dependency is Branding → Social Media Content Engine (color palette feeds post generation).
+- **Self-hosted via Docker**, `docker-compose.yml` `n8n` service (built from `n8n/Dockerfile`: `node:24-alpine` plus Chromium, with n8n installed globally via npm and pinned by `ARG N8N_VERSION=2.27.5`, and the `n8n-nodes-puppeteer` community node), SQLite storage under `n8n/data/` (bind-mounted, portable — see `n8n/README.md` if present for migration notes), public URL fixed to `localhost:4343` via env vars in `n8n/.env` (`N8N_PORT`, `WEBHOOK_URL`, etc.) so OAuth redirects resolve correctly instead of n8n's default `5678`.
+- **Modular, independent workflows** — the seven modules designed in [`n8n_workflows.md`](n8n_workflows.md) are built as separate n8n workflows, each importable/exportable on its own. As built, that is nine functional workflows — `00` (Lead Notification, the VD2 measurement instrument) plus `01`–`07` with module 6 split into `06a`/`06b` — and one auxiliary (`_TMP_CreateSocialSheet`), all exported under `n8n/workflows/`. The only designed inter-workflow dependency is Branding → Social Media Content Engine (color palette feeds post generation).
 - **Credentials manager workaround**: n8n's built-in credentials UI is awkward to work with for this project's needs (frequent recreation, poor portability across machines). Where reasonable, config is passed via `.env` files or webhook payloads instead of n8n's credentials store.
 
 ## Version control: workflows vs. runtime data
@@ -40,7 +40,9 @@ Verified directly against `n8n/data/database.sqlite` (workflow + execution table
 | 06b | Carrito Abandonado | No | 4 / 1 |
 | 07 | Logistics & Shipping Automation | No | 8 / 8 |
 
-All 8 real workflows exist and have been manually executed/tested (none are on an active schedule or live webhook right now — `active=0` for all). Workflow 06 ("Lead Nurturing & Cart Interest" in the original design) was split into two: `06a. Newsletter Quincenal` (the bi-weekly schedule half) and `06b. Carrito Abandonado` (the webhook-triggered abandoned-cart half). A `_TMP_CreateSocialSheet` helper workflow also exists (scaffolding, not one of the 7 modules).
+`00. Lead Notification` was built after this snapshot of the execution table, as the instrument for VD2; it is not listed above, and its measured runs (18, no failures) are recorded in `docs/research/quote-latency/results/` rather than here. The detailed execution records behind the counts above were not preserved.
+
+All 8 workflows in the table exist and have been manually executed/tested (none are on an active schedule or live webhook right now — `active=0` for all). Workflow 06 ("Lead Nurturing & Cart Interest" in the original design) was split into two: `06a. Newsletter Quincenal` (the bi-weekly schedule half) and `06b. Carrito Abandonado` (the webhook-triggered abandoned-cart half). A `_TMP_CreateSocialSheet` helper workflow also exists (scaffolding, not one of the 7 modules).
 
 Data status per workflow (fill in / correct as work continues — this is the section the "no real access, no budget" constraint applies to directly):
 
