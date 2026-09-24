@@ -65,7 +65,7 @@ formateo a Markdown; el contenido textual no se alteró).
 
 ## Participante P3 — 02/09/2026, presencial, moderador: Emiliano
 
-- Rango etario: +60
+- Rango etario: 60+
 - Compra online: Habitualmente (Mercado Libre generalmente)
 - Dispositivo: Notebook
 - Completó sin asistencia: "Consultó si seleccionaba cualquier producto en un momento nada más" (una consulta menor antes de la tarea, no asistencia durante la tarea)

@@ -60,7 +60,7 @@ suavizarlo, porque el criterio de aceptación de VD4 es completar "sin asistenci
   que el propio Capítulo 5 reporta que el sitio se usa mayoritariamente desde dispositivos
   móviles (Statcounter Global Stats, 2024a, citado en §2.3).
 - **P5** fue el único participante con fricción real, y coincide con ser la persona de mayor
-  edad (+60) del grupo — declaró explícitamente que "le costaba leer las descripciones"
+  edad (60+) del grupo — declaró explícitamente que "le costaba leer las descripciones"
   (letra chica). Este hallazgo cualitativo **corrobora de forma independiente** la regresión
   de Accessibility que Lighthouse ya reporta en el Capítulo 5 (83 vs. 89–94 del sitio
   preexistente) — dos instrumentos distintos, mismo síntoma. Vale la pena señalar esta
