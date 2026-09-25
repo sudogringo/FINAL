@@ -1,0 +1,389 @@
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container detected via .dockerenv file
+Failed to load Custom API options for the node "n8n-nodes-base.confluence": Unknown credential name "confluenceCloudOAuth2Api"
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (ATaCw9FTNy8f23lpWnoow) 
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Trigger (Sheet mode)": [
+          {
+            "startTime": 1790355984311,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 2,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Leer Sheet de Contenido": [
+          {
+            "startTime": 1790355984314,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger (Sheet mode)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 843,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "row_number": 2,
+                      "fecha_publicacion": "",
+                      "tema": "can of peaches",
+                      "descripcion": "new product",
+                      "imagen_url": "https://picsum.photos/seed/canofpeaches/800/600",
+                      "tags_sugeridos": "#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza #argentina #export #calidad #sustentable #goldenharvestsa",
+                      "instagram_post": "🌾 can of peaches\n\nnew product\n\n✨ Disponible ahora. Consultanos por DM o visitá nuestro sitio.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 Imagen sugerida: https://picsum.photos/seed/canofpeaches/800/600",
+                      "whatsapp_story": "🌾 *can of peaches*\nnew product\n\n💬 Consultanos por este medio para más info.\n#peaches #product #agro #agricultura #campo",
+                      "facebook_post": "🌾 Golden Harvest S.A. — can of peaches\n\nnew product\n\n📅 Fecha sugerida de publicación: A confirmar\n🔗 Visitá nuestro sitio para más información.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 https://picsum.photos/seed/canofpeaches/800/600"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "¿Form o Sheet?": [
+          {
+            "startTime": 1790355985157,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Leer Sheet de Contenido",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 10,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "row_number": 2,
+                      "fecha_publicacion": "",
+                      "tema": "can of peaches",
+                      "descripcion": "new product",
+                      "imagen_url": "https://picsum.photos/seed/canofpeaches/800/600",
+                      "tags_sugeridos": "#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza #argentina #export #calidad #sustentable #goldenharvestsa",
+                      "instagram_post": "🌾 can of peaches\n\nnew product\n\n✨ Disponible ahora. Consultanos por DM o visitá nuestro sitio.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 Imagen sugerida: https://picsum.photos/seed/canofpeaches/800/600",
+                      "whatsapp_story": "🌾 *can of peaches*\nnew product\n\n💬 Consultanos por este medio para más info.\n#peaches #product #agro #agricultura #campo",
+                      "facebook_post": "🌾 Golden Harvest S.A. — can of peaches\n\nnew product\n\n📅 Fecha sugerida de publicación: A confirmar\n🔗 Visitá nuestro sitio para más información.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 https://picsum.photos/seed/canofpeaches/800/600"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Normalizar datos (Sheet)": [
+          {
+            "startTime": 1790355985167,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "¿Form o Sheet?",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 42,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "source": "sheet",
+                      "producto": "can of peaches",
+                      "descripcion": "new product",
+                      "fecha": "",
+                      "imagen_url": "https://picsum.photos/seed/canofpeaches/800/600",
+                      "email": "",
+                      "plataformas": "Instagram,WhatsApp Story,Facebook",
+                      "row_number": 2
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Resolver Imagen (Unsplash)": [
+          {
+            "startTime": 1790355985209,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Normalizar datos (Sheet)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 86,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "source": "sheet",
+                      "producto": "can of peaches",
+                      "descripcion": "new product",
+                      "fecha": "",
+                      "imagen_url": "https://picsum.photos/seed/canofpeaches/800/600",
+                      "email": "",
+                      "plataformas": "Instagram,WhatsApp Story,Facebook",
+                      "row_number": 2,
+                      "imagen_url_final": "https://picsum.photos/seed/canofpeaches/800/600"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Generar Hashtags (Rule-based)": [
+          {
+            "startTime": 1790355985295,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Resolver Imagen (Unsplash)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 11,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "source": "sheet",
+                      "producto": "can of peaches",
+                      "descripcion": "new product",
+                      "fecha": "",
+                      "imagen_url": "https://picsum.photos/seed/canofpeaches/800/600",
+                      "email": "",
+                      "plataformas": "Instagram,WhatsApp Story,Facebook",
+                      "row_number": 2,
+                      "imagen_url_final": "https://picsum.photos/seed/canofpeaches/800/600",
+                      "hashtags": "#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza #argentina #export #calidad #sustentable #goldenharvestsa",
+                      "hashtags_array": [
+                        "#peaches",
+                        "#product",
+                        "#agro",
+                        "#agricultura",
+                        "#campo",
+                        "#agronegocio",
+                        "#cosecha",
+                        "#vino",
+                        "#viticultura",
+                        "#mendoza",
+                        "#argentina",
+                        "#export",
+                        "#calidad",
+                        "#sustentable",
+                        "#goldenharvestsa"
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Formatear Posts": [
+          {
+            "startTime": 1790355985306,
+            "executionIndex": 6,
+            "source": [
+              {
+                "previousNode": "Generar Hashtags (Rule-based)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 9,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "source": "sheet",
+                      "email": "",
+                      "row_number": 2,
+                      "producto": "can of peaches",
+                      "fecha": "",
+                      "hashtags": "#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza #argentina #export #calidad #sustentable #goldenharvestsa",
+                      "imagen_url_final": "https://picsum.photos/seed/canofpeaches/800/600",
+                      "post_instagram": "🌾 can of peaches\n\nnew product\n\n✨ Disponible ahora. Consultanos por DM o visitá nuestro sitio.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 Imagen sugerida: https://picsum.photos/seed/canofpeaches/800/600",
+                      "post_whatsapp": "🌾 *can of peaches*\nnew product\n\n💬 Consultanos por este medio para más info.\n#peaches #product #agro #agricultura #campo",
+                      "post_facebook": "🌾 Golden Harvest S.A. — can of peaches\n\nnew product\n\n📅 Fecha sugerida de publicación: A confirmar\n🔗 Visitá nuestro sitio para más información.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 https://picsum.photos/seed/canofpeaches/800/600"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "¿Enviar email o escribir sheet?": [
+          {
+            "startTime": 1790355985316,
+            "executionIndex": 7,
+            "source": [
+              {
+                "previousNode": "Formatear Posts",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 10,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [],
+                [
+                  {
+                    "json": {
+                      "source": "sheet",
+                      "email": "",
+                      "row_number": 2,
+                      "producto": "can of peaches",
+                      "fecha": "",
+                      "hashtags": "#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza #argentina #export #calidad #sustentable #goldenharvestsa",
+                      "imagen_url_final": "https://picsum.photos/seed/canofpeaches/800/600",
+                      "post_instagram": "🌾 can of peaches\n\nnew product\n\n✨ Disponible ahora. Consultanos por DM o visitá nuestro sitio.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 Imagen sugerida: https://picsum.photos/seed/canofpeaches/800/600",
+                      "post_whatsapp": "🌾 *can of peaches*\nnew product\n\n💬 Consultanos por este medio para más info.\n#peaches #product #agro #agricultura #campo",
+                      "post_facebook": "🌾 Golden Harvest S.A. — can of peaches\n\nnew product\n\n📅 Fecha sugerida de publicación: A confirmar\n🔗 Visitá nuestro sitio para más información.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 https://picsum.photos/seed/canofpeaches/800/600"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Escribir en Sheet": [
+          {
+            "startTime": 1790355985326,
+            "executionIndex": 8,
+            "source": [
+              {
+                "previousNode": "¿Enviar email o escribir sheet?",
+                "previousNodeOutput": 1,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1187,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "fecha_publicacion": "",
+                      "tema": "can of peaches",
+                      "tags_sugeridos": "#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza #argentina #export #calidad #sustentable #goldenharvestsa",
+                      "imagen_url": "https://picsum.photos/seed/canofpeaches/800/600",
+                      "instagram_post": "🌾 can of peaches\n\nnew product\n\n✨ Disponible ahora. Consultanos por DM o visitá nuestro sitio.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 Imagen sugerida: https://picsum.photos/seed/canofpeaches/800/600",
+                      "whatsapp_story": "🌾 *can of peaches*\nnew product\n\n💬 Consultanos por este medio para más info.\n#peaches #product #agro #agricultura #campo",
+                      "facebook_post": "🌾 Golden Harvest S.A. — can of peaches\n\nnew product\n\n📅 Fecha sugerida de publicación: A confirmar\n🔗 Visitá nuestro sitio para más información.\n\n#peaches #product #agro #agricultura #campo #agronegocio #cosecha #vino #viticultura #mendoza\n\n📸 https://picsum.photos/seed/canofpeaches/800/600",
+                      "row_number": 2
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Escribir en Sheet"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1790355984310,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger (Sheet mode)",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "979f488b8b1e1080c886cd640ef68086d4a747ea172bec097390b836632ef350"
+  },
+  "mode": "cli",
+  "startedAt": "2026-09-25T17:06:24.296Z",
+  "stoppedAt": "2026-09-25T17:06:26.515Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}

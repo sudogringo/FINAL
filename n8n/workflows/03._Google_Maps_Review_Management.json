@@ -1,11 +1,16 @@
 {
-  "updatedAt": "2026-08-04T20:25:01.789Z",
-  "createdAt": "2026-06-04T13:18:22.871Z",
   "id": "GqIUYIEcOhioWBfY",
   "name": "03. Google Maps Review Management",
   "description": "",
   "active": false,
+  "activeVersionId": null,
+  "createdAt": "2026-06-04T13:18:22.871Z",
+  "updatedAt": "2026-09-25T16:44:42.533Z",
   "isArchived": false,
+  "versionId": "051b6def-ca13-4998-a642-54a57eb74a87",
+  "versionCounter": 66,
+  "sourceWorkflowId": null,
+  "triggerCount": 0,
   "nodes": [
     {
       "parameters": {
@@ -251,7 +256,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// [TESIS] Emit each review as a separate item \u2014 no external API needed\nreturn [\n  { json: { reviewId: \"rev001\", starRating: 5, comment: \"Excelentes productos, el pesto de oliva es incre\u00edble. Muy buena atenci\u00f3n.\", reviewerDisplayName: \"Mar\u00eda Gonz\u00e1lez\" } },\n  { json: { reviewId: \"rev002\", starRating: 2, comment: \"La entrega demor\u00f3 m\u00e1s de lo esperado y el frasco lleg\u00f3 con la tapa floja.\", reviewerDisplayName: \"Carlos P\u00e9rez\" } },\n  { json: { reviewId: \"rev003\", starRating: 4, comment: \"Muy buenas mermeladas artesanales. El chutney de ciruela es delicioso.\", reviewerDisplayName: \"Ana Rodr\u00edguez\" } },\n  { json: { reviewId: \"rev004\", starRating: 1, comment: \"P\u00e9simo servicio, nunca respondieron mi reclamo y el producto lleg\u00f3 roto.\", reviewerDisplayName: \"Juan Mart\u00ednez\" } },\n  { json: { reviewId: \"rev005\", starRating: 5, comment: \"Los mejores productos artesanales de la regi\u00f3n. El aceite de oliva es excepcional.\", reviewerDisplayName: \"Laura S\u00e1nchez\" } }\n];\n"
+        "jsCode": "// [TESIS] Emit each review as a separate item — no external API needed\nreturn [\n  { json: { reviewId: \"rev001\", starRating: 5, comment: \"Excelentes productos, el pesto de oliva es increíble. Muy buena atención.\", reviewerDisplayName: \"María González\" } },\n  { json: { reviewId: \"rev002\", starRating: 2, comment: \"La entrega demoró más de lo esperado y el frasco llegó con la tapa floja.\", reviewerDisplayName: \"Carlos Pérez\" } },\n  { json: { reviewId: \"rev003\", starRating: 4, comment: \"Muy buenas mermeladas artesanales. El chutney de ciruela es delicioso.\", reviewerDisplayName: \"Ana Rodríguez\" } },\n  { json: { reviewId: \"rev004\", starRating: 1, comment: \"Pésimo servicio, nunca respondieron mi reclamo y el producto llegó roto.\", reviewerDisplayName: \"Juan Martínez\" } },\n  { json: { reviewId: \"rev005\", starRating: 5, comment: \"Los mejores productos artesanales de la región. El aceite de oliva es excepcional.\", reviewerDisplayName: \"Laura Sánchez\" } }\n];\n"
       },
       "id": "node-mock-reviews",
       "name": "[TESIS] Mock Reviews",
@@ -264,7 +269,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// [TESIS] Process all reviews at once \u2014 classify + generate reply/escalation\nconst items = $input.all();\nconst results = [];\n\nfor (const item of items) {\n  const r = item.json;\n  const stars = r.starRating;\n  const comment = (r.comment || '').toLowerCase();\n  const name = r.reviewerDisplayName || 'Cliente';\n\n  let action, priority, reply, escalation;\n\n  if (stars >= 4) {\n    action = 'auto_reply';\n    priority = 'normal';\n    reply = `\u00a1Muchas gracias ${name}! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opini\u00f3n es muy valiosa para nosotros.`;\n    escalation = null;\n  } else {\n    action = (comment.includes('demora') || comment.includes('roto') || comment.includes('p\u00e9simo') || comment.includes('horrible'))\n      ? 'urgent_admin' : 'notify_admin';\n    priority = action === 'urgent_admin' ? 'urgent' : 'normal';\n    reply = null;\n    escalation = `Contactar a ${name} para resolver su experiencia negativa y ofrecer compensaci\u00f3n si corresponde.`;\n  }\n\n  results.push({\n    reviewId: r.reviewId,\n    reviewer: name,\n    stars,\n    comment: r.comment,\n    action,\n    priority,\n    tesis_reply: reply,\n    escalation_suggestion: escalation\n  });\n}\n\nreturn [{ json: { all_reviews: results } }];\n"
+        "jsCode": "// [TESIS] Process all reviews at once — classify + generate reply/escalation\nconst items = $input.all();\nconst results = [];\n\nfor (const item of items) {\n  const r = item.json;\n  const stars = r.starRating;\n  const comment = (r.comment || '').toLowerCase();\n  const name = r.reviewerDisplayName || 'Cliente';\n\n  let action, priority, reply, escalation;\n\n  if (stars >= 4) {\n    action = 'auto_reply';\n    priority = 'normal';\n    reply = `¡Muchas gracias ${name}! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opinión es muy valiosa para nosotros.`;\n    escalation = null;\n  } else {\n    action = (comment.includes('demora') || comment.includes('roto') || comment.includes('pésimo') || comment.includes('horrible'))\n      ? 'urgent_admin' : 'notify_admin';\n    priority = action === 'urgent_admin' ? 'urgent' : 'normal';\n    reply = null;\n    escalation = `Contactar a ${name} para resolver su experiencia negativa y ofrecer compensación si corresponde.`;\n  }\n\n  results.push({\n    reviewId: r.reviewId,\n    reviewer: name,\n    stars,\n    comment: r.comment,\n    action,\n    priority,\n    tesis_reply: reply,\n    escalation_suggestion: escalation\n  });\n}\n\nreturn [{ json: { all_reviews: results } }];\n"
       },
       "id": "node-expand-reviews",
       "name": "[TESIS] Process All Reviews",
@@ -277,7 +282,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// [TESIS] Build HTML email with all review results\nconst data = $input.first().json;\nconst reviews = data.all_reviews;\n\nconst positive = reviews.filter(r => r.action === 'auto_reply');\nconst negative = reviews.filter(r => r.action !== 'auto_reply');\nconst urgent = reviews.filter(r => r.priority === 'urgent');\n\nconst starsBar = (n) => '\u2b50'.repeat(n) + '\u2606'.repeat(5 - n);\n\nconst positiveRows = positive.map(r => `\n  <tr style=\"background:#f0fdf4\">\n    <td style=\"padding:8px\">${starsBar(r.stars)} (${r.stars})</td>\n    <td style=\"padding:8px\"><b>${r.reviewer}</b><br><small>${r.comment}</small></td>\n    <td style=\"padding:8px;color:#16a34a\"><i>${r.tesis_reply}</i></td>\n  </tr>`).join('');\n\nconst negativeRows = negative.map(r => `\n  <tr style=\"background:${r.priority==='urgent'?'#fff1f2':'#fffbeb'}\">\n    <td style=\"padding:8px\">${starsBar(r.stars)} (${r.stars})</td>\n    <td style=\"padding:8px\"><b>${r.reviewer}</b><br><small>${r.comment}</small></td>\n    <td style=\"padding:8px;color:#dc2626\">${r.priority==='urgent'?'\ud83d\udea8 URGENTE':'\u26a0\ufe0f Atenci\u00f3n'}<br><small>${r.escalation_suggestion}</small></td>\n  </tr>`).join('');\n\nconst html = `\n<html><body style=\"font-family:Arial,sans-serif;max-width:700px;margin:auto\">\n  <h2 style=\"color:#15803d\">\ud83c\udf3f Golden Harvest S.A. \u2014 Reporte de Rese\u00f1as Google Maps</h2>\n  <p style=\"color:#666\">Procesado: ${new Date().toLocaleString('es-AR')}</p>\n\n  <table style=\"width:100%;border-collapse:collapse;margin-bottom:16px\">\n    <tr>\n      <td style=\"background:#15803d;color:white;padding:12px;border-radius:6px;text-align:center\"><b>${reviews.length}</b><br>Total</td>\n      <td style=\"width:12px\"></td>\n      <td style=\"background:#16a34a;color:white;padding:12px;border-radius:6px;text-align:center\"><b>${positive.length}</b><br>Positivas</td>\n      <td style=\"width:12px\"></td>\n      <td style=\"background:#dc2626;color:white;padding:12px;border-radius:6px;text-align:center\"><b>${negative.length}</b><br>Negativas</td>\n      <td style=\"width:12px\"></td>\n      <td style=\"background:#7f1d1d;color:white;padding:12px;border-radius:6px;text-align:center\"><b>${urgent.length}</b><br>Urgentes</td>\n    </tr>\n  </table>\n\n  ${positive.length ? `\n  <h3 style=\"color:#16a34a\">\u2705 Rese\u00f1as Positivas \u2014 Respuesta Autom\u00e1tica Generada</h3>\n  <table style=\"width:100%;border-collapse:collapse;font-size:13px\">\n    <tr style=\"background:#dcfce7\"><th style=\"padding:8px;text-align:left\">Estrellas</th><th style=\"padding:8px;text-align:left\">Rese\u00f1a</th><th style=\"padding:8px;text-align:left\">Respuesta Sugerida</th></tr>\n    ${positiveRows}\n  </table>` : ''}\n\n  ${negative.length ? `\n  <h3 style=\"color:#dc2626\">\u26a0\ufe0f Rese\u00f1as Negativas \u2014 Requieren Atenci\u00f3n</h3>\n  <table style=\"width:100%;border-collapse:collapse;font-size:13px\">\n    <tr style=\"background:#fee2e2\"><th style=\"padding:8px;text-align:left\">Estrellas</th><th style=\"padding:8px;text-align:left\">Rese\u00f1a</th><th style=\"padding:8px;text-align:left\">Acci\u00f3n Sugerida</th></tr>\n    ${negativeRows}\n  </table>` : ''}\n\n  <p style=\"color:#999;font-size:11px;margin-top:24px\">Workflow 03 \u2014 Google Maps Review Management | Golden Harvest S.A. | Modo TESIS (simulado)</p>\n</body></html>`;\n\nreturn [{ json: { subject: `[Golden Harvest] Rese\u00f1as Google Maps \u2014 ${positive.length} positivas, ${negative.length} negativas${urgent.length ? ', ' + urgent.length + ' URGENTES' : ''}`, html_body: html, summary: { total: reviews.length, positivas: positive.length, negativas: negative.length, urgentes: urgent.length } } }];\n"
+        "jsCode": "// [TESIS] Build HTML email with all review results\nconst data = $input.first().json;\nconst reviews = data.all_reviews;\n\nconst positive = reviews.filter(r => r.action === 'auto_reply');\nconst negative = reviews.filter(r => r.action !== 'auto_reply');\nconst urgent = reviews.filter(r => r.priority === 'urgent');\n\nconst starsBar = (n) => '⭐'.repeat(n) + '☆'.repeat(5 - n);\n\nconst positiveRows = positive.map(r => `\n  <tr style=\"background:#f0fdf4\">\n    <td style=\"padding:8px\">${starsBar(r.stars)} (${r.stars})</td>\n    <td style=\"padding:8px\"><b>${r.reviewer}</b><br><small>${r.comment}</small></td>\n    <td style=\"padding:8px;color:#16a34a\"><i>${r.tesis_reply}</i></td>\n  </tr>`).join('');\n\nconst negativeRows = negative.map(r => `\n  <tr style=\"background:${r.priority==='urgent'?'#fff1f2':'#fffbeb'}\">\n    <td style=\"padding:8px\">${starsBar(r.stars)} (${r.stars})</td>\n    <td style=\"padding:8px\"><b>${r.reviewer}</b><br><small>${r.comment}</small></td>\n    <td style=\"padding:8px;color:#dc2626\">${r.priority==='urgent'?'🚨 URGENTE':'⚠️ Atención'}<br><small>${r.escalation_suggestion}</small></td>\n  </tr>`).join('');\n\nconst html = `\n<html><body style=\"font-family:Arial,sans-serif;max-width:700px;margin:auto\">\n  <h2 style=\"color:#15803d\">🌿 Golden Harvest S.A. — Reporte de Reseñas Google Maps</h2>\n  <p style=\"color:#666\">Procesado: ${new Date().toLocaleString('es-AR')}</p>\n\n  <table style=\"width:100%;border-collapse:collapse;margin-bottom:16px\">\n    <tr>\n      <td style=\"background:#15803d;color:white;padding:12px;border-radius:6px;text-align:center\"><b>${reviews.length}</b><br>Total</td>\n      <td style=\"width:12px\"></td>\n      <td style=\"background:#16a34a;color:white;padding:12px;border-radius:6px;text-align:center\"><b>${positive.length}</b><br>Positivas</td>\n      <td style=\"width:12px\"></td>\n      <td style=\"background:#dc2626;color:white;padding:12px;border-radius:6px;text-align:center\"><b>${negative.length}</b><br>Negativas</td>\n      <td style=\"width:12px\"></td>\n      <td style=\"background:#7f1d1d;color:white;padding:12px;border-radius:6px;text-align:center\"><b>${urgent.length}</b><br>Urgentes</td>\n    </tr>\n  </table>\n\n  ${positive.length ? `\n  <h3 style=\"color:#16a34a\">✅ Reseñas Positivas — Respuesta Automática Generada</h3>\n  <table style=\"width:100%;border-collapse:collapse;font-size:13px\">\n    <tr style=\"background:#dcfce7\"><th style=\"padding:8px;text-align:left\">Estrellas</th><th style=\"padding:8px;text-align:left\">Reseña</th><th style=\"padding:8px;text-align:left\">Respuesta Sugerida</th></tr>\n    ${positiveRows}\n  </table>` : ''}\n\n  ${negative.length ? `\n  <h3 style=\"color:#dc2626\">⚠️ Reseñas Negativas — Requieren Atención</h3>\n  <table style=\"width:100%;border-collapse:collapse;font-size:13px\">\n    <tr style=\"background:#fee2e2\"><th style=\"padding:8px;text-align:left\">Estrellas</th><th style=\"padding:8px;text-align:left\">Reseña</th><th style=\"padding:8px;text-align:left\">Acción Sugerida</th></tr>\n    ${negativeRows}\n  </table>` : ''}\n\n  <p style=\"color:#999;font-size:11px;margin-top:24px\">Workflow 03 — Google Maps Review Management | Golden Harvest S.A. | Modo TESIS (simulado)</p>\n</body></html>`;\n\nreturn [{ json: { subject: `[Golden Harvest] Reseñas Google Maps — ${positive.length} positivas, ${negative.length} negativas${urgent.length ? ', ' + urgent.length + ' URGENTES' : ''}`, html_body: html, summary: { total: reviews.length, positivas: positive.length, negativas: negative.length, urgentes: urgent.length } } }];\n"
       },
       "id": "node-write-results",
       "name": "[TESIS] Build Email",
@@ -290,12 +295,12 @@
     },
     {
       "parameters": {
-        "content": "## \ud83d\udd34 MODO PRODUCCI\u00d3N\n\n**Requiere credenciales reales de Google My Business**\n\nEstos nodos est\u00e1n **deshabilitados** para el demo de tesis.\nEn producci\u00f3n, esta ruta:\n- Obtiene rese\u00f1as via Google My Business API\n- Publica respuestas autom\u00e1ticas en Google Maps\n- Env\u00eda emails al administrador para rese\u00f1as negativas\n\n**Para activar:** configurar credenciales OAuth de Google My Business y habilitar los nodos.",
+        "content": "## 🔴 MODO PRODUCCIÓN\n\n**Requiere credenciales reales de Google My Business**\n\nEstos nodos están **deshabilitados** para el demo de tesis.\nEn producción, esta ruta:\n- Obtiene reseñas via Google My Business API\n- Publica respuestas automáticas en Google Maps\n- Envía emails al administrador para reseñas negativas\n\n**Para activar:** configurar credenciales OAuth de Google My Business y habilitar los nodos.",
         "height": 608,
         "width": 1464
       },
       "id": "sticky-production",
-      "name": "Sticky Note \u2014 PRODUCCI\u00d3N",
+      "name": "Sticky Note — PRODUCCIÓN",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -305,13 +310,13 @@
     },
     {
       "parameters": {
-        "content": "## \ud83d\udfe2 MODO TESIS\n\n**Simulaci\u00f3n sin credenciales reales**\n\n5 rese\u00f1as de muestra en espa\u00f1ol. Flujo:\n1. **Mock Reviews** \u2192 emite 5 \u00edtems\n2. **Process All Reviews** \u2192 clasifica todas de una sola vez (sin splitInBatches)\n3. **Build Email** \u2192 genera HTML con resumen completo\n4. **Send Email** \u2192 env\u00eda reporte a tiagoboberg@gmail.com\n\n- 3 positivas (4-5 \u2b50) \u2192 respuesta amable generada\n- 2 negativas (1-2 \u2b50) \u2192 escalaci\u00f3n sugerida\n\n**NO** se publican respuestas en Google Maps.",
+        "content": "## 🟢 MODO TESIS\n\n**Simulación sin credenciales reales**\n\n5 reseñas de muestra en español. Flujo:\n1. **Mock Reviews** → emite 5 ítems\n2. **Process All Reviews** → clasifica todas de una sola vez (sin splitInBatches)\n3. **Build Email** → genera HTML con resumen completo\n4. **Send Email** → envía reporte a tiagoboberg@gmail.com\n\n- 3 positivas (4-5 ⭐) → respuesta amable generada\n- 2 negativas (1-2 ⭐) → escalación sugerida\n\n**NO** se publican respuestas en Google Maps.",
         "height": 460,
         "width": 1464,
         "color": 3
       },
       "id": "sticky-tesis",
-      "name": "Sticky Note \u2014 TESIS",
+      "name": "Sticky Note — TESIS",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -341,6 +346,17 @@
           "name": "Gmail account"
         }
       }
+    },
+    {
+      "parameters": {},
+      "id": "db0224f8-7c0f-4abe-a7db-3e8f146f5884",
+      "name": "Manual Trigger (TESIS)",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        160,
+        896
+      ]
     }
   ],
   "connections": {
@@ -515,8 +531,30 @@
           }
         ]
       ]
+    },
+    "Manual Trigger (TESIS)": {
+      "main": [
+        [
+          {
+            "node": "Fetch Public Reviews",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "[TESIS] Mock Reviews",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch Google Reviews",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
+  "nodeGroups": [],
   "settings": {
     "executionOrder": "v1",
     "saveManualExecutions": true,
@@ -524,34 +562,28 @@
     "binaryMode": "separate"
   },
   "staticData": null,
-  "meta": null,
-  "nodeGroups": [],
   "pinData": {},
-  "versionId": "59b46810-c5dd-436f-87fa-d8196c0ba870",
-  "activeVersionId": null,
-  "versionCounter": 65,
-  "triggerCount": 0,
-  "sourceWorkflowId": null,
+  "meta": null,
+  "tags": [],
   "shared": [
     {
-      "updatedAt": "2026-06-04T13:18:22.874Z",
-      "createdAt": "2026-06-04T13:18:22.874Z",
       "role": "workflow:owner",
       "workflowId": "GqIUYIEcOhioWBfY",
       "projectId": "fqt8Sbkc8GWwPwDS",
       "project": {
-        "updatedAt": "2026-04-21T17:40:00.062Z",
-        "createdAt": "2026-04-21T17:36:32.601Z",
         "id": "fqt8Sbkc8GWwPwDS",
         "name": "Tiago Cunto Boberg <tiagoboberg@gmail.com>",
         "type": "personal",
         "icon": null,
         "description": null,
         "customTelemetryTags": [],
-        "creatorId": "e904e65e-d840-4829-bc02-d388c616774f"
-      }
+        "creatorId": "e904e65e-d840-4829-bc02-d388c616774f",
+        "createdAt": "2026-04-21T17:36:32.601Z",
+        "updatedAt": "2026-04-21T17:40:00.062Z"
+      },
+      "createdAt": "2026-06-04T13:18:22.874Z",
+      "updatedAt": "2026-06-04T13:18:22.874Z"
     }
   ],
-  "tags": [],
   "activeVersion": null
 }

@@ -1,0 +1,402 @@
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container detected via .dockerenv file
+Failed to load Custom API options for the node "n8n-nodes-base.confluence": Unknown credential name "confluenceCloudOAuth2Api"
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (JIiCZ5E4-hb_dE4EYsz8V) 
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Every 6 Hours": [
+          {
+            "startTime": 1790355958367,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Fetch Google Reviews": [
+          {
+            "startTime": 1790355958369,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Every 6 Hours",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Fetch Public Reviews": [
+          {
+            "startTime": 1790355958369,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Every 6 Hours",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Normalize Public Reviews": [
+          {
+            "startTime": 1790355958369,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Fetch Public Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "[TESIS] Mock Reviews": [
+          {
+            "startTime": 1790355958370,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Every 6 Hours",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 733,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "reviewId": "rev001",
+                      "starRating": 5,
+                      "comment": "Excelentes productos, el pesto de oliva es increíble. Muy buena atención.",
+                      "reviewerDisplayName": "María González"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "reviewId": "rev002",
+                      "starRating": 2,
+                      "comment": "La entrega demoró más de lo esperado y el frasco llegó con la tapa floja.",
+                      "reviewerDisplayName": "Carlos Pérez"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "reviewId": "rev003",
+                      "starRating": 4,
+                      "comment": "Muy buenas mermeladas artesanales. El chutney de ciruela es delicioso.",
+                      "reviewerDisplayName": "Ana Rodríguez"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "reviewId": "rev004",
+                      "starRating": 1,
+                      "comment": "Pésimo servicio, nunca respondieron mi reclamo y el producto llegó roto.",
+                      "reviewerDisplayName": "Juan Martínez"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "reviewId": "rev005",
+                      "starRating": 5,
+                      "comment": "Los mejores productos artesanales de la región. El aceite de oliva es excepcional.",
+                      "reviewerDisplayName": "Laura Sánchez"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "[TESIS] Process All Reviews": [
+          {
+            "startTime": 1790355959103,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "[TESIS] Mock Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 15,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "all_reviews": [
+                        {
+                          "reviewId": "rev001",
+                          "reviewer": "María González",
+                          "stars": 5,
+                          "comment": "Excelentes productos, el pesto de oliva es increíble. Muy buena atención.",
+                          "action": "auto_reply",
+                          "priority": "normal",
+                          "tesis_reply": "¡Muchas gracias María González! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opinión es muy valiosa para nosotros.",
+                          "escalation_suggestion": null
+                        },
+                        {
+                          "reviewId": "rev002",
+                          "reviewer": "Carlos Pérez",
+                          "stars": 2,
+                          "comment": "La entrega demoró más de lo esperado y el frasco llegó con la tapa floja.",
+                          "action": "notify_admin",
+                          "priority": "normal",
+                          "tesis_reply": null,
+                          "escalation_suggestion": "Contactar a Carlos Pérez para resolver su experiencia negativa y ofrecer compensación si corresponde."
+                        },
+                        {
+                          "reviewId": "rev003",
+                          "reviewer": "Ana Rodríguez",
+                          "stars": 4,
+                          "comment": "Muy buenas mermeladas artesanales. El chutney de ciruela es delicioso.",
+                          "action": "auto_reply",
+                          "priority": "normal",
+                          "tesis_reply": "¡Muchas gracias Ana Rodríguez! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opinión es muy valiosa para nosotros.",
+                          "escalation_suggestion": null
+                        },
+                        {
+                          "reviewId": "rev004",
+                          "reviewer": "Juan Martínez",
+                          "stars": 1,
+                          "comment": "Pésimo servicio, nunca respondieron mi reclamo y el producto llegó roto.",
+                          "action": "urgent_admin",
+                          "priority": "urgent",
+                          "tesis_reply": null,
+                          "escalation_suggestion": "Contactar a Juan Martínez para resolver su experiencia negativa y ofrecer compensación si corresponde."
+                        },
+                        {
+                          "reviewId": "rev005",
+                          "reviewer": "Laura Sánchez",
+                          "stars": 5,
+                          "comment": "Los mejores productos artesanales de la región. El aceite de oliva es excepcional.",
+                          "action": "auto_reply",
+                          "priority": "normal",
+                          "tesis_reply": "¡Muchas gracias Laura Sánchez! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opinión es muy valiosa para nosotros.",
+                          "escalation_suggestion": null
+                        }
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "[TESIS] Build Email": [
+          {
+            "startTime": 1790355959118,
+            "executionIndex": 6,
+            "source": [
+              {
+                "previousNode": "[TESIS] Process All Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 15,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "subject": "[Golden Harvest] Reseñas Google Maps — 3 positivas, 2 negativas, 1 URGENTES",
+                      "html_body": "\n<html><body style=\"font-family:Arial,sans-serif;max-width:700px;margin:auto\">\n  <h2 style=\"color:#15803d\">🌿 Golden Harvest S.A. — Reporte de Reseñas Google Maps</h2>\n  <p style=\"color:#666\">Procesado: 25/9/2026, 05:05:59</p>\n\n  <table style=\"width:100%;border-collapse:collapse;margin-bottom:16px\">\n    <tr>\n      <td style=\"background:#15803d;color:white;padding:12px;border-radius:6px;text-align:center\"><b>5</b><br>Total</td>\n      <td style=\"width:12px\"></td>\n      <td style=\"background:#16a34a;color:white;padding:12px;border-radius:6px;text-align:center\"><b>3</b><br>Positivas</td>\n      <td style=\"width:12px\"></td>\n      <td style=\"background:#dc2626;color:white;padding:12px;border-radius:6px;text-align:center\"><b>2</b><br>Negativas</td>\n      <td style=\"width:12px\"></td>\n      <td style=\"background:#7f1d1d;color:white;padding:12px;border-radius:6px;text-align:center\"><b>1</b><br>Urgentes</td>\n    </tr>\n  </table>\n\n  \n  <h3 style=\"color:#16a34a\">✅ Reseñas Positivas — Respuesta Automática Generada</h3>\n  <table style=\"width:100%;border-collapse:collapse;font-size:13px\">\n    <tr style=\"background:#dcfce7\"><th style=\"padding:8px;text-align:left\">Estrellas</th><th style=\"padding:8px;text-align:left\">Reseña</th><th style=\"padding:8px;text-align:left\">Respuesta Sugerida</th></tr>\n    \n  <tr style=\"background:#f0fdf4\">\n    <td style=\"padding:8px\">⭐⭐⭐⭐⭐ (5)</td>\n    <td style=\"padding:8px\"><b>María González</b><br><small>Excelentes productos, el pesto de oliva es increíble. Muy buena atención.</small></td>\n    <td style=\"padding:8px;color:#16a34a\"><i>¡Muchas gracias María González! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opinión es muy valiosa para nosotros.</i></td>\n  </tr>\n  <tr style=\"background:#f0fdf4\">\n    <td style=\"padding:8px\">⭐⭐⭐⭐☆ (4)</td>\n    <td style=\"padding:8px\"><b>Ana Rodríguez</b><br><small>Muy buenas mermeladas artesanales. El chutney de ciruela es delicioso.</small></td>\n    <td style=\"padding:8px;color:#16a34a\"><i>¡Muchas gracias Ana Rodríguez! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opinión es muy valiosa para nosotros.</i></td>\n  </tr>\n  <tr style=\"background:#f0fdf4\">\n    <td style=\"padding:8px\">⭐⭐⭐⭐⭐ (5)</td>\n    <td style=\"padding:8px\"><b>Laura Sánchez</b><br><small>Los mejores productos artesanales de la región. El aceite de oliva es excepcional.</small></td>\n    <td style=\"padding:8px;color:#16a34a\"><i>¡Muchas gracias Laura Sánchez! Nos alegra mucho que disfrutes de nuestros productos Golden Harvest. Tu opinión es muy valiosa para nosotros.</i></td>\n  </tr>\n  </table>\n\n  \n  <h3 style=\"color:#dc2626\">⚠️ Reseñas Negativas — Requieren Atención</h3>\n  <table style=\"width:100%;border-collapse:collapse;font-size:13px\">\n    <tr style=\"background:#fee2e2\"><th style=\"padding:8px;text-align:left\">Estrellas</th><th style=\"padding:8px;text-align:left\">Reseña</th><th style=\"padding:8px;text-align:left\">Acción Sugerida</th></tr>\n    \n  <tr style=\"background:#fffbeb\">\n    <td style=\"padding:8px\">⭐⭐☆☆☆ (2)</td>\n    <td style=\"padding:8px\"><b>Carlos Pérez</b><br><small>La entrega demoró más de lo esperado y el frasco llegó con la tapa floja.</small></td>\n    <td style=\"padding:8px;color:#dc2626\">⚠️ Atención<br><small>Contactar a Carlos Pérez para resolver su experiencia negativa y ofrecer compensación si corresponde.</small></td>\n  </tr>\n  <tr style=\"background:#fff1f2\">\n    <td style=\"padding:8px\">⭐☆☆☆☆ (1)</td>\n    <td style=\"padding:8px\"><b>Juan Martínez</b><br><small>Pésimo servicio, nunca respondieron mi reclamo y el producto llegó roto.</small></td>\n    <td style=\"padding:8px;color:#dc2626\">🚨 URGENTE<br><small>Contactar a Juan Martínez para resolver su experiencia negativa y ofrecer compensación si corresponde.</small></td>\n  </tr>\n  </table>\n\n  <p style=\"color:#999;font-size:11px;margin-top:24px\">Workflow 03 — Google Maps Review Management | Golden Harvest S.A. | Modo TESIS (simulado)</p>\n</body></html>",
+                      "summary": {
+                        "total": 5,
+                        "positivas": 3,
+                        "negativas": 2,
+                        "urgentes": 1
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Send a message": [
+          {
+            "startTime": 1790355959133,
+            "executionIndex": 7,
+            "source": [
+              {
+                "previousNode": "[TESIS] Build Email",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 850,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "1a0d987ef5eee589",
+                      "threadId": "1a0d987ef5eee589",
+                      "labelIds": [
+                        "UNREAD",
+                        "SENT",
+                        "INBOX"
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Merge Reviews": [
+          {
+            "startTime": 1790355960001,
+            "executionIndex": 8,
+            "source": [
+              null,
+              {
+                "previousNode": "Normalize Public Reviews",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                []
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Merge Reviews"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1790355958367,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Every 6 Hours",
+          "type": "n8n-nodes-base.scheduleTrigger"
+        }
+      }
+    },
+    "resumeToken": "1c297ebfdc713f77b9093638bbcaae19e6340efec087de2636332cb38868764e"
+  },
+  "mode": "cli",
+  "startedAt": "2026-09-25T17:05:58.357Z",
+  "stoppedAt": "2026-09-25T17:06:00.002Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}

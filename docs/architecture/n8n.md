@@ -18,8 +18,8 @@ All the business logic that isn't "serve the catalog and store a quote" — mark
 
 - **Workflow definitions** are exported to JSON and tracked at `n8n/workflows/*.json` (one file per workflow, named after the workflow, e.g. `01._Automated_Branding.json`). Re-export after any workflow change:
   ```bash
-  docker exec n8n n8n export:workflow --all --output=/tmp/wf_export --separate
-  docker cp n8n:/tmp/wf_export/. n8n/workflows/
+  docker exec golden_harvest_n8n n8n export:workflow --all --output=/tmp/wf_export --separate
+  docker cp golden_harvest_n8n:/tmp/wf_export/. n8n/workflows/
   ```
   These exports reference credentials only by `id`/`name` — no secret values are ever embedded in them, so they're safe to commit regardless of repo visibility.
 
@@ -27,33 +27,51 @@ All the business logic that isn't "serve the catalog and store a quote" — mark
 
 ## Implemented
 
-Verified directly against `n8n/data/database.sqlite` (workflow + execution tables) — this is ground truth, not a guess:
+Two different things are recorded below, and they must not be confused:
 
-| # | Workflow | Active | Executions (success/error) |
-|---|---|---|---|
-| 01 | Automated Branding | No | 7 / 13 |
-| 02 | Website Health & SEO Monitor | No | 4 / 8 |
-| 03 | Google Maps Review Management | No | 3 / 4 |
-| 04 | Social Media Content Engine | No | 28 / 11 |
-| 05 | Monthly Activity Report | No | 6 / 8 |
-| 06a | Newsletter Quincenal | No | 6 / 0 |
-| 06b | Carrito Abandonado | No | 4 / 1 |
-| 07 | Logistics & Shipping Automation | No | 8 / 8 |
+- **Development history** — success/error counts read from `n8n/data/database.sqlite` (workflow + execution tables) on **2026-08-04**. They accumulate every run made while each workflow was being built and debugged, failed attempts included. The per-execution records behind them were not preserved, so the cause of those errors can't be recovered.
+- **Current state** — each workflow executed 3 times on **2026-09-25** via `n8n execute` against the full running stack, cross-checked in n8n's execution table. Script, protocol, logs and the fixes applied between the first (failing) and final batch: [`docs/research/n8n-workflow-runs/`](../research/n8n-workflow-runs/README.md). This is the number that says whether a workflow works.
 
-`00. Lead Notification` was built after this snapshot of the execution table, as the instrument for VD2; it is not listed above, and its measured runs (18, no failures) are recorded in `docs/research/quote-latency/results/` rather than here. The detailed execution records behind the counts above were not preserved.
+| # | Workflow | Active | Dev history (success/error, 2026-08-04) | Current state (2026-09-25) |
+|---|---|---|---|---|
+| 01 | Automated Branding | No | 7 / 13 | 3 / 3 OK |
+| 02 | Website Health & SEO Monitor | No | 4 / 8 | 3 / 3 OK |
+| 03 | Google Maps Review Management | No | 3 / 4 | 3 / 3 OK |
+| 04 | Social Media Content Engine | No | 28 / 11 | 3 / 3 OK |
+| 05 | Monthly Activity Report | No | 6 / 8 | 3 / 3 OK |
+| 06a | Newsletter Quincenal | No | 6 / 0 | 3 / 3 OK |
+| 06b | Carrito Abandonado | No | 4 / 1 | 3 / 3 OK |
+| 07 | Logistics & Shipping Automation | No | 8 / 8 | 3 / 3 OK |
 
-All 8 workflows in the table exist and have been manually executed/tested (none are on an active schedule or live webhook right now — `active=0` for all). Workflow 06 ("Lead Nurturing & Cart Interest" in the original design) was split into two: `06a. Newsletter Quincenal` (the bi-weekly schedule half) and `06b. Carrito Abandonado` (the webhook-triggered abandoned-cart half). A `_TMP_CreateSocialSheet` helper workflow also exists (scaffolding, not one of the 7 modules).
+`00. Lead Notification` was built after the development-history snapshot, as the instrument for VD2; its measured runs (18, no failures) are recorded in `docs/research/quote-latency/results/`. It is the only workflow left active (`active=1`), for that measurement.
+
+Fixes applied on 2026-09-25 before the final batch (exports updated in `n8n/workflows/`):
+
+- **02** — the trigger fed the disabled `Fetch Website Links` path (so `siteUrl` was undefined) instead of the TESIS PageSpeed branch; rewired to `PSI Mobile → Wait → PSI Desktop → Merge → report → Gmail`. PSI target changed from `https://tiago-cunto.github.io/golden-harvest/` (404) to `https://sudogringo.github.io/FINAL/`; the `Google API Key (PageSpeed)` credential had expired and was renewed. The old on-page HTML check chain is left in the canvas, unfed.
+- **03** — its only trigger was the Schedule Trigger; added `Manual Trigger (TESIS)` wired to the same nodes.
+- **05** — both HTTP nodes pointed at `http://golden_harvest_api:8000/...`, a host that doesn't exist in the stack; now `http://backend:3001/api/stats/monthly` and `/api/orders`, and the report Code node maps the backend's response shape. "Facturación total" in the report is always $0: backend orders carry no prices.
+
+All 8 workflows in the table are inactive (`active=0`) and are run manually. Workflow 06 ("Lead Nurturing & Cart Interest" in the original design) was split into two: `06a. Newsletter Quincenal` (the bi-weekly schedule half) and `06b. Carrito Abandonado` (the webhook-triggered abandoned-cart half). A `_TMP_CreateSocialSheet` helper workflow also exists (scaffolding, not one of the 7 modules).
 
 Data status per workflow (fill in / correct as work continues — this is the section the "no real access, no budget" constraint applies to directly):
 
-- **01 Branding**: extracts colors from a real *public* URL (`https://tiago-cunto.github.io/golden-harvest/` — the students' own GitHub Pages mockup, not Golden Harvest's real site) — compliant with the no-real-access constraint since it's a site the students control. Output stored in `n8n/data/brand_colors.json`.
+- **01 Branding**: extracts colors from a real *public* URL (`https://tiago-cunto.github.io/golden-harvest/` — the students' own GitHub Pages mockup, not Golden Harvest's real site) — compliant with the no-real-access constraint since it's a site the students control. Output stored in `n8n/data/brand_colors.json`. Note: that URL returned 404 on 2026-09-25 (see 02 above); 01 still completed 3/3, so check whether its colors now come from a fallback rather than the page.
+- **02 SEO Monitor**: audits `https://sudogringo.github.io/FINAL/` (the new catalog's GitHub Pages deploy) through the free PageSpeed Insights API.
 - **03 Google Maps Review Management**: has a `reviews_processed.json` output file — verify whether reviews are pulled from a real (free-tier) Google Maps API against a placeholder listing, or fully simulated, before citing this in the thesis as a "live integration."
 - **02, 04, 05, 06a, 06b, 07**: data source (simulated vs. free-tier API) not yet audited in this pass — check each workflow's HTTP Request / trigger nodes and record findings here before writing the corresponding thesis section.
 
 ## Relations
 
 - **n8n ← Frontend**: webhook triggers on quote submission and on abandoned-cart detection (client-side 2h timer).
-- **n8n → Backend**: none currently. n8n does not read or write the Postgres database the backend owns — no `depends_on` between the two services in `docker-compose.yml`, and no HTTP calls from n8n workflows into backend routes exist yet. If Logistics Automation (07) needs quote data, it currently must get it from the triggering webhook payload, not a backend lookup.
+- **n8n → Backend**: read-only HTTP calls to the backend API at `http://backend:3001/api` — 05 (`GET /stats/monthly`, `GET /orders`) and 07 (`GET /orders`). n8n never writes to the Postgres database the backend owns; persistence stays exclusively in the backend.
+- **Backend → n8n**: webhooks `N8N_QUOTE_WEBHOOK` (received by `00. Lead Notification`) and `N8N_LOGISTICS_WEBHOOK` (no receiving workflow yet; 07 runs from its Manual Trigger).
 - **n8n → external services**: SendGrid/Postmark (nurturing emails), WhatsApp Business + email (sales rep notification), PDFMonkey or HTML node (shipping labels/remitos), PageSpeed API (SEO monitor), Google Maps (reputation). Per the zero-budget constraint, each of these should be using a free tier or a simulated stand-in — see the audit table above.
+
+## Gotchas (n8n 2.35)
+
+- **`$env` is denied in expressions** ("access to env vars denied"), so `{{$env.GH_API_BASE_URL}}` doesn't work in node parameters. Backend URLs are hardcoded as `http://backend:3001/api` in 05 and 07; keep them in sync with `docker-compose.yml` by hand.
+- **`n8n execute` from the CLI while the instance is running** fails with "Task Broker's port 5679 is already in use". Give the CLI process its own port: `docker exec -e N8N_RUNNERS_BROKER_PORT=5690 golden_harvest_n8n n8n execute --id <id> --rawOutput`.
+- **The CLI can't start a workflow whose only trigger is a Schedule Trigger** ("Missing node to start execution"). Every workflow keeps a Manual Trigger next to its schedule for that reason.
+- **Public API updates** (`PUT /api/v1/workflows/{id}`) accept only `name`, `nodes`, `connections` and `settings`, and reject unknown `settings` keys with 400.
 
 See [`docs/architecture/diagram.md`](./diagram.md) for the full system diagram (target vs. as-built).

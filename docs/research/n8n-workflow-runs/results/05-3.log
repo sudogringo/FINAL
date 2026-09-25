@@ -1,0 +1,289 @@
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container detected via .dockerenv file
+Failed to load Custom API options for the node "n8n-nodes-base.confluence": Unknown credential name "confluenceCloudOAuth2Api"
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (b4EVEcqWgr_RvVz1-Ql93) 
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Schedule — 1ro de cada mes 08:00": [
+          {
+            "startTime": 1790356033387,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "GET /stats/monthly — Métricas del mes": [
+          {
+            "startTime": 1790356033389,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Schedule — 1ro de cada mes 08:00",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 43,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "month": "2026-09",
+                      "quotes": {
+                        "total": 2,
+                        "pending": 2,
+                        "contacted": 0,
+                        "closed": 0
+                      },
+                      "orders": {
+                        "total": 0
+                      },
+                      "topProducts": [],
+                      "webInteractions": [
+                        {
+                          "tipo": "vista",
+                          "count": 200
+                        },
+                        {
+                          "tipo": "carrito",
+                          "count": 5
+                        }
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "GET /orders — Pedidos del mes": [
+          {
+            "startTime": 1790356033432,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Schedule — 1ro de cada mes 08:00",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 14,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmta78ls00004k6d853vyr7yo",
+                      "estado": "CONFIRMADO",
+                      "createdAt": "2026-08-26T14:38:38.400Z",
+                      "customer_nombre": "VD3 Test Cliente",
+                      "customer_email": "vd3-verify@example.test",
+                      "localidad": null,
+                      "total": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Merge — Estadísticas + Pedidos": [
+          {
+            "startTime": 1790356033447,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "GET /stats/monthly — Métricas del mes",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              },
+              {
+                "previousNode": "GET /orders — Pedidos del mes",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 55,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "month": "2026-09",
+                      "quotes": {
+                        "total": 2,
+                        "pending": 2,
+                        "contacted": 0,
+                        "closed": 0
+                      },
+                      "orders": {
+                        "total": 0
+                      },
+                      "topProducts": [],
+                      "webInteractions": [
+                        {
+                          "tipo": "vista",
+                          "count": 200
+                        },
+                        {
+                          "tipo": "carrito",
+                          "count": 5
+                        }
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": "cmta78ls00004k6d853vyr7yo",
+                      "estado": "CONFIRMADO",
+                      "createdAt": "2026-08-26T14:38:38.400Z",
+                      "customer_nombre": "VD3 Test Cliente",
+                      "customer_email": "vd3-verify@example.test",
+                      "localidad": null,
+                      "total": 1
+                    },
+                    "pairedItem": {
+                      "item": 0,
+                      "input": 1
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Armar reporte mensual (ES)": [
+          {
+            "startTime": 1790356033502,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Merge — Estadísticas + Pedidos",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 720,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "report_html": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Reporte Mensual Golden Harvest — 2026-09</title>\n  <style>\n    body { font-family: Arial, sans-serif; max-width: 720px; margin: 0 auto; padding: 24px; color: #333; background: #fafafa; }\n    .header { background: #8B6914; color: white; padding: 20px 24px; border-radius: 8px 8px 0 0; }\n    .header h1 { margin: 0; font-size: 22px; }\n    .header p { margin: 4px 0 0; font-size: 14px; opacity: 0.85; }\n    .section { background: white; border: 1px solid #e0d8c8; padding: 20px 24px; margin-top: 12px; border-radius: 6px; }\n    .section h2 { margin: 0 0 14px; color: #5a3e1b; font-size: 16px; border-bottom: 1px solid #e0d8c8; padding-bottom: 8px; }\n    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 0; }\n    .kpi { background: #f5f0e8; border-radius: 6px; padding: 14px; text-align: center; }\n    .kpi .value { font-size: 24px; font-weight: bold; color: #8B6914; }\n    .kpi .label { font-size: 12px; color: #666; margin-top: 4px; }\n    table { width: 100%; border-collapse: collapse; font-size: 14px; }\n    th { background: #f5f0e8; text-align: left; padding: 8px 10px; color: #5a3e1b; }\n    td { padding: 8px 10px; border-bottom: 1px solid #f0ebe0; }\n    .footer { font-size: 12px; color: #999; text-align: center; margin-top: 20px; }\n  </style>\n</head>\n<body>\n  <div class=\"header\">\n    <h1>📊 Reporte Mensual — Golden Harvest S.A.</h1>\n    <p>Período: 2026-09</p>\n  </div>\n\n  <div class=\"section\">\n    <h2>Resumen de Pedidos</h2>\n    <div class=\"kpi-grid\">\n      <div class=\"kpi\"><div class=\"value\">0</div><div class=\"label\">Pedidos totales</div></div>\n      <div class=\"kpi\"><div class=\"value\">0</div><div class=\"label\">Clientes únicos</div></div>\n      <div class=\"kpi\"><div class=\"value\">$ 0,00</div><div class=\"label\">Facturación total</div></div>\n    </div>\n  </div>\n\n  <div class=\"section\">\n    <h2>Top 3 Productos más Vendidos</h2>\n    <table>\n      <tr><th>Pos.</th><th>Producto</th><th>SKU</th><th style=\"text-align:center\">Unidades</th></tr>\n      \n    </table>\n  </div>\n\n  <div class=\"section\">\n    <h2>Interacciones Web</h2>\n    <table>\n      <tr><th>Métrica</th><th>Cantidad</th></tr>\n      <tr><td>Vistas de producto</td><td>200</td></tr>\n      <tr><td>Agregados al carrito</td><td>5</td></tr>\n      <tr><td>Compras completadas</td><td>0</td></tr>\n      <tr><td>Tasa de conversión (vista a compra)</td><td>0.0%</td></tr>\n    </table>\n  </div>\n\n  <p class=\"footer\">Reporte generado el 25 de septiembre de 2026 · Golden Harvest S.A. · Sistema n8n</p>\n</body>\n</html>",
+                      "report_text": "====================================================\n  REPORTE MENSUAL — GOLDEN HARVEST S.A.\n  Período: 2026-09\n====================================================\n\nRESUMEN DE PEDIDOS\n  Pedidos totales:   0\n  Clientes únicos:   0\n  Facturación total: $ 0,00\n\nTOP 3 PRODUCTOS MÁS VENDIDOS\n\n\nINTERACCIONES WEB\n  Vistas de producto:        200\n  Agregados al carrito:      5\n  Compras completadas:       0\n  Tasa de conversión:        0.0%\n\n====================================================\nGenerado automáticamente por n8n — 2026-09-25T17:07:14.220Z\n====================================================",
+                      "month": "2026-09"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Send a message": [
+          {
+            "startTime": 1790356034223,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Armar reporte mensual (ES)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 646,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "1a0d9891415e7228",
+                      "threadId": "1a0d9891415e7228",
+                      "labelIds": [
+                        "UNREAD",
+                        "SENT",
+                        "INBOX"
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Send a message"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1790356033386,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Schedule — 1ro de cada mes 08:00",
+          "type": "n8n-nodes-base.scheduleTrigger"
+        }
+      }
+    },
+    "resumeToken": "c06b3133acd22099aa8b382c29c4abaf39019605d085f0bbed17d27a4c39e8a3"
+  },
+  "mode": "cli",
+  "startedAt": "2026-09-25T17:07:13.377Z",
+  "stoppedAt": "2026-09-25T17:07:14.870Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}

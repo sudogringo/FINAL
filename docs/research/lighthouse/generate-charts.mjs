@@ -12,9 +12,11 @@ const RESULTS_DIR = path.join(__dirname, 'results');
 const ASSETS_DIR = path.join(__dirname, '..', '..', 'assets');
 
 const COLORS = {
-  new: '#2f8f4e',
-  'new-hosted': '#2f8f4e',
-  original: '#b8412f',
+  // Okabe-Ito blue/orange: distinguishable under the common colour-vision
+  // deficiencies; the original series is also hatched (see HATCH_ORIGINAL).
+  new: '#0072B2',
+  'new-hosted': '#0072B2',
+  original: '#E69F00',
   grid: '#d9d9d9',
   text: '#222222',
   bar: '#3b6fd1',
@@ -58,6 +60,9 @@ ${body}
 </svg>`;
 }
 
+const HATCH_ORIGINAL = `<defs><pattern id="hatch-original" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="${COLORS.original}"/><line x1="0" y1="0" x2="0" y2="6" stroke="#5a3d00" stroke-width="2"/></pattern></defs>`;
+const fillFor = (label) => (label === 'original' ? 'url(#hatch-original)' : COLORS[label]);
+
 // --- Chart 1: median comparison bars, original vs new, per device ---
 function chartMedianComparison(rows) {
   const metrics = ['performance', 'accessibility', 'best_practices', 'seo'];
@@ -68,7 +73,7 @@ function chartMedianComparison(rows) {
   const plotH = height - marginTop - marginBottom;
   const groupW = plotW / (devices.length * metrics.length);
 
-  let body = '';
+  let body = HATCH_ORIGINAL;
   // axis
   body += `<line x1="${marginLeft}" y1="${marginTop}" x2="${marginLeft}" y2="${marginTop + plotH}" stroke="${COLORS.grid}"/>`;
   body += `<line x1="${marginLeft}" y1="${marginTop + plotH}" x2="${width - 40}" y2="${marginTop + plotH}" stroke="${COLORS.grid}"/>`;
@@ -93,7 +98,7 @@ function chartMedianComparison(rows) {
         const x = groupX + li * barW + 4;
         const barH = (med / 100) * plotH;
         const y = marginTop + plotH - barH;
-        body += `<rect x="${x}" y="${y}" width="${barW - 4}" height="${barH}" fill="${COLORS[label]}"/>`;
+        body += `<rect x="${x}" y="${y}" width="${barW - 4}" height="${barH}" fill="${fillFor(label)}"/>`;
         body += `<text x="${x + (barW - 4) / 2}" y="${y - 4}" text-anchor="middle" font-size="10" fill="${COLORS.text}">${Math.round(med)}</text>`;
       });
       const labelX = groupX + groupW / 2;
@@ -104,7 +109,7 @@ function chartMedianComparison(rows) {
   }
 
   // legend
-  body += `<rect x="${marginLeft}" y="${marginTop - 36}" width="12" height="12" fill="${COLORS.original}"/>`;
+  body += `<rect x="${marginLeft}" y="${marginTop - 36}" width="12" height="12" fill="${fillFor('original')}"/>`;
   body += `<text x="${marginLeft + 18}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">sitio original (n=1)</text>`;
   body += `<rect x="${marginLeft + 200}" y="${marginTop - 36}" width="12" height="12" fill="${COLORS['new-hosted']}"/>`;
   body += `<text x="${marginLeft + 218}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">catálogo nuevo, alojado en GitHub Pages (mediana, n=5)</text>`;

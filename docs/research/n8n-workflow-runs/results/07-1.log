@@ -1,0 +1,205 @@
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container detected via .dockerenv file
+Failed to load Custom API options for the node "n8n-nodes-base.confluence": Unknown credential name "confluenceCloudOAuth2Api"
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (w9q6JgA_aNMr8CNv4tgkW) 
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Trigger": [
+          {
+            "startTime": 1790356115344,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Obtener Órdenes Confirmadas": [
+          {
+            "startTime": 1790356115355,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 43,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmta78ls00004k6d853vyr7yo",
+                      "estado": "CONFIRMADO",
+                      "createdAt": "2026-08-26T14:38:38.400Z",
+                      "customer_nombre": "VD3 Test Cliente",
+                      "customer_email": "vd3-verify@example.test",
+                      "localidad": null,
+                      "total": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Limitar a 3 Órdenes (Demo)": [
+          {
+            "startTime": 1790356115405,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Obtener Órdenes Confirmadas",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 778,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmta78ls00004k6d853vyr7yo",
+                      "estado": "CONFIRMADO",
+                      "createdAt": "2026-08-26T14:38:38.400Z",
+                      "customer_nombre": "VD3 Test Cliente",
+                      "customer_email": "vd3-verify@example.test",
+                      "localidad": null,
+                      "total": 1
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Generar Remitos y Resumen": [
+          {
+            "startTime": 1790356116191,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Limitar a 3 Órdenes (Demo)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 18,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "summary_html": "\n<div style=\"font-family:sans-serif;max-width:680px;margin:0 auto;padding:24px;\">\n  <h2 style=\"color:#166534;\">Golden Harvest S.A. — Remitos Generados</h2>\n  <p style=\"color:#6b7280;\">Fecha: 25 de septiembre de 2026</p>\n  <p>Se procesaron <strong>1</strong> orden(es) confirmada(s):</p>\n  <table style=\"width:100%;border-collapse:collapse;font-size:14px;\">\n    <thead><tr style=\"background:#f3f4f6;\">\n      <th style=\"padding:8px 12px;text-align:left;\">Orden</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Cliente</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Localidad</th>\n      <th style=\"padding:8px 12px;text-align:right;\">Total</th>\n    </tr></thead>\n    <tbody><tr>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">#cmta78ls00004k6d853vyr7yo</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">VD3 Test Cliente</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">null</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;\">$1</td>\n  </tr></tbody>\n  </table>\n  <p style=\"margin-top:20px;font-size:12px;color:#9ca3af;\">Golden Harvest S.A. — Sistema Automatizado de Logística</p>\n</div>",
+                      "total": 1,
+                      "fecha": "2026-09-25"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Gmail — Enviar Remitos (TESIS)": [
+          {
+            "startTime": 1790356116215,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Generar Remitos y Resumen",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 673,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "1a0d98a55734995d",
+                      "threadId": "1a0d98a55734995d",
+                      "labelIds": [
+                        "UNREAD",
+                        "SENT",
+                        "INBOX"
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Gmail — Enviar Remitos (TESIS)"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1790356115344,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "8d7ad9852ae8527a2c954ba66ba002026fe26644205416b18f6283c62e7382e2"
+  },
+  "mode": "cli",
+  "startedAt": "2026-09-25T17:08:35.336Z",
+  "stoppedAt": "2026-09-25T17:08:36.899Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}

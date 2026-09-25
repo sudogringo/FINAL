@@ -2,6 +2,15 @@ import 'dotenv/config'
 import bcrypt from 'bcryptjs'
 import { prisma } from './db'
 
+// Stock simulado por talle (dato sintético — sin acceso a stock real de Golden Harvest S.A.)
+function mockStock(sizes: string[]): Record<string, number> {
+  const bySize: Record<string, number> = {}
+  for (const size of sizes) {
+    bySize[size] = 20 + Math.floor(Math.random() * 80) // 20-99 unidades
+  }
+  return bySize
+}
+
 async function main() {
   // Admin por defecto
   const passwordHash = await bcrypt.hash('admin1234', 10)
@@ -19,7 +28,6 @@ async function main() {
       description: 'En jugo natural, ideal para guisos y salsas caseras. Sabor auténtico del campo.',
       sizes: ['250g', '1kg', '4kg'],
       tag: 'Clásico',
-      stockBySize: {},
     },
     {
       name: 'Cubetti di Pomodoro',
@@ -27,7 +35,6 @@ async function main() {
       description: 'Tomate en cubos perfectos, ideal para preparaciones rápidas sin perder textura.',
       sizes: ['250g', '1kg'],
       tag: 'Popular',
-      stockBySize: {},
     },
     {
       name: 'Salsa Clásica',
@@ -35,7 +42,6 @@ async function main() {
       description: 'Nuestra receta tradicional con tomates seleccionados y especias naturales.',
       sizes: ['250g', '1kg'],
       tag: 'Premium',
-      stockBySize: {},
     },
     {
       name: 'Doble Concentrado',
@@ -43,7 +49,6 @@ async function main() {
       description: 'Alta concentración para dar color y sabor intenso a tus preparaciones.',
       sizes: ['250g', '1kg', '4kg'],
       tag: 'Profesional',
-      stockBySize: {},
     },
     {
       name: 'Mitades en Almíbar',
@@ -51,7 +56,6 @@ async function main() {
       description: 'Duraznos cortados en mitades, en almíbar suave. El clásico de la mesa argentina.',
       sizes: ['250g', '1kg', '4kg'],
       tag: 'Clásico',
-      stockBySize: {},
     },
     {
       name: 'Trozos en Almíbar',
@@ -59,7 +63,6 @@ async function main() {
       description: 'Versátil, ideal para postres, repostería y ensaladas de fruta.',
       sizes: ['250g', '1kg'],
       tag: 'Versátil',
-      stockBySize: {},
     },
     {
       name: 'Durazno Light',
@@ -67,7 +70,6 @@ async function main() {
       description: 'Menos azúcar, mismo sabor auténtico. Para quienes cuidan su alimentación.',
       sizes: ['250g', '1kg'],
       tag: 'Light',
-      stockBySize: {},
     },
     {
       name: 'Durazno al Natural',
@@ -75,14 +77,13 @@ async function main() {
       description: 'Sin azúcar agregada, en agua. Pureza total del durazno de cosecha propia.',
       sizes: ['250g', '1kg', '4kg'],
       tag: 'Natural',
-      stockBySize: {},
     },
-  ]
+  ].map(p => ({ ...p, stockBySize: mockStock(p.sizes) }))
 
   for (const p of products) {
     await prisma.product.upsert({
       where: { id: 'seed-' + p.name.toLowerCase().replace(/\s+/g, '-') },
-      update: {},
+      update: { stockBySize: p.stockBySize },
       create: { id: 'seed-' + p.name.toLowerCase().replace(/\s+/g, '-'), ...p },
     })
   }

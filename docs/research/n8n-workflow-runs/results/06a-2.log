@@ -1,0 +1,732 @@
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container detected via .dockerenv file
+Failed to load Custom API options for the node "n8n-nodes-base.confluence": Unknown credential name "confluenceCloudOAuth2Api"
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (X86TGuvJ6xX-DLLWEvWOt) 
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Trigger": [
+          {
+            "startTime": 1790356057215,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "GET /mock/newsletter-subscribers": [
+          {
+            "startTime": 1790356057217,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 251,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": 1,
+                      "name": "Leanne Graham",
+                      "username": "Bret",
+                      "email": "Sincere@april.biz",
+                      "address": {
+                        "street": "Kulas Light",
+                        "suite": "Apt. 556",
+                        "city": "Gwenborough",
+                        "zipcode": "92998-3874",
+                        "geo": {
+                          "lat": "-37.3159",
+                          "lng": "81.1496"
+                        }
+                      },
+                      "phone": "1-770-736-8031 x56442",
+                      "website": "hildegard.org",
+                      "company": {
+                        "name": "Romaguera-Crona",
+                        "catchPhrase": "Multi-layered client-server neural-net",
+                        "bs": "harness real-time e-markets"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 2,
+                      "name": "Ervin Howell",
+                      "username": "Antonette",
+                      "email": "Shanna@melissa.tv",
+                      "address": {
+                        "street": "Victor Plains",
+                        "suite": "Suite 879",
+                        "city": "Wisokyburgh",
+                        "zipcode": "90566-7771",
+                        "geo": {
+                          "lat": "-43.9509",
+                          "lng": "-34.4618"
+                        }
+                      },
+                      "phone": "010-692-6593 x09125",
+                      "website": "anastasia.net",
+                      "company": {
+                        "name": "Deckow-Crist",
+                        "catchPhrase": "Proactive didactic contingency",
+                        "bs": "synergize scalable supply-chains"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 3,
+                      "name": "Clementine Bauch",
+                      "username": "Samantha",
+                      "email": "Nathan@yesenia.net",
+                      "address": {
+                        "street": "Douglas Extension",
+                        "suite": "Suite 847",
+                        "city": "McKenziehaven",
+                        "zipcode": "59590-4157",
+                        "geo": {
+                          "lat": "-68.6102",
+                          "lng": "-47.0653"
+                        }
+                      },
+                      "phone": "1-463-123-4447",
+                      "website": "ramiro.info",
+                      "company": {
+                        "name": "Romaguera-Jacobson",
+                        "catchPhrase": "Face to face bifurcated interface",
+                        "bs": "e-enable strategic applications"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 4,
+                      "name": "Patricia Lebsack",
+                      "username": "Karianne",
+                      "email": "Julianne.OConner@kory.org",
+                      "address": {
+                        "street": "Hoeger Mall",
+                        "suite": "Apt. 692",
+                        "city": "South Elvis",
+                        "zipcode": "53919-4257",
+                        "geo": {
+                          "lat": "29.4572",
+                          "lng": "-164.2990"
+                        }
+                      },
+                      "phone": "493-170-9623 x156",
+                      "website": "kale.biz",
+                      "company": {
+                        "name": "Robel-Corkery",
+                        "catchPhrase": "Multi-tiered zero tolerance productivity",
+                        "bs": "transition cutting-edge web services"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 5,
+                      "name": "Chelsey Dietrich",
+                      "username": "Kamren",
+                      "email": "Lucio_Hettinger@annie.ca",
+                      "address": {
+                        "street": "Skiles Walks",
+                        "suite": "Suite 351",
+                        "city": "Roscoeview",
+                        "zipcode": "33263",
+                        "geo": {
+                          "lat": "-31.8129",
+                          "lng": "62.5342"
+                        }
+                      },
+                      "phone": "(254)954-1289",
+                      "website": "demarco.info",
+                      "company": {
+                        "name": "Keebler LLC",
+                        "catchPhrase": "User-centric fault-tolerant solution",
+                        "bs": "revolutionize end-to-end systems"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 6,
+                      "name": "Mrs. Dennis Schulist",
+                      "username": "Leopoldo_Corkery",
+                      "email": "Karley_Dach@jasper.info",
+                      "address": {
+                        "street": "Norberto Crossing",
+                        "suite": "Apt. 950",
+                        "city": "South Christy",
+                        "zipcode": "23505-1337",
+                        "geo": {
+                          "lat": "-71.4197",
+                          "lng": "71.7478"
+                        }
+                      },
+                      "phone": "1-477-935-8478 x6430",
+                      "website": "ola.org",
+                      "company": {
+                        "name": "Considine-Lockman",
+                        "catchPhrase": "Synchronised bottom-line interface",
+                        "bs": "e-enable innovative applications"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 7,
+                      "name": "Kurtis Weissnat",
+                      "username": "Elwyn.Skiles",
+                      "email": "Telly.Hoeger@billy.biz",
+                      "address": {
+                        "street": "Rex Trail",
+                        "suite": "Suite 280",
+                        "city": "Howemouth",
+                        "zipcode": "58804-1099",
+                        "geo": {
+                          "lat": "24.8918",
+                          "lng": "21.8984"
+                        }
+                      },
+                      "phone": "210.067.6132",
+                      "website": "elvis.io",
+                      "company": {
+                        "name": "Johns Group",
+                        "catchPhrase": "Configurable multimedia task-force",
+                        "bs": "generate enterprise e-tailers"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 8,
+                      "name": "Nicholas Runolfsdottir V",
+                      "username": "Maxime_Nienow",
+                      "email": "Sherwood@rosamond.me",
+                      "address": {
+                        "street": "Ellsworth Summit",
+                        "suite": "Suite 729",
+                        "city": "Aliyaview",
+                        "zipcode": "45169",
+                        "geo": {
+                          "lat": "-14.3990",
+                          "lng": "-120.7677"
+                        }
+                      },
+                      "phone": "586.493.6943 x140",
+                      "website": "jacynthe.com",
+                      "company": {
+                        "name": "Abernathy Group",
+                        "catchPhrase": "Implemented secondary concept",
+                        "bs": "e-enable extensible e-tailers"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 9,
+                      "name": "Glenna Reichert",
+                      "username": "Delphine",
+                      "email": "Chaim_McDermott@dana.io",
+                      "address": {
+                        "street": "Dayna Park",
+                        "suite": "Suite 449",
+                        "city": "Bartholomebury",
+                        "zipcode": "76495-3109",
+                        "geo": {
+                          "lat": "24.6463",
+                          "lng": "-168.8889"
+                        }
+                      },
+                      "phone": "(775)976-6794 x41206",
+                      "website": "conrad.com",
+                      "company": {
+                        "name": "Yost and Sons",
+                        "catchPhrase": "Switchable contextually-based project",
+                        "bs": "aggregate real-time technologies"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "id": 10,
+                      "name": "Clementina DuBuque",
+                      "username": "Moriah.Stanton",
+                      "email": "Rey.Padberg@karina.biz",
+                      "address": {
+                        "street": "Kattie Turnpike",
+                        "suite": "Suite 198",
+                        "city": "Lebsackbury",
+                        "zipcode": "31428-2261",
+                        "geo": {
+                          "lat": "-38.2386",
+                          "lng": "57.2232"
+                        }
+                      },
+                      "phone": "024-648-3804",
+                      "website": "ambrose.net",
+                      "company": {
+                        "name": "Hoeger LLC",
+                        "catchPhrase": "Centralized empowering task-force",
+                        "bs": "target end-to-end models"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Segmentar suscriptores": [
+          {
+            "startTime": 1790356057468,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "GET /mock/newsletter-subscribers",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 207,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "email": "Sincere@april.biz",
+                      "nombre": "Leanne Graham",
+                      "empresa": "Romaguera-Crona",
+                      "categoria": "vino",
+                      "ciudad": "Gwenborough"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Shanna@melissa.tv",
+                      "nombre": "Ervin Howell",
+                      "empresa": "Deckow-Crist",
+                      "categoria": "oliva",
+                      "ciudad": "Wisokyburgh"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Nathan@yesenia.net",
+                      "nombre": "Clementine Bauch",
+                      "empresa": "Romaguera-Jacobson",
+                      "categoria": "mix",
+                      "ciudad": "McKenziehaven"
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Julianne.OConner@kory.org",
+                      "nombre": "Patricia Lebsack",
+                      "empresa": "Robel-Corkery",
+                      "categoria": "vino",
+                      "ciudad": "South Elvis"
+                    },
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Lucio_Hettinger@annie.ca",
+                      "nombre": "Chelsey Dietrich",
+                      "empresa": "Keebler LLC",
+                      "categoria": "oliva",
+                      "ciudad": "Roscoeview"
+                    },
+                    "pairedItem": {
+                      "item": 4
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Karley_Dach@jasper.info",
+                      "nombre": "Mrs. Dennis Schulist",
+                      "empresa": "Considine-Lockman",
+                      "categoria": "mix",
+                      "ciudad": "South Christy"
+                    },
+                    "pairedItem": {
+                      "item": 5
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Telly.Hoeger@billy.biz",
+                      "nombre": "Kurtis Weissnat",
+                      "empresa": "Johns Group",
+                      "categoria": "vino",
+                      "ciudad": "Howemouth"
+                    },
+                    "pairedItem": {
+                      "item": 6
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Sherwood@rosamond.me",
+                      "nombre": "Nicholas Runolfsdottir V",
+                      "empresa": "Abernathy Group",
+                      "categoria": "oliva",
+                      "ciudad": "Aliyaview"
+                    },
+                    "pairedItem": {
+                      "item": 7
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Chaim_McDermott@dana.io",
+                      "nombre": "Glenna Reichert",
+                      "empresa": "Yost and Sons",
+                      "categoria": "mix",
+                      "ciudad": "Bartholomebury"
+                    },
+                    "pairedItem": {
+                      "item": 8
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Rey.Padberg@karina.biz",
+                      "nombre": "Clementina DuBuque",
+                      "empresa": "Hoeger LLC",
+                      "categoria": "vino",
+                      "ciudad": "Lebsackbury"
+                    },
+                    "pairedItem": {
+                      "item": 9
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Generar Email HTML": [
+          {
+            "startTime": 1790356057675,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Segmentar suscriptores",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 22,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "email": "Sincere@april.biz",
+                      "nombre": "Leanne Graham",
+                      "empresa": "Romaguera-Crona",
+                      "categoria": "vino",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Leanne Graham,</h2>\n  <p>Desde <strong>Gwenborough</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Colección Malbec Reserva 2024</h4>\n    <p>Nuevas cosechas con notas a frutos rojos y taninos suaves.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.688Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Shanna@melissa.tv",
+                      "nombre": "Ervin Howell",
+                      "empresa": "Deckow-Crist",
+                      "categoria": "oliva",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Ervin Howell,</h2>\n  <p>Desde <strong>Wisokyburgh</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Aceite de Oliva Extra Virgen Premium</h4>\n    <p>Prensado en frío, cosecha temprana, ideal para gastronomía.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.689Z"
+                    },
+                    "pairedItem": {
+                      "item": 1
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Nathan@yesenia.net",
+                      "nombre": "Clementine Bauch",
+                      "empresa": "Romaguera-Jacobson",
+                      "categoria": "mix",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Clementine Bauch,</h2>\n  <p>Desde <strong>McKenziehaven</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Pack Degustación Golden Harvest</h4>\n    <p>Una selección de nuestros mejores vinos y aceites del año.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.690Z"
+                    },
+                    "pairedItem": {
+                      "item": 2
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Julianne.OConner@kory.org",
+                      "nombre": "Patricia Lebsack",
+                      "empresa": "Robel-Corkery",
+                      "categoria": "vino",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Patricia Lebsack,</h2>\n  <p>Desde <strong>South Elvis</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Colección Malbec Reserva 2024</h4>\n    <p>Nuevas cosechas con notas a frutos rojos y taninos suaves.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.691Z"
+                    },
+                    "pairedItem": {
+                      "item": 3
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Lucio_Hettinger@annie.ca",
+                      "nombre": "Chelsey Dietrich",
+                      "empresa": "Keebler LLC",
+                      "categoria": "oliva",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Chelsey Dietrich,</h2>\n  <p>Desde <strong>Roscoeview</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Aceite de Oliva Extra Virgen Premium</h4>\n    <p>Prensado en frío, cosecha temprana, ideal para gastronomía.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.692Z"
+                    },
+                    "pairedItem": {
+                      "item": 4
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Karley_Dach@jasper.info",
+                      "nombre": "Mrs. Dennis Schulist",
+                      "empresa": "Considine-Lockman",
+                      "categoria": "mix",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Mrs. Dennis Schulist,</h2>\n  <p>Desde <strong>South Christy</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Pack Degustación Golden Harvest</h4>\n    <p>Una selección de nuestros mejores vinos y aceites del año.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.693Z"
+                    },
+                    "pairedItem": {
+                      "item": 5
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Telly.Hoeger@billy.biz",
+                      "nombre": "Kurtis Weissnat",
+                      "empresa": "Johns Group",
+                      "categoria": "vino",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Kurtis Weissnat,</h2>\n  <p>Desde <strong>Howemouth</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Colección Malbec Reserva 2024</h4>\n    <p>Nuevas cosechas con notas a frutos rojos y taninos suaves.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.693Z"
+                    },
+                    "pairedItem": {
+                      "item": 6
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Sherwood@rosamond.me",
+                      "nombre": "Nicholas Runolfsdottir V",
+                      "empresa": "Abernathy Group",
+                      "categoria": "oliva",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Nicholas Runolfsdottir V,</h2>\n  <p>Desde <strong>Aliyaview</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Aceite de Oliva Extra Virgen Premium</h4>\n    <p>Prensado en frío, cosecha temprana, ideal para gastronomía.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.694Z"
+                    },
+                    "pairedItem": {
+                      "item": 7
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Chaim_McDermott@dana.io",
+                      "nombre": "Glenna Reichert",
+                      "empresa": "Yost and Sons",
+                      "categoria": "mix",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Glenna Reichert,</h2>\n  <p>Desde <strong>Bartholomebury</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Pack Degustación Golden Harvest</h4>\n    <p>Una selección de nuestros mejores vinos y aceites del año.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.694Z"
+                    },
+                    "pairedItem": {
+                      "item": 8
+                    }
+                  },
+                  {
+                    "json": {
+                      "email": "Rey.Padberg@karina.biz",
+                      "nombre": "Clementina DuBuque",
+                      "empresa": "Hoeger LLC",
+                      "categoria": "vino",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Clementina DuBuque,</h2>\n  <p>Desde <strong>Lebsackbury</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Colección Malbec Reserva 2024</h4>\n    <p>Nuevas cosechas con notas a frutos rojos y taninos suaves.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.695Z"
+                    },
+                    "pairedItem": {
+                      "item": 9
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Limitar a 1 (TESIS)": [
+          {
+            "startTime": 1790356057697,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Generar Email HTML",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "email": "Sincere@april.biz",
+                      "nombre": "Leanne Graham",
+                      "empresa": "Romaguera-Crona",
+                      "categoria": "vino",
+                      "html": "<!DOCTYPE html>\n<html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\">\n<div style=\"background:#1a472a;padding:20px;text-align:center;\">\n  <h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1>\n  <p style=\"color:#a8d5a2;margin:5px 0;\">Newsletter Quincenal</p>\n</div>\n<div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\">\n  <h2 style=\"color:#1a472a;\">Hola Leanne Graham,</h2>\n  <p>Desde <strong>Gwenborough</strong>, nos alegra compartir las últimas novedades de Golden Harvest.</p>\n  <div style=\"background:#f9f6f0;padding:20px;border-left:4px solid #c8a951;margin:20px 0;\">\n    <h3 style=\"color:#8b6914;margin-top:0;\">✨ Destacado del mes</h3>\n    <h4>Colección Malbec Reserva 2024</h4>\n    <p>Nuevas cosechas con notas a frutos rojos y taninos suaves.</p>\n    <a href=\"#\" style=\"background:#1a472a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;display:inline-block;\">Ver más →</a>\n  </div>\n  <p style=\"color:#666;font-size:12px;\">Para dejar de recibir este newsletter, <a href=\"#\">hacé clic aquí</a>.</p>\n</div>\n</body></html>",
+                      "generado_en": "2026-09-25T17:07:37.688Z"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Gmail — Enviar Newsletter (TESIS)": [
+          {
+            "startTime": 1790356057698,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Limitar a 1 (TESIS)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 741,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "1a0d9897057f6a41",
+                      "threadId": "1a0d9897057f6a41",
+                      "labelIds": [
+                        "UNREAD",
+                        "SENT",
+                        "INBOX"
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Gmail — Enviar Newsletter (TESIS)"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1790356057214,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "8648d7b94b74f009e463d73ed1e1c2f25773b65cb3c5c74f6966606591b4978c"
+  },
+  "mode": "cli",
+  "startedAt": "2026-09-25T17:07:37.206Z",
+  "stoppedAt": "2026-09-25T17:07:38.440Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}
