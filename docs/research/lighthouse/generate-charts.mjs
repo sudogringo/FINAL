@@ -110,11 +110,11 @@ function chartMedianComparison(rows) {
 
   // legend
   body += `<rect x="${marginLeft}" y="${marginTop - 36}" width="12" height="12" fill="${fillFor('original')}"/>`;
-  body += `<text x="${marginLeft + 18}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">sitio original (n=1)</text>`;
+  body += `<text x="${marginLeft + 18}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">sitio preexistente (n=1)</text>`;
   body += `<rect x="${marginLeft + 200}" y="${marginTop - 36}" width="12" height="12" fill="${COLORS['new-hosted']}"/>`;
   body += `<text x="${marginLeft + 218}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">catálogo nuevo, alojado en GitHub Pages (mediana, n=5)</text>`;
 
-  return svgWrap(width, height, body, 'Puntajes medianos de Lighthouse — sitio original vs. catálogo nuevo');
+  return svgWrap(width, height, body, 'Puntajes medianos de Lighthouse — sitio preexistente vs. catálogo nuevo');
 }
 
 // --- Chart 2: per-run performance spread for "new-hosted", both devices ---
