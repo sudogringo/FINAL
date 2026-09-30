@@ -24,7 +24,7 @@
     },
     {
       "parameters": {
-        "content": "## \ud83d\udfe2 MODO TESIS\nFlujo de demostraci\u00f3n con backend simulado FastAPI.\n- Trigger manual \u2192 obtiene \u00f3rdenes confirmadas\n- Limita a 3 \u00f3rdenes para la demo\n- Genera remito HTML por orden\n- Imprime resumen por consola",
+        "content": "## \ud83d\udfe2 MODO TESIS\nFlujo de demostraci\u00f3n contra el backend Express del proyecto.\n- Trigger manual \u2192 obtiene \u00f3rdenes confirmadas\n- Limita a 3 \u00f3rdenes para la demo\n- Genera remito HTML por orden\n- Envía los remitos por Gmail al correo del equipo de tesis",
         "height": 500,
         "width": 1564,
         "color": 3

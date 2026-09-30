@@ -310,7 +310,7 @@
     },
     {
       "parameters": {
-        "content": "## 🟢 MODO TESIS\n\n**Simulación sin credenciales reales**\n\n5 reseñas de muestra en español. Flujo:\n1. **Mock Reviews** → emite 5 ítems\n2. **Process All Reviews** → clasifica todas de una sola vez (sin splitInBatches)\n3. **Build Email** → genera HTML con resumen completo\n4. **Send Email** → envía reporte a tiagoboberg@gmail.com\n\n- 3 positivas (4-5 ⭐) → respuesta amable generada\n- 2 negativas (1-2 ⭐) → escalación sugerida\n\n**NO** se publican respuestas en Google Maps.",
+        "content": "## 🟢 MODO TESIS\n\n**Simulación sin credenciales reales**\n\n5 reseñas de muestra en español. Flujo:\n1. **Mock Reviews** → emite 5 ítems\n2. **Process All Reviews** → clasifica todas de una sola vez (sin splitInBatches)\n3. **Build Email** → genera HTML con resumen completo\n4. **Send Email** → envía el reporte al correo del equipo de tesis\n\n- 3 positivas (4-5 ⭐) → respuesta amable generada\n- 2 negativas (1-2 ⭐) → escalación sugerida\n\n**NO** se publican respuestas en Google Maps.",
         "height": 460,
         "width": 1464,
         "color": 3

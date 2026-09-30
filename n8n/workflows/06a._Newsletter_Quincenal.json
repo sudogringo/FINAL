@@ -9,7 +9,7 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## \ud83d\udfe2 MODO TESIS \u2014 Newsletter Quincenal\nFlujo activo para la demo universitaria:\n1. **Manual Trigger** \u2014 ejecutar manualmente\n2. **HTTP Request** \u2192 `GET /mock/newsletter-subscribers` (API simulada, sin credenciales)\n3. **Code** \u2014 Segmentar por categor\u00eda de inter\u00e9s (vino, oliva, mix)\n4. **Split In Batches** \u2014 procesa un suscriptor a la vez\n5. **Code** \u2014 Genera HTML personalizado en espa\u00f1ol\n6. **Gmail** \u2014 Env\u00eda email real a `tiagoboberg@gmail.com`\n\n> \u26a0\ufe0f Requiere credencial **Gmail OAuth2** configurada en n8n.",
+        "content": "## \ud83d\udfe2 MODO TESIS \u2014 Newsletter Quincenal\nFlujo activo para la demo universitaria:\n1. **Manual Trigger** \u2014 ejecutar manualmente\n2. **HTTP Request** \u2192 `GET /mock/newsletter-subscribers` (API simulada, sin credenciales)\n3. **Code** \u2014 Segmentar por categor\u00eda de inter\u00e9s\n4. **Split In Batches** \u2014 procesa un suscriptor a la vez\n5. **Code** \u2014 Genera HTML personalizado en espa\u00f1ol\n6. **Gmail** \u2014 Env\u00eda el email al correo del equipo de tesis\n\n> \u26a0\ufe0f Requiere credencial **Gmail OAuth2** configurada en n8n.",
         "height": 626,
         "width": 1884,
         "color": 3

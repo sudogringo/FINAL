@@ -183,7 +183,7 @@
     },
     {
       "parameters": {
-        "content": "## \ud83d\udfe2 MODO TESIS\n\nFlujo activo para demo universitaria.\n\n**Entrada:** Manual Trigger\n**URL:** https://tiago-cunto.github.io/golden-harvest/\n\n1. Set Thesis URL \u2014 fija la URL del sitio GitHub Pages\n2. Fetch HTML \u2014 descarga el HTML de la p\u00e1gina\n3. Extract Colors \u2014 regex hex + rgba \u2192 top 5 colores\n4. Send Email \u2014 env\u00eda la paleta al email configurado\n\nNo requiere credenciales externas (excepto Gmail OAuth para prod).",
+        "content": "## \ud83d\udfe2 MODO TESIS\n\nFlujo activo para demo universitaria.\n\n**Entrada:** Manual Trigger\n**URL:** https://sudogringo.github.io/FINAL/\n\n1. Set Thesis URL \u2014 fija la URL del sitio GitHub Pages\n2. Fetch HTML \u2014 descarga el HTML de la p\u00e1gina\n3. Extract Colors \u2014 regex hex + rgba \u2192 top 5 colores\n4. Send Email \u2014 env\u00eda la paleta al email configurado\n\nNo requiere credenciales externas (excepto Gmail OAuth para prod).",
         "height": 380,
         "width": 1492,
         "color": 3

@@ -65,7 +65,7 @@
     },
     {
       "parameters": {
-        "content": "## 🟢 MODO TESIS — Monthly Activity Report\n\nFlujo activo para demo universitaria.\nUsa la API local FastAPI (`golden_harvest_api:8000`) en lugar de Google Analytics 4 real.\n\n**Fuente de datos:**\n- `GET /stats/monthly` → pedidos, revenue, top productos, interacciones web\n- `GET /orders` → listado de pedidos del mes\n\n**Salida:** Email HTML enviado a `tiagoboberg@gmail.com` con el reporte mensual.\n\n**Trigger:** Schedule (1ro de cada mes 08:00) + Manual para testing.",
+        "content": "## 🟢 MODO TESIS — Monthly Activity Report\n\nFlujo activo para demo universitaria.\nUsa la API REST del backend Express (`http://backend:3001/api`) en lugar de Google Analytics 4 real.\n\n**Fuente de datos:**\n- `GET /stats/monthly` → pedidos, revenue, top productos, interacciones web\n- `GET /orders` → listado de pedidos del mes\n\n**Salida:** Email HTML enviado al correo del equipo de tesis con el reporte mensual.\n\n**Trigger:** Schedule (1ro de cada mes 08:00) + Manual para testing.",
         "height": 684,
         "width": 1080,
         "color": 3
