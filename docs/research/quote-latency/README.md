@@ -42,7 +42,8 @@ credentials, matching `n8n/workflows/07._Logistics_Shipping_Automation.json`'s s
   per the project's "no real access, everything simulated" constraint.
 - **15–20 runs per batch**: a single request is one sample of a system with real variability
   (DB write time, n8n cold-start on first execution, Gmail API round trip). Reporting median +
-  min/max + p95 across a batch gives a defensible answer instead of a single anecdotal number.
+  min/max + p95 (plus mean and standard deviation) across a batch gives a defensible answer
+  instead of a single anecdotal number.
 - **Measurement mode required**: the backend's default behavior is fire-and-forget (it does not
   wait for n8n, by design, so the customer-facing response stays fast). To measure the real
   end-to-end latency, the backend must run with `MEASURE_LATENCY=true`, which makes it `await` the
@@ -117,7 +118,10 @@ batches stay available for before/after comparison.
 - `results/batch-<label>/run-<n>.json` — one file per request: timestamps, HTTP status, and either
   `endToEndLatencyMs` or an `error`.
 - `results/summary.json` — one entry per batch: `median_ms`, `min_ms`, `max_ms`, `p95_ms`,
-  `n_failed`, and `meets_criterion` against the 15000ms criterion from §3.2.
+  `mean_ms`, `stddev_ms` (sample, n − 1), `n_failed`, the exact (Clopper-Pearson) 95% confidence
+  interval of the failure rate (`failure_rate_ci95_low`/`failure_rate_ci95_high`), and
+  `meets_criterion` against the 15000ms criterion from §3.2. Every statistic reported in the
+  thesis's Table 6 is reproduced by this script.
 - `results/summary.csv` — same data, one row per batch, for import into a spreadsheet/pandas.
 
 This directory only produces the measurement artifacts. Whether/how this result is written into

@@ -7,6 +7,10 @@
     "min_ms": 662,
     "max_ms": 1203,
     "p95_ms": 1203,
+    "mean_ms": 820.8,
+    "stddev_ms": 176.9,
+    "failure_rate_ci95_low": 0,
+    "failure_rate_ci95_high": 0.1853,
     "criterion_ms": 15000,
     "meets_criterion": true
   }
