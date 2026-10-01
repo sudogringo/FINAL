@@ -75,25 +75,35 @@ quotesRouter.post('/', async (req: Request, res: Response) => {
 
   console.log(JSON.stringify({ event: 'quote_received', sessionId, clientSubmittedAt, receivedAt }))
 
-  // Upsert customer por email
-  const customer = await prisma.customer.upsert({
-    where: { email: contact.email },
-    update: {
-      nombre:   contact.nombre,
-      empresa:  contact.empresa,
-      telefono: contact.telefono,
-    },
-    create: {
-      nombre:   contact.nombre,
-      email:    contact.email,
-      empresa:  contact.empresa,
-      telefono: contact.telefono,
-    },
-  })
+  // Persistencia: si la base no responde, se informa 503 en lugar de dejar caer el
+  // proceso (Express 4 no captura rechazos de handlers async). No se dispara ningún
+  // webhook: sin cotización persistida no hay nada que notificar.
+  let quote
+  try {
+    // Upsert customer por email
+    const customer = await prisma.customer.upsert({
+      where: { email: contact.email },
+      update: {
+        nombre:   contact.nombre,
+        empresa:  contact.empresa,
+        telefono: contact.telefono,
+      },
+      create: {
+        nombre:   contact.nombre,
+        email:    contact.email,
+        empresa:  contact.empresa,
+        telefono: contact.telefono,
+      },
+    })
 
-  const quote = await prisma.quote.create({
-    data: { sessionId, contact, items, customerId: customer.id },
-  })
+    quote = await prisma.quote.create({
+      data: { sessionId, contact, items, customerId: customer.id },
+    })
+  } catch (err) {
+    console.error(JSON.stringify({ event: 'quote_persist_failed', sessionId, error: String(err) }))
+    res.status(503).json({ error: 'No se pudo registrar la solicitud. Intentá de nuevo en unos minutos.' })
+    return
+  }
 
   const webhookUrl = process.env.N8N_QUOTE_WEBHOOK ?? ''
   const webhookPayload = {
