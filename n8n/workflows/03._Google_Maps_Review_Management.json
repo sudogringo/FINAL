@@ -326,7 +326,7 @@
     },
     {
       "parameters": {
-        "sendTo": "tiagoboberg@gmail.com",
+        "sendTo": "bandeja.demo@example.com",
         "subject": "=Review data - {{ $json.subject }}",
         "message": "={{ $json.html_body }}",
         "options": {}
@@ -572,7 +572,7 @@
       "projectId": "fqt8Sbkc8GWwPwDS",
       "project": {
         "id": "fqt8Sbkc8GWwPwDS",
-        "name": "Tiago Cunto Boberg <tiagoboberg@gmail.com>",
+        "name": "Gmail - cuenta demo",
         "type": "personal",
         "icon": null,
         "description": null,

@@ -23,6 +23,8 @@ All the business logic that isn't "serve the catalog and store a quote" — mark
   ```
   These exports reference credentials only by `id`/`name` — no secret values are ever embedded in them, so they're safe to commit regardless of repo visibility.
 
+  **Demo inbox placeholder.** The committed exports use `bandeja.demo@example.com` as the recipient of every TESIS-branch Gmail node, and `Gmail - cuenta demo` as the credential display name, so no personal address is published. A raw `export:workflow` brings the real inbox back: re-apply the placeholder before committing. After importing on a new instance, set `sendTo` to your own test inbox.
+
 - **Credentials** (currently 4: `Google Sheets account`, `Gmail account`, `Google Drive account` — all OAuth2 — plus `Google API Key (PageSpeed)`, a static key) live only in `database.sqlite`, encrypted with `N8N_ENCRYPTION_KEY` (`n8n/.env`). To onboard a new machine (a collaborator, or your own second laptop) without re-authorizing each Google account from scratch: copy `database.sqlite` + the real `N8N_ENCRYPTION_KEY` value **outside of git** — direct file transfer or a private, non-repo channel, never a commit. The Google OAuth2 refresh tokens aren't machine-bound, so this works as-is; the one thing to keep consistent is that both instances serve on the same `localhost:4343` host:port used at the original authorization, since that's baked into the OAuth redirect. If a token ever needs re-consent and the host:port differs, redo that one credential's OAuth flow in the n8n UI — it's a one-off, not a blocker.
 
 ## Implemented

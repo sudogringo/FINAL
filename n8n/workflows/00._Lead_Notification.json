@@ -65,7 +65,7 @@
     },
     {
       "parameters": {
-        "sendTo": "tiagoboberg@gmail.com",
+        "sendTo": "bandeja.demo@example.com",
         "subject": "=[SIMULADO] Nuevo Lead — Quote {{ $json.quoteId }}",
         "message": "={{ $json.message_text.replace(/\\n/g, '<br>') }}",
         "options": {}
