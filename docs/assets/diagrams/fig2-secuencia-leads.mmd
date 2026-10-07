@@ -1,0 +1,27 @@
+%%{init: {"theme":"neutral","sequence":{"mirrorActors":false,"actorFontSize":20,"messageFontSize":20,"noteFontSize":19,"actorMargin":14,"width":118,"boxMargin":6,"messageMargin":22,"wrap":false,"noteAlign":"left"},"themeVariables":{"fontFamily":"Arial"}}}%%
+sequenceDiagram
+    participant C as Cliente<br/>(navegador)
+    participant FE as Frontend<br/>(QuoteForm,<br/>CartContext)
+    participant BE as Backend<br/>(Express,<br/>Prisma)
+    participant DB as PostgreSQL
+    participant N8N as n8n
+    C->>FE: agrega ítems
+    FE->>FE: reinicia el timer<br/>de 2 h
+    alt Envía la cotización antes de 2 h
+        C->>FE: envía QuoteForm
+        FE->>BE: POST /api/quotes
+        BE->>DB: upsert Customer
+        BE->>DB: create Quote
+        BE-->>FE: 201 { id }
+        BE-)N8N: N8N_QUOTE_WEBHOOK<br/>(fire-and-forget)
+        Note over BE,N8N: Workflow 00 (TESIS): aviso<br/>por Gmail. PRODUCCIÓN, no<br/>activada: WhatsApp + SendGrid.
+        C->>FE: cierra el formulario
+        FE->>FE: vacía el carrito<br/>y cancela el timer
+        Note over BE,DB: Más tarde, fuera<br/>de este request
+        BE->>DB: Quote CLOSED<br/>y se crea la Order
+        Note over BE,N8N: PRODUCCIÓN: N8N_LOGISTICS_<br/>WEBHOOK, sin receptor (§4.4).<br/>TESIS: el workflow 07 se<br/>dispara a mano y lee<br/>GET /api/orders.
+    else Pasan 2 h sin cotización
+        FE->>FE: vence el timer
+        FE-)N8N: N8N_ABANDONED_WEBHOOK<br/>(desde el cliente)
+        Note over FE,N8N: PRODUCCIÓN: disparo real desde el frontend.<br/>TESIS: el workflow 06b se prueba<br/>con un Webhook de prueba.
+    end

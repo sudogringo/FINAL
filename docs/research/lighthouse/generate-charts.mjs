@@ -8,7 +8,9 @@ import { fileURLToPath } from 'node:url';
 // already used by run-audit.mjs / summarize.mjs.
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const RESULTS_DIR = path.join(__dirname, 'results');
+// Optional first argument: a batch subfolder of results/ (e.g. paired-2026-10-07).
+const BATCH = process.argv[2] ?? '';
+const RESULTS_DIR = path.join(__dirname, 'results', BATCH);
 const ASSETS_DIR = path.join(__dirname, '..', '..', 'assets');
 
 const COLORS = {
@@ -108,70 +110,70 @@ function chartMedianComparison(rows) {
     }
   }
 
-  // legend
+  // legend: n is read from the data, not assumed
+  const runsOf = (label) => rows.filter((r) => r.label === label && r.device === 'mobile').length;
+  const legendFor = (label, text) => { const n = runsOf(label); return n > 1 ? `${text} (mediana, n=${n})` : `${text} (n=1)`; };
   body += `<rect x="${marginLeft}" y="${marginTop - 36}" width="12" height="12" fill="${fillFor('original')}"/>`;
-  body += `<text x="${marginLeft + 18}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">sitio preexistente (n=1)</text>`;
-  body += `<rect x="${marginLeft + 200}" y="${marginTop - 36}" width="12" height="12" fill="${COLORS['new-hosted']}"/>`;
-  body += `<text x="${marginLeft + 218}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">catálogo nuevo, alojado en GitHub Pages (mediana, n=5)</text>`;
+  body += `<text x="${marginLeft + 18}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">${legendFor('original', 'sitio preexistente')}</text>`;
+  body += `<rect x="${marginLeft + 260}" y="${marginTop - 36}" width="12" height="12" fill="${COLORS['new-hosted']}"/>`;
+  body += `<text x="${marginLeft + 278}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">${legendFor('new-hosted', 'catálogo nuevo, alojado en GitHub Pages')}</text>`;
 
   return svgWrap(width, height, body, 'Puntajes medianos de Lighthouse — sitio preexistente vs. catálogo nuevo');
 }
 
-// --- Chart 2: per-run performance spread for "new-hosted", both devices ---
+// --- Chart 2: per-run Performance of both sites and devices ---
+// Series differ by colour, marker shape and line dash, so they stay
+// distinguishable in greyscale print and for colour-vision deficiencies.
+function marker(shape, x, y, color) {
+  const r = 5;
+  if (shape === 'square') return `<rect x="${x - r}" y="${y - r}" width="${2 * r}" height="${2 * r}" fill="${color}"/>`;
+  if (shape === 'triangle') return `<polygon points="${x},${y - r - 1} ${x - r - 1},${y + r} ${x + r + 1},${y + r}" fill="${color}"/>`;
+  if (shape === 'diamond') return `<polygon points="${x},${y - r - 1} ${x + r + 1},${y} ${x},${y + r + 1} ${x - r - 1},${y}" fill="#ffffff" stroke="${color}" stroke-width="2"/>`;
+  return `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}"/>`;
+}
+
 function chartRunSpread(rows) {
-  const width = 900, height = 420;
-  const marginLeft = 50, marginBottom = 50, marginTop = 60, marginRight = 40;
+  const width = 900, height = 470;
+  const marginLeft = 50, marginBottom = 50, marginTop = 110, marginRight = 90;
   const plotW = width - marginLeft - marginRight;
   const plotH = height - marginTop - marginBottom;
-
-  const newRows = rows.filter((r) => r.label === 'new-hosted');
-  const devices = ['desktop', 'mobile'];
-  const maxRun = 5;
-
-  let allVals = newRows.map((r) => Number(r.performance));
-  const yMin = Math.max(0, Math.min(...allVals) - 10);
-  const yMax = Math.min(100, Math.max(...allVals) + 10);
-
-  function yFor(v) {
-    return marginTop + plotH - ((v - yMin) / (yMax - yMin)) * plotH;
-  }
-  function xFor(run) {
-    return marginLeft + ((run - 1) / (maxRun - 1)) * plotW;
-  }
+  const SERIES = [
+    { label: 'new-hosted', device: 'mobile', name: 'catálogo nuevo, móvil', color: COLORS['new-hosted'], shape: 'circle', dash: '' },
+    { label: 'new-hosted', device: 'desktop', name: 'catálogo nuevo, escritorio', color: COLORS['new-hosted'], shape: 'square', dash: '8,4' },
+    { label: 'original', device: 'mobile', name: 'sitio preexistente, móvil', color: '#B36B00', shape: 'triangle', dash: '' },
+    { label: 'original', device: 'desktop', name: 'sitio preexistente, escritorio', color: '#B36B00', shape: 'diamond', dash: '8,4' },
+  ].filter((s) => rows.some((r) => r.label === s.label && r.device === s.device));
+  const maxRun = Math.max(...rows.map((r) => Number(r.run)));
+  const yMin = 0, yMax = 100;
+  const yFor = (v) => marginTop + plotH - ((v - yMin) / (yMax - yMin)) * plotH;
+  const xFor = (run) => marginLeft + ((run - 1) / Math.max(1, maxRun - 1)) * plotW;
 
   let body = '';
   body += `<line x1="${marginLeft}" y1="${marginTop}" x2="${marginLeft}" y2="${marginTop + plotH}" stroke="${COLORS.grid}"/>`;
   body += `<line x1="${marginLeft}" y1="${marginTop + plotH}" x2="${width - marginRight}" y2="${marginTop + plotH}" stroke="${COLORS.grid}"/>`;
-
-  for (let g = Math.ceil(yMin / 10) * 10; g <= yMax; g += 10) {
+  for (let g = 0; g <= 100; g += 20) {
     const y = yFor(g);
     body += `<line x1="${marginLeft}" y1="${y}" x2="${width - marginRight}" y2="${y}" stroke="${COLORS.grid}" stroke-dasharray="4,4"/>`;
     body += `<text x="${marginLeft - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="${COLORS.text}">${g}</text>`;
   }
+  const yAxisCenter = marginTop + plotH / 2;
+  body += `<text x="16" y="${yAxisCenter}" text-anchor="middle" font-size="11" fill="${COLORS.text}" transform="rotate(-90 16 ${yAxisCenter})">Performance (0–100)</text>`;
   for (let run = 1; run <= maxRun; run++) {
     body += `<text x="${xFor(run)}" y="${marginTop + plotH + 20}" text-anchor="middle" font-size="11" fill="${COLORS.text}">corrida ${run}</text>`;
   }
-
-  const deviceColor = { desktop: '#3b6fd1', mobile: '#d1893b' };
-  for (const device of devices) {
-    const devRows = newRows.filter((r) => r.device === device).sort((a, b) => Number(a.run) - Number(b.run));
-    const points = devRows.map((r) => `${xFor(Number(r.run))},${yFor(Number(r.performance))}`).join(' ');
-    body += `<polyline points="${points}" fill="none" stroke="${deviceColor[device]}" stroke-width="2"/>`;
-    devRows.forEach((r) => {
-      body += `<circle cx="${xFor(Number(r.run))}" cy="${yFor(Number(r.performance))}" r="4" fill="${deviceColor[device]}"/>`;
-    });
-    const med = median(devRows.map((r) => Number(r.performance)));
-    const medY = yFor(med);
-    body += `<line x1="${marginLeft}" y1="${medY}" x2="${width - marginRight}" y2="${medY}" stroke="${deviceColor[device]}" stroke-dasharray="6,3" opacity="0.5"/>`;
-    body += `<text x="${width - marginRight + 2}" y="${medY + 4}" font-size="10" fill="${deviceColor[device]}">mediana ${Math.round(med)}</text>`;
-  }
-
-  body += `<circle cx="${width - 200}" cy="${marginTop - 15}" r="4" fill="${deviceColor.desktop}"/>`;
-  body += `<text x="${width - 190}" y="${marginTop - 11}" font-size="11" fill="${COLORS.text}">escritorio</text>`;
-  body += `<circle cx="${width - 120}" cy="${marginTop - 15}" r="4" fill="${deviceColor.mobile}"/>`;
-  body += `<text x="${width - 110}" y="${marginTop - 11}" font-size="11" fill="${COLORS.text}">móvil</text>`;
-
-  return svgWrap(width, height, body, 'Puntaje de Performance en 5 corridas — catálogo nuevo, GitHub Pages (línea punteada = mediana)');
+  SERIES.forEach((s, i) => {
+    const pts = rows.filter((r) => r.label === s.label && r.device === s.device).sort((a, b) => Number(a.run) - Number(b.run));
+    const poly = pts.map((r) => `${xFor(Number(r.run))},${yFor(Number(r.performance))}`).join(' ');
+    body += `<polyline points="${poly}" fill="none" stroke="${s.color}" stroke-width="2" ${s.dash ? `stroke-dasharray="${s.dash}"` : ''}/>`;
+    pts.forEach((r) => { body += marker(s.shape, xFor(Number(r.run)), yFor(Number(r.performance)), s.color); });
+    const med = median(pts.map((r) => Number(r.performance)));
+    body += `<text x="${width - marginRight + 8}" y="${yFor(med) + 4}" font-size="10" fill="${s.color}">mediana ${Math.round(med)}</text>`;
+    const lx = marginLeft + (i % 2) * 330, ly = 52 + Math.floor(i / 2) * 20;
+    body += `<line x1="${lx}" y1="${ly}" x2="${lx + 28}" y2="${ly}" stroke="${s.color}" stroke-width="2" ${s.dash ? `stroke-dasharray="${s.dash}"` : ''}/>`;
+    body += marker(s.shape, lx + 14, ly, s.color);
+    body += `<text x="${lx + 36}" y="${ly + 4}" font-size="11" fill="${COLORS.text}">${s.name}</text>`;
+  });
+  return svgWrap(width, height, body, 'Performance de Lighthouse por corrida — ambos sitios en su alojamiento real');
 }
 
 function main() {
@@ -181,11 +183,12 @@ function main() {
   const chart1 = chartMedianComparison(rows);
   const chart2 = chartRunSpread(rows);
 
-  fs.writeFileSync(path.join(ASSETS_DIR, 'lighthouse-median-comparison.svg'), chart1);
-  fs.writeFileSync(path.join(ASSETS_DIR, 'lighthouse-new-runs-spread.svg'), chart2);
+  const suffix = BATCH ? `-${BATCH}` : '';
+  fs.writeFileSync(path.join(ASSETS_DIR, `lighthouse-median-comparison${suffix}.svg`), chart1);
+  fs.writeFileSync(path.join(ASSETS_DIR, `lighthouse-runs-spread${suffix}.svg`), chart2);
 
-  console.log(`Wrote docs/assets/lighthouse-median-comparison.svg`);
-  console.log(`Wrote docs/assets/lighthouse-new-runs-spread.svg`);
+  console.log(`Wrote docs/assets/lighthouse-median-comparison${suffix}.svg`);
+  console.log(`Wrote docs/assets/lighthouse-runs-spread${suffix}.svg`);
 }
 
 main();
