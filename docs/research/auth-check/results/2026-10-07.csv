@@ -1,0 +1,7 @@
+route,no_credentials,wrong_key,service_key
+orders,401,401,200
+orders?estado=confirmado,401,401,200
+stats/monthly,401,401,200
+stats/abandoned-carts,401,401,200
+products,200,200,200
+orders/:id/items (id inexistente),401,401,404
