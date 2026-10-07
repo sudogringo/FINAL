@@ -6,9 +6,12 @@ como pendiente de ejecución por restricciones de tiempo del proyecto.
 
 ## Fuente de los datos crudos
 
-Transcripción manual, sesión por sesión, del documento de campo
-`PrimerasEncuestasGH.BACKUP-2026-09-02 (1).docx` (fuera del repo, en la carpeta de trabajo
-del equipo). Reproducido íntegro en [`raw/participantes.md`](raw/participantes.md).
+Documento de campo original, completado por los moderadores durante las sesiones:
+[`raw/campo-original_PrimerasEncuestasGH.docx`](raw/campo-original_PrimerasEncuestasGH.docx)
+(archivo de trabajo `PrimerasEncuestasGH.BACKUP-2026-09-02 (1).docx`, última edición
+03/09/2026; MD5 `eb712a704ee5dcdbd4611bbc90f0cdc0`). Se publica sin alteraciones: identifica a
+los participantes solo como P1–P5 y no contiene nombres ni datos de contacto. Su transcripción a
+Markdown, sesión por sesión, está en [`raw/participantes.md`](raw/participantes.md).
 
 ## Metodología aplicada
 
@@ -21,6 +24,9 @@ puntos.
 - **P1-P3**: moderados por Emiliano, 02/09/2026.
 - **P4-P5**: moderados por Tiago, 03/09/2026.
 - Todos en notebook/PC de escritorio — no se probó en dispositivo móvil.
+- **Reclutamiento**: por contacto directo de los autores entre familiares, amigos y parejas.
+  Ninguno tenía vínculo con Golden Harvest S.A. El vínculo personal con los moderadores
+  refuerza el sesgo de deseabilidad social sobre el puntaje SUS.
 - **Consentimiento informado**: verbal, no formulario firmado. Se explicó a cada
   participante el propósito de la prueba (validar la usabilidad de un catálogo de e-commerce
   académico, sin vínculo con la empresa real) antes de comenzar la tarea. No hubo compensación
@@ -40,14 +46,23 @@ contribuciones se multiplica por 2,5 para obtener un puntaje de 0 a 100.
 | P4 | 97,5 | Best Imaginable |
 | P5 | 77,5 | Good |
 | **Promedio** | **94,5** | **Best Imaginable** |
+| **Mediana (rango)** | **97,5 (77,5–100)** | |
+
+Con n=5 y efecto techo (P1 y P2 en el extremo favorable de los diez ítems; P3 y P4 apartados
+en un solo ítem), la mediana y el rango describen el resultado mejor que el promedio.
 
 Detalle del cálculo por ítem en [`results/sus-summary.csv`](results/sus-summary.csv).
 
 ## Tasa de completitud
 
-5/5 (100 %) completaron la tarea. P3 hizo una consulta menor ("¿selecciono cualquier
-producto?") antes de empezar, no una asistencia durante la tarea — se declara igual, sin
-suavizarlo, porque el criterio de aceptación de VD4 es completar "sin asistencia externa".
+**4/5 según el criterio del protocolo.** La tarea pedía seleccionar al menos tres productos,
+interpretado como tres variedades distintas (Anexo B de la tesis); P4 seleccionó dos variedades
+(tres unidades), por lo que no cumple ese criterio aunque envió la solicitud. Los cinco
+participantes enviaron la solicitud de cotización.
+
+P3 formuló una única consulta al moderador sobre la consigna ("¿selecciono cualquier
+producto?"), no sobre el uso de la interfaz. Se registra como observación; no altera la
+completitud de P3.
 
 ## Limitaciones (declarar en la tesis, no ocultar)
 
@@ -61,7 +76,7 @@ suavizarlo, porque el criterio de aceptación de VD4 es completar "sin asistenci
   móviles (Statcounter Global Stats, 2024a, citado en §2.3).
 - **P5** fue el único participante con fricción real, y coincide con ser la persona de mayor
   edad (60+) del grupo — declaró explícitamente que "le costaba leer las descripciones"
-  (letra chica). Este hallazgo cualitativo **corrobora de forma independiente** la regresión
-  de Accessibility que Lighthouse ya reporta en el Capítulo 5 (83 vs. 89–94 del sitio
-  preexistente) — dos instrumentos distintos, mismo síntoma. Vale la pena señalar esta
-  triangulación en la tesis, no es casualidad.
+  (letra chica). Este hallazgo es **consistente** con la regresión de Accessibility que
+  Lighthouse reporta en el Capítulo 5 (83 vs. 89–94 del sitio preexistente), pero no la
+  corrobora de forma independiente: es un solo participante, en una prueba moderada por los
+  autores, y Lighthouse no mide el tamaño de letra percibido (§5.1.2 de la tesis).
