@@ -23,6 +23,10 @@ function parseArgs() {
   if (!args.label) throw new Error('Missing --label=<name>');
   args.runs = Number(args.runs ?? 1);
   args.device = args.device ?? 'both';
+  // --run-index=N numbers a single external run (external URLs only allow --runs=1).
+  args.runIndex = args['run-index'];
+  // --out=<subdir> writes into results/<subdir> instead of results/.
+  args.out = args.out ?? '';
   if (!['mobile', 'desktop', 'both'].includes(args.device)) {
     throw new Error(`Invalid --device value: ${args.device}`);
   }
@@ -55,7 +59,8 @@ async function runOnce({ url, device, chromePort }) {
 }
 
 async function main() {
-  const { url, label, runs, device } = parseArgs();
+  const { url, label, runs, device, runIndex, out } = parseArgs();
+  const outDir = path.join(RESULTS_DIR, out);
 
   if (runs > 1 && !isLocalUrl(url)) {
     throw new Error(
@@ -64,7 +69,7 @@ async function main() {
     );
   }
 
-  fs.mkdirSync(RESULTS_DIR, { recursive: true });
+  fs.mkdirSync(outDir, { recursive: true });
 
   const devices = device === 'both' ? ['mobile', 'desktop'] : [device];
 
@@ -80,11 +85,11 @@ async function main() {
       console.log(`\n[${label}] ${dev} — run ${run}/${runs} — auditing ${url}`);
       try {
         const { report, lhr } = await runOnce({ url, device: dev, chromePort: chrome.port });
-        const suffix = runs > 1 ? `-${run}` : '';
+        const suffix = runIndex ? `-${runIndex}` : runs > 1 ? `-${run}` : '';
         const baseName = `${label}-${dev}${suffix}`;
 
-        fs.writeFileSync(path.join(RESULTS_DIR, `${baseName}.json`), report[0]);
-        fs.writeFileSync(path.join(RESULTS_DIR, `${baseName}.html`), report[1]);
+        fs.writeFileSync(path.join(outDir, `${baseName}.json`), report[0]);
+        fs.writeFileSync(path.join(outDir, `${baseName}.html`), report[1]);
 
         console.log(
           `  performance=${Math.round(lhr.categories.performance.score * 100)} ` +
@@ -98,7 +103,7 @@ async function main() {
     }
   }
 
-  console.log(`\nDone. Results written to ${RESULTS_DIR}`);
+  console.log(`\nDone. Results written to ${outDir}`);
 }
 
 main().catch((err) => {

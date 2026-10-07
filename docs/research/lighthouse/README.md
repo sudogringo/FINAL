@@ -147,7 +147,7 @@ new-hosted (real)         64    83   100  100   6069   0.000    23
 original (real)           29    89   74   82  11514   0.120   555
 ```
 
-`new-hosted` is now the number cited in Chapter 5 — it's the only one measured under the same
+*(Superseded as the cited comparison by the 2026-10-07 paired batch below.)* `new-hosted` became the number cited in Chapter 5 — it was the only one measured under the same
 conditions as `original` (both real hosts, no localhost shortcut). The `new` (localhost) batch is
 kept in `results/` for reference/methodology discussion (it's what surfaced the asymmetry in the
 first place) but is no longer the cited comparison.
@@ -167,6 +167,43 @@ for i in 1 2 3 4 5; do
 done
 node summarize.mjs
 node generate-charts.mjs
+```
+
+## 2026-10-07 — paired, same-session baseline (`results/paired-2026-10-07/`, cited)
+
+The 2026-09-08 comparison still had two asymmetries, flagged in the 3rd-instance devolución
+(R3-M-08): `original` was a single run from 2026-08-04, `new-hosted` five runs from 2026-09-08.
+This batch removes both: **5 runs of each site per device, interleaved in one session**
+(13:16–13:27 ART, `started.txt` / `finished.txt`), each on its real host. The single-run guard
+for external URLs is kept: every audit is one `--runs=1` call, numbered with `--run-index`, with
+30 s pauses between calls. No commit touched `frontend/` after 2026-09-07, so `new-hosted` is the
+same build measured on 2026-09-08.
+
+```
+=== mobile ===          perf  a11y  bp   seo  lcp_ms  cls    tbt_ms
+new-hosted (real)         76    83   100  100   6078   0.001    15
+original (real)           28    94   75   82  11951   0.527   575
+
+=== desktop ===         perf  a11y  bp   seo  lcp_ms  cls    tbt_ms
+new-hosted (real)         64    83   100  100   6150   0.000     7
+original (real)           32    89   74   82  11609   0.121   528
+```
+
+Per-run `original` Performance: mobile 26/28/32/24/38, desktop 33/30/32/27/48. The 2026-08-04
+single run (mobile 18, best-practices 57) sat at the low end of that spread, which is why the
+paired medians give smaller deltas than the earlier table (Performance +48/+32 instead of
++57/+35; best-practices mobile +25 instead of +43). Category scores of `new-hosted` are
+identical to the 2026-09-08 batch.
+
+```bash
+OUT=paired-2026-10-07
+for i in 1 2 3 4 5; do
+  node run-audit.mjs --url=https://www.goldenharvest.com.ar/silvia --label=original --runs=1 --run-index=$i --device=both --out=$OUT
+  sleep 30
+  node run-audit.mjs --url=https://sudogringo.github.io/FINAL/ --label=new-hosted --runs=1 --run-index=$i --device=both --out=$OUT
+  sleep 30
+done
+node summarize.mjs $OUT
 ```
 
 ## Output

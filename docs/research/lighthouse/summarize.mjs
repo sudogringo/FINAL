@@ -3,7 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const RESULTS_DIR = path.join(__dirname, 'results');
+// Optional first argument: a batch subfolder of results/ (e.g. paired-2026-10-07).
+const RESULTS_DIR = path.join(__dirname, 'results', process.argv[2] ?? '');
 
 const CSV_COLUMNS = [
   'label', 'device', 'run',
