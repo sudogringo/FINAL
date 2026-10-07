@@ -1,6 +1,6 @@
 # Golden Harvest S.A. — Digital Transformation
 
-UTN final project (2026). Authors: Cunto Boberg, Tiago & Rojo, Emiliano. Director: Prof. Alberto Cortez.
+UTN final project (2026). Authors: Cunto Boberg, Tiago & Rojo, Emiliano. Directores: Prof. Alberto Cortez y Ariel Enferrel.
 
 A decoupled system for a fictionalized digital transformation of Golden Harvest S.A.: an interactive product catalog that produces sales *leads*, not transactions — the cart never redirects to a payment gateway, it fires a webhook to an automation layer (n8n) with a structured quote request for a sales rep to follow up on.
 
@@ -16,10 +16,11 @@ Three layers:
 
 ```
 User browses catalog → adds items to cart → submits quote request
-  → webhook fires to n8n
-    → n8n notifies sales rep (WhatsApp + Email)
+  → backend persists it (POST /api/quotes) and fires the n8n webhook
+    → n8n notifies the sales rep by email (TESIS branch; WhatsApp is the disabled PRODUCCIÓN branch)
       → sales rep confirms order
-        → n8n triggers Logistics module (PDF label generation)
+        → workflow 07 composes an HTML dispatch summary (manual trigger;
+          PDF delivery notes/labels are the disabled PRODUCCIÓN branch)
 ```
 
 ## Repo layout
@@ -28,7 +29,7 @@ User browses catalog → adds items to cart → submits quote request
 |---|---|
 | `frontend/` | React + TS + Vite SPA. See [`docs/architecture/frontend.md`](docs/architecture/frontend.md). |
 | `backend/` | Express + Prisma + PostgreSQL API. See [`docs/architecture/backend.md`](docs/architecture/backend.md). |
-| `n8n/` | Local n8n instance data (SQLite, workflow exports, logs). `n8n/workflows/*.json` holds the canonical exported definitions — 8 workflows (module 6 ships as two: `06a`/`06b`). See [`docs/architecture/n8n.md`](docs/architecture/n8n.md). |
+| `n8n/` | Local n8n instance data (SQLite, workflow exports, logs). `n8n/workflows/*.json` holds the canonical exported definitions — 9 functional workflows (`00`–`07`, with module 6 split into `06a`/`06b`) plus one auxiliary setup workflow. See [`docs/architecture/n8n.md`](docs/architecture/n8n.md). |
 | `docs/thesis/` | The thesis draft itself. |
 | `docs/research/` | Benchmarks, original-site vs. new-site comparisons, raw test data for Chapters 5–6. Lighthouse toolkit + re-run playbook: [`docs/research/lighthouse/README.md`](docs/research/lighthouse/README.md). |
 | `docs/assets/` | Graphs, tables, screenshots for insertion into the thesis document. |

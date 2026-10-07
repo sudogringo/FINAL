@@ -1,7 +1,15 @@
-# Transcripción cruda — prueba de usabilidad
+# Transcripción — prueba de usabilidad
 
-Fuente: `PrimerasEncuestasGH.BACKUP-2026-09-02 (1).docx`, transcripción sin editar (solo
-formateo a Markdown; el contenido textual no se alteró).
+Fuente: el documento de campo original, publicado sin alteraciones en
+[`campo-original_PrimerasEncuestasGH.docx`](campo-original_PrimerasEncuestasGH.docx). El registro
+lo completaron los moderadores de cada sesión (Emiliano en P1–P3, Tiago en P4–P5).
+
+La transcripción a Markdown aplica tres normalizaciones, sin cambiar ningún dato:
+- tildes y formato de los rótulos (por ejemplo, «Completo sin asistencia? Si» pasa a «Completó sin asistencia: Sí»);
+- tiempos en minutos:segundos («1.34 minutos» se transcribe 1:34 min, es decir 94 s, con el mismo criterio que el «6:21 Minutos» de P5);
+- glosas añadidas, marcadas como [nota del transcriptor].
+
+Ante cualquier diferencia, vale el documento de campo.
 
 ---
 
@@ -68,7 +76,7 @@ formateo a Markdown; el contenido textual no se alteró).
 - Rango etario: 60+
 - Compra online: Habitualmente (Mercado Libre generalmente)
 - Dispositivo: Notebook
-- Completó sin asistencia: "Consultó si seleccionaba cualquier producto en un momento nada más" (una consulta menor antes de la tarea, no asistencia durante la tarea)
+- Completó sin asistencia: "Consultó si seleccionaba cualquier producto en un momento nada más" [nota del transcriptor: la consulta fue sobre la consigna, no sobre el uso de la interfaz; el registro de campo no consigna la respuesta del moderador]
 - Tiempo total: 2:06 min
 - Productos seleccionados: Salsa Clásica 250g ×1, Trozos en Almíbar 1kg ×1, Durazno al Natural 4kg ×1
 - Puntos de fricción: No

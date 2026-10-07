@@ -25,7 +25,7 @@ Decoupled system with three layers:
 
 2. **Backend (Express + Prisma + PostgreSQL, implemented)** — REST API and single source of truth for all data consumed by both the frontend and n8n workflows: products, quotes, customers, orders, interactions, and stats. Location: `backend/`. Detail: [`docs/architecture/backend.md`](docs/architecture/backend.md).
 
-3. **Process Orchestrator (n8n, self-hosted via Docker on port 4343)** — Seven independent automation workflows for marketing, logistics, and CRM, triggered by webhooks from the frontend/backend or schedules. All workflows read data from the backend API (`GH_API_BASE_URL=http://backend:3001/api`). Detail: [`docs/architecture/n8n.md`](docs/architecture/n8n.md).
+3. **Process Orchestrator (n8n, self-hosted via Docker on port 4343)** — Nine independent automation workflows (00–07, with 06 split into 06a/06b) for marketing, logistics, and CRM, triggered by webhooks from the frontend/backend or schedules. All workflows read data from the backend API (`GH_API_BASE_URL=http://backend:3001/api`). Detail: [`docs/architecture/n8n.md`](docs/architecture/n8n.md).
 
 ## n8n Workflow Modules (designed in `docs/architecture/n8n_workflows.md`)
 
@@ -122,7 +122,7 @@ docker compose up -d      # Postgres + Backend + n8n
 ## Key Files
 
 - `docs/thesis/proposal.md` — Project scope and n8n module descriptions (Spanish, authoritative)
-- `docs/thesis/thesis_draft.md` — Early academic thesis draft; the delivered thesis is the `.docx` kept outside the repo
+- `docs/_archive/thesis_draft.md` — Early academic thesis draft (archived); the delivered thesis is the `.docx` kept outside the repo
 - `docs/architecture/n8n_workflows.md` — Detailed n8n workflow designs with JS code snippets for Code Nodes
 - `n8n/workflows/*.json` — Exported n8n workflow definitions
 - `backend/prisma/schema.prisma` — DB schema
@@ -136,9 +136,9 @@ docker compose up -d      # Postgres + Backend + n8n
 User browses catalog → adds items to cart → submits quote request
   → POST /api/quotes (backend saves to DB, upserts Customer)
     → backend fires N8N_QUOTE_WEBHOOK
-      → n8n notifies sales rep (WhatsApp + Email)
+      → n8n notifies sales rep by email (WhatsApp only in the disabled PRODUCCIÓN branch)
         → sales rep confirms → Quote status → CLOSED → Order created
-          → n8n triggers Logistics workflow (PDF label generation)
+          → workflow 07 composes an HTML dispatch summary (PDF labels only in the disabled PRODUCCIÓN branch)
 ```
 
 The 2-hour abandoned cart detection runs client-side: if a quote is not submitted within 2 hours of cart activity, the frontend fires a separate webhook (`N8N_ABANDONED_WEBHOOK`) to trigger the **6b. Carrito Abandonado** workflow.
@@ -150,7 +150,7 @@ The 2-hour abandoned cart detection runs client-side: if a quote is not submitte
 - [x] n8n workflow architecture designed
 - [x] React + TS + Vite scaffolded (`frontend/`, feature-based: cart, quote, admin panel)
 - [x] Express + Prisma + PostgreSQL backend (`backend/`) — auth, products, quotes, customers, orders, interactions, stats, upload routes implemented
-- [x] n8n Docker setup + 7 workflow definitions
+- [x] n8n Docker setup + 9 functional workflow definitions (+1 auxiliary)
 - [x] docker-compose full stack (Postgres + Backend + n8n)
 - [x] Backend ↔ n8n webhook wiring (quote submit, logistics on order confirm)
 - [x] Frontend → Backend connection (QuoteForm via submitQuote())

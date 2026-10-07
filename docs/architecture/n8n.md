@@ -67,11 +67,11 @@ Data status per workflow (fill in / correct as work continues — this is the se
 - **n8n ← Frontend**: webhook triggers on quote submission and on abandoned-cart detection (client-side 2h timer).
 - **n8n → Backend**: read-only HTTP calls to the backend API at `http://backend:3001/api` — 05 (`GET /stats/monthly`, `GET /orders`) and 07 (`GET /orders`). n8n never writes to the Postgres database the backend owns; persistence stays exclusively in the backend.
 - **Backend → n8n**: webhooks `N8N_QUOTE_WEBHOOK` (received by `00. Lead Notification`) and `N8N_LOGISTICS_WEBHOOK` (no receiving workflow yet; 07 runs from its Manual Trigger).
-- **n8n → external services**: SendGrid/Postmark (nurturing emails), WhatsApp Business + email (sales rep notification), PDFMonkey or HTML node (shipping labels/remitos), PageSpeed API (SEO monitor), Google Maps (reputation). Per the zero-budget constraint, each of these should be using a free tier or a simulated stand-in — see the audit table above.
+- **n8n → external services**: in the executed TESIS branches, Gmail, Google Sheets and the PageSpeed API; in the disabled PRODUCCIÓN branches (design only), SendGrid/Postmark (nurturing emails), WhatsApp Business (sales rep notification), PDFMonkey (delivery notes and labels), PageSpeed API (SEO monitor), Google Maps (reputation). Per the zero-budget constraint, each of these should be using a free tier or a simulated stand-in — see the audit table above.
 
-## Gotchas (n8n 2.35)
+## Gotchas (n8n 2.27.5, see `docs/research/n8n-workflow-runs/VERSION.md`)
 
-- **`$env` is denied in expressions** ("access to env vars denied"), so `{{$env.GH_API_BASE_URL}}` doesn't work in node parameters. Backend URLs are hardcoded as `http://backend:3001/api` in 05 and 07; keep them in sync with `docker-compose.yml` by hand.
+- **`$env` in expressions** is blocked unless `N8N_BLOCK_ENV_ACCESS_IN_NODE=false`. The compose file sets it so 05 and 07 can send `X-Service-Key: {{$env.SERVICE_API_KEY}}` to the backend. Side effect: Code nodes can read every container variable, `N8N_ENCRYPTION_KEY` included, so only trusted workflows should run on this instance. Backend URLs stay hardcoded as `http://backend:3001/api` in 05 and 07; keep them in sync with `docker-compose.yml` by hand.
 - **`n8n execute` from the CLI while the instance is running** fails with "Task Broker's port 5679 is already in use". Give the CLI process its own port: `docker exec -e N8N_RUNNERS_BROKER_PORT=5690 golden_harvest_n8n n8n execute --id <id> --rawOutput`.
 - **The CLI can't start a workflow whose only trigger is a Schedule Trigger** ("Missing node to start execution"). Every workflow keeps a Manual Trigger next to its schedule for that reason.
 - **Public API updates** (`PUT /api/v1/workflows/{id}`) accept only `name`, `nodes`, `connections` and `settings`, and reject unknown `settings` keys with 400.

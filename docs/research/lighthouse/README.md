@@ -13,9 +13,12 @@ profile, no quota, no rate limits — safe to re-run against our own site as man
 
 ## Methodology
 
-- **Original site** (`https://www.goldenharvest.com.ar/silvia`): exactly **one run**, mobile
-  + desktop. `run-audit.mjs` refuses `--runs > 1` against any non-localhost URL to avoid
-  hammering a site we don't control.
+- **Cited comparison: `results/paired-2026-10-07/`** — 5 runs per site and device, interleaved in
+  one session (see the 2026-10-07 section below). The top-level `results/summary*.csv` files belong
+  to the earlier batches (single `original` run + `new`/`new-hosted`) and are kept for history.
+- **Original site** (`https://www.goldenharvest.com.ar/silvia`): `run-audit.mjs` refuses
+  `--runs > 1` against any non-localhost URL to avoid hammering a site we don't control, so each
+  audit is a separate `--runs=1` call (numbered with `--run-index`) with pauses in between.
 - **New frontend**: audited against a **production build** served via `vite preview`
   (`http://localhost:4173/FINAL/`), not the dev server — dev-mode is unminified and skips
   prod optimizations, which would understate real performance. **5 runs**, mobile + desktop,
@@ -89,8 +92,8 @@ node summarize.mjs
 node generate-charts.mjs
 ```
 
-The original site (`https://www.goldenharvest.com.ar/silvia`) never needs re-running —
-it's a one-time, single-run baseline snapshot and stays untouched:
+The original site's single-run snapshot of 2026-08-04 is kept as history; the cited baseline is
+the paired batch of 2026-10-07 (section below). The historical single run was taken with:
 
 ```bash
 node run-audit.mjs --url=https://www.goldenharvest.com.ar/silvia --label=original --runs=1 --device=both

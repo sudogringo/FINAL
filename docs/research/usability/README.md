@@ -60,8 +60,8 @@ interpretado como tres variedades distintas (Anexo B de la tesis); P4 seleccion�
 (tres unidades), por lo que no cumple ese criterio aunque envió la solicitud. Los cinco
 participantes enviaron la solicitud de cotización.
 
-P3 formuló una única consulta al moderador sobre la consigna ("¿selecciono cualquier
-producto?"), no sobre el uso de la interfaz. Se registra como observación; no altera la
+P3 consultó al moderador, una sola vez, si podía seleccionar cualquier producto: una pregunta
+sobre la consigna, no sobre el uso de la interfaz. El registro de campo no consigna la respuesta. Se registra como observación; no altera la
 completitud de P3.
 
 ## Limitaciones (declarar en la tesis, no ocultar)
