@@ -15,7 +15,8 @@ current behaviour instead.
 
 ## Protocol
 
-- n8n 2.35.4, container `golden_harvest_n8n`, full stack up (`docker compose up -d` at repo root).
+- Container `golden_harvest_n8n`, full stack up (`docker compose up -d` at repo root). n8n version:
+  see [`VERSION.md`](VERSION.md) (2.27.5; recorded per batch in `n8n-version.txt` since 2026-10-07).
 - Each workflow (01–07 except 00, which is measured in `../quote-latency/`) runs **3 times** via
   `n8n execute --id <id> --rawOutput` inside the container, 5 s apart.
 - `N8N_RUNNERS_BROKER_PORT=5690` is passed to the CLI process only: the running instance already
@@ -24,9 +25,23 @@ current behaviour instead.
   `Execution was NOT successful`. Runs are also saved in n8n's execution table with `mode=cli`.
 - **Side effects are real**: the TESIS branches send Gmail messages and write to Google Sheets.
 
+## Check — 2026-10-07, after the service-key change (not a replacement for 2026-09-25)
+
+`results/2026-10-07/` (n8n 2.27.5, recorded in `n8n-version.txt`). Run after the backend began
+requiring the admin JWT or `X-Service-Key` on `GET /api/orders*` and `/api/stats/*`.
+
+- **What it shows**: in workflow 05, both HTTP nodes read `/api/stats/monthly` and `/api/orders`
+  with the service key and the report node built its output; the backend answers 401 to the same
+  requests without the key. The service-key path works end to end.
+- **What it does not show**: the n8n instance had no stored credentials on that date (Gmail,
+  Google Sheets and the PageSpeed key had been removed), so 01–06b stop at their first
+  credentialed node. Workflow 07 exits 0 only because the database held no confirmed orders:
+  its run ends after the HTTP node with zero items, so it is **not** a functional pass.
+- The 2026-09-25 batch below remains the cited state of the workflows.
+
 ## Results — 2026-09-25, after fixes (current, cited)
 
-All 24 runs OK; `results/summary.csv` and `results/<wf>-<n>.log` hold this batch. Cross-checked
+All 24 runs OK; `results/2026-09-25/summary.csv` and `results/2026-09-25/<wf>-<n>.log` hold this batch. Cross-checked
 against n8n's execution table (`mode=cli`, `status=success`, 3 per workflow).
 
 | WF | OK / runs | Mean duration |
@@ -48,7 +63,7 @@ Fixes applied between the two batches (exports in `n8n/workflows/`):
   `Google API Key (PageSpeed)` credential had expired and was renewed.
 - **03** — added `Manual Trigger (TESIS)` wired to the same nodes as the Schedule Trigger.
 - **05** — HTTP nodes now call `http://backend:3001/api/stats/monthly` and `/api/orders`
-  (hardcoded: n8n 2.35 denies `$env` access in expressions); the report Code node maps the
+  (hardcoded backend host); the report Code node maps the
   backend's response shape. Caveat: "Facturación total" is always $0 because backend orders
   carry no prices.
 
@@ -65,7 +80,8 @@ Fixes applied between the two batches (exports in `n8n/workflows/`):
 | 06b Carrito Abandonado | 3 / 3 | — |
 | 07 Logistics & Shipping Automation | 3 / 3 | — |
 
-Per-run detail: `results/summary.csv`; raw CLI output: `results/<wf>-<n>.log`.
+Per-run detail and raw CLI output of the current batch: `results/2026-09-25/`. The logs of this
+first batch were overwritten by the second one on the same day and were not preserved.
 
 ### Diagnosed causes (not fixed here)
 
@@ -84,5 +100,5 @@ Per-run detail: `results/summary.csv`; raw CLI output: `results/<wf>-<n>.log`.
 
 ```bash
 docker compose up -d                           # from repo root
-docs/research/n8n-workflow-runs/run-all.sh     # RUNS=3 by default; writes results/ and summary.csv
+docs/research/n8n-workflow-runs/run-all.sh     # RUNS=3 by default; writes results/<date>/ (BATCH=<name> to override)
 ```

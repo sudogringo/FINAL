@@ -2,10 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-// Reads results/runs.csv + results/<wf>-<n>.log and writes results/summary.csv.
+// Reads <batch>/runs.csv + <batch>/<wf>-<n>.log and writes <batch>/summary.csv.
 // A run is OK only if the CLI exited 0 and n8n did not report "Execution was NOT successful".
 
-const dir = path.join(path.dirname(fileURLToPath(import.meta.url)), 'results');
+// Batch folder: first CLI argument (e.g. results/2026-10-07), relative to this script.
+const dir = path.join(path.dirname(fileURLToPath(import.meta.url)), process.argv[2] ?? 'results');
 const [, ...lines] = fs.readFileSync(path.join(dir, 'runs.csv'), 'utf-8').trim().split('\n');
 
 function errorInfo(log) {

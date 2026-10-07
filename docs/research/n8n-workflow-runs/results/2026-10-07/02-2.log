@@ -1,0 +1,184 @@
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container detected via .dockerenv file
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Credential with ID "bbjsxolIOOEGysNb" does not exist for type "httpQueryAuth".
+Registered runner "JS Task Runner" (DIsBht7deCWbRnqjK9aq9) 
+Credential with ID "bbjsxolIOOEGysNb" does not exist for type "httpQueryAuth".
+Credential with ID "bbjsxolIOOEGysNb" does not exist for type "httpQueryAuth".
+Execution was NOT successful. See log message for details.
+Execution error:
+====================================
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "error": {
+        "level": "info",
+        "shouldReport": false,
+        "tags": {},
+        "message": "Credential with ID \"bbjsxolIOOEGysNb\" does not exist for type \"httpQueryAuth\".",
+        "stack": "Error: Credential with ID \"bbjsxolIOOEGysNb\" does not exist for type \"httpQueryAuth\".\n    at CredentialsHelper.getCredentialsEntity (/usr/local/lib/node_modules/n8n/src/credentials-helper.ts:307:11)\n    at CredentialsHelper.getDecrypted (/usr/local/lib/node_modules/n8n/src/credentials-helper.ts:396:29)\n    at ExecuteContext._getCredentials (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/node-execution-context/node-execution-context.ts:461:31)\n    at ExecuteContext.getCredentials (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/node-execution-context/base-execute-context.ts:102:10)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/HttpRequest/V3/HttpRequestV3.node.ts:196:23)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1067:8)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1367:11)\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1829:27\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2521:11"
+      },
+      "runData": {
+        "Daily 9 AM Trigger": [
+          {
+            "startTime": 1791389287765,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "PSI Mobile": [
+          {
+            "startTime": 1791389287766,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Daily 9 AM Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 4032,
+            "executionStatus": "error",
+            "error": {
+              "level": "info",
+              "shouldReport": false,
+              "tags": {},
+              "message": "Credential with ID \"bbjsxolIOOEGysNb\" does not exist for type \"httpQueryAuth\".",
+              "stack": "Error: Credential with ID \"bbjsxolIOOEGysNb\" does not exist for type \"httpQueryAuth\".\n    at CredentialsHelper.getCredentialsEntity (/usr/local/lib/node_modules/n8n/src/credentials-helper.ts:307:11)\n    at CredentialsHelper.getDecrypted (/usr/local/lib/node_modules/n8n/src/credentials-helper.ts:396:29)\n    at ExecuteContext._getCredentials (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/node-execution-context/node-execution-context.ts:461:31)\n    at ExecuteContext.getCredentials (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/node-execution-context/base-execute-context.ts:102:10)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/HttpRequest/V3/HttpRequestV3.node.ts:196:23)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1067:8)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1367:11)\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1829:27\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2521:11"
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "PSI Mobile"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [
+        {
+          "node": {
+            "parameters": {
+              "curlImport": "",
+              "method": "GET",
+              "url": "https://www.googleapis.com/pagespeedonline/v5/runPagespeed",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpQueryAuth",
+              "provideSslCertificates": false,
+              "sendQuery": true,
+              "specifyQuery": "keypair",
+              "queryParameters": {
+                "parameters": [
+                  {
+                    "name": "url",
+                    "value": "https://sudogringo.github.io/FINAL/"
+                  },
+                  {
+                    "name": "strategy",
+                    "value": "mobile"
+                  }
+                ]
+              },
+              "sendHeaders": false,
+              "sendBody": false,
+              "options": {},
+              "infoMessage": ""
+            },
+            "id": "bbb00002-0002-0002-0002-000000000002",
+            "name": "PSI Mobile",
+            "type": "n8n-nodes-base.httpRequest",
+            "position": [
+              1312,
+              1296
+            ],
+            "typeVersion": 4.2,
+            "retryOnFail": true,
+            "maxTries": 3,
+            "waitBetweenTries": 2000,
+            "credentials": {
+              "httpQueryAuth": {
+                "id": "bbjsxolIOOEGysNb",
+                "name": "Google API Key (PageSpeed)"
+              }
+            }
+          },
+          "data": {
+            "main": [
+              [
+                {
+                  "json": {},
+                  "pairedItem": {
+                    "item": 0
+                  }
+                }
+              ]
+            ]
+          },
+          "source": {
+            "main": [
+              {
+                "previousNode": "Daily 9 AM Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ]
+          }
+        }
+      ],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1791389287764,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Daily 9 AM Trigger",
+          "type": "n8n-nodes-base.cron"
+        }
+      }
+    },
+    "resumeToken": "7780a08870f6ff6fb7b96eaaf36f853daa6c071cf15d0b8275cf668036befa12"
+  },
+  "mode": "cli",
+  "startedAt": "2026-10-07T16:08:07.757Z",
+  "stoppedAt": "2026-10-07T16:08:11.798Z",
+  "storedAt": "db",
+  "status": "error"
+}
+Error executing workflow. See log messages for details.
+
+Execution error:
+====================================
+Credential with ID "bbjsxolIOOEGysNb" does not exist for type "httpQueryAuth".
+Error: Credential with ID "bbjsxolIOOEGysNb" does not exist for type "httpQueryAuth".
+    at CredentialsHelper.getCredentialsEntity (/usr/local/lib/node_modules/n8n/src/credentials-helper.ts:307:11)
+    at CredentialsHelper.getDecrypted (/usr/local/lib/node_modules/n8n/src/credentials-helper.ts:396:29)
+    at ExecuteContext._getCredentials (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/node-execution-context/node-execution-context.ts:461:31)
+    at ExecuteContext.getCredentials (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/node-execution-context/base-execute-context.ts:102:10)
+    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/HttpRequest/V3/HttpRequestV3.node.ts:196:23)
+    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1067:8)
+    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1367:11)
+    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1829:27
+    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2521:11
+Credential with ID "bbjsxolIOOEGysNb" does not exist for type "httpQueryAuth".

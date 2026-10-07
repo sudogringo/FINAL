@@ -1,0 +1,257 @@
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container detected via .dockerenv file
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (4ybUJG8mfxCtOpbfJ5xfy) 
+Execution was NOT successful. See log message for details.
+Execution error:
+====================================
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "error": {
+        "level": "warning",
+        "tags": {},
+        "timestamp": 1791389410692,
+        "context": {},
+        "functionality": "regular",
+        "name": "NodeApiError",
+        "node": {
+          "parameters": {
+            "authentication": "oAuth2",
+            "resource": "sheet",
+            "operation": "read",
+            "documentId": {
+              "__rl": true,
+              "mode": "id",
+              "value": "1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM"
+            },
+            "sheetName": {
+              "__rl": true,
+              "value": 1618377617,
+              "mode": "list",
+              "cachedResultName": "posts",
+              "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM/edit#gid=1618377617"
+            },
+            "filtersUI": {},
+            "combineFilters": "AND",
+            "options": {}
+          },
+          "id": "read-sheet",
+          "name": "Leer Sheet de Contenido",
+          "type": "n8n-nodes-base.googleSheets",
+          "position": [
+            224,
+            784
+          ],
+          "typeVersion": 4.5,
+          "credentials": {
+            "googleSheetsOAuth2Api": {
+              "id": "X2syETMrleq2VzbZ",
+              "name": "Google Sheets account"
+            }
+          }
+        },
+        "messages": [
+          "Credential with ID \"X2syETMrleq2VzbZ\" does not exist for type \"googleSheetsOAuth2Api\"."
+        ],
+        "httpCode": null,
+        "message": "Credential with ID \"X2syETMrleq2VzbZ\" does not exist for type \"googleSheetsOAuth2Api\".",
+        "stack": "NodeApiError: Credential with ID \"X2syETMrleq2VzbZ\" does not exist for type \"googleSheetsOAuth2Api\".\n    at ExecuteContext.apiRequest (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/transport/index.ts:78:9)\n    at GoogleSheet.spreadsheetGetSheet (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/helpers/GoogleSheet.ts:141:21)\n    at ExecuteContext.router (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/actions/router.ts:43:20)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/GoogleSheetsV2.node.ts:30:10)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1067:8)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1367:11)\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1829:27\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2521:11"
+      },
+      "runData": {
+        "Manual Trigger (Sheet mode)": [
+          {
+            "startTime": 1791389410684,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Leer Sheet de Contenido": [
+          {
+            "startTime": 1791389410685,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger (Sheet mode)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 18,
+            "executionStatus": "error",
+            "error": {
+              "level": "warning",
+              "tags": {},
+              "timestamp": 1791389410692,
+              "context": {},
+              "functionality": "regular",
+              "name": "NodeApiError",
+              "node": {
+                "parameters": {
+                  "authentication": "oAuth2",
+                  "resource": "sheet",
+                  "operation": "read",
+                  "documentId": {
+                    "__rl": true,
+                    "mode": "id",
+                    "value": "1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM"
+                  },
+                  "sheetName": {
+                    "__rl": true,
+                    "value": 1618377617,
+                    "mode": "list",
+                    "cachedResultName": "posts",
+                    "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM/edit#gid=1618377617"
+                  },
+                  "filtersUI": {},
+                  "combineFilters": "AND",
+                  "options": {}
+                },
+                "id": "read-sheet",
+                "name": "Leer Sheet de Contenido",
+                "type": "n8n-nodes-base.googleSheets",
+                "position": [
+                  224,
+                  784
+                ],
+                "typeVersion": 4.5,
+                "credentials": {
+                  "googleSheetsOAuth2Api": {
+                    "id": "X2syETMrleq2VzbZ",
+                    "name": "Google Sheets account"
+                  }
+                }
+              },
+              "messages": [
+                "Credential with ID \"X2syETMrleq2VzbZ\" does not exist for type \"googleSheetsOAuth2Api\"."
+              ],
+              "httpCode": null,
+              "message": "Credential with ID \"X2syETMrleq2VzbZ\" does not exist for type \"googleSheetsOAuth2Api\".",
+              "stack": "NodeApiError: Credential with ID \"X2syETMrleq2VzbZ\" does not exist for type \"googleSheetsOAuth2Api\".\n    at ExecuteContext.apiRequest (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/transport/index.ts:78:9)\n    at GoogleSheet.spreadsheetGetSheet (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/helpers/GoogleSheet.ts:141:21)\n    at ExecuteContext.router (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/actions/router.ts:43:20)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/GoogleSheetsV2.node.ts:30:10)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1067:8)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1367:11)\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1829:27\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2521:11"
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Leer Sheet de Contenido"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [
+        {
+          "node": {
+            "parameters": {
+              "authentication": "oAuth2",
+              "resource": "sheet",
+              "operation": "read",
+              "documentId": {
+                "__rl": true,
+                "mode": "id",
+                "value": "1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM"
+              },
+              "sheetName": {
+                "__rl": true,
+                "value": 1618377617,
+                "mode": "list",
+                "cachedResultName": "posts",
+                "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1AVtwQLSgSmHTGt4bjsFA35ma5BaumYnEgltMMbwbMvM/edit#gid=1618377617"
+              },
+              "filtersUI": {},
+              "combineFilters": "AND",
+              "options": {}
+            },
+            "id": "read-sheet",
+            "name": "Leer Sheet de Contenido",
+            "type": "n8n-nodes-base.googleSheets",
+            "position": [
+              224,
+              784
+            ],
+            "typeVersion": 4.5,
+            "credentials": {
+              "googleSheetsOAuth2Api": {
+                "id": "X2syETMrleq2VzbZ",
+                "name": "Google Sheets account"
+              }
+            }
+          },
+          "data": {
+            "main": [
+              [
+                {
+                  "json": {},
+                  "pairedItem": {
+                    "item": 0
+                  }
+                }
+              ]
+            ]
+          },
+          "source": {
+            "main": [
+              {
+                "previousNode": "Manual Trigger (Sheet mode)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ]
+          }
+        }
+      ],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1791389410683,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger (Sheet mode)",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "4b9822058fe0a48d06bc932203ace3fa98ba9ad83b6311e69b6c00889b7f3b74"
+  },
+  "mode": "cli",
+  "startedAt": "2026-10-07T16:10:10.676Z",
+  "stoppedAt": "2026-10-07T16:10:10.704Z",
+  "storedAt": "db",
+  "status": "error"
+}
+Error executing workflow. See log messages for details.
+
+Execution error:
+====================================
+Credential with ID "X2syETMrleq2VzbZ" does not exist for type "googleSheetsOAuth2Api".
+NodeApiError: Credential with ID "X2syETMrleq2VzbZ" does not exist for type "googleSheetsOAuth2Api".
+    at ExecuteContext.apiRequest (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/transport/index.ts:78:9)
+    at GoogleSheet.spreadsheetGetSheet (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/helpers/GoogleSheet.ts:141:21)
+    at ExecuteContext.router (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/actions/router.ts:43:20)
+    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/nodes/Google/Sheet/v2/GoogleSheetsV2.node.ts:30:10)
+    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1067:8)
+    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1367:11)
+    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1829:27
+    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2521:11
+Credential with ID "X2syETMrleq2VzbZ" does not exist for type "googleSheetsOAuth2Api".

@@ -8,7 +8,11 @@ RUNS="${RUNS:-3}"
 CONTAINER="${CONTAINER:-golden_harvest_n8n}"
 # The running instance already holds the task broker port (5679); the CLI process needs its own.
 BROKER_PORT="${BROKER_PORT:-5690}"
-mkdir -p results
+# Each batch gets its own dated folder so earlier, cited batches are never overwritten.
+OUT="results/${BATCH:-$(date +%F)}"
+mkdir -p "$OUT"
+# Record the n8n version that actually runs the batch.
+docker exec "$CONTAINER" n8n --version 2>/dev/null | tail -1 > "$OUT/n8n-version.txt"
 
 WORKFLOWS=(
   "01:Yvoc3v8PN45TaRAD"
@@ -21,17 +25,17 @@ WORKFLOWS=(
   "07:pIlvvd0nTN7mfJOL"
 )
 
-echo "workflow,run,exit_code,duration_ms" > results/runs.csv
+echo "workflow,run,exit_code,duration_ms" > "$OUT/runs.csv"
 for entry in "${WORKFLOWS[@]}"; do
   wf="${entry%%:*}"; id="${entry##*:}"
   for n in $(seq 1 "$RUNS"); do
     start=$(date +%s%3N)
     docker exec -e N8N_RUNNERS_BROKER_PORT="$BROKER_PORT" "$CONTAINER" \
-      n8n execute --id "$id" --rawOutput > "results/$wf-$n.log" 2>&1
+      n8n execute --id "$id" --rawOutput > "$OUT/$wf-$n.log" 2>&1
     code=$?
-    echo "$wf,$n,$code,$(( $(date +%s%3N) - start ))" >> results/runs.csv
+    echo "$wf,$n,$code,$(( $(date +%s%3N) - start ))" >> "$OUT/runs.csv"
     echo "$wf run $n: exit $code"
     sleep 5
   done
 done
-node summarize.mjs
+node summarize.mjs "$OUT"
