@@ -1,10 +1,10 @@
 import { Router, Request, Response } from 'express'
 import { prisma } from '../db'
-import { requireAuth } from '../middleware/auth'
+import { requireAuthOrServiceKey } from '../middleware/auth'
 
 export const ordersRouter = Router()
 
-ordersRouter.get('/', async (req: Request, res: Response) => {
+ordersRouter.get('/', requireAuthOrServiceKey, async (req: Request, res: Response) => {
   try {
     const { month, estado } = req.query
 
@@ -49,7 +49,7 @@ ordersRouter.get('/', async (req: Request, res: Response) => {
   }
 })
 
-ordersRouter.get('/:id/items', async (req: Request, res: Response) => {
+ordersRouter.get('/:id/items', requireAuthOrServiceKey, async (req: Request, res: Response) => {
   try {
     const items = await prisma.orderItem.findMany({
       where: { orderId: String(req.params.id) },

@@ -29,6 +29,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://gharvest:gharvest_pass@postgres:5432/golden_harvest
       - JWT_SECRET=${JWT_SECRET:-changeme_jwt_secret}
+      - SERVICE_API_KEY=${SERVICE_API_KEY:-}
       - N8N_QUOTE_WEBHOOK=${N8N_QUOTE_WEBHOOK:-}
       - N8N_ABANDONED_WEBHOOK=${N8N_ABANDONED_WEBHOOK:-}
       - N8N_LOGISTICS_WEBHOOK=${N8N_LOGISTICS_WEBHOOK:-}
@@ -59,6 +60,8 @@ services:
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-America/Argentina/Buenos_Aires}
       - TZ=${TZ:-America/Argentina/Buenos_Aires}
       - GH_API_BASE_URL=http://backend:3001/api
+      - SERVICE_API_KEY=${SERVICE_API_KEY:-}
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
     volumes:
       - ./n8n/data:/home/node/.n8n
     depends_on:

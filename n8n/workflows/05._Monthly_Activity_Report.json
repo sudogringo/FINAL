@@ -113,7 +113,16 @@
     {
       "parameters": {
         "url": "http://backend:3001/api/stats/monthly",
-        "options": {}
+        "options": {},
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Service-Key",
+              "value": "={{ $env.SERVICE_API_KEY }}"
+            }
+          ]
+        }
       },
       "id": "node-get-stats",
       "name": "GET /stats/monthly — Métricas del mes",
@@ -127,7 +136,16 @@
     {
       "parameters": {
         "url": "http://backend:3001/api/orders",
-        "options": {}
+        "options": {},
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Service-Key",
+              "value": "={{ $env.SERVICE_API_KEY }}"
+            }
+          ]
+        }
       },
       "id": "node-get-orders",
       "name": "GET /orders — Pedidos del mes",

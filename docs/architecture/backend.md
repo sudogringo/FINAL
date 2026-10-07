@@ -9,6 +9,7 @@ The frontend catalog is "Lead-to-Sale", not transactional — carts don't check 
 - **Express + TypeScript** — minimal, unopinionated HTTP layer; matches the rest of the stack's TS-first approach (frontend is also TS).
 - **Prisma ORM + PostgreSQL** — typed schema/migrations over a relational store. Postgres was chosen over MongoDB (mentioned as an alternative in the original 3-layer plan) because the actual data (products, quotes, admins) is structured and relational enough that schema enforcement is more useful than schema flexibility here.
 - **JWT auth** (`jsonwebtoken` + `bcryptjs`) for the admin panel — no customer-facing auth exists or is planned; end users are anonymous leads identified only by a `sessionId` on their quote.
+- **Service key for n8n**: `GET /orders`, `GET /orders/:id/items`, `GET /stats/monthly` and `GET /stats/abandoned-carts` return customer data, so they require either the admin JWT or the `X-Service-Key` header matching `SERVICE_API_KEY` (`requireAuthOrServiceKey` in `middleware/auth.ts`). Workflows 05 and 07 send that header from `$env.SERVICE_API_KEY`. With `SERVICE_API_KEY` unset, only the JWT path is open.
 - **Multer** for image uploads (product photos), stored under `backend/uploads/`.
 - **Zod** for request validation at the API boundary.
 

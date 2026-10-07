@@ -116,13 +116,13 @@ docker compose up -d      # Postgres + Backend + n8n
 
 - Express + TypeScript
 - Prisma ORM → PostgreSQL
-- JWT auth for admin routes
+- JWT auth for admin routes; `GET /api/orders*` and `/api/stats/*` also accept the `X-Service-Key` header (`SERVICE_API_KEY`) so n8n can read them
 - Zod validation on all endpoints
 
 ## Key Files
 
 - `docs/thesis/proposal.md` — Project scope and n8n module descriptions (Spanish, authoritative)
-- `docs/thesis/thesis_draft.md` — Full academic thesis draft; Chapters 5 & 6 are pending implementation
+- `docs/thesis/thesis_draft.md` — Early academic thesis draft; the delivered thesis is the `.docx` kept outside the repo
 - `docs/architecture/n8n_workflows.md` — Detailed n8n workflow designs with JS code snippets for Code Nodes
 - `n8n/workflows/*.json` — Exported n8n workflow definitions
 - `backend/prisma/schema.prisma` — DB schema
@@ -154,5 +154,5 @@ The 2-hour abandoned cart detection runs client-side: if a quote is not submitte
 - [x] docker-compose full stack (Postgres + Backend + n8n)
 - [x] Backend ↔ n8n webhook wiring (quote submit, logistics on order confirm)
 - [x] Frontend → Backend connection (QuoteForm via submitQuote())
-- [ ] Integration smoke-testing across all 7 workflows against live backend
-- [ ] Chapters 5 & 6 of thesis (Results & Conclusions)
+- [x] Integration verification of the 9 functional workflows against the live backend (`docs/research/n8n-workflow-runs/`)
+- [x] Chapters 5 & 6 of thesis (Results & Conclusions)
