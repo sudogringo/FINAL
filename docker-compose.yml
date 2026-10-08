@@ -2,6 +2,9 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: golden_harvest_db
+    # Sin esto, tras un reinicio de Docker la base no vuelve y el backend
+    # (que sí se reinicia) queda en un bucle de P1001.
+    restart: unless-stopped
     environment:
       POSTGRES_USER: gharvest
       POSTGRES_PASSWORD: gharvest_pass
@@ -35,6 +38,7 @@ services:
       - N8N_LOGISTICS_WEBHOOK=${N8N_LOGISTICS_WEBHOOK:-}
       - ABANDONED_CART_THRESHOLD_MS=${ABANDONED_CART_THRESHOLD_MS:-60000}
       - MEASURE_LATENCY=${MEASURE_LATENCY:-false}
+      - SEED_ADMIN_PASSWORD=${SEED_ADMIN_PASSWORD:-}
     depends_on:
       postgres:
         condition: service_healthy
