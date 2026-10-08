@@ -75,8 +75,12 @@ quotesRouter.post('/', async (req: Request, res: Response) => {
   // webhook: sin cotización persistida no hay nada que notificar.
   let quote
   try {
-    // Upsert customer por email
-    const customer = await prisma.customer.upsert(customerUpsertArgs(contact))
+    // Upsert customer por email (sin pisar datos de un cliente existente)
+    const stored = await prisma.customer.findUnique({
+      where:  { email: contact.email },
+      select: { empresa: true, telefono: true, localidad: true },
+    })
+    const customer = await prisma.customer.upsert(customerUpsertArgs(contact, stored))
 
     quote = await prisma.quote.create({
       data: { sessionId, contact, items, customerId: customer.id },

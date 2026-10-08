@@ -25,19 +25,44 @@ test('rejects a localidad longer than 100 characters', () => {
 })
 
 test('writes localidad when creating the customer', () => {
-  const args = customerUpsertArgs({ ...BASE, localidad: 'San Rafael' })
+  const args = customerUpsertArgs({ ...BASE, localidad: 'San Rafael' }, null)
   assert.deepEqual(args.where, { email: 'ana@example.com' })
   assert.equal(args.create.localidad, 'San Rafael')
 })
 
-test('updates localidad of an existing customer when the form provides it', () => {
-  const args = customerUpsertArgs({ ...BASE, localidad: 'San Rafael' })
-  assert.equal(args.update.localidad, 'San Rafael')
+// The quote form is public: whoever knows a customer's email must not be able
+// to rewrite that customer's data. An existing customer only gets the fields
+// it still lacks; what each quote said stays in Quote.contact.
+const STORED = { nombre: 'Ana Pérez', empresa: 'Conservas Ana', telefono: '2610000000', localidad: 'San Rafael' }
+
+test('never overwrites the data of an existing customer', () => {
+  const args = customerUpsertArgs(
+    { nombre: 'Impostor', email: 'ana@example.com', empresa: 'Otra', telefono: '1100000000', localidad: 'Otra ciudad' },
+    STORED,
+  )
+  assert.deepEqual(args.update, {})
 })
 
-// Prisma ignores undefined fields in `update`, so the stored value survives.
-test('leaves the stored localidad untouched when the form omits it', () => {
-  const args = customerUpsertArgs(BASE)
-  assert.equal(args.create.localidad, undefined)
-  assert.equal(args.update.localidad, undefined)
+test('fills the fields an existing customer is still missing', () => {
+  const args = customerUpsertArgs(
+    { ...BASE, telefono: '2615555555', localidad: 'Maipú' },
+    { ...STORED, telefono: null, localidad: null },
+  )
+  assert.deepEqual(args.update, { telefono: '2615555555', localidad: 'Maipú' })
+})
+
+test('treats an empty stored value as missing', () => {
+  const args = customerUpsertArgs({ ...BASE, empresa: 'Conservas Ana' }, { ...STORED, empresa: '' })
+  assert.deepEqual(args.update, { empresa: 'Conservas Ana' })
+})
+
+test('does not fill a missing field with an absent form value', () => {
+  const args = customerUpsertArgs(BASE, { ...STORED, localidad: null })
+  assert.deepEqual(args.update, {})
+})
+
+test('without a stored customer, the form values go to create', () => {
+  const args = customerUpsertArgs({ ...BASE, localidad: 'Maipú' }, null)
+  assert.equal(args.create.localidad, 'Maipú')
+  assert.deepEqual(args.update, {})
 })
