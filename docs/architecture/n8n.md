@@ -57,10 +57,10 @@ All 8 workflows in the table are inactive (`active=0`) and are run manually. Wor
 
 Data status per workflow (fill in / correct as work continues — this is the section the "no real access, no budget" constraint applies to directly):
 
-- **01 Branding**: extracts colors from a real *public* URL (`https://tiago-cunto.github.io/golden-harvest/` — the students' own GitHub Pages mockup, not Golden Harvest's real site) — compliant with the no-real-access constraint since it's a site the students control. Output stored in `n8n/data/brand_colors.json`. Note: that URL returned 404 on 2026-09-25 (see 02 above); 01 still completed 3/3, so check whether its colors now come from a fallback rather than the page.
-- **02 SEO Monitor**: audits `https://sudogringo.github.io/FINAL/` (the new catalog's GitHub Pages deploy) through the free PageSpeed Insights API.
-- **03 Google Maps Review Management**: has a `reviews_processed.json` output file — verify whether reviews are pulled from a real (free-tier) Google Maps API against a placeholder listing, or fully simulated, before citing this in the thesis as a "live integration."
-- **02, 04, 05, 06a, 06b, 07**: data source (simulated vs. free-tier API) not yet audited in this pass — check each workflow's HTTP Request / trigger nodes and record findings here before writing the corresponding thesis section.
+- **01 Branding**: the enabled `Set Thesis URL` node points at `https://sudogringo.github.io/FINAL/`, the project's own GitHub Pages build (the older `tiago-cunto.github.io/golden-harvest/` mockup returned 404 on 2026-09-25; `Set Hardcoded URL`, pointing at the company's public site, is disabled). The extracted palette is therefore the new site's own, not the company's.
+- **02 SEO Monitor**: audits `https://sudogringo.github.io/FINAL/` through the free PageSpeed Insights API. Until 08/10/2026 the requests sent no `category` parameter, so only Performance came back and the report showed Accessibility, Best Practices and SEO as 0/100; both PSI nodes now request the four categories and a missing score is shown as "N/D".
+- **03 Google Maps Review Management**: fully simulated. The content comes from the `[TESIS] Mock Reviews` node; the two fetch nodes return `{}` (no Maps API key).
+- **04**: Google Sheets (content sheet) or the Form Trigger. **05** and **07**: the backend API with `X-Service-Key`. **06a** and **06b**: jsonplaceholder (`/users`, `/posts`) as simulated sources. Per-workflow triggers and sources are tabulated in `CLAUDE.md`.
 
 ## Relations
 

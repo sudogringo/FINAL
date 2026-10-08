@@ -148,7 +148,7 @@ flowchart LR
 | 3 | Google Maps Reputation | Cada 6h | — |
 | 4 | Social Media Content Engine | Webhook (producto nuevo) | `GET /api/products` |
 | 5 | Monthly Activity Report | Día 1 de cada mes | `GET /api/stats/monthly` |
-| 6a | Newsletter Quincenal | Quincenal (1º/15) | `GET /api/mock/newsletter-subscribers` |
+| 6a | Newsletter Quincenal | Quincenal (1º/15) | `GET /api/mock/newsletter-subscribers` (ruta de diseño, nunca implementada; la rama TESIS usa jsonplaceholder) |
 | 6b | Carrito Abandonado | Webhook (2h inactividad) | `GET /api/stats/abandoned-carts` |
 | 7 | Logistics Automation | Webhook (orden confirmada) | `GET /api/orders/:id/items` |
 
@@ -175,25 +175,26 @@ flowchart TD
     FE["🖥️ Frontend<br/>React 19 + Vite"]:::frontend
     BE["⚙️ Backend<br/>Express + Prisma"]:::backend
     DB[("🗄️ PostgreSQL")]:::db
-    N8N["🔁 n8n<br/>8 workflows importados<br/>todos inactive"]:::orch
+    N8N["🔁 n8n<br/>9 workflows + 1 auxiliar<br/>solo 00 activo"]:::orch
 
     FE -- "POST /api/quotes ✅" --> BE
     BE -- "GET /api/products ✅" --> FE
     BE -- "guarda lead ✅" --> DB
-    BE -. "webhook (env var vacía)" .-> N8N
-    N8N -. "GH_API_BASE_URL<br/>sin uso real aún" .-> BE
+    BE -- "webhook quote ✅ (00)" --> N8N
+    N8N -- "GET /api/orders, /api/stats/monthly ✅<br/>(05 y 07, X-Service-Key)" --> BE
 ```
 
 **Leyenda:** línea sólida = implementado y funcionando. Línea punteada = diseñado (código o config presente) pero no activo hoy.
 
-**Gaps identificados** (relevantes para el capítulo de resultados/conclusiones):
-- `N8N_QUOTE_WEBHOOK` y `N8N_ABANDONED_WEBHOOK` no están seteados por default en `docker-compose.yml` → el backend nunca dispara hacia n8n en una corrida estándar.
-- Ningún workflow de n8n hace `fetch`/`HTTP Request` real contra `GH_API_BASE_URL` todavía, pese a que la infraestructura (`depends_on`, env var) está lista.
-- Los 8 workflows están importados en la instancia n8n pero `active: false` — falta activarlos para que corran por schedule/webhook real.
+**Estado al 08/10/2026** (antes esta sección describía un estado previo, con los webhooks sin configurar y ningún workflow leyendo el backend):
+- El backend dispara `N8N_QUOTE_WEBHOOK` hacia el workflow 00, el único activo (`active: true` en el export).
+- Los workflows 05 y 07 leen el backend (`GET /api/stats/monthly`, `GET /api/orders`) con la clave de servicio (`X-Service-Key`).
+- Los demás corren desde su Manual Trigger, con PageSpeed, Google Sheets, Puppeteer o datos simulados (tabla en `CLAUDE.md`).
+- `N8N_ABANDONED_WEBHOOK` y `N8N_LOGISTICS_WEBHOOK` siguen sin un workflow receptor: 06b parte de un webhook de prueba y 07 de un Manual Trigger.
 
 **[1] Frontend** — igual al diagrama objetivo, sin cambios.
 **[2] Backend** — igual al diagrama objetivo, sin cambios.
-**[3] n8n** — misma agrupación por función de negocio que el objetivo; los 8 workflows existen y están importados en la instancia, pero ninguno está activo (`active: false`) ni hace las llamadas HTTP al backend indicadas en la tabla — ver gaps arriba.
+**[3] n8n** — misma agrupación por función de negocio que el objetivo; ver el estado arriba.
 
 ---
 
@@ -223,7 +224,7 @@ sequenceDiagram
         BE-->>FE: 201 { id }
         BE-)N8N: fireWebhook(N8N_QUOTE_WEBHOOK) [fire-and-forget]
         deactivate BE
-        N8N-->>N8N: notifica a vendedor (WhatsApp + Email)
+        N8N-->>N8N: notifica a vendedor por email (WhatsApp solo en la rama PRODUCCIÓN, deshabilitada)
 
         Note over BE,N8N: — más tarde, fuera de este request —
         BE->>BE: admin marca Quote → CLOSED (PATCH /api/quotes/:id/status)
@@ -242,13 +243,15 @@ Render estático para inserción directa en el `.docx` de la tesis: [`../assets/
 
 ---
 
-## Cronograma del proyecto (Anexo E)
+## Cronograma del proyecto (versión anterior de la tesis)
+
+> Este Gantt corresponde a una versión anterior. La tesis entregada no lo incluye: su Anexo D es la cronología de hitos con la Tabla D1 (commits por período), tomada de `git log`.
 
 Deriva de la Tabla 3 del cuerpo de la tesis (§3.6, "Hitos principales del proyecto"), que solo documenta **fechas de hito puntuales** (una fecha, un estado). Para el diagrama de Gantt del Anexo E cada fase de trabajo se reconstruye como el intervalo entre un hito y el hito inmediatamente anterior — es la única forma de derivar duraciones reales a partir de una tabla de milestones. Esa inferencia no está en la Tabla 3 original; queda marcada acá para no generar ambigüedad con los datos fuente.
 
 ```mermaid
 ---
-title: Anexo E — Diagrama de Gantt del proyecto
+title: Diagrama de Gantt del proyecto (versión anterior)
 ---
 gantt
     dateFormat  YYYY-MM-DD

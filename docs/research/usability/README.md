@@ -1,12 +1,14 @@
 # Prueba de usabilidad — System Usability Scale (SUS)
 
 Datos crudos y cálculo de la prueba de usabilidad exploratoria para la validación de VD4
-(usabilidad del catálogo) — la que el diseño metodológico de la tesis (§4.5) declaraba
-como pendiente de ejecución por restricciones de tiempo del proyecto.
+(usabilidad del catálogo). Una versión anterior de la tesis la declaraba pendiente; se
+ejecutó el 2 y el 3 de septiembre de 2026 (protocolo en §4.5 y en el Anexo B de la tesis).
 
 ## Fuente de los datos crudos
 
-Documento de campo original, completado por los moderadores durante las sesiones:
+Documento de campo: consolidado de las notas de los dos moderadores, armado por uno de ellos
+(metadatos del archivo: creado el 02/09/2026 a las 22:31, hora de Argentina, y editado hasta el
+03/09/2026). No es un registro tomado en tiempo real durante cada sesión:
 [`raw/campo-original_PrimerasEncuestasGH.docx`](raw/campo-original_PrimerasEncuestasGH.docx)
 (archivo de trabajo `PrimerasEncuestasGH.BACKUP-2026-09-02 (1).docx`, última edición
 03/09/2026; MD5 `eb712a704ee5dcdbd4611bbc90f0cdc0`). Se publica sin alteraciones: identifica a
@@ -15,7 +17,7 @@ Markdown, sesión por sesión, está en [`raw/participantes.md`](raw/participant
 
 ## Metodología aplicada
 
-Coincide con el protocolo declarado de antemano en §4.5 de la tesis: muestra intencional de
+Coincide con el protocolo descrito en §4.5 y en el Anexo B de la tesis: muestra intencional de
 5 usuarios representativos, moderación presencial, sin asistencia externa durante la tarea
 (completar una solicitud de cotización en el catálogo), y calificación mediante el
 cuestionario SUS (System Usability Scale, Brooke 1996) de 10 ítems en escala Likert de 5
@@ -72,10 +74,10 @@ completitud de P3.
   controlada; ninguna evidencia sugiere que haya afectado el resultado, pero corresponde
   declararlo.
 - **Un solo tipo de dispositivo** (notebook/PC) — no se evaluó el catálogo en mobile, pese a
-  que el propio Capítulo 5 reporta que el sitio se usa mayoritariamente desde dispositivos
-  móviles (Statcounter Global Stats, 2024a, citado en §2.3).
-- **P5** fue el único participante con fricción real, y coincide con ser la persona de mayor
-  edad (60+) del grupo — declaró explícitamente que "le costaba leer las descripciones"
+  que el tráfico web es mayoritariamente móvil (Statcounter Global Stats, 2024a, citado en
+  §2.5 de la tesis).
+- **P5** fue el único participante con fricción real; es uno de los dos participantes del tramo
+  de 60 años o más (P3 y P5; P3 no tuvo fricción) — declaró explícitamente que "le costaba leer las descripciones"
   (letra chica). Este hallazgo es **consistente** con la regresión de Accessibility que
   Lighthouse reporta en el Capítulo 5 (83 vs. 89–94 del sitio preexistente), pero no la
   corrobora de forma independiente: es un solo participante, en una prueba moderada por los
