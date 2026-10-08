@@ -61,13 +61,10 @@ export default function Contact() {
               <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
                 Correo
               </p>
-              <a
-                href="mailto:info@goldenharvest.com.ar"
-                className="flex items-center gap-2 text-dark/70 hover:text-gold-dark text-sm transition-colors"
-              >
+              <span className="flex items-center gap-2 text-dark/70 text-sm">
                 <Mail size={14} />
-                info@goldenharvest.com.ar
-              </a>
+                No publicado (sitio de demostración académica)
+              </span>
             </div>
             <div className="border-l border-dark/10 pl-16">
               <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-2">

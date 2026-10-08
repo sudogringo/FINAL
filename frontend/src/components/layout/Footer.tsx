@@ -12,8 +12,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex flex-col items-center md:items-start">
           <span className="text-[10px] text-gold/50 font-heading tracking-[0.4em] uppercase">Golden Harvest S.A.</span>
-          <span className="text-white/25 text-[11px] font-body mt-0.5">
-            © {new Date().getFullYear()} — Todos los derechos reservados
+          <span className="text-white/70 text-[12px] font-body mt-0.5 text-center md:text-left">
+            Proyecto académico (UTN FRM, {new Date().getFullYear()}). Sitio de demostración sin vínculo con Golden Harvest S.A.
           </span>
         </div>
         <nav className="flex gap-6" aria-label="Links del footer">

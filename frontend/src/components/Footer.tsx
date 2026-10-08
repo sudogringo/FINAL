@@ -13,7 +13,7 @@ export default function Footer() {
             className="text-white/30 text-xs mt-0.5"
             style={{ fontFamily: 'Source Sans 3, sans-serif' }}
           >
-            © {new Date().getFullYear()} — Todos los derechos reservados
+            Proyecto académico (UTN FRM, {new Date().getFullYear()}). Sitio de demostración sin vínculo con Golden Harvest S.A.
           </span>
         </div>
 
