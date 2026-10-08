@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { prisma } from '../db'
 import { requireAuth } from '../middleware/auth'
 import { contactSchema, customerUpsertArgs } from './quoteContact'
+import { planQuoteClose, unknownProductIds, type QuoteItem } from './quoteClose'
 
 export const quotesRouter = Router()
 
@@ -70,6 +71,22 @@ quotesRouter.post('/', async (req: Request, res: Response) => {
 
   console.log(JSON.stringify({ event: 'quote_received', sessionId, clientSubmittedAt, receivedAt }))
 
+  // Un ítem con un producto inexistente no se puede cerrar después (la orden
+  // referencia el producto): se rechaza acá, antes de persistir nada.
+  let known
+  try {
+    known = await prisma.product.findMany({ where: { id: { in: items.map(i => i.id) } }, select: { id: true } })
+  } catch (err) {
+    console.error(JSON.stringify({ event: 'quote_persist_failed', sessionId, error: String(err) }))
+    res.status(503).json({ error: 'No se pudo registrar la solicitud. Intentá de nuevo en unos minutos.' })
+    return
+  }
+  const unknown = unknownProductIds(items, known.map(p => p.id))
+  if (unknown.length) {
+    res.status(400).json({ error: 'Productos inexistentes en la solicitud', unknown })
+    return
+  }
+
   // Persistencia: si la base no responde, se informa 503 en lugar de dejar caer el
   // proceso (Express 4 no captura rechazos de handlers async). No se dispara ningún
   // webhook: sin cotización persistida no hay nada que notificar.
@@ -135,57 +152,61 @@ quotesRouter.patch('/:id/status', requireAuth, async (req: Request, res: Respons
     res.status(400).json({ error: 'Estado inválido' }); return
   }
 
-  const existing = await prisma.quote.findUnique({
-    where: { id: String(req.params.id) },
-    include: { customer: true },
-  })
-  if (!existing) {
-    res.status(404).json({ error: 'Cotización no encontrada' }); return
-  }
+  const id = String(req.params.id)
+  try {
+    // Descuento de stock, orden y cambio de estado van juntos o no va ninguno.
+    const outcome = await prisma.$transaction(async tx => {
+      const existing = await tx.quote.findUnique({ where: { id }, include: { order: true } })
+      if (!existing) return { kind: 'not_found' as const }
 
-  if (status === 'CLOSED' && existing.status !== 'CLOSED') {
-    const items = existing.items as Array<{ id: string; name: string; size: string; qty: number }>
+      let order = null
+      if (status === 'CLOSED' && existing.status !== 'CLOSED' && existing.customerId) {
+        const items = existing.items as unknown as QuoteItem[]
+        const products = await tx.product.findMany({
+          where:  { id: { in: items.map(i => i.id) } },
+          select: { id: true, stockBySize: true },
+        })
+        const plan = planQuoteClose({ items, products, orderExists: existing.order !== null })
+        if (plan.missingProducts.length) return { kind: 'missing' as const, missing: plan.missingProducts }
 
-    // Descontar stock
-    for (const item of items) {
-      const product = await prisma.product.findUnique({ where: { id: item.id } })
-      if (!product) continue
-      const stockBySize = (product.stockBySize ?? {}) as Record<string, number>
-      const next = Math.max(0, (stockBySize[item.size] ?? 0) - item.qty)
-      await prisma.product.update({
-        where: { id: item.id },
-        data: { stockBySize: { ...stockBySize, [item.size]: next } },
-      })
+        for (const u of plan.stockUpdates) {
+          await tx.product.update({ where: { id: u.id }, data: { stockBySize: u.stockBySize } })
+        }
+        if (plan.orderItems.length) {
+          order = await tx.order.create({
+            data: {
+              customerId: existing.customerId,
+              quoteId:    existing.id,
+              estado:     'CONFIRMADO',
+              items:      { create: plan.orderItems },
+            },
+          })
+        }
+      }
+
+      const quote = await tx.quote.update({ where: { id }, data: { status } })
+      return { kind: 'ok' as const, quote, order, contact: existing.contact, items: existing.items }
+    })
+
+    if (outcome.kind === 'not_found') {
+      res.status(404).json({ error: 'Cotización no encontrada' }); return
+    }
+    if (outcome.kind === 'missing') {
+      res.status(409).json({ error: 'La cotización incluye productos que ya no existen', missing: outcome.missing }); return
     }
 
-    // Crear Order si hay customer
-    if (existing.customerId) {
-      const order = await prisma.order.create({
-        data: {
-          customerId: existing.customerId,
-          quoteId:    existing.id,
-          estado:     'CONFIRMADO',
-          items: {
-            create: items.map(i => ({
-              productId: i.id,
-              nombre:    i.name,
-              size:      i.size,
-              cantidad:  i.qty,
-            })),
-          },
-        },
-      })
-
-      // Disparar webhook de logística a n8n
+    // Disparar webhook de logística a n8n solo después de confirmar la transacción
+    if (outcome.order) {
       fireWebhook(process.env.N8N_LOGISTICS_WEBHOOK ?? '', {
-        orderId:    order.id,
-        quoteId:    existing.id,
-        contact:    existing.contact,
-        items,
+        orderId: outcome.order.id,
+        quoteId: id,
+        contact: outcome.contact,
+        items:   outcome.items,
       })
     }
+    res.json(outcome.quote)
+  } catch (err) {
+    console.error(JSON.stringify({ event: 'quote_status_failed', quoteId: id, error: String(err) }))
+    res.status(500).json({ error: 'No se pudo actualizar la cotización' })
   }
-
-  const quote = await prisma.quote.update({ where: { id: String(req.params.id) }, data: { status } })
-  res.json(quote)
 })

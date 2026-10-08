@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import bcrypt from 'bcryptjs'
 import { prisma } from './db'
+import { resolveAdminPassword } from './seedAdmin'
 
 // Stock simulado por talle (dato sintético — sin acceso a stock real de Golden Harvest S.A.)
 function mockStock(sizes: string[]): Record<string, number> {
@@ -12,11 +13,13 @@ function mockStock(sizes: string[]): Record<string, number> {
 }
 
 async function main() {
-  // Admin por defecto
-  const passwordHash = await bcrypt.hash('admin1234', 10)
+  // Admin: la contraseña sale de SEED_ADMIN_PASSWORD o se genera al azar en
+  // cada corrida del seed (que la restablece). No hay contraseña por defecto.
+  const admin = resolveAdminPassword(process.env)
+  const passwordHash = await bcrypt.hash(admin.password, 10)
   await prisma.admin.upsert({
     where: { email: 'admin@goldenharvest.com' },
-    update: {},
+    update: { passwordHash },
     create: { email: 'admin@goldenharvest.com', passwordHash },
   })
 
@@ -89,7 +92,9 @@ async function main() {
   }
 
   console.log('Seed completado:')
-  console.log('  Admin: admin@goldenharvest.com / admin1234')
+  console.log(admin.source === 'env'
+    ? '  Admin: admin@goldenharvest.com (contraseña de SEED_ADMIN_PASSWORD)'
+    : `  Admin: admin@goldenharvest.com / ${admin.password} (generada para esta corrida; definí SEED_ADMIN_PASSWORD para fijarla)`)
   console.log(`  Productos: ${products.length} cargados`)
 }
 
