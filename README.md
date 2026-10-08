@@ -34,31 +34,80 @@ User browses catalog → adds items to cart → submits quote request
 | `docs/research/` | Benchmarks, original-site vs. new-site comparisons, raw test data for Chapters 5–6. Lighthouse toolkit + re-run playbook: [`docs/research/lighthouse/README.md`](docs/research/lighthouse/README.md). |
 | `docs/assets/` | Graphs, tables, screenshots for insertion into the thesis document. |
 | `docs/architecture/` | Per-layer design docs: need, design, what's implemented, relations to other layers. See [`docs/architecture/diagram.md`](docs/architecture/diagram.md) for the system-wide diagram (target vs. as-built). |
-| `Docs/` | UTN thesis template (`.docx`) and evaluation rubric — reference files, not authored content. |
+| `docs/official/` | UTN thesis template (`.docx`) and evaluation rubric — reference files, not authored content. |
 | `docs/thesis/proposal.md` | Original project proposal and n8n module scope (Spanish, authoritative). |
 | `docs/architecture/n8n_workflows.md` | Detailed design for all 7 n8n workflow modules (module 6 shipped as two separate workflows, 6a/6b — see `n8n.md`). |
 
-## Setup
+## Setup (reproducible, full stack)
 
-Frontend (from `frontend/`):
+Everything runs locally with Docker Compose from the repo root. Nothing here
+needs a paid service; Gmail and Google Sheets need **your own** Google OAuth
+client (free), because no credential is versioned.
 
-```bash
-npm run dev       # Dev server (Vite, HMR)
-npm run build      # Type-check + bundle
-```
-
-Backend (from `backend/`):
+### 1. Environment
 
 ```bash
-npm run dev       # Dev server with hot reload
-npm run db:migrate # Apply Prisma migrations
-npm run db:seed    # Seed sample data
+cp .env.example .env
 ```
 
-n8n + PostgreSQL (from repo root):
+Fill in `.env` (the root file is the only one Docker Compose reads):
+
+| Variable | Value |
+|---|---|
+| `JWT_SECRET` | `openssl rand -hex 32` |
+| `N8N_ENCRYPTION_KEY` | `openssl rand -hex 32` |
+| `SERVICE_API_KEY` | `openssl rand -hex 32` — shared by the backend and n8n; without it workflows 05 and 07 get 401 |
+| `N8N_QUOTE_WEBHOOK` | `http://n8n:4343/webhook/quote` (container-to-container; `localhost` would point at the backend itself) |
+| `N8N_LOGISTICS_WEBHOOK` | optional — no TESIS workflow listens on it (07 runs from a manual trigger) |
+| `SEED_ADMIN_PASSWORD` | optional, 12+ chars; if unset the seed generates one and prints it once |
+
+The per-folder files (`backend/.env`, `frontend/.env`, `n8n/.env`) are only
+for running a layer outside Docker with `npm run dev`.
+
+### 2. Start and seed
 
 ```bash
-docker compose up
+docker compose up -d --build                             # Postgres + backend (runs migrations) + n8n
+docker exec golden_harvest_backend npm run db:seed       # catalog + admin user
 ```
 
-n8n will be available at `http://localhost:4343`.
+API at `http://localhost:3001/api`, n8n at `http://localhost:4343`.
+
+### 3. Import the workflows into n8n
+
+```bash
+docker cp n8n/workflows golden_harvest_n8n:/tmp/workflows
+docker exec golden_harvest_n8n n8n import:workflow --separate --input=/tmp/workflows
+```
+
+### 4. Credentials (n8n UI → Credentials)
+
+Create these three with exactly these names, then open each workflow and
+re-select them in the nodes that show a credential warning (imported
+workflows reference credential ids from the authors' instance):
+
+| Name | Type | Used by |
+|---|---|---|
+| `Gmail account` | Gmail OAuth2 | 00–07 |
+| `Google Sheets account` | Google Sheets OAuth2 | 04, auxiliary |
+| `Google API Key (PageSpeed)` | Query Auth, parameter `key` | 02 |
+
+The OAuth redirect URL is `http://localhost:4343/rest/oauth2-credential/callback`.
+
+### 5. Frontend
+
+```bash
+cd frontend && npm install && npm run dev      # http://localhost:5173
+```
+
+### Tests
+
+```bash
+cd frontend && npm test                        # Jest + React Testing Library
+cd backend  && npm test                        # node:test (auth middleware, quote contact, quote closing, seed)
+cd n8n      && node --test tests/*.test.mjs    # Code nodes of workflows 02 and 07, run from the exported JSON
+```
+
+> `n8n/docker-compose.yml` starts n8n alone, for editing workflows. It does
+> not pass `SERVICE_API_KEY` or `N8N_BLOCK_ENV_ACCESS_IN_NODE`, so workflows 05
+> and 07 cannot reach the backend from it. Use the root compose for runs.

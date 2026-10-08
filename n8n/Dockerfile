@@ -1,4 +1,9 @@
-FROM node:24-alpine
+# Base, n8n and community node pinned to the versions found in the image that
+# ran this project (final-n8n:latest, inspected 08/10/2026): Node 24.21.0 on
+# Alpine 3.24, n8n 2.27.5, n8n-nodes-puppeteer 1.5.0. Chromium comes from the
+# Alpine 3.24 repos (152.0.7977.82-r0 at that date) and is not pinned further,
+# because Alpine drops superseded package versions from its mirrors.
+FROM node:24.21.0-alpine3.24
 
 # Install chromium from Alpine repos (musl-compatible, no glibc needed)
 RUN apk add --no-cache \
@@ -25,7 +30,7 @@ RUN npm install -g "n8n@${N8N_VERSION}"
 RUN mkdir -p /n8n-custom && \
     cd /n8n-custom && \
     npm init -y && \
-    npm install n8n-nodes-puppeteer
+    npm install n8n-nodes-puppeteer@1.5.0
 
 RUN chown -R node:node /n8n-custom
 

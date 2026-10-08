@@ -1,3 +1,6 @@
+# Standalone n8n, for editing workflows only. It does not pass SERVICE_API_KEY
+# or N8N_BLOCK_ENV_ACCESS_IN_NODE, so workflows 05 and 07 cannot read the
+# backend from here. For runs, use the docker-compose.yml at the repo root.
 services:
   n8n:
     build:
