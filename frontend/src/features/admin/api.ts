@@ -36,6 +36,7 @@ export interface ApiQuote {
     telefono?: string
     email: string
     notas?: string
+    localidad?: string
   }
   items: Array<{ id: string; name: string; line: string; size: string; qty: number }>
   status: QuoteStatus

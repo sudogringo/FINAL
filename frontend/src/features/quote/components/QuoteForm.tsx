@@ -15,6 +15,7 @@ const schema = z.object({
     .or(z.literal('')),
   email:    z.string().email('Email inválido'),
   notas:    z.string().max(500, 'Máximo 500 caracteres').optional(),
+  localidad: z.string().max(100, 'Máximo 100 caracteres').optional(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -144,11 +145,15 @@ export default function QuoteForm() {
               </Field>
             </div>
 
+            <Field id="localidad" label="Localidad de entrega" error={errors.localidad?.message}>
+              <input id="localidad" type="text" placeholder="Godoy Cruz, Mendoza (opcional)" className={inputCls(!!errors.localidad)} {...register('localidad')} />
+            </Field>
+
             <Field id="notas" label="Notas adicionales" error={errors.notas?.message}>
               <textarea
                 id="notas"
                 rows={3}
-                placeholder="Destino de entrega, volumen estimado, condiciones especiales..."
+                placeholder="Volumen estimado, condiciones especiales..."
                 className={`${inputCls(!!errors.notas)} resize-none`}
                 {...register('notas')}
               />

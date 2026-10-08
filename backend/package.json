@@ -11,7 +11,7 @@
     "db:generate": "prisma generate",
     "db:seed": "tsx src/seed.ts",
     "db:studio": "prisma studio",
-    "test": "tsx --test src/middleware/auth.test.ts"
+    "test": "tsx --test src/middleware/auth.test.ts src/routes/quoteContact.test.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

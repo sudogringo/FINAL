@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express'
 import { z } from 'zod'
 import { prisma } from '../db'
 import { requireAuth } from '../middleware/auth'
+import { contactSchema, customerUpsertArgs } from './quoteContact'
 
 export const quotesRouter = Router()
 
@@ -10,13 +11,7 @@ const quoteSchema = z.object({
   // Timestamp capturado en el frontend justo antes del submit — T0 de VD2 (§3.2).
   // Opcional: si falta (llamadas fuera del flujo instrumentado), no rompe el endpoint.
   clientSubmittedAt: z.string().datetime().optional(),
-  contact: z.object({
-    nombre: z.string(),
-    empresa: z.string().optional(),
-    telefono: z.string().optional(),
-    email: z.string().email(),
-    notas: z.string().optional(),
-  }),
+  contact: contactSchema,
   items: z.array(z.object({
     id: z.string(),
     name: z.string(),
@@ -81,20 +76,7 @@ quotesRouter.post('/', async (req: Request, res: Response) => {
   let quote
   try {
     // Upsert customer por email
-    const customer = await prisma.customer.upsert({
-      where: { email: contact.email },
-      update: {
-        nombre:   contact.nombre,
-        empresa:  contact.empresa,
-        telefono: contact.telefono,
-      },
-      create: {
-        nombre:   contact.nombre,
-        email:    contact.email,
-        empresa:  contact.empresa,
-        telefono: contact.telefono,
-      },
-    })
+    const customer = await prisma.customer.upsert(customerUpsertArgs(contact))
 
     quote = await prisma.quote.create({
       data: { sessionId, contact, items, customerId: customer.id },

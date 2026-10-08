@@ -4,6 +4,9 @@ import userEvent from '@testing-library/user-event'
 import QuoteForm from '../features/quote/components/QuoteForm'
 import { CartProvider, useCart } from '../features/cart/CartContext'
 import { act } from 'react'
+import { submitQuote } from '../features/admin/api'
+
+jest.mock('../features/admin/api', () => ({ submitQuote: jest.fn().mockResolvedValue({ id: 'q1' }) }))
 
 function QuoteFormWithOpenState() {
   const { addItem, openQuote } = useCart()
@@ -72,5 +75,40 @@ describe('QuoteForm', () => {
     await screen.findByRole('dialog')
     fireEvent.click(screen.getByLabelText('Cerrar'))
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  })
+
+  it('offers an optional Localidad field', async () => {
+    renderForm()
+    act(() => { fireEvent.click(screen.getByText('Abrir formulario')) })
+    await screen.findByRole('dialog')
+    const input = screen.getByLabelText(/Localidad/i)
+    expect(input).toBeInTheDocument()
+    expect(input).not.toBeRequired()
+  })
+
+  it('sends localidad inside contact when the user fills it', async () => {
+    const user = userEvent.setup()
+    // jsdom lacks crypto.randomUUID(), the fallback when no session id exists yet.
+    sessionStorage.setItem('gh_session_id', 'test-session')
+    renderForm()
+    act(() => { fireEvent.click(screen.getByText('Abrir formulario')) })
+    await screen.findByRole('dialog')
+    await user.type(screen.getByLabelText(/Nombre completo/i), 'Juan García')
+    await user.type(screen.getByLabelText(/Email/i), 'juan@example.com')
+    await user.type(screen.getByLabelText(/Localidad/i), 'Godoy Cruz, Mendoza')
+    await user.click(screen.getByRole('button', { name: /Enviar Cotización/i }))
+    await waitFor(() => expect(submitQuote).toHaveBeenCalled())
+    const payload = (submitQuote as jest.Mock).mock.calls.at(-1)[0]
+    expect(payload.contact.localidad).toBe('Godoy Cruz, Mendoza')
+  })
+
+  it('rejects a localidad longer than 100 characters', async () => {
+    const user = userEvent.setup()
+    renderForm()
+    act(() => { fireEvent.click(screen.getByText('Abrir formulario')) })
+    await screen.findByRole('dialog')
+    fireEvent.change(screen.getByLabelText(/Localidad/i), { target: { value: 'x'.repeat(101) } })
+    await user.click(screen.getByRole('button', { name: /Enviar Cotización/i }))
+    expect(await screen.findByText(/Máximo 100 caracteres/i)).toBeInTheDocument()
   })
 })
