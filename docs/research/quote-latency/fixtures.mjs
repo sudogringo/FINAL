@@ -1,18 +1,22 @@
 // Simulated product/contact data for VD2 latency runs. All synthetic — no real
 // Golden Harvest customer data, per the project's "no real access" constraint.
 
+// Productos del catálogo que crea backend/src/seed.ts (id = 'seed-' + nombre en
+// minúsculas con guiones). Desde el 08/10/2026 POST /api/quotes rechaza ids
+// inexistentes. El lote del 25/08/2026 usó ids de una plantilla anterior
+// (vinos), que el backend de entonces aceptaba sin validar.
 export const PRODUCTS = [
-  { id: 'malbec-750',       name: 'Malbec Reserva',        line: 'Reserva',   size: '750ml' },
-  { id: 'cabernet-750',     name: 'Cabernet Sauvignon',    line: 'Clásica',   size: '750ml' },
-  { id: 'torrontes-750',    name: 'Torrontés',             line: 'Clásica',   size: '750ml' },
-  { id: 'blend-magnum-1500',name: 'Gran Blend',            line: 'Premium',   size: '1500ml' },
-  { id: 'chardonnay-750',   name: 'Chardonnay',            line: 'Clásica',   size: '750ml' },
-  { id: 'malbec-magnum',    name: 'Malbec Reserva',        line: 'Reserva',   size: '1500ml' },
+  { id: 'seed-tomate-entero-pelado', name: 'Tomate Entero Pelado', line: 'roja',   size: '1kg'  },
+  { id: 'seed-salsa-clásica',        name: 'Salsa Clásica',        line: 'roja',   size: '250g' },
+  { id: 'seed-doble-concentrado',    name: 'Doble Concentrado',    line: 'roja',   size: '4kg'  },
+  { id: 'seed-mitades-en-almíbar',   name: 'Mitades en Almíbar',   line: 'dorada', size: '1kg'  },
+  { id: 'seed-durazno-light',        name: 'Durazno Light',        line: 'dorada', size: '250g' },
+  { id: 'seed-durazno-al-natural',   name: 'Durazno al Natural',   line: 'dorada', size: '4kg'  },
 ];
 
 const FIRST_NAMES = ['Lucía', 'Martín', 'Sofía', 'Diego', 'Valentina', 'Nicolás', 'Camila', 'Federico'];
 const LAST_NAMES  = ['Fernández', 'Gómez', 'Rodríguez', 'Pérez', 'Álvarez', 'Suárez', 'Romero', 'Ledesma'];
-const EMPRESAS    = ['Distribuidora del Sur SRL', 'Vinoteca Norte', 'Almacén Gourmet SA', null];
+const EMPRESAS    = ['Distribuidora del Sur SRL', 'Almacén Norte', 'Almacén Gourmet SA', null];
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
