@@ -25,22 +25,27 @@ Decoupled system with three layers:
 
 2. **Backend (Express + Prisma + PostgreSQL, implemented)** — REST API and single source of truth for all data consumed by both the frontend and n8n workflows: products, quotes, customers, orders, interactions, and stats. Location: `backend/`. Detail: [`docs/architecture/backend.md`](docs/architecture/backend.md).
 
-3. **Process Orchestrator (n8n, self-hosted via Docker on port 4343)** — Nine independent automation workflows (00–07, with 06 split into 06a/06b) for marketing, logistics, and CRM, triggered by webhooks from the frontend/backend or schedules. All workflows read data from the backend API (`GH_API_BASE_URL=http://backend:3001/api`). Detail: [`docs/architecture/n8n.md`](docs/architecture/n8n.md).
+3. **Process Orchestrator (n8n, self-hosted via Docker on port 4343)** — Nine independent automation workflows (00–07, with 06 split into 06a/06b) for marketing, logistics, and CRM. Only 00 is active (webhook from the backend); the rest run from a Manual Trigger in the TESIS branch. Only 05 and 07 read the backend API (`http://backend:3001/api`, with `X-Service-Key`); the others use PageSpeed, Google Sheets, Puppeteer or simulated data (see the table below). Detail: [`docs/architecture/n8n.md`](docs/architecture/n8n.md).
 
 ## n8n Workflow Modules (designed in `docs/architecture/n8n_workflows.md`)
 
-| # | Module | Trigger | n8n reads from backend |
-|---|---|---|---|
-| 1 | Automated Branding | Monthly / webhook | — |
-| 2 | SEO & Performance Monitor | Weekly Mon 08:00 | — |
-| 3 | Google Maps Reputation | Poll every 6h | — |
-| 4 | Social Media Content Engine | Webhook (new product) | `GET /api/products` |
-| 5 | Monthly Activity Report | 1st of month | `GET /api/stats/monthly` |
-| 6a | Newsletter Quincenal | Bi-weekly (1st/15th) | `GET /api/mock/newsletter-subscribers` |
-| 6b | Carrito Abandonado | Webhook (2h after abandoned cart) | `GET /api/stats/abandoned-carts` |
-| 7 | Logistics Automation | Webhook (order confirmed) | `GET /api/orders/:id/items` |
+Implemented state (TESIS branch) as exported in `n8n/workflows/`. Only 00 is
+active; the others run from their Manual Trigger. The original design (webhook
+and schedule triggers, more backend reads) is in `n8n_workflows.md`.
 
-Module 6 ("Lead Nurturing & Cart Interest" in the original design) was split into two independent n8n workflows: **6a** (newsletter, schedule-driven) and **6b** (abandoned-cart follow-up, webhook-driven). See [`docs/architecture/n8n.md`](docs/architecture/n8n.md) for details.
+| # | Module | Trigger (implemented) | Data source (TESIS branch) |
+|---|---|---|---|
+| 0 | Lead Notification | Webhook `quote` (active) | quote payload from `POST /api/quotes` |
+| 1 | Automated Branding | Form / Manual | Puppeteer on `sudogringo.github.io/FINAL/` (the project's own site) |
+| 2 | SEO & Performance Monitor | Manual (daily cron present, inactive) | PageSpeed Insights API (4 categories) |
+| 3 | Google Maps Reputation | Manual (6-hour schedule present, inactive) | mock reviews (`[TESIS] Mock Reviews` node) |
+| 4 | Social Media Content Engine | Form / Manual (Sheet mode) | Google Sheets |
+| 5 | Monthly Activity Report | Manual (monthly schedule present, inactive) | `GET /api/orders`, `GET /api/stats/monthly` (service key) |
+| 6a | Newsletter Quincenal | Manual | jsonplaceholder `/users` (simulated subscribers) |
+| 6b | Carrito Abandonado | Manual / test webhook | jsonplaceholder `/posts`; the backend exposes `GET /api/stats/abandoned-carts` but 6b does not read it |
+| 7 | Logistics Automation | Manual | `GET /api/orders?estado=confirmado` (service key) |
+
+Module 6 ("Lead Nurturing & Cart Interest" in the original design) was split into two independent n8n workflows: **6a** (newsletter; bi-weekly schedule in the design, manual in the implemented TESIS branch) and **6b** (abandoned-cart follow-up; webhook in the design, manual or test webhook in the TESIS branch). See [`docs/architecture/n8n.md`](docs/architecture/n8n.md) for details.
 
 The **Branding module** feeds color data to the **Social Media Content Engine** — this is the only inter-workflow dependency.
 
@@ -55,7 +60,7 @@ The **Branding module** feeds color data to the **Social Media Content Engine** 
 | `docs/research/` | Benchmarks, original-site vs. new-site comparisons, raw test data — the source material for Chapters 5–6. **Lighthouse performance data lives in `docs/research/lighthouse/` — re-run it (see that folder's README "Re-running after a frontend change" playbook) any time `frontend/` changes in a way that could move performance/accessibility/SEO scores, so Chapter 5 doesn't go stale.** |
 | `docs/assets/` | Graphs, tables, screenshots for insertion into the thesis `.docx`. Generate visuals from `docs/research/` data and save rendered output here. |
 | `docs/architecture/` | One file per layer (`frontend.md`, `backend.md`, `n8n.md`), each covering: need, design, what's implemented, and relations to the other layers. `diagram.md` holds the system-wide Mermaid diagrams (target architecture vs. as-built/demo). Read these before making cross-layer changes. |
-| `Docs/` (capital D, root) | Pre-existing folder with the UTN thesis template and rubric — binary/reference files, distinct from `docs/`. |
+| `docs/official/` | UTN thesis template and rubric — binary/reference files. |
 
 This table mirrors the one in `README.md` — keep both in sync if the layout changes.
 
@@ -127,8 +132,8 @@ docker compose up -d      # Postgres + Backend + n8n
 - `n8n/workflows/*.json` — Exported n8n workflow definitions
 - `backend/prisma/schema.prisma` — DB schema
 - `docker-compose.yml` — Full stack orchestration
-- `Docs/Modelo de Tesis.docx` — UTN thesis template
-- `Docs/rubica.docs` — Evaluation rubric
+- `docs/official/Modelo de Tesis.docx` — UTN thesis template
+- `docs/official/rubica.docs` — Evaluation rubric
 
 ## Lead-to-Sale Flow (Core Business Logic)
 
@@ -154,5 +159,5 @@ The 2-hour abandoned cart detection runs client-side: if a quote is not submitte
 - [x] docker-compose full stack (Postgres + Backend + n8n)
 - [x] Backend ↔ n8n webhook wiring (quote submit, logistics on order confirm)
 - [x] Frontend → Backend connection (QuoteForm via submitQuote())
-- [x] Integration verification of the 9 functional workflows against the live backend (`docs/research/n8n-workflow-runs/`)
+- [x] Execution check of the 8 non-00 workflows on 25/09/2026, 3 runs each, no execution errors (`docs/research/n8n-workflow-runs/`); only 05 and 07 read the backend. The 07/10 batch ran without credentials.
 - [x] Chapters 5 & 6 of thesis (Results & Conclusions)
