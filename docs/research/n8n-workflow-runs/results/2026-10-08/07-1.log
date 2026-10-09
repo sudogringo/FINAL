@@ -1,0 +1,202 @@
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container detected via .dockerenv file
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (6bfTkOWFgvdrMdCbn4uGB) 
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Trigger": [
+          {
+            "startTime": 1791511664018,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Obtener Órdenes Confirmadas": [
+          {
+            "startTime": 1791511664040,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 59,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmv0bblo60076ysu5yk6x2fzn",
+                      "estado": "CONFIRMADO",
+                      "createdAt": "2026-10-09T01:54:39.606Z",
+                      "customer_nombre": "Prueba Humo",
+                      "customer_email": "humo@example.test",
+                      "localidad": "Godoy Cruz",
+                      "total": 2
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Limitar a 3 Órdenes (Demo)": [
+          {
+            "startTime": 1791511664119,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Obtener Órdenes Confirmadas",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 602,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmv0bblo60076ysu5yk6x2fzn",
+                      "estado": "CONFIRMADO",
+                      "createdAt": "2026-10-09T01:54:39.606Z",
+                      "customer_nombre": "Prueba Humo",
+                      "customer_email": "humo@example.test",
+                      "localidad": "Godoy Cruz",
+                      "total": 2
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Generar Resumen de Despacho": [
+          {
+            "startTime": 1791511664741,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Limitar a 3 Órdenes (Demo)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 15,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "summary_html": "\n<div style=\"font-family:sans-serif;max-width:680px;margin:0 auto;padding:24px;\">\n  <h2 style=\"color:#166534;\">Golden Harvest S.A. — Resumen de despacho</h2>\n  <p style=\"color:#6b7280;\">Fecha: 09 de octubre de 2026</p>\n  <p>Se procesaron <strong>1</strong> orden(es) confirmada(s):</p>\n  <table style=\"width:100%;border-collapse:collapse;font-size:14px;\">\n    <thead><tr style=\"background:#f3f4f6;\">\n      <th style=\"padding:8px 12px;text-align:left;\">Orden</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Cliente</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Localidad</th>\n      <th style=\"padding:8px 12px;text-align:right;\">Unidades</th>\n    </tr></thead>\n    <tbody><tr>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">#cmv0bblo60076ysu5yk6x2fzn</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">Prueba Humo</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">Godoy Cruz</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;\">2 u.</td>\n  </tr></tbody>\n  </table>\n  <p style=\"margin-top:20px;font-size:12px;color:#9ca3af;\">Golden Harvest S.A. — Sistema Automatizado de Logística</p>\n</div>",
+                      "total": 1,
+                      "fecha": "2026-10-09"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Gmail — Enviar Resumen de Despacho (TESIS)": [
+          {
+            "startTime": 1791511664765,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Generar Resumen de Despacho",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 732,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "1a11e6a29da89dc8",
+                      "threadId": "1a11e6a29da89dc8",
+                      "labelIds": [
+                        "SENT"
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Gmail — Enviar Resumen de Despacho (TESIS)"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1791511664017,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "964d3fab32139d6202a587dfeb56ee4e1b19294861a7a5a7e636a71abd67ed3c"
+  },
+  "mode": "cli",
+  "startedAt": "2026-10-09T02:07:44.013Z",
+  "stoppedAt": "2026-10-09T02:07:45.513Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}
