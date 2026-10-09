@@ -5,6 +5,11 @@
 // to this script. Each run's raw result is written to results/<batch>/run-N.json.
 //
 // Usage: node run-batch.mjs [--runs=18] [--base-url=http://localhost:3001] [--label=<batch-name>]
+//                           [--interval-ms=0]
+//
+// --interval-ms waits that long between the end of one run and the start of the
+// next (default 0: back-to-back, as in the 25/08/2026 batch). A spaced batch
+// (e.g. 60000) measures isolated leads instead of a burst.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -25,6 +30,7 @@ function parseArgs() {
     runs: Number(args.runs ?? 18),
     baseUrl: args['base-url'] ?? 'http://localhost:3001',
     label: args.label ?? new Date().toISOString().slice(0, 10),
+    intervalMs: Number(args['interval-ms'] ?? 0),
   };
 }
 
@@ -79,15 +85,16 @@ async function fireOne(baseUrl, runIndex) {
 }
 
 async function main() {
-  const { runs, baseUrl, label } = parseArgs();
+  const { runs, baseUrl, label, intervalMs } = parseArgs();
   const batchDir = path.join(RESULTS_DIR, `batch-${label}`);
   requireArchived(batchDir);
   fs.mkdirSync(batchDir, { recursive: true });
 
-  console.log(`Firing ${runs} quote requests against ${baseUrl} (MEASURE_LATENCY must be 'true' on the backend)...`);
+  console.log(`Firing ${runs} quote requests against ${baseUrl}, ${intervalMs} ms apart (MEASURE_LATENCY must be 'true' on the backend)...`);
 
   const results = [];
   for (let i = 1; i <= runs; i++) {
+    if (i > 1 && intervalMs > 0) await new Promise((r) => setTimeout(r, intervalMs));
     const result = await fireOne(baseUrl, i);
     results.push(result);
     fs.writeFileSync(path.join(batchDir, `run-${i}.json`), JSON.stringify(result, null, 2));
