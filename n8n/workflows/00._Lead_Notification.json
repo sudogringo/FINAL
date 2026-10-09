@@ -7,19 +7,19 @@
     {
       "parameters": {
         "content": "## 🔴 MODO PRODUCCIÓN\nNodos deshabilitados que requieren credenciales reales:\n- **WhatsApp Business API** (notificación al vendedor por WhatsApp — requiere cuenta Meta Business verificada)\n- **SendGrid** (email transaccional — requiere API key paga más allá del free tier)\n\nEn producción, ambos envíos irían en paralelo tras el webhook, y el Respond to Webhook esperaría\na que ambos confirmen entrega antes de devolver el timestamp final — igual que en la rama TESIS,\npero con proveedores reales en lugar de Gmail simulado. Habilitar y configurar credenciales antes\nde pasar a producción.",
-        "height": 460,
+        "height": 520,
         "width": 1560
       },
       "id": "sticky-prod",
       "name": "🔴 MODO PRODUCCIÓN",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [784, 592]
+      "position": [784, 672]
     },
     {
       "parameters": {
-        "content": "## 🟢 MODO TESIS\nFlujo de demostración que corre de verdad, sin costo.\n- Webhook recibe el POST del backend (N8N_QUOTE_WEBHOOK) con { quoteId, sessionId, contact, items,\n  createdAt, clientSubmittedAt }\n- Arma un mensaje de notificación simulado (texto que representaría el WhatsApp + Email al vendedor)\n- Lo manda por Gmail real a la cuenta del autor, como evidencia tangible de que el circuito\n  end-to-end funciona\n- Responde al backend con t1_start/t1_end para que el script de medición calcule la latencia\n  T0 (click del usuario) -> T1 (fin de esta ejecución)",
-        "height": 460,
+        "content": "## 🟢 MODO TESIS\nFlujo de demostración que corre de verdad, sin costo.\n- Webhook recibe el POST del backend (N8N_QUOTE_WEBHOOK) con { quoteId, sessionId, contact, items,\n  createdAt, clientSubmittedAt }\n- Arma un mensaje de notificación simulado (texto que representaría el WhatsApp + Email al vendedor),\n  con los campos del formulario escapados\n- Lo envía por Gmail a la casilla de demostración (bandeja.demo@example.com)\n- Responde al backend con t1_start/t1_end para que el script de medición calcule la latencia\n  T0 (envío de la solicitud) -> T1 (Gmail acepta el aviso)",
+        "height": 540,
         "width": 1560,
         "color": 3
       },
@@ -40,7 +40,7 @@
       "name": "Webhook — Quote (TESIS)",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [848, 176],
+      "position": [848, 400],
       "webhookId": "c4e2f6a1-8b3d-4c5e-9f1a-2d6b7e8a9c10"
     },
     {
@@ -51,7 +51,7 @@
       "name": "Registrar t1_start",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1072, 176]
+      "position": [1072, 400]
     },
     {
       "parameters": {
@@ -61,7 +61,7 @@
       "name": "Armar Mensaje (Simulado)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1296, 176]
+      "position": [1296, 400]
     },
     {
       "parameters": {
@@ -74,7 +74,7 @@
       "name": "Gmail — Notificar Lead (TESIS)",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [1520, 176],
+      "position": [1520, 400],
       "webhookId": "e3f5a7c9-1b2d-4e6f-8a9c-3d5b7e9f1a2c",
       "credentials": {
         "gmailOAuth2": {
@@ -91,7 +91,7 @@
       "name": "Registrar t1_end",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1744, 176]
+      "position": [1744, 400]
     },
     {
       "parameters": {
@@ -103,7 +103,7 @@
       "name": "Respond to Webhook (TESIS)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1968, 176]
+      "position": [1968, 400]
     },
     {
       "parameters": {
@@ -116,7 +116,7 @@
       "name": "Webhook — Quote (Producción)",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [848, 672],
+      "position": [848, 960],
       "webhookId": "f6a8c1d3-4e7f-4a9b-8c1d-5e7f9a1b3c4d",
       "disabled": true
     },
@@ -138,7 +138,7 @@
       "name": "WhatsApp Business API (Producción)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1072, 672],
+      "position": [1072, 960],
       "disabled": true
     },
     {
@@ -159,7 +159,7 @@
       "name": "SendGrid (Producción)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1296, 672],
+      "position": [1296, 960],
       "disabled": true
     },
     {
@@ -172,7 +172,7 @@
       "name": "Respond to Webhook (Producción)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1520, 672],
+      "position": [1520, 960],
       "disabled": true
     }
   ],
