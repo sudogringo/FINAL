@@ -4,10 +4,16 @@ import { fileURLToPath } from 'node:url';
 import * as chromeLauncher from 'chrome-launcher';
 import puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
+import desktopConfig from 'lighthouse/core/config/desktop-config.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const RESULTS_DIR = path.join(__dirname, 'results');
 
+// --profile=legacy (default) keeps the settings of every batch up to 2026-10-07: the
+// desktop run changes form factor and screen but keeps Lighthouse's default *mobile*
+// throttling (4x CPU, Slow 4G). --profile=standard uses Lighthouse's own desktop
+// preset for the desktop run (desktop-config.js: no CPU slowdown, dense 4G), the one
+// PageSpeed Insights applies. The mobile run is identical in both profiles.
 const DEVICE_CONFIG = {
   mobile: { formFactor: 'mobile', screenEmulation: { mobile: true, width: 412, height: 823, deviceScaleFactor: 1.75, disabled: false } },
   desktop: { formFactor: 'desktop', screenEmulation: { mobile: false, width: 1350, height: 940, deviceScaleFactor: 1, disabled: false } },
@@ -27,6 +33,10 @@ function parseArgs() {
   args.runIndex = args['run-index'];
   // --out=<subdir> writes into results/<subdir> instead of results/.
   args.out = args.out ?? '';
+  args.profile = args.profile ?? 'legacy';
+  if (!['legacy', 'standard'].includes(args.profile)) {
+    throw new Error(`Invalid --profile value: ${args.profile}`);
+  }
   if (!['mobile', 'desktop', 'both'].includes(args.device)) {
     throw new Error(`Invalid --device value: ${args.device}`);
   }
@@ -42,24 +52,27 @@ function isLocalUrl(url) {
   }
 }
 
-async function runOnce({ url, device, chromePort }) {
+async function runOnce({ url, device, chromePort, profile }) {
+  const config = profile === 'standard' && device === 'desktop'
+    ? desktopConfig
+    : {
+        extends: 'lighthouse:default',
+        settings: {
+          formFactor: DEVICE_CONFIG[device].formFactor,
+          screenEmulation: DEVICE_CONFIG[device].screenEmulation,
+        },
+      };
   const result = await lighthouse(url, {
     port: chromePort,
     output: ['json', 'html'],
     logLevel: 'info',
     onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
-  }, {
-    extends: 'lighthouse:default',
-    settings: {
-      formFactor: DEVICE_CONFIG[device].formFactor,
-      screenEmulation: DEVICE_CONFIG[device].screenEmulation,
-    },
-  });
+  }, config);
   return result;
 }
 
 async function main() {
-  const { url, label, runs, device, runIndex, out } = parseArgs();
+  const { url, label, runs, device, runIndex, out, profile } = parseArgs();
   const outDir = path.join(RESULTS_DIR, out);
 
   if (runs > 1 && !isLocalUrl(url)) {
@@ -84,7 +97,7 @@ async function main() {
 
       console.log(`\n[${label}] ${dev} — run ${run}/${runs} — auditing ${url}`);
       try {
-        const { report, lhr } = await runOnce({ url, device: dev, chromePort: chrome.port });
+        const { report, lhr } = await runOnce({ url, device: dev, chromePort: chrome.port, profile });
         const suffix = runIndex ? `-${runIndex}` : runs > 1 ? `-${run}` : '';
         const baseName = `${label}-${dev}${suffix}`;
 
