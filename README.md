@@ -4,7 +4,7 @@ UTN final project (2026). Authors: Cunto Boberg, Tiago & Rojo, Emiliano. Directo
 
 A decoupled system for a fictionalized digital transformation of Golden Harvest S.A.: an interactive product catalog that produces sales *leads*, not transactions — the cart never redirects to a payment gateway, it fires a webhook to an automation layer (n8n) with a structured quote request for a sales rep to follow up on.
 
-> **Note**: this project is modeled on a real company, but the students have no access to the real site or its data. Everything here — products, leads, reviews — is simulated. See `CLAUDE.md` → Project Constraints for details.
+> **Academic project — not affiliated with Golden Harvest S.A.** This repository and the published demo site are a UTN FRM thesis project. They do not represent Golden Harvest S.A., which neither commissioned nor endorsed them. The company is used only as a public reference: the students have no access to its site, systems or data. Leads, orders, reviews, subscribers and stock are simulated. The product photos and logo are the exception: they come from the company's public website and Mercado Libre listings, are used for academic purposes only, and will be removed if the company objects. See `CLAUDE.md` → Project Constraints for details.
 
 ## Architecture
 

@@ -1,0 +1,85 @@
+TAP version 13
+# Subtest: lists the contact and the requested products
+ok 1 - lists the contact and the requested products
+  ---
+  duration_ms: 2.5343
+  ...
+# Subtest: escapes HTML typed in the public quote form
+ok 2 - escapes HTML typed in the public quote form
+  ---
+  duration_ms: 0.3535
+  ...
+# Subtest: keeps the line breaks the Gmail node turns into <br>
+ok 3 - keeps the line breaks the Gmail node turns into <br>
+  ---
+  duration_ms: 0.1412
+  ...
+# Subtest: falls back to placeholders when the contact is missing
+ok 4 - falls back to placeholders when the contact is missing
+  ---
+  duration_ms: 0.1886
+  ...
+# Subtest: reports the four categories when PageSpeed returns them
+ok 5 - reports the four categories when PageSpeed returns them
+  ---
+  duration_ms: 24.3868
+  ...
+# Subtest: a category PageSpeed did not return is reported as missing, never as 0/100
+ok 6 - a category PageSpeed did not return is reported as missing, never as 0/100
+  ---
+  duration_ms: 5.681
+  ...
+# Subtest: a missing performance score does not raise a false alert by counting as 0
+ok 7 - a missing performance score does not raise a false alert by counting as 0
+  ---
+  duration_ms: 2.1612
+  ...
+# Subtest: alerts when a measured performance score is below 80
+ok 8 - alerts when a measured performance score is below 80
+  ---
+  duration_ms: 0.7233
+  ...
+# Subtest: PSI Mobile asks PageSpeed for the four Lighthouse categories
+ok 9 - PSI Mobile asks PageSpeed for the four Lighthouse categories
+  ---
+  duration_ms: 0.9624
+  ...
+# Subtest: PSI Desktop asks PageSpeed for the four Lighthouse categories
+ok 10 - PSI Desktop asks PageSpeed for the four Lighthouse categories
+  ---
+  duration_ms: 0.1705
+  ...
+# Subtest: titles the email as a dispatch summary, not as delivery notes
+ok 11 - titles the email as a dispatch summary, not as delivery notes
+  ---
+  duration_ms: 35.8096
+  ...
+# Subtest: prints the localidad when the order has one
+ok 12 - prints the localidad when the order has one
+  ---
+  duration_ms: 0.8275
+  ...
+# Subtest: never prints a literal null when the customer gave no localidad
+ok 13 - never prints a literal null when the customer gave no localidad
+  ---
+  duration_ms: 0.4176
+  ...
+# Subtest: escapes HTML coming from the public quote form
+ok 14 - escapes HTML coming from the public quote form
+  ---
+  duration_ms: 0.3116
+  ...
+# Subtest: the TESIS sticky note describes a dispatch summary, not delivery notes
+ok 15 - the TESIS sticky note describes a dispatch summary, not delivery notes
+  ---
+  duration_ms: 0.1949
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 206.6657

@@ -32,20 +32,22 @@ All the business logic that isn't "serve the catalog and store a quote" — mark
 Two different things are recorded below, and they must not be confused:
 
 - **Development history** — success/error counts read from `n8n/data/database.sqlite` (workflow + execution tables) on **2026-08-04**. They accumulate every run made while each workflow was being built and debugged, failed attempts included. The per-execution records behind them were not preserved, so the cause of those errors can't be recovered.
-- **Current state** — each workflow executed 3 times on **2026-09-25** via `n8n execute` against the full running stack, cross-checked in n8n's execution table. Script, protocol, logs and the fixes applied between the first (failing) and final batch: [`docs/research/n8n-workflow-runs/`](../research/n8n-workflow-runs/README.md). This is the number that says whether a workflow works.
+- **Verification batches** — each workflow executed 3 times via `n8n execute` against the full running stack, cross-checked in n8n's execution table. Script, protocol, logs and the fixes applied between batches: [`docs/research/n8n-workflow-runs/`](../research/n8n-workflow-runs/README.md). Since 08/10/2026 each run is also checked for **content** (`check-content.mjs`: real trigger, non-empty items, expected fields, delivery accepted by Gmail/Sheets), because "no execution error" turned out not to mean "correct output". The 25/09 batch was re-checked with the same criterion. A 07/10 batch is discarded: 7 of 8 workflows failed for an environment cause (the Google credentials had been revoked and were only recreated on 08/10).
 
-| # | Workflow | Active | Dev history (success/error, 2026-08-04) | Current state (2026-09-25) |
-|---|---|---|---|---|
-| 01 | Automated Branding | No | 7 / 13 | 3 / 3 OK |
-| 02 | Website Health & SEO Monitor | No | 4 / 8 | 3 / 3 OK |
-| 03 | Google Maps Review Management | No | 3 / 4 | 3 / 3 OK |
-| 04 | Social Media Content Engine | No | 28 / 11 | 3 / 3 OK |
-| 05 | Monthly Activity Report | No | 6 / 8 | 3 / 3 OK |
-| 06a | Newsletter Quincenal | No | 6 / 0 | 3 / 3 OK |
-| 06b | Carrito Abandonado | No | 4 / 1 | 3 / 3 OK |
-| 07 | Logistics & Shipping Automation | No | 8 / 8 | 3 / 3 OK |
+| # | Workflow | Active | Dev history (success/error, 2026-08-04) | 25/09: no error / correct content | 08/10: correct content |
+|---|---|---|---|---|---|
+| 01 | Automated Branding | No | 7 / 13 | 3/3 · yes | 3/3 |
+| 02 | Website Health & SEO Monitor | No | 4 / 8 | 3/3 · **no** (A11y/BP/SEO shown as 0/100) | 3/3 |
+| 03 | Google Maps Review Management | No | 3 / 4 | 3/3 · yes (simulated reviews) | 3/3 |
+| 04 | Social Media Content Engine | No | 28 / 11 | 3/3 · yes | 3/3 (rerun after sharing the content sheet; the first 3 failed with 403) |
+| 05 | Monthly Activity Report | No | 6 / 8 | 3/3 · yes | 3/3 |
+| 06a | Newsletter Quincenal | No | 6 / 0 | 3/3 · yes (simulated subscribers) | 3/3 |
+| 06b | Carrito Abandonado | No | 4 / 1 | 3/3 · yes (simulated source) | 3/3 |
+| 07 | Logistics & Shipping Automation | No | 8 / 8 | 3/3 · **no** ("Remitos", localidad shown as `null`) | 3/3 |
 
-`00. Lead Notification` was built after the development-history snapshot, as the instrument for VD2; its measured runs (18, no failures) are recorded in `docs/research/quote-latency/results/`. It is the only workflow left active (`active=1`), for that measurement.
+For 03, 06a and 06b the content check can only confirm a non-empty *simulated* output: their data sources are mocks.
+
+`00. Lead Notification` was built after the development-history snapshot, as the instrument for VD2: 52 measured runs without failures (18 on 25/08, 34 on 08/10) plus 3 on 09/10 after escaping the quote-form fields in its message, all in `docs/research/quote-latency/results/`. Its Gmail node sends to `bandeja.demo@example.com`, which bounces after Gmail accepts the message, so t1 is Gmail's acceptance, not arrival in an inbox. It is the only workflow left active (`active=1`), for that measurement.
 
 Fixes applied on 2026-09-25 before the final batch (exports updated in `n8n/workflows/`):
 

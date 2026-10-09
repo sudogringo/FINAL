@@ -1,0 +1,189 @@
+
+> golden-harvest-backend@1.0.0 test
+> tsx --test src/middleware/auth.test.ts src/middleware/errors.test.ts src/routes/quoteContact.test.ts src/routes/quoteClose.test.ts src/seedAdmin.test.ts src/routes/productSchema.test.ts
+
+TAP version 13
+# Subtest: rejects a request without credentials
+ok 1 - rejects a request without credentials
+  ---
+  duration_ms: 4.7563
+  ...
+# Subtest: accepts a valid admin JWT
+ok 2 - accepts a valid admin JWT
+  ---
+  duration_ms: 16.6125
+  ...
+# Subtest: rejects a JWT signed with another secret
+ok 3 - rejects a JWT signed with another secret
+  ---
+  duration_ms: 3.6955
+  ...
+# Subtest: accepts the configured service key (n8n workflows)
+ok 4 - accepts the configured service key (n8n workflows)
+  ---
+  duration_ms: 1.1315
+  ...
+# Subtest: rejects a wrong service key
+ok 5 - rejects a wrong service key
+  ---
+  duration_ms: 4.2419
+  ...
+# Subtest: fails closed when SERVICE_API_KEY is not configured
+ok 6 - fails closed when SERVICE_API_KEY is not configured
+  ---
+  duration_ms: 1.1643
+  ...
+# Subtest: a rejected async handler reaches next(err) instead of crashing the process
+ok 7 - a rejected async handler reaches next(err) instead of crashing the process
+  ---
+  duration_ms: 8.702
+  ...
+# Subtest: wraps every handler of a route, including the ones after a middleware
+ok 8 - wraps every handler of a route, including the ones after a middleware
+  ---
+  duration_ms: 2.1383
+  ...
+# Subtest: a foreign-key violation (Prisma P2003) is a client error: 400
+ok 9 - a foreign-key violation (Prisma P2003) is a client error: 400
+  ---
+  duration_ms: 0.2637
+  ...
+# Subtest: a missing record (Prisma P2025) is 404
+ok 10 - a missing record (Prisma P2025) is 404
+  ---
+  duration_ms: 0.0741
+  ...
+# Subtest: any other error is 500
+ok 11 - any other error is 500
+  ---
+  duration_ms: 0.0758
+  ...
+# Subtest: keeps the imageUrl the admin panel sends when saving a product
+ok 12 - keeps the imageUrl the admin panel sends when saving a product
+  ---
+  duration_ms: 9.0771
+  ...
+# Subtest: accepts null to remove the image ("Quitar" in the panel)
+ok 13 - accepts null to remove the image ("Quitar" in the panel)
+  ---
+  duration_ms: 0.7277
+  ...
+# Subtest: a product can still be created without an image
+ok 14 - a product can still be created without an image
+  ---
+  duration_ms: 2.071
+  ...
+# Subtest: rejects an imageUrl that is not a URL
+ok 15 - rejects an imageUrl that is not a URL
+  ---
+  duration_ms: 1.4512
+  ...
+# Subtest: deducts each item from the stock of its size, never below zero
+ok 16 - deducts each item from the stock of its size, never below zero
+  ---
+  duration_ms: 6.6675
+  ...
+# Subtest: builds one order item per quote item
+ok 17 - builds one order item per quote item
+  ---
+  duration_ms: 0.5889
+  ...
+# Subtest: closing a quote that already has an order changes nothing (no double deduction)
+ok 18 - closing a quote that already has an order changes nothing (no double deduction)
+  ---
+  duration_ms: 0.398
+  ...
+# Subtest: reports items whose product no longer exists and plans nothing
+ok 19 - reports items whose product no longer exists and plans nothing
+  ---
+  duration_ms: 0.232
+  ...
+# Subtest: unknownProductIds lists the quote items that are not in the catalog
+ok 20 - unknownProductIds lists the quote items that are not in the catalog
+  ---
+  duration_ms: 0.1903
+  ...
+# Subtest: two sizes of the same product end up in a single stock update
+ok 21 - two sizes of the same product end up in a single stock update
+  ---
+  duration_ms: 0.3108
+  ...
+# Subtest: accepts a contact without localidad (the field is optional)
+ok 22 - accepts a contact without localidad (the field is optional)
+  ---
+  duration_ms: 4.6154
+  ...
+# Subtest: keeps a trimmed localidad when provided
+ok 23 - keeps a trimmed localidad when provided
+  ---
+  duration_ms: 1.1508
+  ...
+# Subtest: treats a blank localidad as absent
+ok 24 - treats a blank localidad as absent
+  ---
+  duration_ms: 0.5925
+  ...
+# Subtest: rejects a localidad longer than 100 characters
+ok 25 - rejects a localidad longer than 100 characters
+  ---
+  duration_ms: 6.9135
+  ...
+# Subtest: writes localidad when creating the customer
+ok 26 - writes localidad when creating the customer
+  ---
+  duration_ms: 3.3508
+  ...
+# Subtest: never overwrites the data of an existing customer
+ok 27 - never overwrites the data of an existing customer
+  ---
+  duration_ms: 0.3218
+  ...
+# Subtest: fills the fields an existing customer is still missing
+ok 28 - fills the fields an existing customer is still missing
+  ---
+  duration_ms: 0.2651
+  ...
+# Subtest: treats an empty stored value as missing
+ok 29 - treats an empty stored value as missing
+  ---
+  duration_ms: 0.1529
+  ...
+# Subtest: does not fill a missing field with an absent form value
+ok 30 - does not fill a missing field with an absent form value
+  ---
+  duration_ms: 0.3268
+  ...
+# Subtest: without a stored customer, the form values go to create
+ok 31 - without a stored customer, the form values go to create
+  ---
+  duration_ms: 0.472
+  ...
+# Subtest: uses SEED_ADMIN_PASSWORD when it is long enough
+ok 32 - uses SEED_ADMIN_PASSWORD when it is long enough
+  ---
+  duration_ms: 1.8957
+  ...
+# Subtest: generates a random password when the variable is missing
+ok 33 - generates a random password when the variable is missing
+  ---
+  duration_ms: 0.288
+  ...
+# Subtest: rejects a SEED_ADMIN_PASSWORD shorter than 12 characters
+ok 34 - rejects a SEED_ADMIN_PASSWORD shorter than 12 characters
+  ---
+  duration_ms: 1.2878
+  ...
+# Subtest: never falls back to the old hardcoded default
+ok 35 - never falls back to the old hardcoded default
+  ---
+  duration_ms: 0.7065
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 905.8842
