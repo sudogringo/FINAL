@@ -1,0 +1,23 @@
+# git HEAD 99c9d5b, 2026-10-08
+commits: 91
+frontend: 19
+n8n: 16
+backend: 12
+frontend + n8n: 4
+    3b853c3 2026-10-08 feat: capture an optional delivery localidad and fix the 07 dispatch summary
+    57760e8 2026-08-25 added workflow and timer setup
+    2b61930 2026-07-02 feat: favicon GH, ubicación Mendoza, sidebar responsive con overlay mobile
+    0a4593c 2026-07-01 fix: integración completa backend-n8n y correcciones de flujo
+frontend + backend: 6
+    3b853c3 2026-10-08 feat: capture an optional delivery localidad and fix the 07 dispatch summary
+    57760e8 2026-08-25 added workflow and timer setup
+    0a4593c 2026-07-01 fix: integración completa backend-n8n y correcciones de flujo
+    336cce0 2026-06-30 feat: integración backend-frontend + rutas n8n-ready
+    fd3018f 2026-06-26 feat: imágenes de producto con upload desde el admin
+    608aff9 2026-06-26 feat: backend Express+Prisma+PostgreSQL y panel admin React
+n8n + backend: 5
+    3b853c3 2026-10-08 feat: capture an optional delivery localidad and fix the 07 dispatch summary
+    88b1d33 2026-10-07 feat(backend): require admin JWT or n8n service key on order and stats reads
+    dfc07b1 2026-09-25 some fixes to workflows
+    57760e8 2026-08-25 added workflow and timer setup
+    0a4593c 2026-07-01 fix: integración completa backend-n8n y correcciones de flujo
