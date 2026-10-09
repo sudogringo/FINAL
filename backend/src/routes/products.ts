@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express'
-import { z } from 'zod'
 import { prisma } from '../db'
 import { requireAuth } from '../middleware/auth'
+import { productSchema } from './productSchema'
 
 export const productsRouter = Router()
 
@@ -26,15 +26,6 @@ productsRouter.get('/:id', async (req: Request, res: Response) => {
 
 // ─── Admin (protected) ──────────────────────────────────────────────────────
 
-const productSchema = z.object({
-  name: z.string().min(2),
-  line: z.enum(['roja', 'dorada']),
-  description: z.string().min(5),
-  sizes: z.array(z.string()).min(1),
-  tag: z.string().optional(),
-  stockBySize: z.record(z.string(), z.number().int().min(0)).optional(),
-  active: z.boolean().optional(),
-})
 
 productsRouter.get('/admin/all', requireAuth, async (_req: Request, res: Response) => {
   const products = await prisma.product.findMany({ orderBy: { createdAt: 'desc' } })
