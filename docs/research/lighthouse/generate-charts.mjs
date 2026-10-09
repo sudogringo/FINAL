@@ -9,7 +9,11 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Optional first argument: a batch subfolder of results/ (e.g. paired-2026-10-07).
-const BATCH = process.argv[2] ?? '';
+const BATCH = process.argv[2] && !process.argv[2].startsWith('--') ? process.argv[2] : '';
+// --desktop=std: plot the desktop runs measured with Lighthouse's standard desktop
+// preset (labels ending in -std, run-audit.mjs --profile=standard) instead of the
+// legacy desktop profile that kept mobile throttling.
+const DESKTOP_STD = process.argv.includes('--desktop=std');
 const RESULTS_DIR = path.join(__dirname, 'results', BATCH);
 const ASSETS_DIR = path.join(__dirname, '..', '..', 'assets');
 
@@ -116,9 +120,9 @@ function chartMedianComparison(rows) {
   body += `<rect x="${marginLeft}" y="${marginTop - 36}" width="12" height="12" fill="${fillFor('original')}"/>`;
   body += `<text x="${marginLeft + 18}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">${legendFor('original', 'sitio preexistente')}</text>`;
   body += `<rect x="${marginLeft + 260}" y="${marginTop - 36}" width="12" height="12" fill="${COLORS['new-hosted']}"/>`;
-  body += `<text x="${marginLeft + 278}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">${legendFor('new-hosted', 'catálogo nuevo, alojado en GitHub Pages')}</text>`;
+  body += `<text x="${marginLeft + 278}" y="${marginTop - 26}" font-size="11" fill="${COLORS.text}">${legendFor('new-hosted', 'sitio nuevo (página de inicio), en GitHub Pages')}</text>`;
 
-  return svgWrap(width, height, body, 'Puntajes medianos de Lighthouse — sitio preexistente vs. catálogo nuevo');
+  return svgWrap(width, height, body, 'Puntajes medianos de Lighthouse — sitio preexistente vs. sitio nuevo');
 }
 
 // --- Chart 2: per-run Performance of both sites and devices ---
@@ -138,8 +142,8 @@ function chartRunSpread(rows) {
   const plotW = width - marginLeft - marginRight;
   const plotH = height - marginTop - marginBottom;
   const SERIES = [
-    { label: 'new-hosted', device: 'mobile', name: 'catálogo nuevo, móvil', color: COLORS['new-hosted'], shape: 'circle', dash: '' },
-    { label: 'new-hosted', device: 'desktop', name: 'catálogo nuevo, escritorio', color: COLORS['new-hosted'], shape: 'square', dash: '8,4' },
+    { label: 'new-hosted', device: 'mobile', name: 'sitio nuevo, móvil', color: COLORS['new-hosted'], shape: 'circle', dash: '' },
+    { label: 'new-hosted', device: 'desktop', name: 'sitio nuevo, escritorio', color: COLORS['new-hosted'], shape: 'square', dash: '8,4' },
     { label: 'original', device: 'mobile', name: 'sitio preexistente, móvil', color: '#B36B00', shape: 'triangle', dash: '' },
     { label: 'original', device: 'desktop', name: 'sitio preexistente, escritorio', color: '#B36B00', shape: 'diamond', dash: '8,4' },
   ].filter((s) => rows.some((r) => r.label === s.label && r.device === s.device));
@@ -161,13 +165,21 @@ function chartRunSpread(rows) {
   for (let run = 1; run <= maxRun; run++) {
     body += `<text x="${xFor(run)}" y="${marginTop + plotH + 20}" text-anchor="middle" font-size="11" fill="${COLORS.text}">corrida ${run}</text>`;
   }
+  // Median labels sit at the right edge; spread them at least 14 px apart so
+  // close medians (e.g. 74 and 76) do not print on top of each other.
+  const labelY = SERIES.map((s) => yFor(median(rows.filter((r) => r.label === s.label && r.device === s.device).map((r) => Number(r.performance)))));
+  const order = labelY.map((y, i) => [y, i]).sort((a, b) => a[0] - b[0]);
+  for (let k = 1; k < order.length; k++) {
+    if (order[k][0] - order[k - 1][0] < 14) order[k][0] = order[k - 1][0] + 14;
+  }
+  order.forEach(([y, i]) => { labelY[i] = y; });
   SERIES.forEach((s, i) => {
     const pts = rows.filter((r) => r.label === s.label && r.device === s.device).sort((a, b) => Number(a.run) - Number(b.run));
     const poly = pts.map((r) => `${xFor(Number(r.run))},${yFor(Number(r.performance))}`).join(' ');
     body += `<polyline points="${poly}" fill="none" stroke="${s.color}" stroke-width="2" ${s.dash ? `stroke-dasharray="${s.dash}"` : ''}/>`;
     pts.forEach((r) => { body += marker(s.shape, xFor(Number(r.run)), yFor(Number(r.performance)), s.color); });
     const med = median(pts.map((r) => Number(r.performance)));
-    body += `<text x="${width - marginRight + 8}" y="${yFor(med) + 4}" font-size="10" fill="${s.color}">mediana ${Math.round(med)}</text>`;
+    body += `<text x="${width - marginRight + 8}" y="${labelY[i] + 4}" font-size="10" fill="${s.color}">mediana ${Math.round(med)}</text>`;
     const lx = marginLeft + (i % 2) * 330, ly = 52 + Math.floor(i / 2) * 20;
     body += `<line x1="${lx}" y1="${ly}" x2="${lx + 28}" y2="${ly}" stroke="${s.color}" stroke-width="2" ${s.dash ? `stroke-dasharray="${s.dash}"` : ''}/>`;
     body += marker(s.shape, lx + 14, ly, s.color);
@@ -177,13 +189,18 @@ function chartRunSpread(rows) {
 }
 
 function main() {
-  const rows = readCsv(path.join(RESULTS_DIR, 'summary.csv'));
+  let rows = readCsv(path.join(RESULTS_DIR, 'summary.csv'));
+  if (DESKTOP_STD) {
+    rows = rows
+      .filter((r) => !(r.device === 'desktop' && !r.label.endsWith('-std')))
+      .map((r) => (r.label.endsWith('-std') ? { ...r, label: r.label.replace(/-std$/, '') } : r));
+  }
   fs.mkdirSync(ASSETS_DIR, { recursive: true });
 
   const chart1 = chartMedianComparison(rows);
   const chart2 = chartRunSpread(rows);
 
-  const suffix = BATCH ? `-${BATCH}` : '';
+  const suffix = (BATCH ? `-${BATCH}` : '') + (DESKTOP_STD ? '-std' : '');
   fs.writeFileSync(path.join(ASSETS_DIR, `lighthouse-median-comparison${suffix}.svg`), chart1);
   fs.writeFileSync(path.join(ASSETS_DIR, `lighthouse-runs-spread${suffix}.svg`), chart2);
 
