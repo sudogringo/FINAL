@@ -39,3 +39,5 @@ for entry in "${WORKFLOWS[@]}"; do
   done
 done
 node summarize.mjs "$OUT"
+# Execution status alone is not evidence: check what each run actually produced.
+node check-content.mjs "$OUT"
