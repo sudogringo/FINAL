@@ -1,0 +1,520 @@
+{
+  "new-hosted": {
+    "desktop": {
+      "runs": [
+        {
+          "label": "new-hosted",
+          "device": "desktop",
+          "run": 1,
+          "performance": 63,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 5918.987999999999,
+          "cls": 0.00044351931442634446,
+          "tbt_ms": 14,
+          "fcp_ms": 2179.4500000000003,
+          "speed_index_ms": 2413.804344000536
+        },
+        {
+          "label": "new-hosted",
+          "device": "desktop",
+          "run": 2,
+          "performance": 62,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 6131.99,
+          "cls": 0.00026660894704301003,
+          "tbt_ms": 20,
+          "fcp_ms": 2306.714,
+          "speed_index_ms": 2541.3516560037615
+        },
+        {
+          "label": "new-hosted",
+          "device": "desktop",
+          "run": 3,
+          "performance": 62,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 5770.336000000001,
+          "cls": 0.00044774979391773006,
+          "tbt_ms": 71,
+          "fcp_ms": 2308.669,
+          "speed_index_ms": 2580.2765159999312
+        },
+        {
+          "label": "new-hosted",
+          "device": "desktop",
+          "run": 4,
+          "performance": 62,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 5896.978,
+          "cls": 0.00044349622859010223,
+          "tbt_ms": 9,
+          "fcp_ms": 2401.038,
+          "speed_index_ms": 2544.8276239966594
+        },
+        {
+          "label": "new-hosted",
+          "device": "desktop",
+          "run": 5,
+          "performance": 62,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 6263.082999999999,
+          "cls": 0.00044773247954054844,
+          "tbt_ms": 21,
+          "fcp_ms": 2230.1479999999997,
+          "speed_index_ms": 2444.388216000536
+        }
+      ],
+      "medians": {
+        "performance": 62,
+        "accessibility": 83,
+        "best_practices": 100,
+        "seo": 100,
+        "lcp_ms": 5918.987999999999,
+        "cls": 0.00044351931442634446,
+        "tbt_ms": 20,
+        "fcp_ms": 2306.714,
+        "speed_index_ms": 2541.3516560037615
+      }
+    },
+    "mobile": {
+      "runs": [
+        {
+          "label": "new-hosted",
+          "device": "mobile",
+          "run": 1,
+          "performance": 85,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 3554.32,
+          "cls": 0.0015250495742469396,
+          "tbt_ms": 32,
+          "fcp_ms": 2681.059,
+          "speed_index_ms": 3561.9633239958594
+        },
+        {
+          "label": "new-hosted",
+          "device": "mobile",
+          "run": 2,
+          "performance": 74,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 6095.313000000002,
+          "cls": 0.0014755810731288345,
+          "tbt_ms": 11,
+          "fcp_ms": 2521.3230000000003,
+          "speed_index_ms": 2960.3604240017066
+        },
+        {
+          "label": "new-hosted",
+          "device": "mobile",
+          "run": 3,
+          "performance": 76,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 5777.053,
+          "cls": 0,
+          "tbt_ms": 37,
+          "fcp_ms": 2310.313,
+          "speed_index_ms": 2740.0660832732847
+        },
+        {
+          "label": "new-hosted",
+          "device": "mobile",
+          "run": 4,
+          "performance": 76,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 5926.671000000001,
+          "cls": 0.0014935530037311386,
+          "tbt_ms": 11,
+          "fcp_ms": 2235.9,
+          "speed_index_ms": 2509.4244440058333
+        },
+        {
+          "label": "new-hosted",
+          "device": "mobile",
+          "run": 5,
+          "performance": 74,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 6090.197,
+          "cls": 0.0004394949066569834,
+          "tbt_ms": 80.99999999999955,
+          "fcp_ms": 2406.7760000000003,
+          "speed_index_ms": 2846.3742239973053
+        }
+      ],
+      "medians": {
+        "performance": 76,
+        "accessibility": 83,
+        "best_practices": 100,
+        "seo": 100,
+        "lcp_ms": 5926.671000000001,
+        "cls": 0.0014755810731288345,
+        "tbt_ms": 32,
+        "fcp_ms": 2406.7760000000003,
+        "speed_index_ms": 2846.3742239973053
+      }
+    }
+  },
+  "new-hosted-std": {
+    "desktop": {
+      "runs": [
+        {
+          "label": "new-hosted-std",
+          "device": "desktop",
+          "run": 1,
+          "performance": 93,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 1574.9439999999997,
+          "cls": 0.0004435020000491628,
+          "tbt_ms": 0,
+          "fcp_ms": 952.6530000000001,
+          "speed_index_ms": 1113.716170498297
+        },
+        {
+          "label": "new-hosted-std",
+          "device": "desktop",
+          "run": 2,
+          "performance": 93,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 1531.2019999999998,
+          "cls": 0.00044772670808148783,
+          "tbt_ms": 0,
+          "fcp_ms": 947.9930000000002,
+          "speed_index_ms": 1157.9103613333666
+        },
+        {
+          "label": "new-hosted-std",
+          "device": "desktop",
+          "run": 3,
+          "performance": 94,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 1499.1129999999998,
+          "cls": 0.0004523100055448282,
+          "tbt_ms": 0,
+          "fcp_ms": 919.077,
+          "speed_index_ms": 1087.448805999072
+        },
+        {
+          "label": "new-hosted-std",
+          "device": "desktop",
+          "run": 4,
+          "performance": 93,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 1530.2989999999995,
+          "cls": 0.00044773247954054844,
+          "tbt_ms": 0,
+          "fcp_ms": 964.2909999999997,
+          "speed_index_ms": 1134.5698641682231
+        },
+        {
+          "label": "new-hosted-std",
+          "device": "desktop",
+          "run": 5,
+          "performance": 93,
+          "accessibility": 83,
+          "best_practices": 100,
+          "seo": 100,
+          "lcp_ms": 1626.5139999999997,
+          "cls": 0.00044351931442634446,
+          "tbt_ms": 0,
+          "fcp_ms": 925.97,
+          "speed_index_ms": 1118.5953453338855
+        }
+      ],
+      "medians": {
+        "performance": 93,
+        "accessibility": 83,
+        "best_practices": 100,
+        "seo": 100,
+        "lcp_ms": 1531.2019999999998,
+        "cls": 0.00044772670808148783,
+        "tbt_ms": 0,
+        "fcp_ms": 947.9930000000002,
+        "speed_index_ms": 1118.5953453338855
+      }
+    }
+  },
+  "original": {
+    "desktop": {
+      "runs": [
+        {
+          "label": "original",
+          "device": "desktop",
+          "run": 1,
+          "performance": 49,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 12928.026999999998,
+          "cls": 0.09932813629717324,
+          "tbt_ms": 165.5,
+          "fcp_ms": 3488.2460000000005,
+          "speed_index_ms": 9830.134616332292
+        },
+        {
+          "label": "original",
+          "device": "desktop",
+          "run": 2,
+          "performance": 50,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 12446.4395,
+          "cls": 0.03005110259656719,
+          "tbt_ms": 185,
+          "fcp_ms": 3349.5199999999995,
+          "speed_index_ms": 9641.886336701766
+        },
+        {
+          "label": "original",
+          "device": "desktop",
+          "run": 3,
+          "performance": 50,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 12717.696,
+          "cls": 0.08486367106177416,
+          "tbt_ms": 150.5,
+          "fcp_ms": 3493.8229999999994,
+          "speed_index_ms": 9643.59130784265
+        },
+        {
+          "label": "original",
+          "device": "desktop",
+          "run": 4,
+          "performance": 47,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 11842.7705,
+          "cls": 0.03529724912220248,
+          "tbt_ms": 241,
+          "fcp_ms": 3348.05,
+          "speed_index_ms": 9584.606815202435
+        },
+        {
+          "label": "original",
+          "device": "desktop",
+          "run": 5,
+          "performance": 49,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 11776.559000000001,
+          "cls": 0.0848518423895056,
+          "tbt_ms": 168.00000000000182,
+          "fcp_ms": 3504.4300000000003,
+          "speed_index_ms": 9504.498935917343
+        }
+      ],
+      "medians": {
+        "performance": 49,
+        "accessibility": 89,
+        "best_practices": 74,
+        "seo": 82,
+        "lcp_ms": 12446.4395,
+        "cls": 0.0848518423895056,
+        "tbt_ms": 168.00000000000182,
+        "fcp_ms": 3488.2460000000005,
+        "speed_index_ms": 9641.886336701766
+      }
+    },
+    "mobile": {
+      "runs": [
+        {
+          "label": "original",
+          "device": "mobile",
+          "run": 1,
+          "performance": 38,
+          "accessibility": 94,
+          "best_practices": 75,
+          "seo": 82,
+          "lcp_ms": 5898.563999999999,
+          "cls": 0.5914196939384063,
+          "tbt_ms": 222.99999999999818,
+          "fcp_ms": 3349.564,
+          "speed_index_ms": 8560.635561810595
+        },
+        {
+          "label": "original",
+          "device": "mobile",
+          "run": 2,
+          "performance": 41,
+          "accessibility": 94,
+          "best_practices": 75,
+          "seo": 82,
+          "lcp_ms": 13021.317,
+          "cls": 0.36354396481714363,
+          "tbt_ms": 174.5,
+          "fcp_ms": 3485.473,
+          "speed_index_ms": 7539.282295687689
+        },
+        {
+          "label": "original",
+          "device": "mobile",
+          "run": 3,
+          "performance": 41,
+          "accessibility": 94,
+          "best_practices": 75,
+          "seo": 82,
+          "lcp_ms": 9780.4925,
+          "cls": 0.3717274671739596,
+          "tbt_ms": 171.5,
+          "fcp_ms": 3489.4249999999997,
+          "speed_index_ms": 7754.474047944155
+        },
+        {
+          "label": "original",
+          "device": "mobile",
+          "run": 4,
+          "performance": 35,
+          "accessibility": 94,
+          "best_practices": 75,
+          "seo": 82,
+          "lcp_ms": 12903.299,
+          "cls": 0.31051284986403693,
+          "tbt_ms": 423.5,
+          "fcp_ms": 3340.873,
+          "speed_index_ms": 7979.532136937174
+        },
+        {
+          "label": "original",
+          "device": "mobile",
+          "run": 5,
+          "performance": 39,
+          "accessibility": 94,
+          "best_practices": 75,
+          "seo": 82,
+          "lcp_ms": 12928.951,
+          "cls": 0.3727525351282731,
+          "tbt_ms": 213.5,
+          "fcp_ms": 3486.8509999999997,
+          "speed_index_ms": 8135.613757314375
+        }
+      ],
+      "medians": {
+        "performance": 39,
+        "accessibility": 94,
+        "best_practices": 75,
+        "seo": 82,
+        "lcp_ms": 12903.299,
+        "cls": 0.3717274671739596,
+        "tbt_ms": 213.5,
+        "fcp_ms": 3485.473,
+        "speed_index_ms": 7979.532136937174
+      }
+    }
+  },
+  "original-std": {
+    "desktop": {
+      "runs": [
+        {
+          "label": "original-std",
+          "device": "desktop",
+          "run": 1,
+          "performance": 72,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 2809.3615,
+          "cls": 0.0848518423895056,
+          "tbt_ms": 2.5,
+          "fcp_ms": 1214.5315,
+          "speed_index_ms": 3167.982973824951
+        },
+        {
+          "label": "original-std",
+          "device": "desktop",
+          "run": 2,
+          "performance": 74,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 2798.3585000000003,
+          "cls": 0.03005110259656719,
+          "tbt_ms": 0,
+          "fcp_ms": 1257.2505,
+          "speed_index_ms": 3243.362156168618
+        },
+        {
+          "label": "original-std",
+          "device": "desktop",
+          "run": 3,
+          "performance": 74,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 2524.658,
+          "cls": 0.0848518423895056,
+          "tbt_ms": 0,
+          "fcp_ms": 1264.5575000000001,
+          "speed_index_ms": 3057.2941194390337
+        },
+        {
+          "label": "original-std",
+          "device": "desktop",
+          "run": 4,
+          "performance": 74,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 2716.01,
+          "cls": 0.04984330015841843,
+          "tbt_ms": 6.5,
+          "fcp_ms": 1235.7490000000003,
+          "speed_index_ms": 3172.522896160567
+        },
+        {
+          "label": "original-std",
+          "device": "desktop",
+          "run": 5,
+          "performance": 79,
+          "accessibility": 89,
+          "best_practices": 74,
+          "seo": 82,
+          "lcp_ms": 2056.6985,
+          "cls": 0.03005110259656719,
+          "tbt_ms": 0,
+          "fcp_ms": 1263.3384999999998,
+          "speed_index_ms": 3240.2107525677284
+        }
+      ],
+      "medians": {
+        "performance": 74,
+        "accessibility": 89,
+        "best_practices": 74,
+        "seo": 82,
+        "lcp_ms": 2716.01,
+        "cls": 0.04984330015841843,
+        "tbt_ms": 0,
+        "fcp_ms": 1257.2505,
+        "speed_index_ms": 3172.522896160567
+      }
+    }
+  }
+}

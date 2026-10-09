@@ -1,0 +1,12 @@
+== paired-2026-10-07
+mobile  original      vs new-hosted      performance 24-38 vs 74-78  n=5/5  p=0.0079  disjoint
+mobile  original      vs new-hosted      lcp         9842-20014 vs 5434-6402  n=5/5  p=0.0079  disjoint
+desktop original      vs new-hosted      performance 27-48 vs 63-64  n=5/5  p=0.0079  disjoint
+desktop original      vs new-hosted      lcp         10121-13315 vs 6090-6213  n=5/5  p=0.0079  disjoint
+== paired-2026-10-08
+mobile  original      vs new-hosted      performance 35-41 vs 74-85  n=5/5  p=0.0079  disjoint
+mobile  original      vs new-hosted      lcp         5899-13021 vs 3554-6095  n=5/5  p=0.0556  overlap
+desktop original      vs new-hosted      performance 47-50 vs 62-63  n=5/5  p=0.0079  disjoint
+desktop original      vs new-hosted      lcp         11777-12928 vs 5770-6263  n=5/5  p=0.0079  disjoint
+desktop original-std  vs new-hosted-std  performance 72-79 vs 93-94  n=5/5  p=0.0079  disjoint
+desktop original-std  vs new-hosted-std  lcp         2057-2809 vs 1499-1627  n=5/5  p=0.0079  disjoint
