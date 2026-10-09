@@ -13,5 +13,50 @@
     "failure_rate_ci95_high": 0.1853,
     "criterion_ms": 15000,
     "meets_criterion": true
+  },
+  {
+    "batch": "batch-2026-10-08-espaciado",
+    "n_runs": 15,
+    "n_failed": 0,
+    "median_ms": 832,
+    "min_ms": 800,
+    "max_ms": 2352,
+    "p95_ms": 2352,
+    "mean_ms": 985.7,
+    "stddev_ms": 393.3,
+    "failure_rate_ci95_low": 0,
+    "failure_rate_ci95_high": 0.218,
+    "criterion_ms": 15000,
+    "meets_criterion": true
+  },
+  {
+    "batch": "batch-2026-10-08-frio",
+    "n_runs": 1,
+    "n_failed": 0,
+    "median_ms": 1217,
+    "min_ms": 1217,
+    "max_ms": 1217,
+    "p95_ms": 1217,
+    "mean_ms": 1217,
+    "stddev_ms": null,
+    "failure_rate_ci95_low": 0,
+    "failure_rate_ci95_high": 0.975,
+    "criterion_ms": 15000,
+    "meets_criterion": true
+  },
+  {
+    "batch": "batch-2026-10-08-rafaga",
+    "n_runs": 18,
+    "n_failed": 0,
+    "median_ms": 898.5,
+    "min_ms": 780,
+    "max_ms": 2525,
+    "p95_ms": 2525,
+    "mean_ms": 1064.8,
+    "stddev_ms": 436.3,
+    "failure_rate_ci95_low": 0,
+    "failure_rate_ci95_high": 0.1853,
+    "criterion_ms": 15000,
+    "meets_criterion": true
   }
 ]

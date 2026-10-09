@@ -1,0 +1,17 @@
+{
+  "runIndex": 12,
+  "clientSubmittedAt": "2026-10-09T01:22:03.193Z",
+  "httpStatus": 201,
+  "error": null,
+  "scriptObservedLatencyMs": 972,
+  "backendReceivedAt": "2026-10-09T01:22:03.195Z",
+  "n8n": {
+    "quoteId": "cmv0a5o3v002kbdrhrc8qqe71",
+    "sessionId": "latency-test-session-12-1791508923193",
+    "clientSubmittedAt": "2026-10-09T01:22:03.193Z",
+    "t1_start": "2026-10-09T01:22:03.281Z",
+    "t1_end": "2026-10-09T01:22:04.143Z",
+    "latency_ms_n8n_internal": 862
+  },
+  "endToEndLatencyMs": 950
+}
