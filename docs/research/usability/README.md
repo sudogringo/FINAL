@@ -31,8 +31,11 @@ puntos.
   refuerza el sesgo de deseabilidad social sobre el puntaje SUS.
 - **Consentimiento informado**: verbal, no formulario firmado. Se explicó a cada
   participante el propósito de la prueba (validar la usabilidad de un catálogo de e-commerce
-  académico, sin vínculo con la empresa real) antes de comenzar la tarea. No hubo compensación
-  ni registro de datos personales identificables — la participación es anónima (P1-P5).
+  académico, sin vínculo con la empresa real) antes de comenzar la tarea. No hubo compensación.
+  Los participantes figuran solo como P1-P5, aunque el documento de campo conserva el tramo
+  etario y observaciones de conducta; por eso, el 09/10/2026 se les pidió conformidad para
+  publicar sus respuestas anonimizadas en este repositorio, y los cinco la dieron por escrito
+  (mensajes conservados por los autores). No hubo revisión de un comité de ética.
 
 ## Cálculo del puntaje SUS
 
