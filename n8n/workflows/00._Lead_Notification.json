@@ -6,7 +6,7 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## 🔴 MODO PRODUCCIÓN\nNodos deshabilitados que requieren credenciales reales:\n- **WhatsApp Business API** (notificación al vendedor por WhatsApp — requiere cuenta Meta Business verificada)\n- **SendGrid** (email transaccional — requiere API key paga más allá del free tier)\n\nEn producción, ambos envíos irían en paralelo tras el webhook, y el Respond to Webhook esperaría\na que ambos confirmen entrega antes de devolver el timestamp final — igual que en la rama TESIS,\npero con proveedores reales en lugar de Gmail simulado. Habilitar y configurar credenciales antes\nde pasar a producción.",
+        "content": "## 🔴 MODO PRODUCCIÓN\nNodos deshabilitados que requieren credenciales reales:\n- **WhatsApp Business API** (notificación al vendedor por WhatsApp — requiere cuenta Meta Business verificada)\n- **SendGrid** (email transaccional — requiere API key paga más allá del free tier)\n\nEn producción, ambos envíos irían en paralelo tras el webhook, y el Respond to Webhook esperaría\na que ambos confirmen entrega antes de devolver el timestamp final — igual que en la rama TESIS,\npero con proveedores reales (WhatsApp Business API y SendGrid) en lugar del Gmail de la casilla de demostración. Habilitar y configurar credenciales antes\nde pasar a producción.",
         "height": 520,
         "width": 1560
       },
