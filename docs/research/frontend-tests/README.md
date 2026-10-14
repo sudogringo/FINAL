@@ -19,13 +19,18 @@ count changes.
 
 | | |
 |---|---|
-| Date | 2026-10-08 (commit `763f281`) |
+| Date | 2026-10-14 (commit `d1cadee`) |
 | Node | v22.14.0 |
 | Command | `npx jest --verbose` in `frontend/` |
-| Result | **11 test suites passed, 77 tests passed, 0 failed** |
-| Raw output | [`test-run-2026-10-08-verbose.txt`](./test-run-2026-10-08-verbose.txt) |
+| Result | **14 test suites passed, 91 tests passed, 0 failed** |
+| Raw output | [`test-run-2026-10-14-verbose.txt`](./test-run-2026-10-14-verbose.txt) |
 
-Earlier runs: 2026-08-07 (verbose, cited in Anexo C of the R34: 10 suites, 70 tests) and
+The 14 new tests (14/10/2026, commit `8132bbd`) fix the accessibility corrections:
+carousel dots with accessible name, aria-current and 24x24 hit area
+(`Production.a11y.test.tsx`), heading order on /catalogo (`CatalogoPage.heading.test.tsx`)
+and the text-safe gold tokens (`contrast.test.tsx`).
+
+Earlier runs: 2026-10-08 (11 suites, 77 tests), 2026-08-07 (verbose, cited in Anexo C of the R34: 10 suites, 70 tests) and
 2026-08-06. The 7 new tests (08/10/2026) cover the academic-project notice on the published
 site (`AcademicNotice.test.tsx`, 4) and the optional delivery localidad in the quote form
 (`QuoteForm.test.tsx`, 3).

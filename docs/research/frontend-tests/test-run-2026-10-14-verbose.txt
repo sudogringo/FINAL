@@ -1,0 +1,152 @@
+PASS src/__tests__/api.test.ts
+  admin/api
+    submitQuote
+      √ sends a POST to the correct URL with serialized body (21 ms)
+      √ throws when res.ok is false (19 ms)
+    adminLogin
+      √ returns the token from the response JSON on success (3 ms)
+      √ throws the expected Spanish error message when response is not ok (1 ms)
+    fetchMonthlyStats
+      √ builds the URL without the month query param when omitted (1 ms)
+      √ builds the URL with the month query param when provided (1 ms)
+    logInteraction
+      √ does not throw when fetch rejects (network failure) (2 ms)
+      √ does not throw when fetch resolves with a non-ok response (1 ms)
+      √ calls fetch with the correct URL and body (1 ms)
+    createProduct
+      √ happy path: calls fetch with the right method/URL and returns the created product (1 ms)
+      √ throws the expected message when res.ok is false (1 ms)
+    deleteProduct
+      √ happy path: calls fetch with the right method/URL (1 ms)
+      √ throws the expected message when res.ok is false (1 ms)
+
+PASS src/__tests__/CartDrawer.test.tsx (8.762 s)
+  CartDrawer
+    √ drawer is hidden initially (77 ms)
+    √ shows item after adding and opening the drawer (35 ms)
+    √ displays item size and quantity (15 ms)
+    √ shows empty state message when cart is empty (24 ms)
+    √ "Solicitar Cotización" button appears when items exist (13 ms)
+
+PASS src/__tests__/CatalogoPage.heading.test.tsx (8.775 s)
+  CatalogoPage heading hierarchy
+    √ has one h1 and product cards are h2 (no skipped level) (178 ms)
+
+PASS src/__tests__/CartContext.test.tsx (8.781 s)
+  CartContext
+    √ addItem is blocked at the per-size stock cap (67 ms)
+    √ setQty(0) removes the item entirely (12 ms)
+    √ setQty caps at the stock limit when set above it (11 ms)
+    √ setQty sets a valid in-range quantity normally (10 ms)
+    √ removeItem removes the specified item (17 ms)
+    √ clearCart empties the cart and resets isOpen/quoteOpen (17 ms)
+    √ totalItems sums quantities across multiple distinct items (12 ms)
+    √ openCart/closeCart/openQuote/closeQuote toggle state directly (15 ms)
+    abandoned cart webhook
+      √ fires the webhook after the abandonment threshold when the cart has items (16 ms)
+      √ does not fire the webhook when the cart is empty (6 ms)
+
+PASS src/__tests__/Production.a11y.test.tsx (8.875 s)
+  Production carousel dots
+    √ exposes each dot as a named button (137 ms)
+    √ marks only the active dot with aria-current and follows selection (113 ms)
+    √ gives each dot a 24x24 hit area while the visible dot stays 8x8 (27 ms)
+
+PASS src/__tests__/ProductCard.test.tsx (8.895 s)
+  ProductCard
+    √ renders product name and description (87 ms)
+    √ renders all size buttons (83 ms)
+    √ first size is selected by default (24 ms)
+    √ changes selected size on click (44 ms)
+    √ shows "Agregar al Pedido" button (5 ms)
+    √ qty cannot go below 1 (5 ms)
+    √ renders correctly for Línea Dorada (3 ms)
+    √ disables add-to-cart and shows "Sin stock" when selected size has 0 stock (8 ms)
+    √ blocks qty increment past stock cap for the selected size (15 ms)
+    √ does not disable qty controls or add-to-cart when the other size has 0 stock (17 ms)
+
+PASS src/__tests__/AdminContext.test.tsx (9.092 s)
+  AdminContext
+    √ starts unauthenticated with no token when localStorage is empty (34 ms)
+    √ initializes token from localStorage if present (9 ms)
+    √ login persists token to localStorage and flips isAuthenticated to true (15 ms)
+    √ logout clears localStorage and flips isAuthenticated to false (14 ms)
+    √ useAdmin throws when used outside AdminProvider (423 ms)
+
+PASS src/__tests__/AcademicNotice.test.tsx (9.145 s)
+  Aviso de proyecto académico
+    √ el pie de página declara que es un proyecto académico sin vínculo con la empresa (46 ms)
+    √ el pie de página no reclama derechos en nombre de la empresa (6 ms)
+    √ la página de contacto no enlaza el correo real de la empresa (12 ms)
+    √ index.html no declara datos estructurados de organización ni autoría de la empresa (2 ms)
+
+PASS src/__tests__/contrast.test.tsx (9.391 s)
+  text-safe gold token
+    √ defines --color-gold-text reaching 4.5:1 on cream card (#EEEBE2) and page (#FBFBFB) (7 ms)
+    √ keeps the brand gold untouched for decorative use (1 ms)
+  no low-contrast text utilities on light surfaces
+    √ Production (all tabs): no brand-gold text on light cards, no low-alpha dark text (142 ms)
+    √ Production: inactive tab text alpha >= 0.65 (22 ms)
+    √ Production: selected pill never pairs white text with a light gold background (44 ms)
+    √ Catalogo page + cards: no text-gold, no text-dark below the alpha floor (42 ms)
+    √ ProductCard: no low-alpha text, line label not in raw #A89D4F (4 ms)
+    √ About: no brand-gold text on light background (9 ms)
+  no low-contrast text utilities on dark surfaces
+    √ Certifications: white text alpha >= floor (8 ms)
+    √ Footer: white/gold text alpha >= floor (8 ms)
+
+PASS src/__tests__/AdminProductsPage.webhookConfigured.test.tsx (10.797 s)
+  AdminProductsPage — triggerSocialMedia with VITE_N8N_WF4_WEBHOOK configured
+    √ POSTs to the configured webhook and shows the success alert (269 ms)
+
+PASS src/__tests__/AdminQuotesPage.test.tsx (11.152 s)
+  AdminQuotesPage
+    √ redirects to /admin/login when not authenticated (51 ms)
+    √ loads and displays quotes on mount (94 ms)
+    √ clicking status-advance calls updateQuoteStatus with PENDING -> CONTACTED and updates the list (186 ms)
+    √ closing a quote (CONTACTED -> CLOSED) is gated behind window.confirm: confirmed proceeds (139 ms)
+    √ closing a quote is a no-op when window.confirm is cancelled (95 ms)
+    √ CLOSED quotes have no advance action button (58 ms)
+
+PASS src/__tests__/AdminLoginPage.test.tsx (12.613 s)
+  AdminLoginPage
+    √ calls adminLogin with entered email/password on submit (757 ms)
+    √ success path stores the token and navigates away from login (665 ms)
+    √ failure path shows the Spanish error message and does not navigate (682 ms)
+
+PASS src/__tests__/AdminProductsPage.test.tsx (13.13 s)
+  AdminProductsPage
+    √ redirects to /admin/login when not authenticated (51 ms)
+    √ loads and displays products on mount (active filter default) (96 ms)
+    handleSave
+      √ create branch: opens empty modal via "Nuevo producto" and calls createProduct (no id) (931 ms)
+      √ edit branch: opens modal via edit pencil (with id) and calls updateProduct with existing id (512 ms)
+    handleDelete
+      √ proceeds when window.confirm returns true (110 ms)
+      √ is a no-op when window.confirm returns false (92 ms)
+    handleRestore
+      √ calls updateProduct with active: true for an inactive product (244 ms)
+    search / line / status filters
+      √ search input narrows the list by name (189 ms)
+      √ line filter narrows the list to "roja" only (94 ms)
+      √ status filter "all" reveals inactive products, combined with line filter "roja" (160 ms)
+    triggerSocialMedia (via "Publicar en redes" button)
+      √ calls window.alert when the webhook env var is unset/empty (120 ms)
+
+PASS src/__tests__/QuoteForm.test.tsx (13.812 s)
+  QuoteForm
+    √ is not rendered when quoteOpen is false (25 ms)
+    √ renders the form when quote is open (50 ms)
+    √ shows validation error for empty nombre (108 ms)
+    √ shows validation error for invalid email (412 ms)
+    √ shows notas max 500 chars label (15 ms)
+    √ closes the form when X button is clicked (30 ms)
+    √ offers an optional Localidad field (18 ms)
+    √ sends localidad inside contact when the user fills it (950 ms)
+    √ rejects a localidad longer than 100 characters (93 ms)
+
+Test Suites: 14 passed, 14 total
+Tests:       91 passed, 91 total
+Snapshots:   0 total
+Time:        37.702 s
+Ran all test suites.
