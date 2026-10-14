@@ -13,7 +13,7 @@ Somos Tiago Cunto Boberg y Emiliano Rojo, estudiantes de la Tecnicatura Universi
 - **Anonimato:** no registramos su nombre ni el de la empresa. Sus respuestas se identifican con un código (por ejemplo, «PyME-03»), y quitamos cualquier detalle que pueda identificarlos. La entrevista no se graba.
 - **Qué se publica:** las respuestas anonimizadas se publican en el repositorio público de la tesis (GitHub) y pueden citarse en la tesis. No se publica nada que permita saber quién respondió.
 - **Beneficios y riesgos:** no hay pago ni costo. No prevemos riesgos más allá del tiempo que dedica a la entrevista. Si lo desea, le enviamos un resumen de los resultados.
-- **Contacto:** [nombre del autor de contacto] — [correo o teléfono de contacto]. Directores del trabajo: Prof. Alberto Cortez y Ariel Enferrel (UTN).
+- **Contacto:** Emiliano Rojo — rojoemiliano515@gmail.com; Tiago Cunto Boberg — tiagoboberg@gmail.com. Directores del trabajo: Prof. Alberto Cortez y Ariel Enferrel (UTN).
 
 Si está de acuerdo, por favor responda este mensaje o escriba, con sus palabras o copiando el texto:
 

@@ -16,7 +16,7 @@ Este estudio forma parte del trabajo final de Tiago Cunto Boberg y Emiliano Rojo
 - **Qué se publica:** los resultados anonimizados (tareas, tiempos, observaciones sin nombres y respuestas del cuestionario) se publican en el repositorio público de la tesis (GitHub) y pueden citarse en la tesis.
 - **Grabación de pantalla (opcional):** si usted acepta, se graba **solo la pantalla**, sin cámara, para verificar los tiempos. La grabación no se publica y se borra al aprobarse la tesis.
 - **Beneficios y riesgos:** no hay pago ni costo. No prevemos riesgos más allá del tiempo dedicado.
-- **Contacto:** [nombre del autor de contacto] — [correo o teléfono de contacto]. Directores: Prof. Alberto Cortez y Ariel Enferrel (UTN).
+- **Contacto:** Emiliano Rojo — rojoemiliano515@gmail.com; Tiago Cunto Boberg — tiagoboberg@gmail.com. Directores: Prof. Alberto Cortez y Ariel Enferrel (UTN).
 
 Si está de acuerdo, escriba o responda:
 
