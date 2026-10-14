@@ -37,6 +37,22 @@ Los tres lotes pasan todos los controles: 01 (9/9), 02 (5/5), 03 (9/9), 05 (12/1
 el lote de repetición `results/2026-10-08-wf04/` (3 corridas, todas aprobadas). Hallazgos que el oráculo
 deja a la vista sin invalidar la corrida: ver "Hallazgos" al final.
 
+## Exports del 14/10/2026: receptores, remitos PDF y paleta 01 → 04
+
+Los workflows 01, 04, 06b y 07 cambiaron (ver `docs/architecture/n8n.md`, sección "Receivers, palette and activation").
+Los oráculos de esos cuatro **eligen el criterio según los nodos presentes en el log**: un log con los nodos nuevos
+(`Preparar Paleta`, `Aplicar Paleta`, `Validar carrito`, `Armar Remito`) se juzga con los controles nuevos; un log
+de los lotes anteriores (08/10 y prerregistro del 14/10) sigue juzgándose con los controles anteriores, de modo que
+los lotes ya citados conservan su veredicto. El lote de los exports nuevos es `results/2026-10-14-receivers/`
+(3 corridas de 01, 04, 06b y 07; `ONLY="01 04 06b 07" BATCH=2026-10-14-receivers bash run-all.sh`). Resultado:
+01 (11/11), 04 (9/9), 06b (8/8), 07 (9/9) en las 3 corridas. Las corridas son por Manual Trigger; los webhooks se
+verificaron aparte con una solicitud real cada uno (HTTP 202 / 200, ejecución `success`), sin oráculo de log porque
+`n8n execute` no los dispara.
+
+Para leer el PDF y el archivo de paleta, el lector de logs conserva los metadatos binarios (nombre, tipo MIME, bytes)
+en `__binary`. El contenido del PDF no está en el log (n8n lo guarda en disco, `filesystem-v2`): se verifican nombre,
+tipo `application/pdf` y tamaño; que los bytes sean un PDF se comprobó a mano (`%PDF-`, 38,9 kB).
+
 ## 01 Automated Branding
 
 Entrada: el HTML renderizado por Puppeteer (`Fetch HTML`). Salida: paleta, correo.
@@ -48,6 +64,10 @@ como `rgb()` equivalente); la paleta son los colores **más frecuentes** del HTM
 sin negro ni blanco; `primary`/`secondary` coinciden con las dos primeras posiciones; el correo muestra todos
 los colores y la URL analizada, y esa URL es la del nodo disparador; si se detectó fondo, aparece en el HTML;
 el correo fue entregado (Gmail con etiqueta `SENT`).
+
+Desde el 14/10 se agregan dos controles (si el log trae `Preparar Paleta`): **`palette_saved_for_04`** — lo que 01
+guarda para 04 (`brand_palette.json`, JSON) tiene la misma paleta y URL que la extraída, con fecha de extracción
+válida — y **`palette_file_written`** — el nodo de escritura corrió una vez y sin error.
 
 No verifica: el HTML capturado incluye solo estilos incrustados o inline; los colores de hojas de estilo
 externas no están en la ejecución. No verifica que los colores representen la marca percibida por una
@@ -93,9 +113,15 @@ incrustados (10 en Instagram, 5 en WhatsApp); URL de imagen igual a la de la fil
 imagen determinista `picsum.photos/seed/<producto>`; la fila escrita a la hoja coincide campo a campo con las
 publicaciones generadas.
 
-No verifica: la paleta de colores. En el export actual ningún nodo del workflow 04 recibe los colores del
-workflow 01, de modo que la dependencia descrita en el diseño no está implementada y no es verificable.
-Tampoco cubre el modo formulario (el oráculo está definido solo para modo Sheet) ni la calidad editorial de
+Desde el 14/10 (log con `Aplicar Paleta de Marca`) se agregan: **`palette_read_from_01`** — la paleta de cada fila
+viene del archivo que dejó 01 (`palette_source = workflow-01`, 1 a 5 colores hex válidos; la paleta por defecto
+**falla** el control); **`posts_use_palette`** — los tres posts y el `imagen_prompt` contienen todos los colores
+de la paleta y `Formatear Posts` conserva la misma paleta que `Aplicar Paleta`; y, cuando el lote tiene un log de 01,
+**`palette_matches_01_output`** — la paleta usada por 04 es la que extrajo la última corrida de 01 del lote (01
+corre antes que 04 en `run-all.sh`). Las corridas 04-1..3 leen todas el archivo de 01-3.
+
+No verifica: en los logs anteriores al 14/10 la paleta (ningún nodo de 04 la recibía). Tampoco cubre el receptor
+`social-content` (validación 400 y mapeo del payload: `n8n/tests/wf01-04-palette.test.mjs`), que `n8n execute` no dispara. Tampoco cubre el modo formulario (el oráculo está definido solo para modo Sheet) ni la calidad editorial de
 los textos. Requiere que la hoja tenga al menos una fila y que la credencial de Google Sheets sea válida.
 
 ## 05 Monthly Activity Report
@@ -128,7 +154,19 @@ Gmail; el destinatario es fijo, `bandeja.demo@example.com`).
 
 ## 06b Carrito Abandonado
 
-Entrada: publicaciones de `jsonplaceholder /posts` (100), de las que el workflow deriva 8 clientes.
+**Desde el 14/10 (log con `Validar carrito`).** Entrada: el payload que envía el frontend
+(`{ items, sessionId, timestamp }`): el cuerpo del webhook `abandoned-cart` si el log lo trae o, en la corrida manual,
+el payload que el nodo `Simular payload del frontend` arma a partir de los 8 carritos simulados. Controles: payloads
+presentes; el payload simulado sigue a su carrito; todos pasan `Validar carrito` y **un payload inválido no produce
+correo**; **la lista del correo (producto, presentación, cantidad) es exactamente la de `items` del payload**
+(comparada con el payload, no con un catálogo); la oferta es 10 % (`descuento_pct = 10`, "10% OFF"), el total de
+unidades coincide con la suma del payload y **el correo no inventa importes** (el carrito del sitio no tiene
+precios); el saludo usa el contacto si existe; el envío coincide con `Limitar a 1 (TESIS)`. No verifica: que el
+correo llegue a un cliente real (el carrito es anónimo: va a la bandeja de demostración), el temporizador de 2 horas
+(corre en el navegador) ni la respuesta HTTP del webhook (verificada a mano: 202). Los controles de abajo describen
+el criterio de los logs anteriores.
+
+Entrada (criterio anterior): publicaciones de `jsonplaceholder /posts` (100), de las que el workflow deriva 8 clientes.
 
 Controles: clientes derivados de las primeras `min(8, n)` publicaciones (id, correo, nombre); productos de
 cada carrito dentro del catálogo de cinco y sin repetidos; carrito y total según la regla de generación;
@@ -143,6 +181,20 @@ deshabilitadas).
 
 ## 07 Logistics & Shipping Automation
 
+**Desde el 14/10 (log con `Armar Remito HTML`).** Entrada: las órdenes confirmadas (`GET /api/orders?estado=confirmado`,
+hasta 3) o, si el log trae el webhook, las órdenes validadas del payload `order-confirmed`. Controles: resumen de
+despacho presente y sin `null`; órdenes recibidas y `CONFIRMADO`; **`items_complete_per_order`** — cada orden
+tiene ítems, sin error del pedido a `/items`, y la suma de unidades de los ítems **iguala el `total` que informa
+el backend**; **`remito_has_order_data`** — el HTML de cada remito contiene el id de la orden, el cliente, la
+localidad (o "Sin informar"), cada producto y presentación, el total de unidades y la marca "Documento no válido
+como factura — demo académica"; **`one_pdf_per_order`** — por cada orden hay un binario `application/pdf` llamado
+`remito-<id>.pdf` de más de 5 kB; **`summary_attaches_every_pdf`** — el correo de resumen lleva un adjunto por
+orden (`remito_1..n`), `adjuntos` los enumera y el resumen nombra cada archivo; el resumen lista cada orden;
+entrega con etiqueta `SENT`. No verifica: el contenido visual del PDF ni que Gmail lo adjunte (el log de Gmail no
+lista adjuntos; el nodo recibe `adjuntos` y los binarios), ni las etiquetas ni el transportista (PRODUCCIÓN).
+
+Criterio anterior (logs sin remito):
+
 Se conservan los criterios previos (resumen de despacho presente, sin `null`, pedidos confirmados leídos).
 Se agregó: todos los pedidos leídos están `CONFIRMADO`; el resumen incluye de cada pedido (hasta 3, límite
 demo) el identificador, cliente, localidad y unidades (`total`), y su total coincide con la cantidad de
@@ -150,6 +202,15 @@ pedidos listados; entrega con etiqueta `SENT`.
 
 No verifica: etiquetas PDF ni WhatsApp (ramas PRODUCCIÓN deshabilitadas). Una base de datos sin pedidos
 confirmados hace fallar el oráculo, de modo que el lote requiere al menos uno.
+
+## Deduplicación por `Idempotency-Key` (00 y 07)
+
+El backend entrega sus webhooks con el patrón outbox (al menos una vez) y envía `Idempotency-Key`. 00 y 07 descartan
+claves repetidas con un conjunto acotado (500) en el static data del workflow. No tiene oráculo de log, porque
+`n8n execute` no pasa por el webhook ni persiste static data: se verifica con
+`n8n/tests/wf-idempotency.test.mjs` (primera entrega pasa, repetición se marca, claves distintas no colisionan, sin
+cabecera se procesa, el conjunto se acota y olvida la más vieja, el duplicado recibe 200 y no llega a los nodos de
+proceso). Límite: solo persiste con el workflow activo.
 
 ## Hallazgos que el oráculo deja a la vista (no son fallas del oráculo)
 

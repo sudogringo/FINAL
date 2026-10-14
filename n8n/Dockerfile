@@ -36,4 +36,6 @@ RUN chown -R node:node /n8n-custom
 
 USER node
 WORKDIR /home/node
+# Shared file area: workflow 01 writes brand_palette.json here and workflow 04 reads it.
+RUN mkdir -p /home/node/.n8n-files
 ENTRYPOINT ["n8n"]

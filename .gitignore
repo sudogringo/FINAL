@@ -27,3 +27,5 @@ n8n/data/config
 n8n/data/*.log
 n8n/data/crash.journal
 n8n/data/nodes/node_modules/
+n8n/data/storage/
+n8n/data/nodes/package-lock.json

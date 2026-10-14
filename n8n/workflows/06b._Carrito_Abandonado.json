@@ -9,13 +9,13 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## \ud83d\udfe2 MODO TESIS \u2014 Carrito Abandonado\nFlujo activo para la demo universitaria:\n1. **Manual Trigger** o **Webhook de prueba** \u2014 dos formas de activar el flujo\n2. **HTTP Request** \u2192 `jsonplaceholder.typicode.com/posts` (datos simulados, sin credenciales)\n3. **Code** \u2014 Agrupa por cliente y lista los productos abandonados\n4. **Code** \u2014 Genera el HTML con la oferta del 10 % de descuento\n5. **Limit** \u2014 acota el env\u00edo a un destinatario\n6. **Gmail** \u2014 env\u00eda el correo a la bandeja de demostraci\u00f3n\n\nSolo requiere la credencial de Gmail de la demo.",
+        "content": "## 🟢 MODO TESIS — Carrito Abandonado\nFlujo activo para la demo universitaria. Dos formas de entrar, un solo camino de validación y correo:\n1. **Webhook `abandoned-cart`** (producción, lo llama el frontend a las 2 h de inactividad del carrito) — recibe `{ items, sessionId, timestamp }`\n2. **Manual Trigger** / **Webhook de prueba** — carritos simulados (`jsonplaceholder`), convertidos al mismo payload\n3. **Code** — `Validar carrito`: rechaza (HTTP 400) lo que no cumpla el contrato; no llega a Gmail\n4. **Code** — arma el correo con los productos REALES del payload (el carrito no tiene precios: oferta del 10 % sin importes)\n5. **Limit** — acota el envío a un destinatario · **Gmail** — bandeja de demostración\n\nEl carrito anónimo no trae e-mail: en TESIS el correo va a la bandeja de demo; el contacto es opcional en el payload.\nSolo requiere la credencial de Gmail de la demo.",
         "height": 690,
-        "width": 1936,
+        "width": 3300,
         "color": 3
       },
       "id": "sticky-tesis-header",
-      "name": "\ud83d\udfe2 MODO TESIS",
+      "name": "🟢 MODO TESIS",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -25,12 +25,12 @@
     },
     {
       "parameters": {
-        "content": "## \ud83d\udd34 MODO PRODUCCI\u00d3N \u2014 Carrito Abandonado\nNodos deshabilitados para la demo. En producci\u00f3n, habilitar:\n- **Webhook** \u2014 recibe evento de carrito abandonado desde e-commerce\n- **Wait 2h** \u2014 espera 2 horas antes de enviar\n- **HTTP CRM** \u2014 verifica si el usuario ya compr\u00f3\n- **AI Agent (Gemini)** \u2014 genera copy persuasivo personalizado con IA\n- **SendGrid** \u2014 env\u00edo real del email con descuento\n- **HTTP CRM** \u2014 registra el seguimiento en el CRM\n\nCredenciales necesarias: SendGrid API Key, CRM API Key, webhook secret del e-commerce.",
+        "content": "## 🔴 MODO PRODUCCIÓN — Carrito Abandonado\nNodos deshabilitados para la demo. En producción, habilitar:\n- **Webhook** — recibe evento de carrito abandonado desde e-commerce\n- **Wait 2h** — espera 2 horas antes de enviar\n- **HTTP CRM** — verifica si el usuario ya compró\n- **AI Agent (Gemini)** — genera copy persuasivo personalizado con IA\n- **SendGrid** — envío real del email con descuento\n- **HTTP CRM** — registra el seguimiento en el CRM\n\nCredenciales necesarias: SendGrid API Key, CRM API Key, webhook secret del e-commerce.",
         "height": 690,
         "width": 1936
       },
       "id": "sticky-prod-header",
-      "name": "\ud83d\udd34 MODO PRODUCCI\u00d3N",
+      "name": "🔴 MODO PRODUCCIÓN",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -82,7 +82,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1104,
+        2336,
         368
       ]
     },
@@ -98,7 +98,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1424,
+        2976,
         368
       ]
     },
@@ -207,11 +207,11 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "test-carrito-abandonado",
-        "responseMode": "lastNode",
+        "responseMode": "responseNode",
         "options": {}
       },
       "id": "webhook-test",
-      "name": "Webhook \u2014 Prueba Carrito",
+      "name": "Webhook — Prueba Carrito",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
@@ -236,7 +236,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const productos = ['Doble Concentrado de Tomate', 'Tomate Entero Pelado', 'Mitades de Durazno en Alm\u00edbar', 'Salsa Cl\u00e1sica', 'Trozos de Durazno en Alm\u00edbar'];\nconst clientes = items.slice(0, 8).map((item, i) => {\n  const numP = (i % 3) + 1;\n  const prods = productos.slice(i % productos.length, (i % productos.length) + numP);\n  return { json: { cliente_id: item.json.id, email: `cliente${item.json.id}@ejemplo.com`, nombre: `Cliente ${item.json.id}`, productos_carrito: prods, total_carrito: Math.round(prods.length * 1850 * (1 + i * 0.1)), tiempo_abandono: `${(i%4)+1}h`, ciudad: ['Mendoza','Buenos Aires','C\u00f3rdoba','Rosario'][i%4] } };\n});\nreturn clientes;"
+        "jsCode": "const productos = ['Doble Concentrado de Tomate', 'Tomate Entero Pelado', 'Mitades de Durazno en Almíbar', 'Salsa Clásica', 'Trozos de Durazno en Almíbar'];\nconst clientes = items.slice(0, 8).map((item, i) => {\n  const numP = (i % 3) + 1;\n  const prods = productos.slice(i % productos.length, (i % productos.length) + numP);\n  return { json: { cliente_id: item.json.id, email: `cliente${item.json.id}@ejemplo.com`, nombre: `Cliente ${item.json.id}`, productos_carrito: prods, total_carrito: Math.round(prods.length * 1850 * (1 + i * 0.1)), tiempo_abandono: `${(i%4)+1}h`, ciudad: ['Mendoza','Buenos Aires','Córdoba','Rosario'][i%4] } };\n});\nreturn clientes;"
       },
       "id": "agrupar",
       "name": "Agrupar por cliente",
@@ -250,15 +250,15 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const { nombre, email, productos_carrito, total_carrito, tiempo_abandono, ciudad } = $input.item.json;\nconst descuento = Math.round(total_carrito * 0.10);\nconst total_final = total_carrito - descuento;\nconst lista = productos_carrito.map(p => `<li style=\"padding:4px 0;\">\ud83e\udd6b ${p}</li>`).join('');\nconst html = `<!DOCTYPE html><html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\"><div style=\"background:#1a472a;padding:20px;text-align:center;\"><h1 style=\"color:#fff;margin:0;\">\ud83c\udf3e Golden Harvest S.A.</h1><p style=\"color:#a8d5a2;margin:5px 0;\">\u00a1Tu carrito te est\u00e1 esperando!</p></div><div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\"><h2 style=\"color:#1a472a;\">Hola ${nombre},</h2><p>Dejaste estos productos en tu carrito hace <strong>${tiempo_abandono}</strong>:</p><ul style=\"background:#f9f6f0;padding:20px;border-radius:8px;\">${lista}</ul><div style=\"background:#fff3cd;border:2px solid #c8a951;padding:20px;border-radius:8px;text-align:center;margin:20px 0;\"><h3 style=\"color:#8b6914;margin-top:0;\">\ud83c\udf81 OFERTA EXCLUSIVA \u2014 10% OFF</h3><p style=\"text-decoration:line-through;color:#999;\">Total original: $${total_carrito}</p><p style=\"font-size:24px;font-weight:bold;color:#1a472a;\">Con descuento: $${total_final}</p><a href=\"#\" style=\"background:#c8a951;color:#fff;padding:15px 30px;text-decoration:none;border-radius:4px;display:inline-block;font-weight:bold;margin-top:10px;\">\u00a1Completar compra! \u2192</a></div></div></body></html>`;\nreturn { json: { email, nombre, productos_carrito, total_carrito, descuento, total_final, html, generado_en: new Date().toISOString() } };"
+        "jsCode": "// Arma el correo con los productos REALES del carrito (payload validado). El carrito del\n// sitio no tiene precios, por eso la oferta se expresa como porcentaje, sin importes.\nconst { items, sessionId, nombre, email } = $input.item.json;\nconst esc = (v) => String(v ?? '').replace(/[&<>\"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' })[ch]);\nconst LINE = { roja: 'Línea Roja', dorada: 'Línea Dorada' };\nconst unidades = items.reduce((s, i) => s + i.qty, 0);\nconst lista = items.map((i) =>\n  `<li style=\"padding:4px 0;\">🥫 <strong>${esc(i.name)}</strong> — ${esc(LINE[i.line] ?? i.line)}${i.line ? ', ' : ''}${esc(i.size)} × ${i.qty}</li>`\n).join('');\nconst saludo = nombre ? `Hola ${esc(nombre)},` : 'Hola,';\nconst html = `<!DOCTYPE html><html><body style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;\"><div style=\"background:#1a472a;padding:20px;text-align:center;\"><h1 style=\"color:#fff;margin:0;\">🌾 Golden Harvest S.A.</h1><p style=\"color:#a8d5a2;margin:5px 0;\">¡Tu carrito te está esperando!</p></div><div style=\"padding:30px;background:#fff;border:1px solid #e0e0e0;\"><h2 style=\"color:#1a472a;\">${saludo}</h2><p>Dejaste estos productos en tu carrito hace más de <strong>2 horas</strong>:</p><ul style=\"background:#f9f6f0;padding:20px;border-radius:8px;\">${lista}</ul><p><strong>Total: ${unidades} unidades</strong></p><div style=\"background:#fff3cd;border:2px solid #c8a951;padding:20px;border-radius:8px;text-align:center;margin:20px 0;\"><h3 style=\"color:#8b6914;margin-top:0;\">🎁 OFERTA EXCLUSIVA — 10% OFF</h3><p style=\"font-size:18px;color:#1a472a;\">Pedinos la cotización de este carrito y te aplicamos 10% de descuento.</p><a href=\"#\" style=\"background:#c8a951;color:#fff;padding:15px 30px;text-decoration:none;border-radius:4px;display:inline-block;font-weight:bold;margin-top:10px;\">¡Completar cotización! →</a></div></div></body></html>`;\nconst asunto = '[Golden Harvest] 🛒 Carrito abandonado — 10% OFF' + (nombre ? ' — ' + nombre : '');\nreturn { json: { email, nombre, items, sessionId, unidades, descuento_pct: 10, asunto, html, generado_en: new Date().toISOString() } };"
       },
       "id": "generar-email",
       "name": "Generar Email Descuento",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1120,
-        496
+        2352,
+        400
       ]
     },
     {
@@ -269,7 +269,7 @@
         "options": {}
       },
       "id": "prod-webhook",
-      "name": "[PROD] Webhook \u2014 Carrito Abandonado",
+      "name": "[PROD] Webhook — Carrito Abandonado",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
@@ -301,7 +301,7 @@
         "options": {}
       },
       "id": "prod-crm-check",
-      "name": "[PROD] CRM \u2014 Verificar si ya compr\u00f3",
+      "name": "[PROD] CRM — Verificar si ya compró",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
@@ -361,7 +361,7 @@
         "options": {}
       },
       "id": "prod-sendgrid",
-      "name": "[PROD] SendGrid \u2014 Enviar Email Descuento",
+      "name": "[PROD] SendGrid — Enviar Email Descuento",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
@@ -377,7 +377,7 @@
         "options": {}
       },
       "id": "prod-crm-log",
-      "name": "[PROD] CRM \u2014 Registrar Seguimiento",
+      "name": "[PROD] CRM — Registrar Seguimiento",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
@@ -393,24 +393,24 @@
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
       "position": [
-        1440,
-        496
+        2672,
+        400
       ]
     },
     {
       "parameters": {
         "sendTo": "bandeja.demo@example.com",
-        "subject": "={{ '[Golden Harvest] \ud83d\uded2 Carrito abandonado \u2014 10% OFF \u2014 ' + $json.nombre }}",
+        "subject": "={{ $json.asunto }}",
         "message": "={{ $json.html }}",
         "options": {}
       },
       "id": "gmail-tesis",
-      "name": "Gmail \u2014 Enviar Descuento (TESIS)",
+      "name": "Gmail — Enviar Descuento (TESIS)",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1728,
-        496
+        2992,
+        400
       ],
       "webhookId": "587b1543-8508-4dcf-bb74-32d02921a05a",
       "credentials": {
@@ -419,6 +419,119 @@
           "name": "Gmail account"
         }
       }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "abandoned-cart",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-abandoned-cart",
+      "name": "Webhook — Carrito Abandonado (TESIS)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        16,
+        752
+      ],
+      "webhookId": "da98e7dc-05f1-4fb4-acb8-7a6126bbec82"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Camino manual: convierte el carrito simulado en el mismo payload que envía el frontend,\n// para que pase por el mismo validador y el mismo armado de correo que el camino real.\nconst c = $input.item.json;\nconst SIZES = ['400 g', '800 g', '3 kg'];\nconst slug = (s) => s.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');\nconst items = c.productos_carrito.map((name, k) => ({\n  id: 'sim-' + slug(name),\n  name,\n  line: /durazno/i.test(name) ? 'dorada' : 'roja',\n  size: SIZES[(c.cliente_id + k) % SIZES.length],\n  qty: 1 + ((c.cliente_id + k) % 3),\n  stockForSize: 100,\n}));\nreturn { json: { body: {\n  items,\n  sessionId: 'sim-session-' + c.cliente_id,\n  timestamp: new Date().toISOString(),\n  contact: { nombre: c.nombre, email: c.email },\n} } };"
+      },
+      "id": "simular-payload",
+      "name": "Simular payload del frontend",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Contrato del frontend (frontend/src/features/cart/CartContext.tsx):\n// { items: CartItem[], sessionId: string | null, timestamp: ISO }. Contacto opcional.\nconst b = $input.item.json.body;\nconst bad = (error) => ({ json: { valid: false, error } });\nif (!b || typeof b !== 'object' || Array.isArray(b)) return bad('body: se esperaba un objeto JSON');\nif (!Array.isArray(b.items) || b.items.length === 0) return bad('items: se esperaba un arreglo con al menos un producto');\nif (b.items.length > 50) return bad('items: demasiados productos (máximo 50)');\nconst str = (v) => typeof v === 'string' && v.trim() !== '';\nconst items = [];\nfor (let i = 0; i < b.items.length; i++) {\n  const it = b.items[i];\n  if (!it || typeof it !== 'object') return bad(`items[${i}]: no es un objeto`);\n  if (!str(it.id)) return bad(`items[${i}].id: texto requerido`);\n  if (!str(it.name)) return bad(`items[${i}].name: texto requerido`);\n  if (!str(it.size)) return bad(`items[${i}].size: texto requerido`);\n  if (!Number.isInteger(it.qty) || it.qty < 1) return bad(`items[${i}].qty: entero >= 1 requerido`);\n  items.push({ id: it.id, name: it.name, line: typeof it.line === 'string' ? it.line : '', size: it.size, qty: it.qty });\n}\nif (b.sessionId != null && typeof b.sessionId !== 'string') return bad('sessionId: texto o null');\nif (b.timestamp != null && (typeof b.timestamp !== 'string' || Number.isNaN(Date.parse(b.timestamp)))) return bad('timestamp: fecha ISO inválida');\nconst c = b.contact && typeof b.contact === 'object' ? b.contact : {};\nreturn { json: {\n  valid: true,\n  items,\n  sessionId: b.sessionId ?? null,\n  timestamp: b.timestamp ?? new Date().toISOString(),\n  nombre: typeof c.nombre === 'string' ? c.nombre : '',\n  email: typeof c.email === 'string' ? c.email : '',\n} };"
+      },
+      "id": "validar-carrito",
+      "name": "Validar carrito",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ca38a0ad-9f1b-4ec7-840b-912b734f273c",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-valido",
+      "name": "¿Payload válido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1744,
+        496
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, items: $json.items.length, unidades: $json.items.reduce((s, i) => s + i.qty, 0) } }}",
+        "options": {
+          "responseCode": 202
+        }
+      },
+      "id": "respond-202",
+      "name": "Responder 202 (carrito recibido)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2048,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: $json.error } }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "respond-400",
+      "name": "Responder 400 (payload inválido)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2048,
+        640
+      ]
     }
   ],
   "connections": {
@@ -433,7 +546,7 @@
         ]
       ]
     },
-    "Webhook \u2014 Prueba Carrito": {
+    "Webhook — Prueba Carrito": {
       "main": [
         [
           {
@@ -455,7 +568,7 @@
         ]
       ]
     },
-    "[PROD] Webhook \u2014 Carrito Abandonado": {
+    "[PROD] Webhook — Carrito Abandonado": {
       "main": [
         [
           {
@@ -470,14 +583,14 @@
       "main": [
         [
           {
-            "node": "[PROD] CRM \u2014 Verificar si ya compr\u00f3",
+            "node": "[PROD] CRM — Verificar si ya compró",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "[PROD] CRM \u2014 Verificar si ya compr\u00f3": {
+    "[PROD] CRM — Verificar si ya compró": {
       "main": [
         [
           {
@@ -492,18 +605,18 @@
       "main": [
         [
           {
-            "node": "[PROD] SendGrid \u2014 Enviar Email Descuento",
+            "node": "[PROD] SendGrid — Enviar Email Descuento",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "[PROD] SendGrid \u2014 Enviar Email Descuento": {
+    "[PROD] SendGrid — Enviar Email Descuento": {
       "main": [
         [
           {
-            "node": "[PROD] CRM \u2014 Registrar Seguimiento",
+            "node": "[PROD] CRM — Registrar Seguimiento",
             "type": "main",
             "index": 0
           }
@@ -536,7 +649,7 @@
       "main": [
         [
           {
-            "node": "Generar Email Descuento",
+            "node": "Simular payload del frontend",
             "type": "main",
             "index": 0
           }
@@ -558,7 +671,69 @@
       "main": [
         [
           {
-            "node": "Gmail \u2014 Enviar Descuento (TESIS)",
+            "node": "Gmail — Enviar Descuento (TESIS)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simular payload del frontend": {
+      "main": [
+        [
+          {
+            "node": "Validar carrito",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook — Carrito Abandonado (TESIS)": {
+      "main": [
+        [
+          {
+            "node": "Validar carrito",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar carrito": {
+      "main": [
+        [
+          {
+            "node": "¿Payload válido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Payload válido?": {
+      "main": [
+        [
+          {
+            "node": "Responder 202 (carrito recibido)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder 400 (payload inválido)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Responder 202 (carrito recibido)": {
+      "main": [
+        [
+          {
+            "node": "Generar Email Descuento",
             "type": "main",
             "index": 0
           }

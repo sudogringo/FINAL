@@ -9,12 +9,12 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## \ud83d\udd34 MODO PRODUCCI\u00d3N\nNodos deshabilitados que requieren credenciales reales:\n- **Webhook** `/order-confirmed` (trigger de producci\u00f3n)\n- **PDFMonkey** (generaci\u00f3n de PDF profesional)\n- **API Carrier** (notificaci\u00f3n al transportista)\n\nHabilitar estos nodos y configurar credenciales antes de pasar a producci\u00f3n.",
+        "content": "## 🔴 MODO PRODUCCIÓN\nNodos deshabilitados que requieren credenciales reales:\n- **Webhook** `/order-confirmed-prod` (trigger de producción)\n- **PDFMonkey** (PDF profesional con plantilla de remito y etiquetas; en TESIS el remito se genera con Puppeteer)\n- **API Carrier** (notificación al transportista)\n\nHabilitar estos nodos y configurar credenciales antes de pasar a producción.",
         "height": 500,
         "width": 1560
       },
       "id": "sticky-prod",
-      "name": "\ud83d\udd34 MODO PRODUCCI\u00d3N",
+      "name": "🔴 MODO PRODUCCIÓN",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -24,13 +24,13 @@
     },
     {
       "parameters": {
-        "content": "## \ud83d\udfe2 MODO TESIS\nFlujo de demostraci\u00f3n contra el backend Express del proyecto.\n- Trigger manual \u2192 obtiene \u00f3rdenes confirmadas\n- Limita a 3 \u00f3rdenes para la demo\n- Genera un resumen de despacho en HTML (hasta 3 \u00f3rdenes)\n- Lo env\u00eda por Gmail a la casilla de demostraci\u00f3n",
+        "content": "## 🟢 MODO TESIS\nFlujo de demostración contra el backend Express del proyecto. Dos entradas, un mismo camino:\n- **Webhook `order-confirmed`** (producción): lo dispara el backend al confirmar una orden (`N8N_LOGISTICS_WEBHOOK`, header `Idempotency-Key` → se descartan reentregas). Payload `{ orderId, quoteId, contact, items }`; se valida (400 si no cumple).\n- **Manual Trigger** → órdenes confirmadas (`GET /api/orders?estado=confirmado`), limitadas a 3, con sus ítems (`GET /api/orders/:id/items`).\n- Se arma el **remito** de cada orden (HTML: id de orden, fecha, cliente, localidad, ítems/unidades, marca «Documento no válido como factura — demo académica»), el nodo **Puppeteer** lo convierte en **PDF** y se nombra `remito-<orden>.pdf`.\n- Un resumen de despacho en HTML + los PDF adjuntos se envía por Gmail a la casilla de demostración.",
         "height": 500,
-        "width": 1564,
+        "width": 2500,
         "color": 3
       },
       "id": "sticky-thesis",
-      "name": "\ud83d\udfe2 MODO TESIS",
+      "name": "🟢 MODO TESIS",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -41,12 +41,12 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "order-confirmed",
+        "path": "order-confirmed-prod",
         "responseMode": "responseNode",
         "options": {}
       },
       "id": "node-webhook-prod",
-      "name": "Webhook Producci\u00f3n",
+      "name": "Webhook Producción",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
@@ -78,7 +78,7 @@
         "options": {}
       },
       "id": "node-pdfmonkey",
-      "name": "PDFMonkey (Producci\u00f3n)",
+      "name": "PDFMonkey (Producción)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
@@ -100,7 +100,7 @@
         "options": {}
       },
       "id": "node-carrier",
-      "name": "API Carrier (Producci\u00f3n)",
+      "name": "API Carrier (Producción)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
@@ -144,7 +144,7 @@
         }
       },
       "id": "node-get-orders",
-      "name": "Obtener \u00d3rdenes Confirmadas",
+      "name": "Obtener Órdenes Confirmadas",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
@@ -157,7 +157,7 @@
         "jsCode": "const all = $input.all();\nconst limited = all.slice(0, 3);\nreturn limited;"
       },
       "id": "node-limit",
-      "name": "Limitar a 3 \u00d3rdenes (Demo)",
+      "name": "Limitar a 3 Órdenes (Demo)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
@@ -168,16 +168,24 @@
     {
       "parameters": {
         "sendTo": "bandeja.demo@example.com",
-        "subject": "=[Golden Harvest] Resumen de despacho \u2014 {{ $json.fecha }}",
+        "subject": "=[Golden Harvest] Resumen de despacho — {{ $json.fecha }}",
         "message": "={{ $json.summary_html }}",
-        "options": {}
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {
+                "property": "={{ $json.adjuntos }}"
+              }
+            ]
+          }
+        }
       },
       "id": "node-gmail-tesis",
-      "name": "Gmail \u2014 Enviar Resumen de Despacho (TESIS)",
+      "name": "Gmail — Enviar Resumen de Despacho (TESIS)",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1872,
+        3008,
         32
       ],
       "webhookId": "bb9ca6a5-57a1-4115-9ebb-1c5adf7037dd",
@@ -191,12 +199,12 @@
     {
       "parameters": {
         "sendTo": "logistica@goldenharvest.com.ar",
-        "subject": "=Env\u00edo confirmado \u2014 Orden #{{ $json.order_id }}",
-        "message": "=<p>Se gener\u00f3 el remito y se notific\u00f3 al carrier para la orden <strong>#{{ $json.order_id }}</strong>.</p><p>Fecha: {{ new Date().toLocaleDateString('es-AR') }}</p>",
+        "subject": "=Envío confirmado — Orden #{{ $json.order_id }}",
+        "message": "=<p>Se generó el remito y se notificó al carrier para la orden <strong>#{{ $json.order_id }}</strong>.</p><p>Fecha: {{ new Date().toLocaleDateString('es-AR') }}</p>",
         "options": {}
       },
       "id": "node-gmail-prod",
-      "name": "Gmail \u2014 Confirmaci\u00f3n de Env\u00edo (PROD)",
+      "name": "Gmail — Confirmación de Envío (PROD)",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
@@ -208,14 +216,249 @@
     },
     {
       "parameters": {
-        "jsCode": "const orders = $input.all().map(i => i.json);\n// Datos del formulario p\u00fablico de cotizaci\u00f3n: se escapan antes de insertarlos en HTML.\nconst esc = v => String(v ?? '').replace(/[&<>\"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' })[ch]);\nconst fecha = new Date().toLocaleDateString('es-AR', { day:'2-digit', month:'long', year:'numeric' });\n\nconst rows = orders.map(o =>\n  `<tr>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">#${esc(o.id)}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">${esc(o.customer_nombre)}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">${o.localidad ? esc(o.localidad) : 'Sin informar'}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;\">${o.total?.toLocaleString('es-AR')} u.</td>\n  </tr>`\n).join('');\n\nconst summary_html = `\n<div style=\"font-family:sans-serif;max-width:680px;margin:0 auto;padding:24px;\">\n  <h2 style=\"color:#166534;\">Golden Harvest S.A. \u2014 Resumen de despacho</h2>\n  <p style=\"color:#6b7280;\">Fecha: ${fecha}</p>\n  <p>Se procesaron <strong>${orders.length}</strong> orden(es) confirmada(s):</p>\n  <table style=\"width:100%;border-collapse:collapse;font-size:14px;\">\n    <thead><tr style=\"background:#f3f4f6;\">\n      <th style=\"padding:8px 12px;text-align:left;\">Orden</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Cliente</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Localidad</th>\n      <th style=\"padding:8px 12px;text-align:right;\">Unidades</th>\n    </tr></thead>\n    <tbody>${rows}</tbody>\n  </table>\n  <p style=\"margin-top:20px;font-size:12px;color:#9ca3af;\">Golden Harvest S.A. \u2014 Sistema Automatizado de Log\u00edstica</p>\n</div>`;\n\nreturn [{ json: { summary_html, total: orders.length, fecha: new Date().toISOString().slice(0,10) } }];"
+        "jsCode": "const all = $input.all();\nconst orders = all.map(i => i.json);\n// Datos del formulario público de cotización: se escapan antes de insertarlos en HTML.\nconst esc = v => String(v ?? '').replace(/[&<>\"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' })[ch]);\nconst fecha = new Date().toLocaleDateString('es-AR', { day:'2-digit', month:'long', year:'numeric' });\n\n// Un PDF de remito por orden: remito_1, remito_2, ... (el nodo Gmail los adjunta por nombre).\nconst binary = {};\nconst remitos = [];\nall.forEach((it) => {\n  const pdf = it.binary && it.binary.data;\n  if (!pdf) return;\n  binary['remito_' + (remitos.length + 1)] = pdf;\n  remitos.push({ order_id: it.json.id, archivo: pdf.fileName });\n});\n\nconst rows = orders.map(o =>\n  `<tr>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">#${esc(o.id)}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">${esc(o.customer_nombre)}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">${o.localidad ? esc(o.localidad) : 'Sin informar'}</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;\">${o.total?.toLocaleString('es-AR')} u.</td>\n  </tr>`\n).join('');\n\nconst adjuntos_html = remitos.length\n  ? `<p>Remitos adjuntos (PDF): ${remitos.map(r => `<code>${esc(r.archivo)}</code>`).join(', ')}</p>`\n  : '';\n\nconst summary_html = `\n<div style=\"font-family:sans-serif;max-width:680px;margin:0 auto;padding:24px;\">\n  <h2 style=\"color:#166534;\">Golden Harvest S.A. — Resumen de despacho</h2>\n  <p style=\"color:#6b7280;\">Fecha: ${fecha}</p>\n  <p>Se procesaron <strong>${orders.length}</strong> orden(es) confirmada(s):</p>\n  <table style=\"width:100%;border-collapse:collapse;font-size:14px;\">\n    <thead><tr style=\"background:#f3f4f6;\">\n      <th style=\"padding:8px 12px;text-align:left;\">Orden</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Cliente</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Localidad</th>\n      <th style=\"padding:8px 12px;text-align:right;\">Unidades</th>\n    </tr></thead>\n    <tbody>${rows}</tbody>\n  </table>\n  ${adjuntos_html}\n  <p style=\"margin-top:20px;font-size:12px;color:#9ca3af;\">Golden Harvest S.A. — Sistema Automatizado de Logística</p>\n</div>`;\n\nreturn [{\n  json: { summary_html, total: orders.length, fecha: new Date().toISOString().slice(0,10), remitos, adjuntos: Object.keys(binary).join(',') },\n  binary,\n}];"
       },
       "id": "node-procesar-todo",
       "name": "Generar Resumen de Despacho",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1584,
+        2800,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "order-confirmed",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-order-confirmed-tesis",
+      "name": "Webhook — Orden Confirmada (TESIS)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        944,
+        176
+      ],
+      "webhookId": "e7164859-1fa2-4e92-81cd-f3b06df444a2"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// El backend entrega sus webhooks con at-least-once (outbox): puede repetir el mismo evento.\n// Cada POST trae el header Idempotency-Key (p. ej. \"order:<id>:confirmed\"). Se recuerdan las\n// últimas 500 claves en el static data del workflow (solo persiste en ejecuciones de producción,\n// es decir con el workflow activo); una clave ya vista marca el ítem como duplicado.\nconst MAX_KEYS = 500;\nconst json = $input.item.json;\nconst headers = json.headers || {};\nconst key = headers['idempotency-key'] || headers['Idempotency-Key'] || null;\nif (!key) return { json: { ...json, idempotency_key: null, duplicate: false } };\nconst store = $getWorkflowStaticData('global');\nconst seen = Array.isArray(store.seenKeys) ? store.seenKeys : [];\nif (seen.includes(key)) return { json: { ...json, idempotency_key: key, duplicate: true } };\nseen.push(key);\nstore.seenKeys = seen.slice(-MAX_KEYS);\nreturn { json: { ...json, idempotency_key: key, duplicate: false } };"
+      },
+      "id": "dedup",
+      "name": "Deduplicar (Idempotency-Key)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1136,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0f875ace-d22f-4072-9b50-ba438e2dc7a8",
+              "leftValue": "={{ $json.duplicate }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-dup",
+      "name": "¿Duplicado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1344,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, duplicate: true, idempotencyKey: $json.idempotency_key } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "respond-dup",
+      "name": "Responder 200 (duplicado)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1552,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Contrato del backend (backend/src/routes/quotes.ts, evento order.confirmed, N8N_LOGISTICS_WEBHOOK):\n// { orderId, quoteId, contact: { nombre, empresa?, telefono?, email, notas?, localidad? },\n//   items: [{ id, name, line, size, qty }] }\nconst b = $input.item.json.body;\nconst bad = (error) => ({ json: { valid: false, error } });\nconst str = (v) => typeof v === 'string' && v.trim() !== '';\nif (!b || typeof b !== 'object' || Array.isArray(b)) return bad('body: se esperaba un objeto JSON');\nif (!str(b.orderId)) return bad('orderId: texto requerido');\nconst c = b.contact;\nif (!c || typeof c !== 'object') return bad('contact: objeto requerido');\nif (!str(c.nombre)) return bad('contact.nombre: texto requerido');\nif (!Array.isArray(b.items) || b.items.length === 0) return bad('items: se esperaba un arreglo con al menos un producto');\nif (b.items.length > 200) return bad('items: demasiados productos (máximo 200)');\nconst items = [];\nfor (let i = 0; i < b.items.length; i++) {\n  const it = b.items[i];\n  if (!it || typeof it !== 'object') return bad(`items[${i}]: no es un objeto`);\n  if (!str(it.name)) return bad(`items[${i}].name: texto requerido`);\n  if (!str(it.size)) return bad(`items[${i}].size: texto requerido`);\n  if (!Number.isInteger(it.qty) || it.qty < 1) return bad(`items[${i}].qty: entero >= 1 requerido`);\n  items.push({ name: it.name, size: it.size, qty: it.qty, line: typeof it.line === 'string' ? it.line : '' });\n}\nconst opt = (v) => (typeof v === 'string' && v.trim() !== '' ? v.trim() : null);\nreturn { json: {\n  valid: true,\n  id: b.orderId,\n  quote_id: opt(b.quoteId),\n  customer_nombre: c.nombre,\n  customer_empresa: opt(c.empresa),\n  customer_telefono: opt(c.telefono),\n  customer_email: opt(c.email),\n  localidad: opt(c.localidad),\n  total: items.reduce((s, i) => s + i.qty, 0),\n  items,\n  fecha_orden: new Date().toISOString(),\n  origen: 'webhook',\n} };"
+      },
+      "id": "validar-orden",
+      "name": "Validar orden (webhook)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "288dd7fa-e437-4c9e-9329-b116c366cef0",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-orden-valida",
+      "name": "¿Orden válida?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1760,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, orderId: $json.id, items: $json.items.length } }}",
+        "options": {
+          "responseCode": 202
+        }
+      },
+      "id": "respond-202",
+      "name": "Responder 202 (orden recibida)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1968,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false, error: $json.error } }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "respond-400",
+      "name": "Responder 400 (orden inválida)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1968,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Camino manual: GET /api/orders no trae los productos; se piden por orden a\n// GET /api/orders/:id/items (misma X-Service-Key) para poder armar el remito.\nconst BASE = 'http://backend:3001/api';\nconst out = [];\nfor (const { json: o } of $input.all()) {\n  let items = [];\n  let items_error;\n  try {\n    const res = await this.helpers.httpRequest({\n      method: 'GET',\n      url: `${BASE}/orders/${encodeURIComponent(o.id)}/items`,\n      headers: { 'X-Service-Key': $env.SERVICE_API_KEY },\n      json: true,\n    });\n    items = (Array.isArray(res) ? res : []).map((i) => ({\n      name: i.nombre || i.product_name || '',\n      size: i.size ?? '',\n      qty: i.cantidad,\n      line: i.product_line ?? '',\n    }));\n  } catch (e) {\n    items_error = String(e && e.message ? e.message : e);\n  }\n  out.push({ json: {\n    id: o.id,\n    customer_nombre: o.customer_nombre,\n    customer_empresa: null,\n    customer_telefono: null,\n    customer_email: o.customer_email ?? null,\n    localidad: o.localidad ?? null,\n    total: o.total,\n    items,\n    ...(items_error ? { items_error } : {}),\n    fecha_orden: o.createdAt ?? new Date().toISOString(),\n    origen: 'api',\n  } });\n}\nreturn out;"
+      },
+      "id": "completar-items",
+      "name": "Completar ítems de la orden",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Remito de entrega (demo académica) como HTML -> data: URL; el nodo Puppeteer lo convierte en PDF.\nconst o = $input.item.json;\n// Datos del formulario público de cotización: se escapan antes de insertarlos en HTML.\nconst esc = (v) => String(v ?? '').replace(/[&<>\"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', \"'\": '&#39;' })[ch]);\nconst LINE = { roja: 'Línea Roja', dorada: 'Línea Dorada' };\nconst fecha = new Date(o.fecha_orden || Date.now()).toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' });\nconst items = Array.isArray(o.items) ? o.items : [];\nconst unidades = items.length ? items.reduce((s, i) => s + (Number(i.qty) || 0), 0) : Number(o.total) || 0;\nconst th = 'padding:8px 10px;text-align:left;border-bottom:2px solid #166534;';\nconst td = 'padding:7px 10px;border-bottom:1px solid #e5e7eb;';\nconst filas = items.length\n  ? items.map((i) => `<tr><td style=\"${td}\">${esc(i.name)}</td><td style=\"${td}\">${esc(LINE[String(i.line).toLowerCase()] ?? i.line)}</td><td style=\"${td}\">${esc(i.size)}</td><td style=\"${td}text-align:right;\">${esc(i.qty)}</td></tr>`).join('')\n  : `<tr><td colspan=\"4\" style=\"${td}color:#6b7280;\">Detalle de ítems no disponible</td></tr>`;\nconst dato = (etq, val) => (val ? `<p style=\"margin:2px 0;\"><strong>${etq}:</strong> ${esc(val)}</p>` : '');\nconst remito_html = `<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Remito ${esc(o.id)}</title></head><body style=\"font-family:Arial,sans-serif;font-size:13px;color:#111;margin:0;padding:32px;\">\n<div style=\"display:flex;justify-content:space-between;border-bottom:3px solid #166534;padding-bottom:12px;\">\n  <div><h1 style=\"margin:0;color:#166534;font-size:22px;\">Golden Harvest S.A.</h1><p style=\"margin:2px 0;color:#6b7280;\">Remito de entrega</p></div>\n  <div style=\"text-align:right;\"><p style=\"margin:2px 0;\"><strong>Remito — Orden #${esc(o.id)}</strong></p><p style=\"margin:2px 0;\">Fecha: ${fecha}</p></div>\n</div>\n<div style=\"margin:18px 0;\">\n  ${dato('Cliente', o.customer_nombre)}${dato('Empresa', o.customer_empresa)}${dato('Email', o.customer_email)}${dato('Teléfono', o.customer_telefono)}\n  <p style=\"margin:2px 0;\"><strong>Localidad de entrega:</strong> <span>${o.localidad ? esc(o.localidad) : 'Sin informar'}</span></p>\n</div>\n<table style=\"width:100%;border-collapse:collapse;\"><thead><tr><th style=\"${th}\">Producto</th><th style=\"${th}\">Línea</th><th style=\"${th}\">Presentación</th><th style=\"${th}text-align:right;\">Unidades</th></tr></thead><tbody>${filas}</tbody></table>\n<p style=\"text-align:right;font-size:15px;margin-top:14px;\"><strong>Total: ${unidades} unidades</strong></p>\n<div style=\"margin-top:48px;display:flex;justify-content:space-between;color:#6b7280;\"><span>Firma y aclaración del receptor: ____________________</span><span>Fecha de recepción: ___ / ___ / ______</span></div>\n<p style=\"margin-top:36px;padding:8px;border:2px dashed #b91c1c;color:#b91c1c;text-align:center;font-weight:bold;\">Documento no válido como factura — demo académica</p>\n</body></html>`;\nconst remito_url = 'data:text/html;charset=utf-8;base64,' + Buffer.from(remito_html, 'utf8').toString('base64');\nreturn { json: { ...o, remito_html, remito_url } };"
+      },
+      "id": "armar-remito",
+      "name": "Armar Remito HTML",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2176,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.remito_url }}",
+        "operation": "getPDF",
+        "dataPropertyName": "data",
+        "preferCSSPageSize": false,
+        "format": "A4",
+        "landscape": false,
+        "printBackground": true,
+        "displayHeaderFooter": false,
+        "omitBackground": false,
+        "scale": 1,
+        "pageRanges": "",
+        "margin": {
+          "top": "10mm",
+          "bottom": "10mm",
+          "left": "10mm",
+          "right": "10mm"
+        },
+        "options": {}
+      },
+      "id": "remito-pdf",
+      "name": "Remito PDF (Puppeteer)",
+      "type": "n8n-nodes-puppeteer.puppeteer",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// El nodo Puppeteer devuelve solo { headers, statusCode, url } + el PDF: se recupera la orden\n// del nodo anterior (mismo ítem) y se nombra el archivo por id de orden.\nconst src = $('Armar Remito HTML').item.json;\nconst { remito_html, remito_url, ...order } = src;\nconst pdf = $input.item.binary && $input.item.binary.data;\nif (!pdf) throw new Error('Puppeteer no devolvió el PDF del remito de la orden ' + order.id);\npdf.fileName = `remito-${order.id}.pdf`;\npdf.mimeType = 'application/pdf';\nreturn { json: order, binary: { data: pdf } };"
+      },
+      "id": "nombrar-pdf",
+      "name": "Nombrar PDF",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2592,
         32
       ]
     }
@@ -225,62 +468,62 @@
       "main": [
         [
           {
-            "node": "Obtener \u00d3rdenes Confirmadas",
+            "node": "Obtener Órdenes Confirmadas",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Obtener \u00d3rdenes Confirmadas": {
+    "Obtener Órdenes Confirmadas": {
       "main": [
         [
           {
-            "node": "Limitar a 3 \u00d3rdenes (Demo)",
+            "node": "Limitar a 3 Órdenes (Demo)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Limitar a 3 \u00d3rdenes (Demo)": {
+    "Limitar a 3 Órdenes (Demo)": {
       "main": [
         [
           {
-            "node": "Generar Resumen de Despacho",
+            "node": "Completar ítems de la orden",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Webhook Producci\u00f3n": {
+    "Webhook Producción": {
       "main": [
         [
           {
-            "node": "PDFMonkey (Producci\u00f3n)",
+            "node": "PDFMonkey (Producción)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "PDFMonkey (Producci\u00f3n)": {
+    "PDFMonkey (Producción)": {
       "main": [
         [
           {
-            "node": "API Carrier (Producci\u00f3n)",
+            "node": "API Carrier (Producción)",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "API Carrier (Producci\u00f3n)": {
+    "API Carrier (Producción)": {
       "main": [
         [
           {
-            "node": "Gmail \u2014 Confirmaci\u00f3n de Env\u00edo (PROD)",
+            "node": "Gmail — Confirmación de Envío (PROD)",
             "type": "main",
             "index": 0
           }
@@ -291,7 +534,131 @@
       "main": [
         [
           {
-            "node": "Gmail \u2014 Enviar Resumen de Despacho (TESIS)",
+            "node": "Gmail — Enviar Resumen de Despacho (TESIS)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Completar ítems de la orden": {
+      "main": [
+        [
+          {
+            "node": "Armar Remito HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook — Orden Confirmada (TESIS)": {
+      "main": [
+        [
+          {
+            "node": "Deduplicar (Idempotency-Key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deduplicar (Idempotency-Key)": {
+      "main": [
+        [
+          {
+            "node": "¿Duplicado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Duplicado?": {
+      "main": [
+        [
+          {
+            "node": "Responder 200 (duplicado)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Validar orden (webhook)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar orden (webhook)": {
+      "main": [
+        [
+          {
+            "node": "¿Orden válida?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Orden válida?": {
+      "main": [
+        [
+          {
+            "node": "Responder 202 (orden recibida)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder 400 (orden inválida)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Responder 202 (orden recibida)": {
+      "main": [
+        [
+          {
+            "node": "Armar Remito HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Armar Remito HTML": {
+      "main": [
+        [
+          {
+            "node": "Remito PDF (Puppeteer)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remito PDF (Puppeteer)": {
+      "main": [
+        [
+          {
+            "node": "Nombrar PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nombrar PDF": {
+      "main": [
+        [
+          {
+            "node": "Generar Resumen de Despacho",
             "type": "main",
             "index": 0
           }

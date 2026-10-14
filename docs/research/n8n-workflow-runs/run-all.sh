@@ -25,9 +25,13 @@ WORKFLOWS=(
   "07:pIlvvd0nTN7mfJOL"
 )
 
+# ONLY="01 04 06b 07" runs just those workflows (default: all eight).
+ONLY="${ONLY:-}"
+
 echo "workflow,run,exit_code,duration_ms" > "$OUT/runs.csv"
 for entry in "${WORKFLOWS[@]}"; do
   wf="${entry%%:*}"; id="${entry##*:}"
+  if [ -n "$ONLY" ] && [[ " $ONLY " != *" $wf "* ]]; then continue; fi
   for n in $(seq 1 "$RUNS"); do
     start=$(date +%s%3N)
     docker exec -e N8N_RUNNERS_BROKER_PORT="$BROKER_PORT" "$CONTAINER" \

@@ -15,10 +15,9 @@ function run(orders) {
 
 const ORDER = { id: 'ord1', customer_nombre: 'Ana Pérez', localidad: 'San Rafael', total: 12 }
 
-test('titles the email as a dispatch summary, not as delivery notes', () => {
+test('titles the email as a dispatch summary', () => {
   const { summary_html } = run([ORDER])
   assert.match(summary_html, /Resumen de despacho/)
-  assert.doesNotMatch(summary_html, /[Rr]emito/)
 })
 
 test('prints the localidad when the order has one', () => {
@@ -38,6 +37,8 @@ test('escapes HTML coming from the public quote form', () => {
   assert.match(summary_html, /&lt;a href=&quot;x&quot;&gt;Ana&lt;\/a&gt;/)
 })
 
-test('the TESIS sticky note describes a dispatch summary, not delivery notes', () => {
-  assert.doesNotMatch(sticky.parameters.content, /[Rr]emito/)
+test('the TESIS sticky note describes the remito PDF that is now generated', () => {
+  assert.match(sticky.parameters.content, /remito/i)
+  assert.match(sticky.parameters.content, /PDF/)
+  assert.match(sticky.parameters.content, /order-confirmed/)
 })

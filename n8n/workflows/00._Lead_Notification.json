@@ -14,20 +14,26 @@
       "name": "🔴 MODO PRODUCCIÓN",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [784, 672]
+      "position": [
+        784,
+        672
+      ]
     },
     {
       "parameters": {
         "content": "## 🟢 MODO TESIS\nFlujo de demostración que corre de verdad, sin costo.\n- Webhook recibe el POST del backend (N8N_QUOTE_WEBHOOK) con { quoteId, sessionId, contact, items,\n  createdAt, clientSubmittedAt }\n- Arma un mensaje de notificación simulado (texto que representaría el WhatsApp + Email al vendedor),\n  con los campos del formulario escapados\n- Lo envía por Gmail a la casilla de demostración (bandeja.demo@example.com)\n- Responde al backend con t1_start/t1_end para que el script de medición calcule la latencia\n  T0 (envío de la solicitud) -> T1 (Gmail acepta el aviso)",
         "height": 540,
-        "width": 1560,
+        "width": 1900,
         "color": 3
       },
       "id": "sticky-thesis",
       "name": "🟢 MODO TESIS",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [784, 96]
+      "position": [
+        784,
+        96
+      ]
     },
     {
       "parameters": {
@@ -40,7 +46,10 @@
       "name": "Webhook — Quote (TESIS)",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [848, 400],
+      "position": [
+        848,
+        400
+      ],
       "webhookId": "c4e2f6a1-8b3d-4c5e-9f1a-2d6b7e8a9c10"
     },
     {
@@ -51,7 +60,10 @@
       "name": "Registrar t1_start",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1072, 400]
+      "position": [
+        1520,
+        400
+      ]
     },
     {
       "parameters": {
@@ -61,7 +73,10 @@
       "name": "Armar Mensaje (Simulado)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1296, 400]
+      "position": [
+        1744,
+        400
+      ]
     },
     {
       "parameters": {
@@ -74,7 +89,10 @@
       "name": "Gmail — Notificar Lead (TESIS)",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [1520, 400],
+      "position": [
+        1968,
+        400
+      ],
       "webhookId": "e3f5a7c9-1b2d-4e6f-8a9c-3d5b7e9f1a2c",
       "credentials": {
         "gmailOAuth2": {
@@ -91,7 +109,10 @@
       "name": "Registrar t1_end",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1744, 400]
+      "position": [
+        2192,
+        400
+      ]
     },
     {
       "parameters": {
@@ -103,7 +124,10 @@
       "name": "Respond to Webhook (TESIS)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1968, 400]
+      "position": [
+        2416,
+        400
+      ]
     },
     {
       "parameters": {
@@ -116,7 +140,10 @@
       "name": "Webhook — Quote (Producción)",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [848, 960],
+      "position": [
+        848,
+        960
+      ],
       "webhookId": "f6a8c1d3-4e7f-4a9b-8c1d-5e7f9a1b3c4d",
       "disabled": true
     },
@@ -127,18 +154,28 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "Authorization", "value": "Bearer YOUR_WHATSAPP_BUSINESS_TOKEN" }
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_WHATSAPP_BUSINESS_TOKEN"
+            }
           ]
         },
         "sendBody": true,
-        "bodyParameters": { "parameters": [{}] },
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
         "options": {}
       },
       "id": "node-whatsapp-prod",
       "name": "WhatsApp Business API (Producción)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1072, 960],
+      "position": [
+        1072,
+        960
+      ],
       "disabled": true
     },
     {
@@ -148,18 +185,28 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "Authorization", "value": "Bearer YOUR_SENDGRID_API_KEY" }
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_SENDGRID_API_KEY"
+            }
           ]
         },
         "sendBody": true,
-        "bodyParameters": { "parameters": [{}] },
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
         "options": {}
       },
       "id": "node-sendgrid-prod",
       "name": "SendGrid (Producción)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [1296, 960],
+      "position": [
+        1296,
+        960
+      ],
       "disabled": true
     },
     {
@@ -172,37 +219,200 @@
       "name": "Respond to Webhook (Producción)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1520, 960],
+      "position": [
+        1520,
+        960
+      ],
       "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// El backend entrega sus webhooks con at-least-once (outbox): puede repetir el mismo evento.\n// Cada POST trae el header Idempotency-Key (p. ej. \"order:<id>:confirmed\"). Se recuerdan las\n// últimas 500 claves en el static data del workflow (solo persiste en ejecuciones de producción,\n// es decir con el workflow activo); una clave ya vista marca el ítem como duplicado.\nconst MAX_KEYS = 500;\nconst json = $input.item.json;\nconst headers = json.headers || {};\nconst key = headers['idempotency-key'] || headers['Idempotency-Key'] || null;\nif (!key) return { json: { ...json, idempotency_key: null, duplicate: false } };\nconst store = $getWorkflowStaticData('global');\nconst seen = Array.isArray(store.seenKeys) ? store.seenKeys : [];\nif (seen.includes(key)) return { json: { ...json, idempotency_key: key, duplicate: true } };\nseen.push(key);\nstore.seenKeys = seen.slice(-MAX_KEYS);\nreturn { json: { ...json, idempotency_key: key, duplicate: false } };"
+      },
+      "id": "dedup",
+      "name": "Deduplicar (Idempotency-Key)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1072,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5c0615be-d565-4c5e-83bd-1f6101f095db",
+              "leftValue": "={{ $json.duplicate }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-dup",
+      "name": "¿Duplicado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1296,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, duplicate: true, idempotencyKey: $json.idempotency_key } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "respond-dup",
+      "name": "Responder 200 (duplicado)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        560
+      ]
     }
   ],
   "connections": {
     "Webhook — Quote (TESIS)": {
-      "main": [[{ "node": "Registrar t1_start", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Deduplicar (Idempotency-Key)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Registrar t1_start": {
-      "main": [[{ "node": "Armar Mensaje (Simulado)", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Armar Mensaje (Simulado)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Armar Mensaje (Simulado)": {
-      "main": [[{ "node": "Gmail — Notificar Lead (TESIS)", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Gmail — Notificar Lead (TESIS)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Gmail — Notificar Lead (TESIS)": {
-      "main": [[{ "node": "Registrar t1_end", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Registrar t1_end",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Registrar t1_end": {
-      "main": [[{ "node": "Respond to Webhook (TESIS)", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook (TESIS)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Webhook — Quote (Producción)": {
-      "main": [[
-        { "node": "WhatsApp Business API (Producción)", "type": "main", "index": 0 },
-        { "node": "SendGrid (Producción)", "type": "main", "index": 0 }
-      ]]
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business API (Producción)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "SendGrid (Producción)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "WhatsApp Business API (Producción)": {
-      "main": [[{ "node": "Respond to Webhook (Producción)", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook (Producción)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "SendGrid (Producción)": {
-      "main": [[{ "node": "Respond to Webhook (Producción)", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook (Producción)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deduplicar (Idempotency-Key)": {
+      "main": [
+        [
+          {
+            "node": "¿Duplicado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Duplicado?": {
+      "main": [
+        [
+          {
+            "node": "Responder 200 (duplicado)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Registrar t1_start",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {

@@ -26,7 +26,9 @@ export function parseLog(file) {
   try { return JSON.parse(raw.slice(start, raw.lastIndexOf('}') + 1)); } catch { return null; }
 }
 
-const items = (run) => (run?.data?.main ?? []).flatMap((out) => out ?? []).map((i) => i.json ?? {});
+// Binary metadata (file name, MIME type, size) is kept under `__binary`: the remito PDFs of 07 and the
+// palette file of 01 are verified through it.
+const items = (run) => (run?.data?.main ?? []).flatMap((out) => out ?? []).map((i) => (i.binary ? { ...(i.json ?? {}), __binary: i.binary } : (i.json ?? {})));
 const isTrigger = (name) => /trigger|schedule|cron|every \d|webhook|form/i.test(name);
 
 // Execution log -> { nodeName: [item json, ...] } in execution order.
@@ -44,6 +46,7 @@ export function loadNodes(file) {
 const chk = (name, pass, detail = '') => ({ name, pass: Boolean(pass), detail: String(detail) });
 const verdict = (checks, notes = []) => ({ pass: checks.every((c) => c.pass), checks, notes });
 const get = (n, re) => Object.entries(n).find(([k]) => re.test(k))?.[1] ?? [];
+const has = (n, re) => Object.keys(n).some((k) => re.test(k));
 // Run `fn(row, i)` for i in 0..count-1; it returns '' when fine or a problem text.
 function perRow(count, fn) {
   const problems = [];
@@ -68,7 +71,7 @@ function colourCounts(html) {
   for (const m of html.matchAll(/#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})(?![A-Fa-f0-9])/g)) bump(m[0].toLowerCase());
   return counts;
 }
-function oracle01(n) {
+function oracle01Core(n) {
   const out = get(n, /^Extract Colors/)[0] ?? {};
   const src = get(n, /^Fetch HTML/)[0] ?? {};
   const html = String(src.html || src.data || src.body || src.content || '');
@@ -188,7 +191,7 @@ function expectedTags(producto, descripcion) {
   const kw = [...new Set(words)].filter((w) => !['para', 'como', 'este', 'esta', 'con', 'los', 'las', 'una', 'que'].includes(w)).slice(0, 5).map((w) => '#' + w);
   return [...new Set([...kw, ...BASE_TAGS.map((t) => '#' + t)])];
 }
-function oracle04(n) {
+function oracle04Core(n) {
   const rows = get(n, /^Leer Sheet de Contenido/);
   const posts = get(n, /^Formatear Posts/);
   const writes = get(n, /^Escribir en Sheet/);
@@ -225,7 +228,7 @@ function oracle04(n) {
     chk('image_url_rule', imageRule.ok, imageRule.detail),
     chk('sheet_write_matches_posts', write.ok, write.detail),
   );
-  return verdict(checks, ['The brand palette of workflow 01 is not an input of any node of 04 in this export; palette use cannot be verified.']);
+  return verdict(checks, has(n, /^Aplicar Paleta/) ? [] : ['This export of 04 has no palette node (batches before 14/10/2026): the brand palette of workflow 01 is not an input and palette use cannot be verified.']);
 }
 
 // ---------------------------------------------------------------- 05 Monthly Activity Report
@@ -314,7 +317,7 @@ function oracle06a(n) {
 
 // ---------------------------------------------------------------- 06b Carrito Abandonado
 const CATALOGUE = ['Doble Concentrado de Tomate', 'Tomate Entero Pelado', 'Mitades de Durazno en Almíbar', 'Salsa Clásica', 'Trozos de Durazno en Almíbar'];
-function oracle06b(n) {
+function oracle06bLegacy(n) {
   const posts = get(n, /^GET /);
   const carts = get(n, /^Agrupar/);
   const mails = get(n, /^Generar Email/);
@@ -361,7 +364,7 @@ function oracle06b(n) {
 }
 
 // ---------------------------------------------------------------- 07 Logistics (original criteria + cross-check)
-function oracle07(n) {
+function oracle07Legacy(n) {
   const html = JSON.stringify(n);
   const fetched = get(n, /Obtener/);
   const limited = get(n, /^Limitar/);
@@ -380,10 +383,161 @@ function oracle07(n) {
   ]);
 }
 
+// ---------------------------------------------------------------- receivers + 01 -> 04 (exports of 14/10/2026)
+// Each oracle below extends or replaces the earlier one only when the log shows the new nodes; logs of
+// the earlier batches (08/10, prereg-14/10) keep being judged by the earlier criteria.
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+const HEX = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+
+// 01: besides the e-mail, the palette must be persisted for 04 (file written, same colours).
+function oracle01(n) {
+  const base = oracle01Core(n);
+  if (!has(n, /^Preparar Paleta/)) return base;
+  const out = get(n, /^Extract Colors/)[0] ?? {};
+  const prep = get(n, /^Preparar Paleta/)[0] ?? {};
+  const wrote = get(n, /^Guardar Paleta/);
+  const bin = prep.__binary?.data;
+  const extra = [
+    chk('palette_saved_for_04',
+      Array.isArray(prep.palette) && JSON.stringify(prep.palette) === JSON.stringify(out.palette) && prep.url === out.url
+        && !Number.isNaN(Date.parse(prep.extractedAt)) && bin?.fileName === 'brand_palette.json' && bin?.mimeType === 'application/json' && bin?.bytes > 20,
+      `saved palette ${(prep.palette ?? []).join(' ')} (${bin?.bytes ?? 0} bytes) vs extracted ${(out.palette ?? []).join(' ')}`),
+    chk('palette_file_written', wrote.length === 1 && !wrote[0].error, wrote[0]?.error ? `write failed: ${JSON.stringify(wrote[0].error).slice(0, 200)}` : `${wrote.length} write result(s)`),
+  ];
+  return verdict([...base.checks, ...extra], base.notes);
+}
+
+// 04: the palette read from the file 01 wrote is applied to every post of the same execution.
+function oracle04(n, ctx = {}) {
+  const base = oracle04Core(n);
+  if (!has(n, /^Aplicar Paleta/)) return base;
+  const rows = get(n, /^Leer Sheet de Contenido/);
+  const applied = get(n, /^Aplicar Paleta/);
+  const posts = get(n, /^Formatear Posts/);
+  const per = (fn) => perRow(rows.length, (i) => (applied[i] && posts[i] ? fn(applied[i], posts[i]) : 'palette or post missing for this row'));
+  const valid = per((a) => (a.palette_source === 'workflow-01' && Array.isArray(a.palette) && a.palette.length >= 1 && a.palette.length <= 5 && a.palette.every((h) => HEX.test(h))
+    ? '' : `source ${a.palette_source}, palette ${JSON.stringify(a.palette)}`));
+  const used = per((a, p) => {
+    const all = (txt) => a.palette.every((h) => txt.includes(h));
+    if (!all(p.post_instagram) || !all(p.post_facebook) || !all(p.post_whatsapp)) return `a post lacks a palette colour (${a.palette.join(' ')})`;
+    if (!String(p.imagen_prompt).includes(p.producto) || !all(String(p.imagen_prompt))) return `image prompt "${p.imagen_prompt}" lacks product or colours`;
+    return JSON.stringify(p.palette) === JSON.stringify(a.palette) ? '' : 'Formatear Posts output carries another palette';
+  });
+  const checks = [
+    chk('palette_read_from_01', valid.ok, valid.detail),
+    chk('posts_use_palette', used.ok, used.detail),
+  ];
+  if (ctx.palette01) {
+    checks.push(chk('palette_matches_01_output',
+      applied.length > 0 && applied.every((a) => JSON.stringify(a.palette) === JSON.stringify(ctx.palette01)),
+      `04 used ${(applied[0]?.palette ?? []).join(' ')}; the last 01 run of the batch extracted ${ctx.palette01.join(' ')}`));
+  }
+  return verdict([...base.checks, ...checks], ctx.palette01 ? base.notes : [...base.notes, 'No 01 log in the batch: the palette was not compared with the output of workflow 01.']);
+}
+
+// 06b: the e-mail lists exactly the cart items of the payload (webhook body, or the simulated payload of the manual path).
+const listedItems = (html) => [...String(html).matchAll(/<li[^>]*>🥫 <strong>(.*?)<\/strong> — (?:[^<]*?, )?([^,<]*?) × (\d+)<\/li>/g)].map((m) => ({ name: m[1], size: m[2], qty: Number(m[3]) }));
+function oracle06b(n) {
+  if (!has(n, /^Validar carrito/)) return oracle06bLegacy(n);
+  const hook = get(n, /^Webhook — Carrito Abandonado/);
+  const sim = get(n, /^Simular payload/);
+  const carts = get(n, /^Agrupar/);
+  const bodies = (hook.length ? hook.map((h) => h.body) : sim.map((s) => s.body));
+  const validated = get(n, /^Validar carrito/);
+  const accepted = validated.filter((v) => v.valid);
+  const mails = get(n, /^Generar Email/);
+  const sentOk = sentCheck(mails, get(n, /^Limitar/), get(n, /^Gmail/));
+  const fromCarts = perRow(hook.length ? 0 : carts.length, (i) => {
+    const b = sim[i]?.body; const c = carts[i];
+    if (!b) return 'no simulated payload';
+    return JSON.stringify(b.items.map((x) => x.name)) === JSON.stringify(c.productos_carrito) && b.contact?.email === c.email ? '' : `${c.nombre}: payload items differ from the simulated cart`;
+  });
+  const exact = perRow(mails.length, (i) => {
+    const want = (bodies[i]?.items ?? []).map((x) => ({ name: esc(x.name), size: esc(x.size), qty: x.qty }));
+    const got = listedItems(mails[i].html);
+    return want.length > 0 && JSON.stringify(got) === JSON.stringify(want) ? '' : `e-mail #${i + 1} lists ${JSON.stringify(got)}, payload cart is ${JSON.stringify(want)}`;
+  });
+  const offer = perRow(mails.length, (i) => {
+    const m = mails[i]; const units = (bodies[i]?.items ?? []).reduce((s, x) => s + x.qty, 0);
+    if (m.descuento_pct !== 10 || !m.html.includes('10% OFF')) return 'does not offer 10% off';
+    if (/\$\s?\d/.test(m.html)) return 'invents a price (carts have none)';
+    return m.html.includes(`Total: ${units} unidades`) && m.unidades === units ? '' : `units: e-mail says ${m.unidades}, payload has ${units}`;
+  });
+  const greet = perRow(mails.length, (i) => {
+    const nombre = bodies[i]?.contact?.nombre ?? '';
+    return mails[i].html.includes(nombre ? `Hola ${esc(nombre)},` : 'Hola,') ? '' : `greeting does not match nombre "${nombre}"`;
+  });
+  return verdict([
+    chk('payloads_present', bodies.length > 0 && bodies.every((b) => b && typeof b === 'object'), `${bodies.length} payload(s) from ${hook.length ? 'the webhook' : 'the simulated cart path'}`),
+    chk('simulated_payload_follows_cart', fromCarts.ok, fromCarts.detail),
+    chk('payloads_pass_validation', validated.length === bodies.length && accepted.length === validated.length, `${accepted.length} of ${validated.length} payload(s) accepted`),
+    chk('invalid_payloads_not_emailed', mails.length === accepted.length, `${accepted.length} accepted payload(s), ${mails.length} e-mail(s) built`),
+    chk('email_lists_exactly_payload_items', exact.ok, exact.detail),
+    chk('offer_without_invented_prices', offer.ok, offer.detail),
+    chk('greeting_matches_contact', greet.ok, greet.detail),
+    sentOk.check,
+  ], [sentOk.note, hook.length ? 'Payload received by the production webhook.' : 'Manual path: carts are simulated (jsonplaceholder) and converted to the payload the frontend sends; the oracle compares the e-mail with that payload, not with a catalogue.']);
+}
+
+// 07: a remito PDF per order, attached to the dispatch e-mail, with the order data in it.
+function oracle07(n) {
+  if (!has(n, /^Armar Remito/)) return oracle07Legacy(n);
+  const html = JSON.stringify(n);
+  const hook = get(n, /^Webhook — Orden Confirmada/);
+  const fetched = get(n, /^Obtener/);
+  const limited = get(n, /^Limitar/);
+  const orders = hook.length ? get(n, /^Validar orden/).filter((o) => o.valid) : get(n, /^Completar/);
+  const remitos = get(n, /^Armar Remito/);
+  const named = get(n, /^Nombrar PDF/);
+  const sum = get(n, /Generar Resumen/)[0] ?? {};
+  const body = String(sum.summary_html ?? '');
+  const items_ = perRow(orders.length, (i) => {
+    const o = orders[i];
+    const units = (o.items ?? []).reduce((s, x) => s + x.qty, 0);
+    if (o.items_error) return `${o.id}: items request failed (${o.items_error})`;
+    if (!o.items?.length) return `${o.id}: no items`;
+    const ref = hook.length ? o.total : limited[i]?.total;
+    return ref === units ? '' : `${o.id}: total ${ref} vs ${units} unit(s) in the items`;
+  });
+  const content = perRow(orders.length, (i) => {
+    const o = orders[i]; const h = String(remitos[i]?.remito_html ?? '');
+    if (!h) return `${o.id}: no remito`;
+    const miss = [`#${esc(o.id)}`, esc(o.customer_nombre), o.localidad ? `>${esc(o.localidad)}<` : '>Sin informar<',
+      `${o.items.reduce((s, x) => s + x.qty, 0)} unidades`, 'Documento no válido como factura — demo académica',
+      ...o.items.flatMap((x) => [esc(x.name), esc(x.size)])].filter((t) => !h.includes(t));
+    return miss.length ? `${o.id}: remito lacks ${miss.slice(0, 3).join(' | ')}` : '';
+  });
+  const pdfs = perRow(orders.length, (i) => {
+    const b = named[i]?.__binary?.data; const id = orders[i].id;
+    return named[i]?.id === id && b?.mimeType === 'application/pdf' && b.fileName === `remito-${id}.pdf` && b.bytes > 5000 ? '' : `${id}: PDF ${JSON.stringify({ f: b?.fileName, m: b?.mimeType, bytes: b?.bytes })}`;
+  });
+  const keys = Object.keys(sum.__binary ?? {});
+  const attached = keys.length === orders.length && orders.every((o, i) => sum.__binary[`remito_${i + 1}`]?.fileName === `remito-${o.id}.pdf` && sum.__binary[`remito_${i + 1}`]?.mimeType === 'application/pdf')
+    && sum.adjuntos === keys.join(',') && JSON.stringify((sum.remitos ?? []).map((r) => r.order_id)) === JSON.stringify(orders.map((o) => o.id))
+    && orders.every((o) => body.includes(`remito-${o.id}.pdf`));
+  const lines = perRow(orders.length, (i) => {
+    const o = orders[i];
+    return body.includes(`#${o.id}`) && body.includes(String(o.customer_nombre)) && (o.localidad ? body.includes(String(o.localidad)) : body.includes('Sin informar')) && body.includes(`${o.total} u.`) ? '' : `order ${o.id} not fully listed`;
+  });
+  return verdict([
+    chk('dispatch_summary_present', /Resumen de despacho/.test(html), ''),
+    chk('no_null_in_summary', !/>null</.test(body), ''),
+    chk('orders_received', orders.length > 0 && (hook.length ? true : fetched.length > 0 && fetched.every((o) => o.estado === 'CONFIRMADO') && orders.length === Math.min(3, fetched.length) && limited.length === orders.length),
+      hook.length ? `${orders.length} order(s) from the webhook` : `${fetched.length} confirmed order(s) fetched, ${orders.length} kept`),
+    chk('items_complete_per_order', items_.ok, items_.detail),
+    chk('remito_has_order_data', remitos.length === orders.length && content.ok, content.detail),
+    chk('one_pdf_per_order', named.length === orders.length && pdfs.ok, pdfs.detail),
+    chk('summary_attaches_every_pdf', attached, `${keys.length} attachment(s) [${keys.join(',')}] for ${orders.length} order(s)`),
+    chk('summary_lists_orders', sum.total === orders.length && lines.ok, `${orders.length} order(s) in summary (total=${sum.total}); ${lines.detail}`),
+    deliveredCheck(get(n, /Gmail/), 'dispatch summary with PDF remitos'),
+  ]);
+}
+
 export const ORACLES = {
   '01': oracle01, '02': oracle02, '03': oracle03, '04': oracle04,
   '05': oracle05, '06a': oracle06a, '06b': oracle06b, '07': oracle07,
 };
+
 
 // ---------------------------------------------------------------- batch runner
 function main(dir) {
@@ -396,6 +550,11 @@ function main(dir) {
     for (const nd of wf.nodes) nodeType.set(nd.name, nd.type);
   }
   const isDelivery = (name) => /gmail|googleSheets/i.test(nodeType.get(name) ?? name);
+
+  // Palette that the last 01 run of the batch extracted: 04 reads that file (01 runs before 04).
+  const last01 = fs.readdirSync(dir).filter((f) => /^01-\d+\.log$/.test(f)).sort().pop();
+  let palette01;
+  if (last01) { try { palette01 = loadNodes(path.join(dir, last01))['Extract Colors']?.[0]?.palette; } catch { palette01 = undefined; } }
 
   const rows = [['workflow', 'run', 'status', 'trigger', 'nodes', 'delivered', 'content_ok', 'content_note', 'oracle_checks']];
   for (const file of fs.readdirSync(dir).filter((f) => /^\w+-\d+\.log$/.test(f)).sort()) {
@@ -413,7 +572,7 @@ function main(dir) {
     if (errors.length) note = `errors in: ${errors.join(', ')}`;
     else if (!ORACLES[wf]) { ok = true; }
     else {
-      const r = ORACLES[wf](nodes);
+      const r = ORACLES[wf](nodes, { palette01 });
       ok = r.pass; tally = `${r.checks.filter((c) => c.pass).length}/${r.checks.length}`;
       note = r.checks.filter((c) => !c.pass).map((c) => `${c.name}: ${c.detail}`).join('; ');
     }

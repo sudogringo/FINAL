@@ -1,0 +1,427 @@
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container detected via .dockerenv file
+n8n Task Broker ready on 127.0.0.1, port 5690
+Failed to start Python task runner in internal mode. because Python 3 is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: renewOnInit is disabled in config
+[license SDK] Skipping renewal on init: autoRenewEnabled is disabled in config
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (egDreGt9uEbDawljpW-0E) 
+Puppeteer node: Container detected via .dockerenv file
+Puppeteer node: Container environment detected, applying container arguments
+Puppeteer node: Adding container arguments: [
+  '--no-sandbox',
+  '--disable-setuid-sandbox',
+  '--disable-dev-shm-usage',
+  '--disable-gpu'
+]
+Processing 1 of 1: [getPDF] data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiPjx0aXRsZT5SZW1pdG8gY212MGJibG82MDA3NnlzdTV5azZ4MmZ6bjwvdGl0bGU+PC9oZWFkPjxib2R5IHN0eWxlPSJmb250LWZhbWlseTpBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxM3B4O2NvbG9yOiMxMTE7bWFyZ2luOjA7cGFkZGluZzozMnB4OyI+CjxkaXYgc3R5bGU9ImRpc3BsYXk6ZmxleDtqdXN0aWZ5LWNvbnRlbnQ6c3BhY2UtYmV0d2Vlbjtib3JkZXItYm90dG9tOjNweCBzb2xpZCAjMTY2NTM0O3BhZGRpbmctYm90dG9tOjEycHg7Ij4KICA8ZGl2PjxoMSBzdHlsZT0ibWFyZ2luOjA7Y29sb3I6IzE2NjUzNDtmb250LXNpemU6MjJweDsiPkdvbGRlbiBIYXJ2ZXN0IFMuQS48L2gxPjxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Y29sb3I6IzZiNzI4MDsiPlJlbWl0byBkZSBlbnRyZWdhPC9wPjwvZGl2PgogIDxkaXYgc3R5bGU9InRleHQtYWxpZ246cmlnaHQ7Ij48cCBzdHlsZT0ibWFyZ2luOjJweCAwOyI+PHN0cm9uZz5SZW1pdG8g4oCUIE9yZGVuICNjbXYwYmJsbzYwMDc2eXN1NXlrNngyZnpuPC9zdHJvbmc+PC9wPjxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Ij5GZWNoYTogMDkgZGUgb2N0dWJyZSBkZSAyMDI2PC9wPjwvZGl2Pgo8L2Rpdj4KPGRpdiBzdHlsZT0ibWFyZ2luOjE4cHggMDsiPgogIDxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Ij48c3Ryb25nPkNsaWVudGU6PC9zdHJvbmc+IFBydWViYSBIdW1vPC9wPjxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Ij48c3Ryb25nPkVtYWlsOjwvc3Ryb25nPiBodW1vQGV4YW1wbGUudGVzdDwvcD4KICA8cCBzdHlsZT0ibWFyZ2luOjJweCAwOyI+PHN0cm9uZz5Mb2NhbGlkYWQgZGUgZW50cmVnYTo8L3N0cm9uZz4gPHNwYW4+R29kb3kgQ3J1ejwvc3Bhbj48L3A+CjwvZGl2Pgo8dGFibGUgc3R5bGU9IndpZHRoOjEwMCU7Ym9yZGVyLWNvbGxhcHNlOmNvbGxhcHNlOyI+PHRoZWFkPjx0cj48dGggc3R5bGU9InBhZGRpbmc6OHB4IDEwcHg7dGV4dC1hbGlnbjpsZWZ0O2JvcmRlci1ib3R0b206MnB4IHNvbGlkICMxNjY1MzQ7Ij5Qcm9kdWN0bzwvdGg+PHRoIHN0eWxlPSJwYWRkaW5nOjhweCAxMHB4O3RleHQtYWxpZ246bGVmdDtib3JkZXItYm90dG9tOjJweCBzb2xpZCAjMTY2NTM0OyI+TMOtbmVhPC90aD48dGggc3R5bGU9InBhZGRpbmc6OHB4IDEwcHg7dGV4dC1hbGlnbjpsZWZ0O2JvcmRlci1ib3R0b206MnB4IHNvbGlkICMxNjY1MzQ7Ij5QcmVzZW50YWNpw7NuPC90aD48dGggc3R5bGU9InBhZGRpbmc6OHB4IDEwcHg7dGV4dC1hbGlnbjpsZWZ0O2JvcmRlci1ib3R0b206MnB4IHNvbGlkICMxNjY1MzQ7dGV4dC1hbGlnbjpyaWdodDsiPlVuaWRhZGVzPC90aD48L3RyPjwvdGhlYWQ+PHRib2R5Pjx0cj48dGQgc3R5bGU9InBhZGRpbmc6N3B4IDEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U1ZTdlYjsiPlRvbWF0ZSBFbnRlcm8gUGVsYWRvPC90ZD48dGQgc3R5bGU9InBhZGRpbmc6N3B4IDEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U1ZTdlYjsiPkzDrW5lYSBSb2phPC90ZD48dGQgc3R5bGU9InBhZGRpbmc6N3B4IDEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U1ZTdlYjsiPjFrZzwvdGQ+PHRkIHN0eWxlPSJwYWRkaW5nOjdweCAxMHB4O2JvcmRlci1ib3R0b206MXB4IHNvbGlkICNlNWU3ZWI7dGV4dC1hbGlnbjpyaWdodDsiPjI8L3RkPjwvdHI+PC90Ym9keT48L3RhYmxlPgo8cCBzdHlsZT0idGV4dC1hbGlnbjpyaWdodDtmb250LXNpemU6MTVweDttYXJnaW4tdG9wOjE0cHg7Ij48c3Ryb25nPlRvdGFsOiAyIHVuaWRhZGVzPC9zdHJvbmc+PC9wPgo8ZGl2IHN0eWxlPSJtYXJnaW4tdG9wOjQ4cHg7ZGlzcGxheTpmbGV4O2p1c3RpZnktY29udGVudDpzcGFjZS1iZXR3ZWVuO2NvbG9yOiM2YjcyODA7Ij48c3Bhbj5GaXJtYSB5IGFjbGFyYWNpw7NuIGRlbCByZWNlcHRvcjogX19fX19fX19fX19fX19fX19fX188L3NwYW4+PHNwYW4+RmVjaGEgZGUgcmVjZXBjacOzbjogX19fIC8gX19fIC8gX19fX19fPC9zcGFuPjwvZGl2Pgo8cCBzdHlsZT0ibWFyZ2luLXRvcDozNnB4O3BhZGRpbmc6OHB4O2JvcmRlcjoycHggZGFzaGVkICNiOTFjMWM7Y29sb3I6I2I5MWMxYzt0ZXh0LWFsaWduOmNlbnRlcjtmb250LXdlaWdodDpib2xkOyI+RG9jdW1lbnRvIG5vIHbDoWxpZG8gY29tbyBmYWN0dXJhIOKAlCBkZW1vIGFjYWTDqW1pY2E8L3A+CjwvYm9keT48L2h0bWw+
+{
+  "data": {
+    "version": 1,
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Trigger": [
+          {
+            "startTime": 1792012623149,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Obtener Órdenes Confirmadas": [
+          {
+            "startTime": 1792012623169,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Trigger",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 48,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmv0bblo60076ysu5yk6x2fzn",
+                      "estado": "CONFIRMADO",
+                      "createdAt": "2026-10-09T01:54:39.606Z",
+                      "customer_nombre": "Prueba Humo",
+                      "customer_email": "humo@example.test",
+                      "localidad": "Godoy Cruz",
+                      "total": 2
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Limitar a 3 Órdenes (Demo)": [
+          {
+            "startTime": 1792012623245,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Obtener Órdenes Confirmadas",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 581,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmv0bblo60076ysu5yk6x2fzn",
+                      "estado": "CONFIRMADO",
+                      "createdAt": "2026-10-09T01:54:39.606Z",
+                      "customer_nombre": "Prueba Humo",
+                      "customer_email": "humo@example.test",
+                      "localidad": "Godoy Cruz",
+                      "total": 2
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Completar ítems de la orden": [
+          {
+            "startTime": 1792012623834,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Limitar a 3 Órdenes (Demo)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 15,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmv0bblo60076ysu5yk6x2fzn",
+                      "customer_nombre": "Prueba Humo",
+                      "customer_empresa": null,
+                      "customer_telefono": null,
+                      "customer_email": "humo@example.test",
+                      "localidad": "Godoy Cruz",
+                      "total": 2,
+                      "items": [
+                        {
+                          "name": "Tomate Entero Pelado",
+                          "size": "1kg",
+                          "qty": 2,
+                          "line": "roja"
+                        }
+                      ],
+                      "fecha_orden": "2026-10-09T01:54:39.606Z",
+                      "origen": "api"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Armar Remito HTML": [
+          {
+            "startTime": 1792012623859,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Completar ítems de la orden",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 11,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmv0bblo60076ysu5yk6x2fzn",
+                      "customer_nombre": "Prueba Humo",
+                      "customer_empresa": null,
+                      "customer_telefono": null,
+                      "customer_email": "humo@example.test",
+                      "localidad": "Godoy Cruz",
+                      "total": 2,
+                      "items": [
+                        {
+                          "name": "Tomate Entero Pelado",
+                          "size": "1kg",
+                          "qty": 2,
+                          "line": "roja"
+                        }
+                      ],
+                      "fecha_orden": "2026-10-09T01:54:39.606Z",
+                      "origen": "api",
+                      "remito_html": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Remito cmv0bblo60076ysu5yk6x2fzn</title></head><body style=\"font-family:Arial,sans-serif;font-size:13px;color:#111;margin:0;padding:32px;\">\n<div style=\"display:flex;justify-content:space-between;border-bottom:3px solid #166534;padding-bottom:12px;\">\n  <div><h1 style=\"margin:0;color:#166534;font-size:22px;\">Golden Harvest S.A.</h1><p style=\"margin:2px 0;color:#6b7280;\">Remito de entrega</p></div>\n  <div style=\"text-align:right;\"><p style=\"margin:2px 0;\"><strong>Remito — Orden #cmv0bblo60076ysu5yk6x2fzn</strong></p><p style=\"margin:2px 0;\">Fecha: 09 de octubre de 2026</p></div>\n</div>\n<div style=\"margin:18px 0;\">\n  <p style=\"margin:2px 0;\"><strong>Cliente:</strong> Prueba Humo</p><p style=\"margin:2px 0;\"><strong>Email:</strong> humo@example.test</p>\n  <p style=\"margin:2px 0;\"><strong>Localidad de entrega:</strong> <span>Godoy Cruz</span></p>\n</div>\n<table style=\"width:100%;border-collapse:collapse;\"><thead><tr><th style=\"padding:8px 10px;text-align:left;border-bottom:2px solid #166534;\">Producto</th><th style=\"padding:8px 10px;text-align:left;border-bottom:2px solid #166534;\">Línea</th><th style=\"padding:8px 10px;text-align:left;border-bottom:2px solid #166534;\">Presentación</th><th style=\"padding:8px 10px;text-align:left;border-bottom:2px solid #166534;text-align:right;\">Unidades</th></tr></thead><tbody><tr><td style=\"padding:7px 10px;border-bottom:1px solid #e5e7eb;\">Tomate Entero Pelado</td><td style=\"padding:7px 10px;border-bottom:1px solid #e5e7eb;\">Línea Roja</td><td style=\"padding:7px 10px;border-bottom:1px solid #e5e7eb;\">1kg</td><td style=\"padding:7px 10px;border-bottom:1px solid #e5e7eb;text-align:right;\">2</td></tr></tbody></table>\n<p style=\"text-align:right;font-size:15px;margin-top:14px;\"><strong>Total: 2 unidades</strong></p>\n<div style=\"margin-top:48px;display:flex;justify-content:space-between;color:#6b7280;\"><span>Firma y aclaración del receptor: ____________________</span><span>Fecha de recepción: ___ / ___ / ______</span></div>\n<p style=\"margin-top:36px;padding:8px;border:2px dashed #b91c1c;color:#b91c1c;text-align:center;font-weight:bold;\">Documento no válido como factura — demo académica</p>\n</body></html>",
+                      "remito_url": "data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiPjx0aXRsZT5SZW1pdG8gY212MGJibG82MDA3NnlzdTV5azZ4MmZ6bjwvdGl0bGU+PC9oZWFkPjxib2R5IHN0eWxlPSJmb250LWZhbWlseTpBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxM3B4O2NvbG9yOiMxMTE7bWFyZ2luOjA7cGFkZGluZzozMnB4OyI+CjxkaXYgc3R5bGU9ImRpc3BsYXk6ZmxleDtqdXN0aWZ5LWNvbnRlbnQ6c3BhY2UtYmV0d2Vlbjtib3JkZXItYm90dG9tOjNweCBzb2xpZCAjMTY2NTM0O3BhZGRpbmctYm90dG9tOjEycHg7Ij4KICA8ZGl2PjxoMSBzdHlsZT0ibWFyZ2luOjA7Y29sb3I6IzE2NjUzNDtmb250LXNpemU6MjJweDsiPkdvbGRlbiBIYXJ2ZXN0IFMuQS48L2gxPjxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Y29sb3I6IzZiNzI4MDsiPlJlbWl0byBkZSBlbnRyZWdhPC9wPjwvZGl2PgogIDxkaXYgc3R5bGU9InRleHQtYWxpZ246cmlnaHQ7Ij48cCBzdHlsZT0ibWFyZ2luOjJweCAwOyI+PHN0cm9uZz5SZW1pdG8g4oCUIE9yZGVuICNjbXYwYmJsbzYwMDc2eXN1NXlrNngyZnpuPC9zdHJvbmc+PC9wPjxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Ij5GZWNoYTogMDkgZGUgb2N0dWJyZSBkZSAyMDI2PC9wPjwvZGl2Pgo8L2Rpdj4KPGRpdiBzdHlsZT0ibWFyZ2luOjE4cHggMDsiPgogIDxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Ij48c3Ryb25nPkNsaWVudGU6PC9zdHJvbmc+IFBydWViYSBIdW1vPC9wPjxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Ij48c3Ryb25nPkVtYWlsOjwvc3Ryb25nPiBodW1vQGV4YW1wbGUudGVzdDwvcD4KICA8cCBzdHlsZT0ibWFyZ2luOjJweCAwOyI+PHN0cm9uZz5Mb2NhbGlkYWQgZGUgZW50cmVnYTo8L3N0cm9uZz4gPHNwYW4+R29kb3kgQ3J1ejwvc3Bhbj48L3A+CjwvZGl2Pgo8dGFibGUgc3R5bGU9IndpZHRoOjEwMCU7Ym9yZGVyLWNvbGxhcHNlOmNvbGxhcHNlOyI+PHRoZWFkPjx0cj48dGggc3R5bGU9InBhZGRpbmc6OHB4IDEwcHg7dGV4dC1hbGlnbjpsZWZ0O2JvcmRlci1ib3R0b206MnB4IHNvbGlkICMxNjY1MzQ7Ij5Qcm9kdWN0bzwvdGg+PHRoIHN0eWxlPSJwYWRkaW5nOjhweCAxMHB4O3RleHQtYWxpZ246bGVmdDtib3JkZXItYm90dG9tOjJweCBzb2xpZCAjMTY2NTM0OyI+TMOtbmVhPC90aD48dGggc3R5bGU9InBhZGRpbmc6OHB4IDEwcHg7dGV4dC1hbGlnbjpsZWZ0O2JvcmRlci1ib3R0b206MnB4IHNvbGlkICMxNjY1MzQ7Ij5QcmVzZW50YWNpw7NuPC90aD48dGggc3R5bGU9InBhZGRpbmc6OHB4IDEwcHg7dGV4dC1hbGlnbjpsZWZ0O2JvcmRlci1ib3R0b206MnB4IHNvbGlkICMxNjY1MzQ7dGV4dC1hbGlnbjpyaWdodDsiPlVuaWRhZGVzPC90aD48L3RyPjwvdGhlYWQ+PHRib2R5Pjx0cj48dGQgc3R5bGU9InBhZGRpbmc6N3B4IDEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U1ZTdlYjsiPlRvbWF0ZSBFbnRlcm8gUGVsYWRvPC90ZD48dGQgc3R5bGU9InBhZGRpbmc6N3B4IDEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U1ZTdlYjsiPkzDrW5lYSBSb2phPC90ZD48dGQgc3R5bGU9InBhZGRpbmc6N3B4IDEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U1ZTdlYjsiPjFrZzwvdGQ+PHRkIHN0eWxlPSJwYWRkaW5nOjdweCAxMHB4O2JvcmRlci1ib3R0b206MXB4IHNvbGlkICNlNWU3ZWI7dGV4dC1hbGlnbjpyaWdodDsiPjI8L3RkPjwvdHI+PC90Ym9keT48L3RhYmxlPgo8cCBzdHlsZT0idGV4dC1hbGlnbjpyaWdodDtmb250LXNpemU6MTVweDttYXJnaW4tdG9wOjE0cHg7Ij48c3Ryb25nPlRvdGFsOiAyIHVuaWRhZGVzPC9zdHJvbmc+PC9wPgo8ZGl2IHN0eWxlPSJtYXJnaW4tdG9wOjQ4cHg7ZGlzcGxheTpmbGV4O2p1c3RpZnktY29udGVudDpzcGFjZS1iZXR3ZWVuO2NvbG9yOiM2YjcyODA7Ij48c3Bhbj5GaXJtYSB5IGFjbGFyYWNpw7NuIGRlbCByZWNlcHRvcjogX19fX19fX19fX19fX19fX19fX188L3NwYW4+PHNwYW4+RmVjaGEgZGUgcmVjZXBjacOzbjogX19fIC8gX19fIC8gX19fX19fPC9zcGFuPjwvZGl2Pgo8cCBzdHlsZT0ibWFyZ2luLXRvcDozNnB4O3BhZGRpbmc6OHB4O2JvcmRlcjoycHggZGFzaGVkICNiOTFjMWM7Y29sb3I6I2I5MWMxYzt0ZXh0LWFsaWduOmNlbnRlcjtmb250LXdlaWdodDpib2xkOyI+RG9jdW1lbnRvIG5vIHbDoWxpZG8gY29tbyBmYWN0dXJhIOKAlCBkZW1vIGFjYWTDqW1pY2E8L3A+CjwvYm9keT48L2h0bWw+"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Remito PDF (Puppeteer)": [
+          {
+            "startTime": 1792012623877,
+            "executionIndex": 5,
+            "source": [
+              {
+                "previousNode": "Armar Remito HTML",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 580,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "binary": {
+                      "data": {
+                        "mimeType": "application/pdf",
+                        "fileType": "pdf",
+                        "fileExtension": "pdf",
+                        "data": "filesystem-v2",
+                        "id": "filesystem-v2:workflows/pIlvvd0nTN7mfJOL/executions/140/binary_data/fe873894-77b3-470c-9aef-a85495922f08",
+                        "fileSize": "38.9 kB",
+                        "bytes": 38878
+                      }
+                    },
+                    "json": {
+                      "headers": {
+                        "content-type": "text/html;charset=utf-8"
+                      },
+                      "statusCode": 200,
+                      "url": "data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+PGh0bWw+PGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiPjx0aXRsZT5SZW1pdG8gY212MGJibG82MDA3NnlzdTV5azZ4MmZ6bjwvdGl0bGU+PC9oZWFkPjxib2R5IHN0eWxlPSJmb250LWZhbWlseTpBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxM3B4O2NvbG9yOiMxMTE7bWFyZ2luOjA7cGFkZGluZzozMnB4OyI+CjxkaXYgc3R5bGU9ImRpc3BsYXk6ZmxleDtqdXN0aWZ5LWNvbnRlbnQ6c3BhY2UtYmV0d2Vlbjtib3JkZXItYm90dG9tOjNweCBzb2xpZCAjMTY2NTM0O3BhZGRpbmctYm90dG9tOjEycHg7Ij4KICA8ZGl2PjxoMSBzdHlsZT0ibWFyZ2luOjA7Y29sb3I6IzE2NjUzNDtmb250LXNpemU6MjJweDsiPkdvbGRlbiBIYXJ2ZXN0IFMuQS48L2gxPjxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Y29sb3I6IzZiNzI4MDsiPlJlbWl0byBkZSBlbnRyZWdhPC9wPjwvZGl2PgogIDxkaXYgc3R5bGU9InRleHQtYWxpZ246cmlnaHQ7Ij48cCBzdHlsZT0ibWFyZ2luOjJweCAwOyI+PHN0cm9uZz5SZW1pdG8g4oCUIE9yZGVuICNjbXYwYmJsbzYwMDc2eXN1NXlrNngyZnpuPC9zdHJvbmc+PC9wPjxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Ij5GZWNoYTogMDkgZGUgb2N0dWJyZSBkZSAyMDI2PC9wPjwvZGl2Pgo8L2Rpdj4KPGRpdiBzdHlsZT0ibWFyZ2luOjE4cHggMDsiPgogIDxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Ij48c3Ryb25nPkNsaWVudGU6PC9zdHJvbmc+IFBydWViYSBIdW1vPC9wPjxwIHN0eWxlPSJtYXJnaW46MnB4IDA7Ij48c3Ryb25nPkVtYWlsOjwvc3Ryb25nPiBodW1vQGV4YW1wbGUudGVzdDwvcD4KICA8cCBzdHlsZT0ibWFyZ2luOjJweCAwOyI+PHN0cm9uZz5Mb2NhbGlkYWQgZGUgZW50cmVnYTo8L3N0cm9uZz4gPHNwYW4+R29kb3kgQ3J1ejwvc3Bhbj48L3A+CjwvZGl2Pgo8dGFibGUgc3R5bGU9IndpZHRoOjEwMCU7Ym9yZGVyLWNvbGxhcHNlOmNvbGxhcHNlOyI+PHRoZWFkPjx0cj48dGggc3R5bGU9InBhZGRpbmc6OHB4IDEwcHg7dGV4dC1hbGlnbjpsZWZ0O2JvcmRlci1ib3R0b206MnB4IHNvbGlkICMxNjY1MzQ7Ij5Qcm9kdWN0bzwvdGg+PHRoIHN0eWxlPSJwYWRkaW5nOjhweCAxMHB4O3RleHQtYWxpZ246bGVmdDtib3JkZXItYm90dG9tOjJweCBzb2xpZCAjMTY2NTM0OyI+TMOtbmVhPC90aD48dGggc3R5bGU9InBhZGRpbmc6OHB4IDEwcHg7dGV4dC1hbGlnbjpsZWZ0O2JvcmRlci1ib3R0b206MnB4IHNvbGlkICMxNjY1MzQ7Ij5QcmVzZW50YWNpw7NuPC90aD48dGggc3R5bGU9InBhZGRpbmc6OHB4IDEwcHg7dGV4dC1hbGlnbjpsZWZ0O2JvcmRlci1ib3R0b206MnB4IHNvbGlkICMxNjY1MzQ7dGV4dC1hbGlnbjpyaWdodDsiPlVuaWRhZGVzPC90aD48L3RyPjwvdGhlYWQ+PHRib2R5Pjx0cj48dGQgc3R5bGU9InBhZGRpbmc6N3B4IDEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U1ZTdlYjsiPlRvbWF0ZSBFbnRlcm8gUGVsYWRvPC90ZD48dGQgc3R5bGU9InBhZGRpbmc6N3B4IDEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U1ZTdlYjsiPkzDrW5lYSBSb2phPC90ZD48dGQgc3R5bGU9InBhZGRpbmc6N3B4IDEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U1ZTdlYjsiPjFrZzwvdGQ+PHRkIHN0eWxlPSJwYWRkaW5nOjdweCAxMHB4O2JvcmRlci1ib3R0b206MXB4IHNvbGlkICNlNWU3ZWI7dGV4dC1hbGlnbjpyaWdodDsiPjI8L3RkPjwvdHI+PC90Ym9keT48L3RhYmxlPgo8cCBzdHlsZT0idGV4dC1hbGlnbjpyaWdodDtmb250LXNpemU6MTVweDttYXJnaW4tdG9wOjE0cHg7Ij48c3Ryb25nPlRvdGFsOiAyIHVuaWRhZGVzPC9zdHJvbmc+PC9wPgo8ZGl2IHN0eWxlPSJtYXJnaW4tdG9wOjQ4cHg7ZGlzcGxheTpmbGV4O2p1c3RpZnktY29udGVudDpzcGFjZS1iZXR3ZWVuO2NvbG9yOiM2YjcyODA7Ij48c3Bhbj5GaXJtYSB5IGFjbGFyYWNpw7NuIGRlbCByZWNlcHRvcjogX19fX19fX19fX19fX19fX19fX188L3NwYW4+PHNwYW4+RmVjaGEgZGUgcmVjZXBjacOzbjogX19fIC8gX19fIC8gX19fX19fPC9zcGFuPjwvZGl2Pgo8cCBzdHlsZT0ibWFyZ2luLXRvcDozNnB4O3BhZGRpbmc6OHB4O2JvcmRlcjoycHggZGFzaGVkICNiOTFjMWM7Y29sb3I6I2I5MWMxYzt0ZXh0LWFsaWduOmNlbnRlcjtmb250LXdlaWdodDpib2xkOyI+RG9jdW1lbnRvIG5vIHbDoWxpZG8gY29tbyBmYWN0dXJhIOKAlCBkZW1vIGFjYWTDqW1pY2E8L3A+CjwvYm9keT48L2h0bWw+"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Nombrar PDF": [
+          {
+            "startTime": 1792012624466,
+            "executionIndex": 6,
+            "source": [
+              {
+                "previousNode": "Remito PDF (Puppeteer)",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 16,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "cmv0bblo60076ysu5yk6x2fzn",
+                      "customer_nombre": "Prueba Humo",
+                      "customer_empresa": null,
+                      "customer_telefono": null,
+                      "customer_email": "humo@example.test",
+                      "localidad": "Godoy Cruz",
+                      "total": 2,
+                      "items": [
+                        {
+                          "name": "Tomate Entero Pelado",
+                          "size": "1kg",
+                          "qty": 2,
+                          "line": "roja"
+                        }
+                      ],
+                      "fecha_orden": "2026-10-09T01:54:39.606Z",
+                      "origen": "api"
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    },
+                    "binary": {
+                      "data": {
+                        "mimeType": "application/pdf",
+                        "fileType": "pdf",
+                        "fileExtension": "pdf",
+                        "data": "filesystem-v2",
+                        "id": "filesystem-v2:workflows/pIlvvd0nTN7mfJOL/executions/140/binary_data/fe873894-77b3-470c-9aef-a85495922f08",
+                        "fileSize": "38.9 kB",
+                        "bytes": 38878,
+                        "fileName": "remito-cmv0bblo60076ysu5yk6x2fzn.pdf"
+                      }
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Generar Resumen de Despacho": [
+          {
+            "startTime": 1792012624498,
+            "executionIndex": 7,
+            "source": [
+              {
+                "previousNode": "Nombrar PDF",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 10,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "summary_html": "\n<div style=\"font-family:sans-serif;max-width:680px;margin:0 auto;padding:24px;\">\n  <h2 style=\"color:#166534;\">Golden Harvest S.A. — Resumen de despacho</h2>\n  <p style=\"color:#6b7280;\">Fecha: 14 de octubre de 2026</p>\n  <p>Se procesaron <strong>1</strong> orden(es) confirmada(s):</p>\n  <table style=\"width:100%;border-collapse:collapse;font-size:14px;\">\n    <thead><tr style=\"background:#f3f4f6;\">\n      <th style=\"padding:8px 12px;text-align:left;\">Orden</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Cliente</th>\n      <th style=\"padding:8px 12px;text-align:left;\">Localidad</th>\n      <th style=\"padding:8px 12px;text-align:right;\">Unidades</th>\n    </tr></thead>\n    <tbody><tr>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">#cmv0bblo60076ysu5yk6x2fzn</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">Prueba Humo</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;\">Godoy Cruz</td>\n    <td style=\"padding:6px 12px;border-bottom:1px solid #e5e7eb;text-align:right;\">2 u.</td>\n  </tr></tbody>\n  </table>\n  <p>Remitos adjuntos (PDF): <code>remito-cmv0bblo60076ysu5yk6x2fzn.pdf</code></p>\n  <p style=\"margin-top:20px;font-size:12px;color:#9ca3af;\">Golden Harvest S.A. — Sistema Automatizado de Logística</p>\n</div>",
+                      "total": 1,
+                      "fecha": "2026-10-14",
+                      "remitos": [
+                        {
+                          "order_id": "cmv0bblo60076ysu5yk6x2fzn",
+                          "archivo": "remito-cmv0bblo60076ysu5yk6x2fzn.pdf"
+                        }
+                      ],
+                      "adjuntos": "remito_1"
+                    },
+                    "binary": {
+                      "remito_1": {
+                        "mimeType": "application/pdf",
+                        "fileType": "pdf",
+                        "fileExtension": "pdf",
+                        "data": "filesystem-v2",
+                        "id": "filesystem-v2:workflows/pIlvvd0nTN7mfJOL/executions/140/binary_data/fe873894-77b3-470c-9aef-a85495922f08",
+                        "fileSize": "38.9 kB",
+                        "bytes": 38878,
+                        "fileName": "remito-cmv0bblo60076ysu5yk6x2fzn.pdf"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Gmail — Enviar Resumen de Despacho (TESIS)": [
+          {
+            "startTime": 1792012624518,
+            "executionIndex": 8,
+            "source": [
+              {
+                "previousNode": "Generar Resumen de Despacho",
+                "previousNodeOutput": 0,
+                "previousNodeRun": 0
+              }
+            ],
+            "hints": [],
+            "executionTime": 1506,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "id": "1a13c46310d90837",
+                      "threadId": "1a13c46310d90837",
+                      "labelIds": [
+                        "SENT"
+                      ]
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Gmail — Enviar Resumen de Despacho (TESIS)"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {},
+      "runtimeData": {
+        "version": 1,
+        "establishedAt": 1792012623149,
+        "source": "cli",
+        "triggerNode": {
+          "name": "Manual Trigger",
+          "type": "n8n-nodes-base.manualTrigger"
+        }
+      }
+    },
+    "resumeToken": "a2c28abba22ca3aac614cf8a508749e6c890d357df5364600487861cedafcf4c"
+  },
+  "mode": "cli",
+  "startedAt": "2026-10-14T21:17:03.145Z",
+  "stoppedAt": "2026-10-14T21:17:06.036Z",
+  "storedAt": "db",
+  "status": "success",
+  "finished": true
+}
