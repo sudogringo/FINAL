@@ -1,0 +1,35 @@
+# Blueprint de Render para el backend de Golden Harvest S.A. (plan gratuito).
+# La base de datos es un proyecto Neon aparte (plan gratuito): se pega su
+# cadena de conexión en DATABASE_URL desde el panel de Render.
+# Guía completa: docs/architecture/deploy-remoto.md
+services:
+  - type: web
+    name: golden-harvest-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm ci --include=dev && npm run build:render
+    startCommand: npm run start:render   # prisma migrate deploy && node dist/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "20"
+      # Secretos: se cargan a mano en el panel de Render (nunca en el repositorio).
+      - key: DATABASE_URL        # Neon; debe incluir ?sslmode=require
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: SERVICE_API_KEY
+        sync: false
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
+      - key: FRONTEND_URL        # origen(es) del frontend, separados por coma
+        sync: false
+      # n8n corre en local: sin URL pública los webhooks quedan SKIPPED en el outbox.
+      # Si se expone n8n (p. ej. con un túnel), completar estas variables.
+      - key: N8N_QUOTE_WEBHOOK
+        sync: false
+      - key: N8N_LOGISTICS_WEBHOOK
+        sync: false

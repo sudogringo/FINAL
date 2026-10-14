@@ -7,11 +7,13 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "build:render": "prisma generate && tsc",
+    "start:render": "prisma migrate deploy && node dist/index.js",
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
     "db:seed": "tsx src/seed.ts",
     "db:studio": "prisma studio",
-    "test": "tsx --test src/middleware/auth.test.ts src/middleware/errors.test.ts src/routes/quoteContact.test.ts src/routes/quoteClose.test.ts src/seedAdmin.test.ts src/routes/productSchema.test.ts"
+    "test": "tsx --test src/middleware/auth.test.ts src/middleware/errors.test.ts src/routes/quoteContact.test.ts src/routes/quoteClose.test.ts src/seedAdmin.test.ts src/routes/productSchema.test.ts src/webhooks/outbox.test.ts src/webhooks/dispatcher.test.ts src/webhooks/store.test.ts src/routes/quoteCreate.test.ts src/routes/health.test.ts src/routes/webhookDeliveries.test.ts src/middleware/rateLimit.test.ts src/middleware/cors.test.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

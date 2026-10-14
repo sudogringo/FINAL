@@ -4,6 +4,12 @@ import { prisma } from '../db'
 import { requireAuth } from '../middleware/auth'
 import { contactSchema, customerUpsertArgs } from './quoteContact'
 import { planQuoteClose, unknownProductIds, type QuoteItem } from './quoteClose'
+import { persistQuote } from './quoteCreate'
+import { attemptDelivery } from '../webhooks/dispatcher'
+import { enqueueDelivery } from '../webhooks/store'
+import { orderConfirmedDelivery, DEFAULT_CONFIG } from '../webhooks/outbox'
+import { dispatcherDeps } from '../webhooks/runtime'
+import { quoteRateLimit } from '../middleware/rateLimit'
 
 export const quotesRouter = Router()
 
@@ -22,44 +28,8 @@ const quoteSchema = z.object({
   })).min(1),
 })
 
-async function fireWebhook(url: string, payload: unknown) {
-  if (!url) return
-  try {
-    await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
-  } catch (err) {
-    console.error('[webhook] error disparando', url, err)
-  }
-}
-
-// Instrumentación VD2 (§3.2): dispara el webhook y espera la respuesta de n8n,
-// que incluye t1_start/t1_end de su propia ejecución. Solo se usa en modo medición
-// (MEASURE_LATENCY=true) — en el resto de los casos fireWebhook() sigue siendo
-// fire-and-forget para no meterle latencia real a la UX de producción.
-async function fireWebhookAndWait(url: string, payload: unknown): Promise<unknown | null> {
-  if (!url) return null
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
-    if (!res.ok) {
-      console.error('[webhook] respuesta no-ok en modo medición', url, res.status)
-      return null
-    }
-    return await res.json()
-  } catch (err) {
-    console.error('[webhook] error disparando (modo medición)', url, err)
-    return null
-  }
-}
-
 // Public — frontend submits quote
-quotesRouter.post('/', async (req: Request, res: Response) => {
+quotesRouter.post('/', quoteRateLimit, async (req: Request, res: Response) => {
   const receivedAt = new Date().toISOString()
   const result = quoteSchema.safeParse(req.body)
   if (!result.success) {
@@ -87,50 +57,40 @@ quotesRouter.post('/', async (req: Request, res: Response) => {
     return
   }
 
-  // Persistencia: si la base no responde, se informa 503 en lugar de dejar caer el
-  // proceso (Express 4 no captura rechazos de handlers async). No se dispara ningún
-  // webhook: sin cotización persistida no hay nada que notificar.
-  let quote
+  // Persistencia: cliente, cotización y entrega pendiente del webhook van en una
+  // sola transacción (outbox). Si la base no responde se informa 503 y no queda
+  // nada a medias. La notificación a n8n la hace el dispatcher en segundo plano,
+  // con reintentos: la respuesta al cliente nunca espera a n8n.
+  const measure = process.env.MEASURE_LATENCY === 'true'
+  let persisted
   try {
-    // Upsert customer por email (sin pisar datos de un cliente existente)
-    const stored = await prisma.customer.findUnique({
-      where:  { email: contact.email },
-      select: { empresa: true, telefono: true, localidad: true },
-    })
-    const customer = await prisma.customer.upsert(customerUpsertArgs(contact, stored))
-
-    quote = await prisma.quote.create({
-      data: { sessionId, contact, items, customerId: customer.id },
+    persisted = await persistQuote(prisma, { sessionId, contact, items, clientSubmittedAt }, {
+      // En modo medición la entrega se "estaciona" (lease) mientras se envía en línea.
+      nextAttemptAt: measure ? new Date(Date.now() + DEFAULT_CONFIG.leaseMs) : undefined,
     })
   } catch (err) {
     console.error(JSON.stringify({ event: 'quote_persist_failed', sessionId, error: String(err) }))
     res.status(503).json({ error: 'No se pudo registrar la solicitud. Intentá de nuevo en unos minutos.' })
     return
   }
+  const { quote, delivery } = persisted
 
-  const webhookUrl = process.env.N8N_QUOTE_WEBHOOK ?? ''
-  const webhookPayload = {
-    quoteId:   quote.id,
-    sessionId: quote.sessionId,
-    contact,
-    items,
-    createdAt: quote.createdAt,
-    clientSubmittedAt,
-  }
-
-  // Modo medición VD2 (§3.2): espera la respuesta de n8n con t1_start/t1_end y la
-  // devuelve en la respuesta HTTP, para que el script de docs/research/quote-latency/
-  // pueda calcular la latencia end-to-end. Gateado por env var para no afectar el
-  // comportamiento normal (fire-and-forget) de la UX de producción.
-  if (process.env.MEASURE_LATENCY === 'true') {
-    const n8nResult = await fireWebhookAndWait(webhookUrl, webhookPayload)
+  // Modo medición VD2 (§3.2): envía la entrega en línea (misma lógica y mismo
+  // estado que el dispatcher) y devuelve la respuesta de n8n con t1_start/t1_end,
+  // para que el script de docs/research/quote-latency/ calcule la latencia
+  // end-to-end. Si el intento falla, la entrega queda PENDING con backoff y el
+  // dispatcher la reintenta. Gateado por env var: no afecta a producción.
+  if (measure) {
+    let n8nResult: unknown = null
+    try {
+      n8nResult = (await attemptDelivery(delivery, dispatcherDeps)).body
+    } catch (err) {
+      console.error('[webhook] error en modo medición', err)
+    }
     console.log(JSON.stringify({ event: 'quote_notified', quoteId: quote.id, n8nResult }))
     res.status(201).json({ id: quote.id, clientSubmittedAt, receivedAt, n8n: n8nResult })
     return
   }
-
-  // Disparar webhook a n8n (sin bloquear la respuesta)
-  fireWebhook(webhookUrl, webhookPayload)
 
   res.status(201).json({ id: quote.id })
 })
@@ -181,6 +141,12 @@ quotesRouter.patch('/:id/status', requireAuth, async (req: Request, res: Respons
               items:      { create: plan.orderItems },
             },
           })
+          // Webhook de logística: se registra en el outbox dentro de la misma
+          // transacción que la orden (el dispatcher lo entrega con reintentos).
+          await enqueueDelivery(tx, orderConfirmedDelivery({
+            orderId: order.id,
+            payload: { orderId: order.id, quoteId: id, contact: existing.contact, items: existing.items },
+          }))
         }
       }
 
@@ -195,15 +161,6 @@ quotesRouter.patch('/:id/status', requireAuth, async (req: Request, res: Respons
       res.status(409).json({ error: 'La cotización incluye productos que ya no existen', missing: outcome.missing }); return
     }
 
-    // Disparar webhook de logística a n8n solo después de confirmar la transacción
-    if (outcome.order) {
-      fireWebhook(process.env.N8N_LOGISTICS_WEBHOOK ?? '', {
-        orderId: outcome.order.id,
-        quoteId: id,
-        contact: outcome.contact,
-        items:   outcome.items,
-      })
-    }
     res.json(outcome.quote)
   } catch (err) {
     console.error(JSON.stringify({ event: 'quote_status_failed', quoteId: id, error: String(err) }))

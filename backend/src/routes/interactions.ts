@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express'
 import { z } from 'zod'
 import { prisma } from '../db'
 import { requireAuth } from '../middleware/auth'
+import { interactionRateLimit } from '../middleware/rateLimit'
 
 export const interactionsRouter = Router()
 
@@ -12,7 +13,7 @@ const interactionSchema = z.object({
 })
 
 // Public — frontend logs events
-interactionsRouter.post('/', async (req: Request, res: Response) => {
+interactionsRouter.post('/', interactionRateLimit, async (req: Request, res: Response) => {
   const result = interactionSchema.safeParse(req.body)
   if (!result.success) { res.status(400).json({ error: result.error.flatten() }); return }
 

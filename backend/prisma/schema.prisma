@@ -128,3 +128,29 @@ enum OrderStatus {
   ENVIADO
   CANCELADO
 }
+
+// Outbox transaccional: cada webhook hacia n8n se registra en la misma
+// transacción que la escritura de negocio y un worker lo entrega con reintentos.
+model WebhookDelivery {
+  id             String         @id @default(cuid())
+  eventType      String
+  target         String // nombre de la variable de entorno con la URL, no la URL
+  payload        Json
+  idempotencyKey String         @unique
+  status         DeliveryStatus @default(PENDING)
+  attempts       Int            @default(0)
+  nextAttemptAt  DateTime       @default(now())
+  lastError      String?
+  deliveredAt    DateTime?
+  createdAt      DateTime       @default(now())
+
+  @@index([status, nextAttemptAt])
+  @@map("webhook_deliveries")
+}
+
+enum DeliveryStatus {
+  PENDING
+  DELIVERED
+  FAILED
+  SKIPPED
+}

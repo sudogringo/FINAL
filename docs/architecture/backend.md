@@ -36,6 +36,22 @@ Routes under `backend/src/routes/`:
 
 **Not yet done**: no automated tests for the backend (frontend has Jest tests, backend doesn't); no rate limiting or input sanitization beyond Zod schemas; no connection from n8n into this layer (see Relations).
 
+## Reliable webhook delivery (transactional outbox)
+
+The backend used to call n8n fire-and-forget: if n8n was down at that moment, the notification was lost with no retry. It now uses a **transactional outbox** (`backend/src/webhooks/`):
+
+- **Enqueue.** `POST /api/quotes` writes the customer, the quote and a `WebhookDelivery` row (`quote.created`, key `quote:<id>:created`, target `N8N_QUOTE_WEBHOOK`) in the *same* DB transaction (`routes/quoteCreate.ts`). Closing a quote writes the order and an `order.confirmed` row (key `order:<id>:confirmed`, target `N8N_LOGISTICS_WEBHOOK`) in the same transaction as the stock deduction. Either everything is saved or nothing is. The HTTP response never waits for n8n.
+- **Row.** `WebhookDelivery`: `eventType`, `target` (the env var *name*, never the URL), `payload`, `idempotencyKey` (unique), `status` (`PENDING` | `DELIVERED` | `FAILED` | `SKIPPED`), `attempts`, `nextAttemptAt`, `lastError`, `deliveredAt`, `createdAt`. Migration `add_webhook_delivery`.
+- **Dispatcher.** An in-process worker (`startDispatcher`, started from `index.ts`, every 5 s) claims due `PENDING` rows with an optimistic lease, POSTs the payload with the `Idempotency-Key` header and a 10 s timeout. 2xx -> `DELIVERED`. Error or non-2xx -> `attempts + 1` and `nextAttemptAt` = 30 s x 2^n (capped at 1 h); after 8 failed attempts -> `FAILED`. Delivery is *at least once*; the key lets the receiver deduplicate.
+- **Unset URL.** If the env var named by `target` is empty (n8n local, backend remote), the row is marked `SKIPPED` with `lastError` naming the missing variable. No request is made and nothing crashes. `SKIPPED` rows are not retried automatically.
+- **Observability.** `GET /api/webhook-deliveries?status=` (admin JWT or `X-Service-Key`) lists the latest 200 rows.
+- **Latency measurement mode.** With `MEASURE_LATENCY=true` the quote route still writes the outbox row but parks it (lease) and sends it inline through the same `attemptDelivery` code, returning n8n's `t1_start`/`t1_end` in the HTTP response as before. If that inline attempt fails the row stays `PENDING` with backoff and the worker retries it. The quote rate limit is disabled in this mode.
+- **Limit.** Single-instance design (in-process timer); with several replicas the lease prevents double sends, but the in-memory rate limiter would need a shared store.
+
+## Remote deployment
+
+CORS origins come from `FRONTEND_URL` (comma-separated; localhost is allowed outside production), `PORT` is respected, `trust proxy` is on in production, `GET /api/health` returns `{status, db}`, and `POST /api/quotes` / `POST /api/interactions` are rate limited per IP (in-memory, `middleware/rateLimit.ts`). See [`deploy-remoto.md`](./deploy-remoto.md) and `render.yaml`.
+
 ## Relations
 
 - **Frontend → Backend**: reads the product catalog (`GET /products`), writes quote requests (`POST /quotes`) from the cart, admin panel does full CRUD via JWT-authenticated routes.
