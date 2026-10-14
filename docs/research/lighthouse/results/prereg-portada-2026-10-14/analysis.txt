@@ -1,0 +1,22 @@
+== prereg-portada-2026-10-14: new-hosted vs original (α por comparación = 0.0125)
+-- mobile: n = 5/5, Lighthouse ['12.8.2']
+   performance  original      37 [32–44]  nueva      76 [76–86]  p unilateral = 0.0040  SIGNIFICATIVA
+   lcp          original   11284 [4823–12808]  nueva    5815 [3417–5828]  p unilateral = 0.0278  no significativa
+   accessibility original 94  nueva 100  (no decisoria)
+   cls          original 0.372  nueva 0.001  (no decisoria)
+   tbt          original 200  nueva 3  (no decisoria)
+   LCP móvil de la página nueva: 5815 ms → Pobre (no decisoria)
+-- desktop: n = 5/5, Lighthouse ['12.8.2']
+   performance  original      73 [70–78]  nueva      93 [92–94]  p unilateral = 0.0040  SIGNIFICATIVA
+   lcp          original    2760 [2273–3036]  nueva    1589 [1468–1607]  p unilateral = 0.0040  SIGNIFICATIVA
+   accessibility original 89  nueva 100  (no decisoria)
+   cls          original 0.046  nueva 0.0  (no decisoria)
+   tbt          original 0  nueva 0  (no decisoria)
+== Comparaciones significativas: 3/4 → hipótesis CONFIRMADA PARCIALMENTE
+
+NOTA (PRERREGISTRO.md §2.5): para la portada, la única regla de decisión prerregistrada es la de
+Accessibility: «resuelta» si la mediana de la portada nueva es ≥ la del original en ambos perfiles.
+Móvil 100 ≥ 94 y escritorio 100 ≥ 89 → regresión de accesibilidad RESUELTA.
+La línea «hipótesis CONFIRMADA PARCIALMENTE» de arriba la imprime el script por defecto; para la
+portada, Performance y LCP son una réplica exploratoria del lote pareado del 08/10, no un contraste
+prerregistrado.

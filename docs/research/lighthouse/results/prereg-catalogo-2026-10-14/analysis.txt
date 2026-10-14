@@ -1,0 +1,15 @@
+== prereg-catalogo-2026-10-14: new-catalogo vs original-productos (α por comparación = 0.0125)
+-- mobile: n = 5/5, Lighthouse ['12.8.2']
+   performance  original      56 [53–57]  nueva      95 [94–95]  p unilateral = 0.0040  SIGNIFICATIVA
+   lcp          original    9438 [8035–11144]  nueva    2502 [2486–2630]  p unilateral = 0.0040  SIGNIFICATIVA
+   accessibility original 90  nueva 100  (no decisoria)
+   cls          original 0.001  nueva 0.003  (no decisoria)
+   tbt          original 236  nueva 14  (no decisoria)
+   LCP móvil de la página nueva: 2502 ms → Necesita mejora (no decisoria)
+-- desktop: n = 5/5, Lighthouse ['12.8.2']
+   performance  original      76 [72–76]  nueva      99 [98–99]  p unilateral = 0.0040  SIGNIFICATIVA
+   lcp          original    2465 [2426–3187]  nueva     823 [788–866]  p unilateral = 0.0040  SIGNIFICATIVA
+   accessibility original 86  nueva 100  (no decisoria)
+   cls          original 0.001  nueva 0.006  (no decisoria)
+   tbt          original 2  nueva 0  (no decisoria)
+== Comparaciones significativas: 4/4 → hipótesis CONFIRMADA
