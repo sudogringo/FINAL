@@ -1,6 +1,7 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { Search, X } from 'lucide-react'
-import { fetchProducts, type ApiProduct } from '../../admin/api'
+import type { ApiProduct } from '../../admin/api'
+import { useProducts } from '../useProducts'
 import type { Product } from '../../../data/products'
 import ProductCard from './ProductCard'
 
@@ -11,17 +12,11 @@ function toProduct(p: ApiProduct): Product {
 }
 
 export default function ProductList() {
-  const [allProducts, setAllProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true)
+  const { products: apiProducts, status, retry, canRetry } = useProducts()
+  const allProducts = useMemo(() => apiProducts.map(toProduct), [apiProducts])
+  const loading = status === 'loading' || status === 'waking'
   const [filter, setFilter] = useState<Filter>('all')
   const [search, setSearch] = useState('')
-
-  useEffect(() => {
-    fetchProducts()
-      .then(data => setAllProducts(data.map(toProduct)))
-      .catch(() => setAllProducts([]))
-      .finally(() => setLoading(false))
-  }, [])
 
   const base = useMemo(
     () => filter === 'all' ? allProducts : allProducts.filter(p => p.line === filter),
@@ -80,13 +75,31 @@ export default function ProductList() {
         </div>
       </div>
 
+      {status === 'waking' && (
+        <p role="status" aria-live="polite" className="mb-6 text-dark/70 text-[14px] font-body">
+          Despertando el servidor… el catálogo se aloja en un servicio gratuito que tarda hasta un minuto en iniciar. Gracias por esperar.
+        </p>
+      )}
+      {status === 'unavailable' && (
+        <div role="status" aria-live="polite" className="text-center py-16">
+          <p className="text-dark/70 text-[15px] font-body">
+            Catálogo no disponible por el momento. Probá de nuevo en unos minutos.
+          </p>
+          {canRetry && (
+            <button onClick={retry} className="mt-3 text-gold-text hover:text-dark text-[12px] font-heading uppercase tracking-widest transition-colors">
+              Reintentar
+            </button>
+          )}
+        </div>
+      )}
+
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div aria-hidden="true" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="h-64 rounded-2xl bg-dark/5 animate-pulse" />
           ))}
         </div>
-      ) : products.length > 0 ? (
+      ) : status === 'unavailable' ? null : products.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {products.map(p => <ProductCard key={p.id} product={p} />)}
         </div>

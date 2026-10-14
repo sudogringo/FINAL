@@ -19,16 +19,16 @@ count changes.
 
 | | |
 |---|---|
-| Date | 2026-10-14 (commit `d1cadee`) |
+| Date | 2026-10-14 (second run, before the artifact commit) |
 | Node | v22.14.0 |
 | Command | `npx jest --verbose` in `frontend/` |
-| Result | **14 test suites passed, 91 tests passed, 0 failed** |
-| Raw output | [`test-run-2026-10-14-verbose.txt`](./test-run-2026-10-14-verbose.txt) |
+| Result | **20 test suites passed, 122 tests passed, 0 failed** |
+| Raw output | [`test-run-2026-10-14b-verbose.txt`](./test-run-2026-10-14b-verbose.txt) |
 
-The 14 new tests (14/10/2026, commit `8132bbd`) fix the accessibility corrections:
+The first 14/10 run (`test-run-2026-10-14-verbose.txt`: 14 suites, 91 tests) added the accessibility tests (commit `8132bbd`) fix the accessibility corrections:
 carousel dots with accessible name, aria-current and 24x24 hit area
 (`Production.a11y.test.tsx`), heading order on /catalogo (`CatalogoPage.heading.test.tsx`)
-and the text-safe gold tokens (`contrast.test.tsx`).
+and the text-safe gold tokens (`contrast.test.tsx`). The second run adds 31: remote API URL resolution, fetch retry with backoff for the free-tier cold start, the catalog loading / waking / unavailable states, the GitHub Pages SPA fallback, and the phone validation that counts digits (the form rejected its own placeholder).
 
 Earlier runs: 2026-10-08 (11 suites, 77 tests), 2026-08-07 (verbose, cited in Anexo C of the R34: 10 suites, 70 tests) and
 2026-08-06. The 7 new tests (08/10/2026) cover the academic-project notice on the published

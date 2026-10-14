@@ -32,8 +32,13 @@ jobs:
       - run: npm run lint
         working-directory: ./frontend
 
+      # VITE_API_URL is a public URL (not a secret): set it under
+      # Settings > Secrets and variables > Actions > Variables (e.g. https://<service>.onrender.com).
+      # If unset, the build still succeeds and /catalogo shows "catálogo no disponible".
       - run: npm run build
         working-directory: ./frontend
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

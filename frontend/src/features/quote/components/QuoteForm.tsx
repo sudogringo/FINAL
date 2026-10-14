@@ -5,12 +5,13 @@ import { z } from 'zod'
 import { X, Send, CheckCircle2, Loader2 } from 'lucide-react'
 import { useCart } from '../../cart/CartContext'
 import { submitQuote } from '../../admin/api'
+import { PHONE_RE } from '../phone'
 
 const schema = z.object({
   nombre:   z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
   empresa:  z.string().optional(),
   telefono: z.string()
-    .regex(/^\+?[\d\s-]{8,15}$/, 'Teléfono inválido (8-15 dígitos)')
+    .regex(PHONE_RE, 'Teléfono inválido (8-15 dígitos)')
     .optional()
     .or(z.literal('')),
   email:    z.string().email('Email inválido'),

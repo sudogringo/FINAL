@@ -1,4 +1,7 @@
-const BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:3001'
+import { API_URL } from '../../config'
+import { HttpError } from '../../lib/fetchWithRetry'
+
+const BASE = API_URL
 
 export interface ApiProduct {
   id: string
@@ -60,9 +63,9 @@ function authHeaders(token: string) {
 
 // ─── Products ────────────────────────────────────────────────────────────────
 
-export async function fetchProducts(): Promise<ApiProduct[]> {
-  const res = await fetch(`${BASE}/api/products`)
-  if (!res.ok) throw new Error('Error al obtener productos')
+export async function fetchProducts(signal?: AbortSignal): Promise<ApiProduct[]> {
+  const res = await fetch(`${BASE}/api/products`, signal ? { signal } : undefined)
+  if (!res.ok) throw new HttpError(res.status, 'Error al obtener productos')
   return res.json()
 }
 
