@@ -22,6 +22,7 @@ export default function ProductCard({ product }: Props) {
   }, [product.id])
 
   const accent   = product.line === 'roja' ? '#C0392B' : '#A89D4F'
+  const accentText = product.line === 'roja' ? '#C0392B' : '#756A2B' // text-safe: >=4.5:1 on the cream card
   const imageUrl = product.imageUrl
 
   const stockForSize = product.stockBySize[size] ?? 0
@@ -63,23 +64,23 @@ export default function ProductCard({ product }: Props) {
             <span className="w-2 h-2" style={{ background: accent }} />
             <span
               className="text-[10px] font-heading font-bold tracking-[0.2em] uppercase"
-              style={{ color: accent }}
+              style={{ color: accentText }}
             >
               {product.line === 'roja' ? 'Línea Roja' : 'Línea Dorada'}
             </span>
           </div>
-          <h3 className="text-dark font-heading font-bold text-lg leading-tight">
+          <h2 className="text-dark font-heading font-bold text-lg leading-tight">
             {product.name}
-          </h3>
+          </h2>
         </div>
 
-        <p className="text-dark/50 text-[13px] font-body leading-relaxed flex-1">
+        <p className="text-dark/70 text-[13px] font-body leading-relaxed flex-1">
           {product.description}
         </p>
 
         {/* Size selector */}
         <div>
-          <p className="text-dark/35 text-[9px] font-heading font-bold tracking-[0.3em] uppercase mb-2">
+          <p className="text-dark/65 text-[9px] font-heading font-bold tracking-[0.3em] uppercase mb-2">
             Presentación
           </p>
           <div className="flex gap-2">
@@ -91,7 +92,7 @@ export default function ProductCard({ product }: Props) {
                 className={`flex-1 py-2 rounded-xl text-[12px] font-heading font-bold border transition-all duration-200 ${
                   size === s
                     ? 'bg-dark text-white border-dark'
-                    : 'bg-white text-dark/60 border-dark/15 hover:border-dark/30'
+                    : 'bg-white text-dark/70 border-dark/15 hover:border-dark/30'
                 }`}
               >
                 {s}
@@ -106,7 +107,7 @@ export default function ProductCard({ product }: Props) {
             <button
               onClick={() => setQty(q => Math.max(1, q - 1))}
               disabled={noStock}
-              className="w-8 h-8 rounded-full border border-dark/15 flex items-center justify-center text-dark/50 hover:text-dark hover:border-dark/30 transition-colors shrink-0 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="w-8 h-8 rounded-full border border-dark/15 flex items-center justify-center text-dark/65 hover:text-dark hover:border-dark/30 transition-colors shrink-0 disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Reducir cantidad"
             >
               <Minus size={12} />
@@ -129,19 +130,19 @@ export default function ProductCard({ product }: Props) {
             <button
               onClick={() => setQty(q => Math.min(q + 1, maxQty))}
               disabled={noStock || atLimit}
-              className="w-8 h-8 rounded-full border border-dark/15 flex items-center justify-center text-dark/50 hover:text-dark hover:border-dark/30 transition-colors shrink-0 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="w-8 h-8 rounded-full border border-dark/15 flex items-center justify-center text-dark/65 hover:text-dark hover:border-dark/30 transition-colors shrink-0 disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Aumentar cantidad"
             >
               <Plus size={12} />
             </button>
             {stockForSize > 0 && (
-              <p className="ml-auto text-dark/35 text-[10px] font-body">
-                Disponible: <span className={atLimit ? 'text-red-line/80' : 'text-dark/45'}>{stockForSize.toLocaleString('es-AR')}</span>
+              <p className="ml-auto text-dark/65 text-[10px] font-body">
+                Disponible: <span className={atLimit ? 'text-red-line' : 'text-dark/65'}>{stockForSize.toLocaleString('es-AR')}</span>
               </p>
             )}
           </div>
           {atLimit && !noStock && (
-            <p className="text-red-line/70 text-[9px] font-body mt-1.5">Límite de stock alcanzado</p>
+            <p className="text-red-line text-[9px] font-body mt-1.5">Límite de stock alcanzado</p>
           )}
         </div>
 

@@ -54,7 +54,7 @@ export default function ProductList() {
               key={t.id}
               onClick={() => setFilter(t.id)}
               className={`pb-2 border-b-2 text-[11px] font-heading font-bold tracking-[0.15em] uppercase transition-colors duration-200 ${
-                filter === t.id ? 'border-gold text-dark' : 'border-transparent text-dark/40 hover:text-dark/60'
+                filter === t.id ? 'border-gold text-dark' : 'border-transparent text-dark/65 hover:text-dark'
               }`}
             >
               {t.label} · {t.count}
@@ -63,17 +63,17 @@ export default function ProductList() {
         </div>
 
         <div className="relative w-full sm:w-64">
-          <Search size={14} className="absolute left-0 top-1/2 -translate-y-1/2 text-dark/35" />
+          <Search size={14} className="absolute left-0 top-1/2 -translate-y-1/2 text-dark/65" />
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Buscar producto..."
             aria-label="Buscar producto"
-            className="w-full bg-transparent border-b border-dark/15 text-dark placeholder:text-dark/35 pl-6 pr-6 py-1.5 text-[13px] font-body focus:outline-none focus:border-gold/60 transition-colors"
+            className="w-full bg-transparent border-b border-dark/15 text-dark placeholder:text-dark/65 pl-6 pr-6 py-1.5 text-[13px] font-body focus:outline-none focus:border-gold/60 transition-colors"
           />
           {search && (
-            <button onClick={() => setSearch('')} className="absolute right-0 top-1/2 -translate-y-1/2 text-dark/35 hover:text-dark/60">
+            <button onClick={() => setSearch('')} className="absolute right-0 top-1/2 -translate-y-1/2 text-dark/65 hover:text-dark">
               <X size={13} />
             </button>
           )}
@@ -92,21 +92,21 @@ export default function ProductList() {
         </div>
       ) : (
         <div className="text-center py-16">
-          <p className="text-dark/40 text-[15px] font-body">
-            No se encontraron productos para <span className="text-gold-dark">"{search}"</span>
+          <p className="text-dark/65 text-[15px] font-body">
+            No se encontraron productos para <span className="text-gold-text">"{search}"</span>
           </p>
-          <button onClick={() => setSearch('')} className="mt-3 text-gold-dark/70 hover:text-gold-dark text-[12px] font-heading uppercase tracking-widest transition-colors">
+          <button onClick={() => setSearch('')} className="mt-3 text-gold-text hover:text-dark text-[12px] font-heading uppercase tracking-widest transition-colors">
             Limpiar búsqueda
           </button>
         </div>
       )}
 
       <div className="mt-10 pt-6 border-t border-dark/10 flex flex-col sm:flex-row justify-between gap-2">
-        <p className="text-dark/35 text-[12px] font-body">
+        <p className="text-dark/65 text-[12px] font-body">
           Precios por cotización según volumen y destino.{' '}
-          <span className="text-gold-dark font-heading font-semibold">Sin pedido mínimo.</span>
+          <span className="text-gold-text font-heading font-semibold">Sin pedido mínimo.</span>
         </p>
-        <p className="text-dark/35 text-[12px] font-body">
+        <p className="text-dark/65 text-[12px] font-body">
           {products.length} producto{products.length !== 1 ? 's' : ''} encontrado{products.length !== 1 ? 's' : ''}
         </p>
       </div>

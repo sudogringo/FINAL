@@ -24,7 +24,7 @@ export default function Hero() {
             (Chromium no recorta bien backdrop-filter en un elemento que además anima transform). */}
         <div className="animate-fade-in-up relative w-[92vw] max-w-[300px] sm:max-w-[520px] md:max-w-[640px] aspect-square sm:aspect-[3/2]">
           <div className="w-full h-full rounded-[3rem] sm:rounded-[50%] overflow-hidden bg-cream/95 backdrop-blur-lg border border-gold/40 shadow-2xl shadow-black/20 flex flex-col items-center justify-center px-8 sm:px-14">
-            <span className="text-dark/45 text-[9px] sm:text-xs font-heading font-semibold tracking-[0.3em] uppercase">
+            <span className="text-dark/70 text-[9px] sm:text-xs font-heading font-semibold tracking-[0.3em] uppercase">
               Marca Registrada · Mendoza
             </span>
 
@@ -46,7 +46,7 @@ export default function Hero() {
               La tradición del campo, en tu mesa.
             </p>
 
-            <span className="text-dark/40 text-[9px] sm:text-xs font-heading font-semibold tracking-[0.25em] uppercase mt-3">
+            <span className="text-dark/70 text-[9px] sm:text-xs font-heading font-semibold tracking-[0.25em] uppercase mt-3">
               Conservas de Tomate &amp; Durazno
             </span>
           </div>

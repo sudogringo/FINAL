@@ -5,6 +5,8 @@
   --color-gold: #CABC6B;
   --color-gold-light: #E9E4C3;
   --color-gold-dark: #A89D4F;
+  --color-gold-text: #756A2B;       /* text-safe gold: 4.5:1 on #EEEBE2 and #FBFBFB */
+  --color-gold-text-large: #968A38; /* >=24px or >=18.66px bold text: 3:1 on #FBFBFB */
   --color-dark: #1B1B1B;
   --color-dark-2: #212121;
   --color-cream: #FBFBFB;

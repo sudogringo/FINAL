@@ -6,6 +6,7 @@ const certs = [
     name: 'FSSC 22000',
     tag: 'Certificación Internacional',
     tagColor: '#CABC6B',
+    tagText: '#CABC6B',
     description:
       'Contamos con una larga trayectoria en sistemas de gestión certificados. Comenzamos implementando normas nacionales IRAM, lo que marcó un primer paso fundamental en la estandarización y control de nuestros procesos. Con el tiempo, en línea con las exigencias internacionales del sector alimentario, evolucionamos hacia los estándares más amplios y exigentes, adoptando actualmente la certificación FSSC 22000.',
   },
@@ -14,6 +15,7 @@ const certs = [
     name: 'PAS',
     tag: 'Prerrequisitos y Saneamiento',
     tagColor: '#A89D4F',
+    tagText: '#A89D4F',
     description:
       'Nuestra planta cuenta con rigurosos sistemas de limpieza, control de plagas y mejora continua en mantenimiento e instalaciones. Estas prácticas son fundamentales para garantizar la inocuidad de los productos y el cumplimiento con diferentes normas y sistemas de gestión de calidad.',
   },
@@ -22,6 +24,7 @@ const certs = [
     name: 'Kosher',
     tag: 'Certificación Religiosa',
     tagColor: '#C0392B',
+    tagText: '#F07060', // light red: tagColor on dark is only 2.8-3.2:1
     description:
       'Nuestros productos cuentan con certificación Kosher, emitida por autoridades rabínicas que auditan ingredientes, procesos y trazabilidad. Esta certificación garantiza que nuestros productos siguen estándares de proceso específicos y se cumple la normativa Kosher para poder ser distribuidos en diferentes mercados.',
   },
@@ -80,7 +83,7 @@ export default function Certifications() {
                   {s.value}<span className="text-xl">{s.sub}</span>
                 </div>
                 <div
-                  className="text-white/40 text-xs uppercase tracking-wide mt-2"
+                  className="text-white/55 text-xs uppercase tracking-wide mt-2"
                   style={{ fontFamily: 'Source Sans 3, sans-serif' }}
                 >
                   {s.label}
@@ -122,7 +125,7 @@ export default function Certifications() {
                     <span
                       className="text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 rounded-full"
                       style={{
-                        color: cert.tagColor,
+                        color: cert.tagText,
                         background: `${cert.tagColor}18`,
                         border: `1px solid ${cert.tagColor}35`,
                         fontFamily: 'Quicksand, sans-serif',

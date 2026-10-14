@@ -31,7 +31,7 @@ export default function About() {
           {/* Left: Text */}
           <div>
             <span
-              className="inline-block text-[#CABC6B] text-xs font-semibold tracking-[0.35em] uppercase mb-4"
+              className="inline-block text-gold-text text-xs font-semibold tracking-[0.35em] uppercase mb-4"
               style={{ fontFamily: 'Quicksand, sans-serif' }}
             >
               Nuestra Historia
@@ -41,11 +41,11 @@ export default function About() {
               style={{ fontFamily: 'Quicksand, sans-serif' }}
             >
               Más de dos décadas{' '}
-              <span style={{ color: '#CABC6B' }}>cosechando</span>{' '}
+              <span className="text-gold-text-large">cosechando</span>{' '}
               calidad.
             </h2>
             <p
-              className="text-[#1B1B1B]/60 text-lg leading-relaxed mb-6"
+              className="text-[#1B1B1B]/65 text-lg leading-relaxed mb-6"
               style={{ fontFamily: 'Source Sans 3, sans-serif' }}
             >
               Golden Harvest S.A. nació con una convicción simple: llevar al
@@ -55,7 +55,7 @@ export default function About() {
               esa filosofía en cada lata.
             </p>
             <p
-              className="text-[#1B1B1B]/60 text-lg leading-relaxed mb-10"
+              className="text-[#1B1B1B]/65 text-lg leading-relaxed mb-10"
               style={{ fontFamily: 'Source Sans 3, sans-serif' }}
             >
               Hoy digitalizamos nuestra operación para acercarnos más a
@@ -75,13 +75,13 @@ export default function About() {
               ].map((s) => (
                 <div key={s.label}>
                   <div
-                    className="text-4xl font-bold text-[#CABC6B]"
+                    className="text-4xl font-bold text-gold-text-large"
                     style={{ fontFamily: 'Quicksand, sans-serif' }}
                   >
                     {s.n}
                   </div>
                   <div
-                    className="text-[#1B1B1B]/50 text-xs uppercase tracking-wide mt-1"
+                    className="text-[#1B1B1B]/65 text-xs uppercase tracking-wide mt-1"
                     style={{ fontFamily: 'Source Sans 3, sans-serif' }}
                   >
                     {s.label}
@@ -99,12 +99,12 @@ export default function About() {
                 className="flex gap-5 p-6 rounded-2xl bg-white border border-[#1B1B1B]/8 hover:border-[#CABC6B]/40 hover:shadow-lg hover:shadow-[#CABC6B]/10 transition-all duration-300 group"
               >
                 <div className="shrink-0 w-12 h-12 rounded-xl bg-[#CABC6B]/10 border border-[#CABC6B]/30 flex items-center justify-center group-hover:bg-[#CABC6B]/20 transition-colors duration-300">
-                  <step.icon size={22} className="text-[#CABC6B]" />
+                  <step.icon size={22} className="text-gold-text-large" />
                 </div>
                 <div>
                   <div className="flex items-center gap-3 mb-2">
                     <span
-                      className="text-[10px] font-bold text-[#CABC6B]/60 tracking-widest"
+                      className="text-[10px] font-bold text-gold-text tracking-widest"
                       style={{ fontFamily: 'Quicksand, sans-serif' }}
                     >
                       0{i + 1}
@@ -117,7 +117,7 @@ export default function About() {
                     </h3>
                   </div>
                   <p
-                    className="text-[#1B1B1B]/60 text-sm leading-relaxed"
+                    className="text-[#1B1B1B]/65 text-sm leading-relaxed"
                     style={{ fontFamily: 'Source Sans 3, sans-serif' }}
                   >
                     {step.description}

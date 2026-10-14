@@ -6,6 +6,9 @@ const tabs = [
     label: 'Tomate',
     emoji: '🍅',
     accent: '#C0392B',
+    textLight: '#C0392B', // accent as text on white (5.4:1)
+    textDark: '#F07060', // accent as text on #1B1B1B (5.9:1)
+    onAccent: 'white', // text on an accent-filled surface (5.4:1)
     materias: {
       title: 'Materias Primas',
       items: [
@@ -30,6 +33,9 @@ const tabs = [
     label: 'Durazno',
     emoji: '🍑',
     accent: '#CABC6B',
+    textLight: '#756A2B', // 5.4:1 on white
+    textDark: '#CABC6B', // 8.9:1 on #1B1B1B
+    onAccent: '#1B1B1B', // 8.9:1 on the gold fill
     materias: {
       title: 'Materias Primas',
       items: [
@@ -54,6 +60,9 @@ const tabs = [
     label: 'Etiquetado',
     emoji: '🏷️',
     accent: '#A89D4F',
+    textLight: '#7D7230', // 4.9:1 on white
+    textDark: '#A89D4F', // 6.2:1 on #1B1B1B
+    onAccent: '#1B1B1B', // 6.2:1 on the fill
     materias: {
       title: 'Control de Calidad',
       items: [
@@ -91,7 +100,7 @@ export default function Production() {
         {/* Header */}
         <div className="text-center mb-16">
           <span
-            className="inline-block text-[#CABC6B] text-xs font-semibold tracking-[0.35em] uppercase mb-4"
+            className="inline-block text-gold-text text-xs font-semibold tracking-[0.35em] uppercase mb-4"
             style={{ fontFamily: 'Quicksand, sans-serif' }}
           >
             Cómo lo hacemos
@@ -101,10 +110,10 @@ export default function Production() {
             style={{ fontFamily: 'Quicksand, sans-serif' }}
           >
             Proceso de{' '}
-            <span style={{ color: '#CABC6B' }}>Producción</span>
+            <span className="text-gold-text-large">Producción</span>
           </h2>
           <p
-            className="mt-4 text-[#1B1B1B]/60 text-lg max-w-xl mx-auto"
+            className="mt-4 text-[#1B1B1B]/65 text-lg max-w-xl mx-auto"
             style={{ fontFamily: 'Source Sans 3, sans-serif' }}
           >
             Cada etapa está diseñada para preservar lo mejor de la naturaleza
@@ -122,7 +131,7 @@ export default function Production() {
               style={{
                 fontFamily: 'Quicksand, sans-serif',
                 backgroundColor: active === i ? t.accent : 'white',
-                color: active === i ? (t.accent === '#CABC6B' ? '#1B1B1B' : 'white') : 'rgba(27,27,27,0.5)',
+                color: active === i ? t.onAccent : 'rgba(27,27,27,0.65)',
                 border: active === i ? 'none' : '1px solid rgba(27,27,27,0.12)',
                 transform: active === i ? 'scale(1.05)' : 'scale(1)',
                 boxShadow: active === i ? `0 8px 24px ${t.accent}30` : 'none',
@@ -143,7 +152,7 @@ export default function Production() {
             <div className="p-7">
               <span
                 className="text-[10px] font-bold tracking-[0.3em] uppercase mb-5 block"
-                style={{ color: tab.accent, fontFamily: 'Quicksand, sans-serif' }}
+                style={{ color: tab.textLight, fontFamily: 'Quicksand, sans-serif' }}
               >
                 {tab.materias.title}
               </span>
@@ -159,7 +168,7 @@ export default function Production() {
                     </span>
                     <span
                       className="text-2xl font-bold"
-                      style={{ color: tab.accent, fontFamily: 'Quicksand, sans-serif' }}
+                      style={{ color: tab.textLight, fontFamily: 'Quicksand, sans-serif' }}
                     >
                       {item.pct}
                     </span>
@@ -183,12 +192,12 @@ export default function Production() {
             <div className="p-7">
               <span
                 className="text-[10px] font-bold tracking-[0.3em] uppercase mb-3 block"
-                style={{ color: tab.accent, fontFamily: 'Quicksand, sans-serif' }}
+                style={{ color: tab.textLight, fontFamily: 'Quicksand, sans-serif' }}
               >
                 {tab.proceso.title}
               </span>
               <p
-                className="text-[#1B1B1B]/60 text-sm leading-relaxed mb-6"
+                className="text-[#1B1B1B]/65 text-sm leading-relaxed mb-6"
                 style={{ fontFamily: 'Source Sans 3, sans-serif' }}
               >
                 {tab.proceso.intro}
@@ -197,8 +206,8 @@ export default function Production() {
                 {tab.proceso.steps.map((step, i) => (
                   <div key={step} className="flex items-start gap-3">
                     <div
-                      className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white mt-0.5"
-                      style={{ background: tab.accent, fontFamily: 'Quicksand, sans-serif' }}
+                      className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold mt-0.5"
+                      style={{ background: tab.accent, color: tab.onAccent, fontFamily: 'Quicksand, sans-serif' }}
                     >
                       {i + 1}
                     </div>
@@ -220,7 +229,7 @@ export default function Production() {
             <div className="p-7">
               <span
                 className="text-[10px] font-bold tracking-[0.3em] uppercase mb-3 block"
-                style={{ color: tab.accent, fontFamily: 'Quicksand, sans-serif' }}
+                style={{ color: tab.textDark, fontFamily: 'Quicksand, sans-serif' }}
               >
                 {tab.extras.title}
               </span>
@@ -245,7 +254,7 @@ export default function Production() {
                 ))}
               </div>
               <p
-                className="text-white/40 text-xs leading-relaxed italic"
+                className="text-white/55 text-xs leading-relaxed italic"
                 style={{ fontFamily: 'Source Sans 3, sans-serif' }}
               >
                 {tab.extras.note}
@@ -255,18 +264,24 @@ export default function Production() {
 
         </div>
 
-        {/* Tab navigation arrows */}
-        <div className="flex justify-center gap-3 mt-10">
+        {/* Tab navigation dots (24x24 hit area, 8x8 visible dot) */}
+        <div className="flex justify-center mt-10">
           {tabs.map((_, i) => (
             <button
               key={i}
               onClick={() => setActive(i)}
-              className="w-2 h-2 rounded-full transition-all duration-300"
-              style={{
-                background: active === i ? tab.accent : 'rgba(27,27,27,0.2)',
-                transform: active === i ? 'scale(1.4)' : 'scale(1)',
-              }}
-            />
+              aria-label={`Ir a la imagen ${i + 1} de ${tabs.length}`}
+              aria-current={active === i ? 'true' : undefined}
+              className="w-6 h-6 flex items-center justify-center"
+            >
+              <span
+                className="block w-2 h-2 rounded-full transition-all duration-300"
+                style={{
+                  background: active === i ? tab.accent : 'rgba(27,27,27,0.2)',
+                  transform: active === i ? 'scale(1.4)' : 'scale(1)',
+                }}
+              />
+            </button>
           ))}
         </div>
 
