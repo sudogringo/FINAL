@@ -1,0 +1,4 @@
+repo HEAD: e35056e
+frontend medido: a573423 (los commits posteriores no modifican frontend/)
+backend medido: 6cd304c (Render, golden-harvest-api)
+prerregistro: https://osf.io/fu58z (2026-10-16T03:13:40Z) y PRERREGISTRO_R39.md (e35056e)

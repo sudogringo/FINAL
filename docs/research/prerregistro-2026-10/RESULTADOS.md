@@ -71,3 +71,33 @@
 - 06a y 06b generan un correo por destinatario, pero en la rama TESIS envían uno solo (nodo «Limitar a 1»).
 - El 04 no consume la paleta del 01.
 - La facturación del 05 es 0, porque los pedidos sembrados no tienen precio.
+
+## Medición D: catálogo publicado frente a `/productos` (PRERREGISTRO_R39.md)
+
+**Reglas:** las de [`PRERREGISTRO_R39.md`](PRERREGISTRO_R39.md) (commit `e35056e`), registradas también en OSF (https://osf.io/fu58z, 16/10/2026 a las 03:13:40 UTC) antes de generar cualquier dato de esta medición.
+**Artefacto medido:** frontend de `a573423`, publicado por la corrida 38844286616 de GitHub Actions (`e35056e`, que no modifica `frontend/`); backend `6cd304c` en Render (Ohio); base Neon (us-east-2) con el seed y las imágenes del 15/10.
+
+**Datos:**
+- Lote: `docs/research/lighthouse/results/prereg-remoto-2026-10-16/`, de las 00:15:32 a las 00:32:48 (ART), según `started.txt` y `finished.txt`.
+- Lighthouse 12.8.2. Las 20 corridas son válidas al primer intento (no hay `incidencias.txt`).
+- Backend despierto antes de cada corrida de la página nueva (`warmup.txt`; el primer despertar tardó 33 s).
+- Análisis: `prereg_analysis.py`, con la salida en `analysis.txt`.
+
+| Perfil | Métrica | Original: mediana [mín–máx] | Nueva publicada: mediana [mín–máx] | p unilateral exacto |
+|---|---|---|---|---|
+| Móvil | Performance | 57 [55–58] | 96 [92–96] | 0,0040 |
+| Móvil | LCP (ms) | 14329 [11310–14615] | 2302 [2175–2617] | 0,0040 |
+| Escritorio (estándar) | Performance | 72 [72–78] | 98 [95–98] | 0,0040 |
+| Escritorio (estándar) | LCP (ms) | 3079 [2167–3174] | 891 [878–1129] | 0,0040 |
+
+**Decisión H1b-rem: confirmada (4/4).** Las 4 comparaciones tienen p ≤ 0,0125 (0,0040, el mínimo posible con 5 + 5) y ninguna mediana va en la dirección contraria.
+
+**Decisión H1b-LCP (rotulada H2 en OSF): confirmada.** La mediana del LCP móvil de la página publicada es 2302 ms ≤ 2500 ms («Bueno»). Una de las cinco corridas quedó por encima del umbral (2617 ms).
+
+**Informado, no decisorio:**
+- TTFB (`server-response-time`): página nueva 18–293 ms en móvil y 18–186 ms en escritorio (la primera corrida de cada perfil es la más lenta); original 226–253 ms y 230–250 ms.
+- Accessibility: 100 / 100 en la página nueva, frente a 90 / 86 en la original. TBT: 11 / 0 ms frente a 188 / 0 ms. CLS ≤ 0,006 en ambas.
+- **Hallazgo no previsto:** el enlace directo `/FINAL/catalogo` responde HTTP 404 con la página `404.html`, que redirige por JavaScript a `/FINAL/?/catalogo` (técnica estándar de SPA en GitHub Pages). Lighthouse sigue la redirección y mide la página final; la auditoría `redirects` le asigna entre 802 y 1084 ms en móvil y entre 252 y 485 ms en escritorio. No es un desvío: la URL es la prerregistrada, y la redirección forma parte de lo que vive quien entra por ese enlace.
+- El elemento LCP es el mismo que en la medición B (el párrafo de presentación del encabezado en móvil y el título en escritorio) y no depende de los datos de la API. Que el LCP móvil publicado sea menor que el del entorno de pruebas (2302 frente a 2502 ms) no se atribuye a una causa: el throttling de Lighthouse es simulado y los servidores difieren (`vite preview` frente a la CDN de GitHub Pages).
+- El original varía entre mediciones: su LCP móvil fue de 9438 ms el 14/10 y de 14329 ms el 16/10.
+- **Arranque en frío** (§6.3, n = 1): ver `coldstart.txt`.

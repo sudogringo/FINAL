@@ -1,0 +1,15 @@
+== prereg-remoto-2026-10-16: new-catalogo-remoto vs original-productos (α por comparación = 0.0125)
+-- mobile: n = 5/5, Lighthouse ['12.8.2']
+   performance  original      57 [55–58]  nueva      96 [92–96]  p unilateral = 0.0040  SIGNIFICATIVA
+   lcp          original   14329 [11310–14615]  nueva    2302 [2175–2617]  p unilateral = 0.0040  SIGNIFICATIVA
+   accessibility original 90  nueva 100  (no decisoria)
+   cls          original 0.0  nueva 0.002  (no decisoria)
+   tbt          original 188  nueva 11  (no decisoria)
+   LCP móvil de la página nueva: 2302 ms → Bueno (no decisoria)
+-- desktop: n = 5/5, Lighthouse ['12.8.2']
+   performance  original      72 [72–78]  nueva      98 [95–98]  p unilateral = 0.0040  SIGNIFICATIVA
+   lcp          original    3079 [2167–3174]  nueva     891 [878–1129]  p unilateral = 0.0040  SIGNIFICATIVA
+   accessibility original 86  nueva 100  (no decisoria)
+   cls          original 0.0  nueva 0.006  (no decisoria)
+   tbt          original 0  nueva 0  (no decisoria)
+== Comparaciones significativas: 4/4 → hipótesis CONFIRMADA

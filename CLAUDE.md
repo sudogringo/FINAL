@@ -25,29 +25,30 @@ Decoupled system with three layers:
 
 2. **Backend (Express + Prisma + PostgreSQL, implemented)** — REST API and single source of truth for all data consumed by both the frontend and n8n workflows: products, quotes, customers, orders, interactions, and stats. Location: `backend/`. Detail: [`docs/architecture/backend.md`](docs/architecture/backend.md).
 
-3. **Process Orchestrator (n8n, self-hosted via Docker on port 4343)** — Nine independent automation workflows (00–07, with 06 split into 06a/06b) for marketing, logistics, and CRM. Only 00 is active (webhook from the backend); the rest run from a Manual Trigger in the TESIS branch. Only 05 and 07 read the backend API (`http://backend:3001/api`, with `X-Service-Key`); the others use PageSpeed, Google Sheets, Puppeteer or simulated data (see the table below). Detail: [`docs/architecture/n8n.md`](docs/architecture/n8n.md).
+3. **Process Orchestrator (n8n, self-hosted via Docker on port 4343)** — Nine independent automation workflows (00–07, with 06 split into 06a/06b) for marketing, logistics, and CRM. Four are active on the local instance, each with a production webhook: 00 (`quote`), 04 (`social-content`), 06b (`abandoned-cart`) and 07 (`order-confirmed`). The rest run from a Manual Trigger in the TESIS branch, and 04/06b/07 keep their Manual paths with simulated data for reproducible runs. Only 05 and 07 read the backend API (`http://backend:3001/api`, with `X-Service-Key`); the others use PageSpeed, Google Sheets, Puppeteer or simulated data (see the table below). The exports in `n8n/workflows/` show `active: false` for 04/06b/07 because importing deactivates a workflow; `n8n list:workflow --active=true` is the source of truth. Detail: [`docs/architecture/n8n.md`](docs/architecture/n8n.md) ("Receivers, palette and activation").
 
 ## n8n Workflow Modules (designed in `docs/architecture/n8n_workflows.md`)
 
-Implemented state (TESIS branch) as exported in `n8n/workflows/`. Only 00 is
-active; the others run from their Manual Trigger. The original design (webhook
-and schedule triggers, more backend reads) is in `n8n_workflows.md`.
+Implemented state (TESIS branch) as exported in `n8n/workflows/`. Active on the
+local instance: 00, 04, 06b and 07 (production webhooks); the others run from
+their Manual Trigger. The original design (webhook and schedule triggers, more
+backend reads) is in `n8n_workflows.md`.
 
 | # | Module | Trigger (implemented) | Data source (TESIS branch) |
 |---|---|---|---|
-| 0 | Lead Notification | Webhook `quote` (active) | quote payload from `POST /api/quotes` |
-| 1 | Automated Branding | Form / Manual | Puppeteer on `sudogringo.github.io/FINAL/` (the project's own site) |
+| 0 | Lead Notification | Webhook `quote` (active) | quote payload from `POST /api/quotes`; deduplicated by `Idempotency-Key` |
+| 1 | Automated Branding | Form / Manual | Puppeteer on `sudogringo.github.io/FINAL/` (the project's own site); writes the palette file that 04 reads |
 | 2 | SEO & Performance Monitor | Manual (daily cron present, inactive) | PageSpeed Insights API (4 categories) |
 | 3 | Google Maps Reputation | Manual (6-hour schedule present, inactive) | mock reviews (`[TESIS] Mock Reviews` node) |
-| 4 | Social Media Content Engine | Form / Manual (Sheet mode) | Google Sheets |
+| 4 | Social Media Content Engine | Webhook `social-content` (active) / Form / Manual (Sheet mode) | product payload or Google Sheets, plus the 01 palette |
 | 5 | Monthly Activity Report | Manual (monthly schedule present, inactive) | `GET /api/orders`, `GET /api/stats/monthly` (service key) |
 | 6a | Newsletter Quincenal | Manual | jsonplaceholder `/users` (simulated subscribers) |
-| 6b | Carrito Abandonado | Manual / test webhook | jsonplaceholder `/posts`; the backend exposes `GET /api/stats/abandoned-carts` but 6b does not read it |
-| 7 | Logistics Automation | Manual | `GET /api/orders?estado=confirmado` (service key) |
+| 6b | Carrito Abandonado | Webhook `abandoned-cart` (active) / Manual | cart payload (webhook) or jsonplaceholder `/posts` (Manual); the backend exposes `GET /api/stats/abandoned-carts` but 6b does not read it |
+| 7 | Logistics Automation | Webhook `order-confirmed` (active) / Manual | order payload (webhook) or `GET /api/orders?estado=confirmado` + `/api/orders/:id/items` (service key); one remito PDF per order |
 
 Module 6 ("Lead Nurturing & Cart Interest" in the original design) was split into two independent n8n workflows: **6a** (newsletter; bi-weekly schedule in the design, manual in the implemented TESIS branch) and **6b** (abandoned-cart follow-up; webhook in the design, manual or test webhook in the TESIS branch). See [`docs/architecture/n8n.md`](docs/architecture/n8n.md) for details.
 
-The **Branding module** feeds color data to the **Social Media Content Engine** — this is the only inter-workflow dependency.
+The **Branding module** feeds color data to the **Social Media Content Engine** through `/home/node/.n8n-files/brand_palette.json` — this is the only inter-workflow dependency.
 
 ## Documentation & Knowledge Base
 
@@ -111,6 +112,10 @@ docker compose logs -f
 docker compose up -d      # Postgres + Backend + n8n
 ```
 
+## Remote Deploy (free tiers, since 15/10/2026)
+
+`GitHub Pages (frontend) → Render (backend, golden-harvest-api.onrender.com, Ohio) → Neon (PostgreSQL, us-east-2)`. n8n stays local, so remote webhook deliveries end `SKIPPED` in the outbox. The Render service is built from the public repo URL (no Blueprint, no auto-deploy on push: use *Manual Deploy* after backend changes); secrets live only in the Render panel. The repo variable `VITE_API_URL` points the Pages build at Render. The free backend sleeps after ~15 min idle and takes ~1 min to wake: the catalog and the admin login retry and show a "waking up" notice. Deep links such as `/FINAL/catalogo` go through the `404.html` SPA redirect (HTTP 404 + JS redirect to `/FINAL/?/catalogo`). Guide: [`docs/architecture/deploy-remoto.md`](docs/architecture/deploy-remoto.md).
+
 ## Frontend Stack
 
 - React 19 + TypeScript + Vite 8
@@ -143,7 +148,7 @@ User browses catalog → adds items to cart → submits quote request
     → backend fires N8N_QUOTE_WEBHOOK
       → n8n notifies sales rep by email (WhatsApp only in the disabled PRODUCCIÓN branch)
         → sales rep confirms → Quote status → CLOSED → Order created
-          → workflow 07 composes an HTML dispatch summary (PDF labels only in the disabled PRODUCCIÓN branch)
+          → workflow 07 builds one remito PDF per order and e-mails a dispatch summary (shipping labels and the carrier call only in the disabled PRODUCCIÓN branch)
 ```
 
 The 2-hour abandoned cart detection runs client-side: if a quote is not submitted within 2 hours of cart activity, the frontend fires a separate webhook (`N8N_ABANDONED_WEBHOOK`) to trigger the **6b. Carrito Abandonado** workflow.
@@ -161,3 +166,7 @@ The 2-hour abandoned cart detection runs client-side: if a quote is not submitte
 - [x] Frontend → Backend connection (QuoteForm via submitQuote())
 - [x] Execution check of the 8 non-00 workflows on 25/09/2026, 3 runs each, no execution errors (`docs/research/n8n-workflow-runs/`); only 05 and 07 read the backend. The 07/10 batch ran without credentials.
 - [x] Chapters 5 & 6 of thesis (Results & Conclusions)
+- [x] Remote deploy on free tiers (Render + Neon + Pages), 15/10/2026
+- [x] Estudio 1 (PyME interviews): closed at n = 5 without saturation (deviation D2), `docs/research/estudios-2026-10/entrevistas-pymes/RESULTADOS.md`
+- [x] Measurement D (remote catalogue) preregistered on OSF (https://osf.io/fu58z) before measuring
+- [ ] Estudio 2 (usability with 10–12 participants) dropped for R39; reported as future work, VD4 framed as formative evaluation (n = 5)
