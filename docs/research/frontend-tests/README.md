@@ -55,3 +55,8 @@ Other suites in the repo (not part of this folder): `backend/` runs `node:test` 
 `npm test` (auth middleware, quote contact, quote closing, seed admin password), and `n8n/`
 runs the Code nodes of workflows 02 and 07 from the exported JSON with
 `node --test tests/*.test.mjs`.
+
+## Corrida del 16/10/2026
+
+- Archivo: `test-run-2026-10-16-verbose.txt` (`cd frontend && npx jest --verbose`).
+- Resultado: 20 suites, 128 pruebas, 128 pasan. Incluye las 6 nuevas del inicio de sesión ante el arranque en frío (commit a573423).

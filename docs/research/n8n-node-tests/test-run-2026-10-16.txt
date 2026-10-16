@@ -1,0 +1,450 @@
+TAP version 13
+# Subtest: 00: the first delivery of a key passes, the redelivery is flagged as duplicate
+ok 1 - 00: the first delivery of a key passes, the redelivery is flagged as duplicate
+  ---
+  duration_ms: 1.4753
+  ...
+# Subtest: 00: different keys do not collide
+ok 2 - 00: different keys do not collide
+  ---
+  duration_ms: 0.1355
+  ...
+# Subtest: 00: a request without the header is processed (never silently dropped)
+ok 3 - 00: a request without the header is processed (never silently dropped)
+  ---
+  duration_ms: 0.0961
+  ...
+# Subtest: 00: the set of seen keys is bounded and forgets the oldest
+ok 4 - 00: the set of seen keys is bounded and forgets the oldest
+  ---
+  duration_ms: 3.7826
+  ...
+# Subtest: 00: the original item (headers, body) travels on untouched
+ok 5 - 00: the original item (headers, body) travels on untouched
+  ---
+  duration_ms: 0.6268
+  ...
+# Subtest: 00: duplicates are answered 200 and never reach the processing nodes
+ok 6 - 00: duplicates are answered 200 and never reach the processing nodes
+  ---
+  duration_ms: 0.1741
+  ...
+# Subtest: 07: the first delivery of a key passes, the redelivery is flagged as duplicate
+ok 7 - 07: the first delivery of a key passes, the redelivery is flagged as duplicate
+  ---
+  duration_ms: 0.1451
+  ...
+# Subtest: 07: different keys do not collide
+ok 8 - 07: different keys do not collide
+  ---
+  duration_ms: 0.0752
+  ...
+# Subtest: 07: a request without the header is processed (never silently dropped)
+ok 9 - 07: a request without the header is processed (never silently dropped)
+  ---
+  duration_ms: 0.2396
+  ...
+# Subtest: 07: the set of seen keys is bounded and forgets the oldest
+ok 10 - 07: the set of seen keys is bounded and forgets the oldest
+  ---
+  duration_ms: 2.7335
+  ...
+# Subtest: 07: the original item (headers, body) travels on untouched
+ok 11 - 07: the original item (headers, body) travels on untouched
+  ---
+  duration_ms: 0.1491
+  ...
+# Subtest: 07: duplicates are answered 200 and never reach the processing nodes
+ok 12 - 07: duplicates are answered 200 and never reach the processing nodes
+  ---
+  duration_ms: 0.0702
+  ...
+# Subtest: lists the contact and the requested products
+ok 13 - lists the contact and the requested products
+  ---
+  duration_ms: 1.9751
+  ...
+# Subtest: escapes HTML typed in the public quote form
+ok 14 - escapes HTML typed in the public quote form
+  ---
+  duration_ms: 0.4872
+  ...
+# Subtest: keeps the line breaks the Gmail node turns into <br>
+ok 15 - keeps the line breaks the Gmail node turns into <br>
+  ---
+  duration_ms: 0.1939
+  ...
+# Subtest: falls back to placeholders when the contact is missing
+ok 16 - falls back to placeholders when the contact is missing
+  ---
+  duration_ms: 0.2862
+  ...
+# Subtest: 01 saves the palette, url and extraction time as a JSON file
+ok 17 - 01 saves the palette, url and extraction time as a JSON file
+  ---
+  duration_ms: 3.918
+  ...
+# Subtest: 01 never overwrites the saved palette with an empty extraction
+ok 18 - 01 never overwrites the saved palette with an empty extraction
+  ---
+  duration_ms: 0.2378
+  ...
+# Subtest: 01 writes the file where 04 reads it (same absolute path) and still sends its e-mail
+ok 19 - 01 writes the file where 04 reads it (same absolute path) and still sends its e-mail
+  ---
+  duration_ms: 0.2455
+  ...
+# Subtest: 04 takes the palette saved by 01
+ok 20 - 04 takes the palette saved by 01
+  ---
+  duration_ms: 0.5087
+  ...
+# Subtest: 04 follows a newer palette (no hard-coded colours)
+ok 21 - 04 follows a newer palette (no hard-coded colours)
+  ---
+  duration_ms: 0.3147
+  ...
+# Subtest: 04 falls back to the default palette, flagged as such, when 01 never saved one
+ok 22 - 04 falls back to the default palette, flagged as such, when 01 never saved one
+  ---
+  duration_ms: 0.8099
+  ...
+# Subtest: 04 falls back when the file is corrupt or holds invalid colours
+ok 23 - 04 falls back when the file is corrupt or holds invalid colours
+  ---
+  duration_ms: 0.5143
+  ...
+# Subtest: 04 puts the palette colours in the three posts
+ok 24 - 04 puts the palette colours in the three posts
+  ---
+  duration_ms: 0.3503
+  ...
+# Subtest: 04 offers an image prompt that names the palette colours
+ok 25 - 04 offers an image prompt that names the palette colours
+  ---
+  duration_ms: 0.5216
+  ...
+# Subtest: 04 keeps the existing post content and fields
+ok 26 - 04 keeps the existing post content and fields
+  ---
+  duration_ms: 0.4691
+  ...
+# Subtest: 04 reads the file between the image resolver and the hashtags, tolerating a missing file
+ok 27 - 04 reads the file between the image resolver and the hashtags, tolerating a missing file
+  ---
+  duration_ms: 0.2343
+  ...
+# Subtest: accepts the payload of the "Publicar en redes" button and maps it to the engine fields
+ok 28 - accepts the payload of the "Publicar en redes" button and maps it to the engine fields
+  ---
+  duration_ms: 0.2355
+  ...
+# Subtest: a product without description or image is still publishable (nulls become empty text)
+ok 29 - a product without description or image is still publishable (nulls become empty text)
+  ---
+  duration_ms: 0.1662
+  ...
+# Subtest: rejects a payload without a product name or that is not an object
+ok 30 - rejects a payload without a product name or that is not an object
+  ---
+  duration_ms: 0.1178
+  ...
+# Subtest: the webhook receiver is enabled on /social-content and answers before the engine runs
+ok 31 - the webhook receiver is enabled on /social-content and answers before the engine runs
+  ---
+  duration_ms: 0.246
+  ...
+# Subtest: webhook posts are e-mailed (not written to the content sheet): only sheet rows are written back
+ok 32 - webhook posts are e-mailed (not written to the content sheet): only sheet rows are written back
+  ---
+  duration_ms: 0.0706
+  ...
+# Subtest: reports the four categories when PageSpeed returns them
+ok 33 - reports the four categories when PageSpeed returns them
+  ---
+  duration_ms: 16.2356
+  ...
+# Subtest: a category PageSpeed did not return is reported as missing, never as 0/100
+ok 34 - a category PageSpeed did not return is reported as missing, never as 0/100
+  ---
+  duration_ms: 0.6804
+  ...
+# Subtest: a missing performance score does not raise a false alert by counting as 0
+ok 35 - a missing performance score does not raise a false alert by counting as 0
+  ---
+  duration_ms: 0.2387
+  ...
+# Subtest: alerts when a measured performance score is below 80
+ok 36 - alerts when a measured performance score is below 80
+  ---
+  duration_ms: 0.2729
+  ...
+# Subtest: PSI Mobile asks PageSpeed for the four Lighthouse categories
+ok 37 - PSI Mobile asks PageSpeed for the four Lighthouse categories
+  ---
+  duration_ms: 0.662
+  ...
+# Subtest: PSI Desktop asks PageSpeed for the four Lighthouse categories
+ok 38 - PSI Desktop asks PageSpeed for the four Lighthouse categories
+  ---
+  duration_ms: 0.1023
+  ...
+# Subtest: accepts the exact payload the frontend sends and keeps the cart items
+ok 39 - accepts the exact payload the frontend sends and keeps the cart items
+  ---
+  duration_ms: 1.8371
+  ...
+# Subtest: accepts a null sessionId (sessionStorage.getItem returns null when unset)
+ok 40 - accepts a null sessionId (sessionStorage.getItem returns null when unset)
+  ---
+  duration_ms: 0.4002
+  ...
+# Subtest: rejects a body that is not an object
+ok 41 - rejects a body that is not an object
+  ---
+  duration_ms: 0.2741
+  ...
+# Subtest: rejects an empty or missing items array
+ok 42 - rejects an empty or missing items array
+  ---
+  duration_ms: 0.4761
+  ...
+# Subtest: rejects an item without name, with a non-positive qty or a non-integer qty
+ok 43 - rejects an item without name, with a non-positive qty or a non-integer qty
+  ---
+  duration_ms: 0.2889
+  ...
+# Subtest: rejects one malformed item even when the others are fine
+ok 44 - rejects one malformed item even when the others are fine
+  ---
+  duration_ms: 0.1515
+  ...
+# Subtest: rejects a timestamp that is not a date
+ok 45 - rejects a timestamp that is not a date
+  ---
+  duration_ms: 0.1601
+  ...
+# Subtest: keeps an optional contact (nombre, email) when the payload carries one
+ok 46 - keeps an optional contact (nombre, email) when the payload carries one
+  ---
+  duration_ms: 0.2224
+  ...
+# Subtest: has empty nombre and email when the anonymous cart carries no contact
+ok 47 - has empty nombre and email when the anonymous cart carries no contact
+  ---
+  duration_ms: 0.2848
+  ...
+# Subtest: does not carry unknown fields of the items (stockForSize) into the result
+ok 48 - does not carry unknown fields of the items (stockForSize) into the result
+  ---
+  duration_ms: 0.5954
+  ...
+# Subtest: the e-mail lists exactly the cart items of the payload, with presentation and quantity
+ok 49 - the e-mail lists exactly the cart items of the payload, with presentation and quantity
+  ---
+  duration_ms: 1.0773
+  ...
+# Subtest: a different cart produces a different list (not a fixed catalogue)
+ok 50 - a different cart produces a different list (not a fixed catalogue)
+  ---
+  duration_ms: 0.2721
+  ...
+# Subtest: offers 10% off without inventing prices (the cart has none)
+ok 51 - offers 10% off without inventing prices (the cart has none)
+  ---
+  duration_ms: 0.1362
+  ...
+# Subtest: states the total number of units of the cart
+ok 52 - states the total number of units of the cart
+  ---
+  duration_ms: 0.074
+  ...
+# Subtest: greets by name when known and generically otherwise
+ok 53 - greets by name when known and generically otherwise
+  ---
+  duration_ms: 0.09
+  ...
+# Subtest: escapes HTML coming from the payload
+ok 54 - escapes HTML coming from the payload
+  ---
+  duration_ms: 0.1097
+  ...
+# Subtest: returns the subject and the items so later nodes and oracles can check them
+ok 55 - returns the subject and the items so later nodes and oracles can check them
+  ---
+  duration_ms: 0.1065
+  ...
+# Subtest: simulated carts have exactly the shape the validator accepts
+ok 56 - simulated carts have exactly the shape the validator accepts
+  ---
+  duration_ms: 0.417
+  ...
+# Subtest: simulated carts are deterministic and keep the simulated customer
+ok 57 - simulated carts are deterministic and keep the simulated customer
+  ---
+  duration_ms: 0.2315
+  ...
+# Subtest: has an enabled production webhook for the frontend on path abandoned-cart
+ok 58 - has an enabled production webhook for the frontend on path abandoned-cart
+  ---
+  duration_ms: 0.1196
+  ...
+# Subtest: the webhook and the Manual Trigger both go through the validator
+ok 59 - the webhook and the Manual Trigger both go through the validator
+  ---
+  duration_ms: 0.122
+  ...
+# Subtest: an invalid payload is answered with 400 and never reaches the e-mail node
+ok 60 - an invalid payload is answered with 400 and never reaches the e-mail node
+  ---
+  duration_ms: 0.1021
+  ...
+# Subtest: titles the email as a dispatch summary
+ok 61 - titles the email as a dispatch summary
+  ---
+  duration_ms: 15.9316
+  ...
+# Subtest: prints the localidad when the order has one
+ok 62 - prints the localidad when the order has one
+  ---
+  duration_ms: 0.4442
+  ...
+# Subtest: never prints a literal null when the customer gave no localidad
+ok 63 - never prints a literal null when the customer gave no localidad
+  ---
+  duration_ms: 0.2886
+  ...
+# Subtest: escapes HTML coming from the public quote form
+ok 64 - escapes HTML coming from the public quote form
+  ---
+  duration_ms: 0.2911
+  ...
+# Subtest: the TESIS sticky note describes the remito PDF that is now generated
+ok 65 - the TESIS sticky note describes the remito PDF that is now generated
+  ---
+  duration_ms: 0.1915
+  ...
+# Subtest: accepts the payload the backend fires and normalises it to the order shape
+ok 66 - accepts the payload the backend fires and normalises it to the order shape
+  ---
+  duration_ms: 1.8975
+  ...
+# Subtest: a contact without localidad is accepted (the field is optional in the quote form)
+ok 67 - a contact without localidad is accepted (the field is optional in the quote form)
+  ---
+  duration_ms: 0.1952
+  ...
+# Subtest: rejects a payload without orderId, contact name or items
+ok 68 - rejects a payload without orderId, contact name or items
+  ---
+  duration_ms: 0.1852
+  ...
+# Subtest: rejects an item with a non-integer or zero qty
+ok 69 - rejects an item with a non-integer or zero qty
+  ---
+  duration_ms: 0.3314
+  ...
+# Subtest: fetches the items of every order from the backend with the service key
+ok 70 - fetches the items of every order from the backend with the service key
+  ---
+  duration_ms: 0.6106
+  ...
+# Subtest: keeps the order (without items) when the items request fails
+ok 71 - keeps the order (without items) when the items request fails
+  ---
+  duration_ms: 0.3813
+  ...
+# Subtest: the remito shows order id, date, customer, delivery locality and every item with its units
+ok 72 - the remito shows order id, date, customer, delivery locality and every item with its units
+  ---
+  duration_ms: 16.1977
+  ...
+# Subtest: the remito carries the "not valid as an invoice - academic demo" mark
+ok 73 - the remito carries the "not valid as an invoice - academic demo" mark
+  ---
+  duration_ms: 1.0386
+  ...
+# Subtest: a second order produces a different remito (no hard-coded content)
+ok 74 - a second order produces a different remito (no hard-coded content)
+  ---
+  duration_ms: 0.5194
+  ...
+# Subtest: never prints a literal null / undefined; missing localidad says "Sin informar"
+ok 75 - never prints a literal null / undefined; missing localidad says "Sin informar"
+  ---
+  duration_ms: 0.4604
+  ...
+# Subtest: escapes HTML coming from the public quote form
+ok 76 - escapes HTML coming from the public quote form
+  ---
+  duration_ms: 0.302
+  ...
+# Subtest: an order without items says the detail is not available instead of an empty table
+ok 77 - an order without items says the detail is not available instead of an empty table
+  ---
+  duration_ms: 0.215
+  ...
+# Subtest: exposes the HTML as a data: URL the Puppeteer node can open, and it decodes back to the same HTML
+ok 78 - exposes the HTML as a data: URL the Puppeteer node can open, and it decodes back to the same HTML
+  ---
+  duration_ms: 0.2629
+  ...
+# Subtest: keeps the order fields so later nodes can pair the PDF with its order
+ok 79 - keeps the order fields so later nodes can pair the PDF with its order
+  ---
+  duration_ms: 0.2259
+  ...
+# Subtest: names the PDF remito-<orderId>.pdf and carries the order (without the bulky HTML)
+ok 80 - names the PDF remito-<orderId>.pdf and carries the order (without the bulky HTML)
+  ---
+  duration_ms: 0.17
+  ...
+# Subtest: fails loudly when Puppeteer returned no PDF for the order
+ok 81 - fails loudly when Puppeteer returned no PDF for the order
+  ---
+  duration_ms: 0.3044
+  ...
+# Subtest: the summary carries one PDF attachment per order, named by order id
+ok 82 - the summary carries one PDF attachment per order, named by order id
+  ---
+  duration_ms: 2.2318
+  ...
+# Subtest: the summary e-mail names the attached remitos
+ok 83 - the summary e-mail names the attached remitos
+  ---
+  duration_ms: 0.3792
+  ...
+# Subtest: the TESIS branch has an enabled webhook on order-confirmed; the PROD one moved to order-confirmed-prod
+ok 84 - the TESIS branch has an enabled webhook on order-confirmed; the PROD one moved to order-confirmed-prod
+  ---
+  duration_ms: 0.0856
+  ...
+# Subtest: the PDF is made by the Puppeteer community node (Get PDF, A4 portrait) from the remito data URL
+ok 85 - the PDF is made by the Puppeteer community node (Get PDF, A4 portrait) from the remito data URL
+  ---
+  duration_ms: 0.0551
+  ...
+# Subtest: the TESIS Gmail node attaches the PDFs listed by the summary
+ok 86 - the TESIS Gmail node attaches the PDFs listed by the summary
+  ---
+  duration_ms: 0.0421
+  ...
+# Subtest: both entries (Manual Trigger and webhook) reach the same remito builder
+ok 87 - both entries (Manual Trigger and webhook) reach the same remito builder
+  ---
+  duration_ms: 0.1049
+  ...
+# Subtest: an invalid webhook payload is answered with 400 and goes no further
+ok 88 - an invalid webhook payload is answered with 400 and goes no further
+  ---
+  duration_ms: 0.046
+  ...
+1..88
+# tests 88
+# suites 0
+# pass 88
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 152.0949

@@ -1,0 +1,345 @@
+TAP version 13
+# Subtest: 01: passes on the real executions (3 runs)
+ok 1 - 01: passes on the real executions (3 runs)
+  ---
+  duration_ms: 4.2552
+  ...
+# Subtest: 02: passes on the real executions (3 runs)
+ok 2 - 02: passes on the real executions (3 runs)
+  ---
+  duration_ms: 55.402
+  ...
+# Subtest: 03: passes on the real executions (3 runs)
+ok 3 - 03: passes on the real executions (3 runs)
+  ---
+  duration_ms: 2.8054
+  ...
+# Subtest: 04: passes on the real executions (3 runs)
+ok 4 - 04: passes on the real executions (3 runs)
+  ---
+  duration_ms: 2.4473
+  ...
+# Subtest: 05: passes on the real executions (3 runs)
+ok 5 - 05: passes on the real executions (3 runs)
+  ---
+  duration_ms: 2.445
+  ...
+# Subtest: 06a: passes on the real executions (3 runs)
+ok 6 - 06a: passes on the real executions (3 runs)
+  ---
+  duration_ms: 2.3023
+  ...
+# Subtest: 06b: passes on the real executions (3 runs)
+ok 7 - 06b: passes on the real executions (3 runs)
+  ---
+  duration_ms: 2.4704
+  ...
+# Subtest: 07: passes on the real executions (3 runs)
+ok 8 - 07: passes on the real executions (3 runs)
+  ---
+  duration_ms: 1.0598
+  ...
+# Subtest: oracle result shape is {pass, checks:[{name, pass, detail}]}
+ok 9 - oracle result shape is {pass, checks:[{name, pass, detail}]}
+  ---
+  duration_ms: 0.6472
+  ...
+# Subtest: 01: a palette colour that is not in the analysed HTML fails
+ok 10 - 01: a palette colour that is not in the analysed HTML fails
+  ---
+  duration_ms: 1.1427
+  ...
+# Subtest: 01: an invalid hex fails
+ok 11 - 01: an invalid hex fails
+  ---
+  duration_ms: 0.7064
+  ...
+# Subtest: 01: a palette that is not the most frequent colours fails
+ok 12 - 01: a palette that is not the most frequent colours fails
+  ---
+  duration_ms: 0.5956
+  ...
+# Subtest: 01: primary different from palette[0] fails
+ok 13 - 01: primary different from palette[0] fails
+  ---
+  duration_ms: 0.5911
+  ...
+# Subtest: 01: email without a palette colour fails
+ok 14 - 01: email without a palette colour fails
+  ---
+  duration_ms: 0.5905
+  ...
+# Subtest: 01: empty HTML captured fails
+ok 15 - 01: empty HTML captured fails
+  ---
+  duration_ms: 0.6201
+  ...
+# Subtest: 03: a misclassified review (5 stars escalated) fails
+ok 16 - 03: a misclassified review (5 stars escalated) fails
+  ---
+  duration_ms: 0.4347
+  ...
+# Subtest: 03: a dropped review fails
+ok 17 - 03: a dropped review fails
+  ---
+  duration_ms: 0.3825
+  ...
+# Subtest: 03: wrong negative count in the summary fails
+ok 18 - 03: wrong negative count in the summary fails
+  ---
+  duration_ms: 0.3662
+  ...
+# Subtest: 03: a reviewer missing from the email body fails
+ok 19 - 03: a reviewer missing from the email body fails
+  ---
+  duration_ms: 0.3977
+  ...
+# Subtest: 03: a positive review whose reply does not name the reviewer fails
+ok 20 - 03: a positive review whose reply does not name the reviewer fails
+  ---
+  duration_ms: 1.1324
+  ...
+# Subtest: 03: urgency flag inconsistent with the comment keywords fails
+ok 21 - 03: urgency flag inconsistent with the comment keywords fails
+  ---
+  duration_ms: 0.3774
+  ...
+# Subtest: 04: post that lost the sheet description fails
+ok 22 - 04: post that lost the sheet description fails
+  ---
+  duration_ms: 0.4028
+  ...
+# Subtest: 04: wrong image URL fails
+ok 23 - 04: wrong image URL fails
+  ---
+  duration_ms: 0.3342
+  ...
+# Subtest: 04: hashtags not derived from product/description fail
+ok 24 - 04: hashtags not derived from product/description fail
+  ---
+  duration_ms: 0.3204
+  ...
+# Subtest: 04: row written to the Sheet that differs from the post fails
+ok 25 - 04: row written to the Sheet that differs from the post fails
+  ---
+  duration_ms: 0.3155
+  ...
+# Subtest: 04: fewer posts than sheet rows fails
+ok 26 - 04: fewer posts than sheet rows fails
+  ---
+  duration_ms: 0.2878
+  ...
+# Subtest: 05: report with a different order total fails
+ok 27 - 05: report with a different order total fails
+  ---
+  duration_ms: 0.436
+  ...
+# Subtest: 05: stats that disagree with the orders list fail
+ok 28 - 05: stats that disagree with the orders list fail
+  ---
+  duration_ms: 0.3614
+  ...
+# Subtest: 05: top product with wrong units fails
+ok 29 - 05: top product with wrong units fails
+  ---
+  duration_ms: 0.3373
+  ...
+# Subtest: 05: web interactions altered in the source fail
+ok 30 - 05: web interactions altered in the source fail
+  ---
+  duration_ms: 0.3773
+  ...
+# Subtest: 05: unique customers altered fail
+ok 31 - 05: unique customers altered fail
+  ---
+  duration_ms: 0.3815
+  ...
+# Subtest: 06a: email without the subscriber name fails
+ok 32 - 06a: email without the subscriber name fails
+  ---
+  duration_ms: 0.4996
+  ...
+# Subtest: 06a: a missing email (9 for 10 subscribers) fails
+ok 33 - 06a: a missing email (9 for 10 subscribers) fails
+  ---
+  duration_ms: 0.4743
+  ...
+# Subtest: 06a: wrong category segmentation fails
+ok 34 - 06a: wrong category segmentation fails
+  ---
+  duration_ms: 0.4175
+  ...
+# Subtest: 06a: sending nothing fails
+ok 35 - 06a: sending nothing fails
+  ---
+  duration_ms: 0.4188
+  ...
+# Subtest: 06b: discount computed with another percentage fails
+ok 36 - 06b: discount computed with another percentage fails
+  ---
+  duration_ms: 0.6741
+  ...
+# Subtest: 06b: email listing a product not in the cart fails
+ok 37 - 06b: email listing a product not in the cart fails
+  ---
+  duration_ms: 0.6393
+  ...
+# Subtest: 06b: cart product outside the catalogue fails
+ok 38 - 06b: cart product outside the catalogue fails
+  ---
+  duration_ms: 0.7791
+  ...
+# Subtest: 06b: customers not derived from the fetched posts fail
+ok 39 - 06b: customers not derived from the fetched posts fail
+  ---
+  duration_ms: 0.6365
+  ...
+# Subtest: 06b: final total not matching html fails
+ok 40 - 06b: final total not matching html fails
+  ---
+  duration_ms: 0.6395
+  ...
+# Subtest: 02: report score that differs from the PSI category fails
+ok 41 - 02: report score that differs from the PSI category fails
+  ---
+  duration_ms: 25.0526
+  ...
+# Subtest: 07: dispatch summary that omits the order fails
+ok 42 - 07: dispatch summary that omits the order fails
+  ---
+  duration_ms: 0.5913
+  ...
+# Subtest: 02: alert flag inconsistent with the scores fails
+ok 43 - 02: alert flag inconsistent with the scores fails
+  ---
+  duration_ms: 23.0666
+  ...
+# Subtest: 01 (14/10 exports): passes on the 3 real executions
+ok 44 - 01 (14/10 exports): passes on the 3 real executions
+  ---
+  duration_ms: 2.7503
+  ...
+# Subtest: 04 (14/10 exports): passes on the 3 real executions
+ok 45 - 04 (14/10 exports): passes on the 3 real executions
+  ---
+  duration_ms: 2.2419
+  ...
+# Subtest: 06b (14/10 exports): passes on the 3 real executions
+ok 46 - 06b (14/10 exports): passes on the 3 real executions
+  ---
+  duration_ms: 3.5893
+  ...
+# Subtest: 07 (14/10 exports): passes on the 3 real executions
+ok 47 - 07 (14/10 exports): passes on the 3 real executions
+  ---
+  duration_ms: 2.427
+  ...
+# Subtest: 01: palette file that was not written (write node errored) fails
+ok 48 - 01: palette file that was not written (write node errored) fails
+  ---
+  duration_ms: 0.733
+  ...
+# Subtest: 01: saved palette different from the extracted one fails
+ok 49 - 01: saved palette different from the extracted one fails
+  ---
+  duration_ms: 0.6076
+  ...
+# Subtest: 04: the palette of 01 is part of the checks when the batch has a 01 log
+ok 50 - 04: the palette of 01 is part of the checks when the batch has a 01 log
+  ---
+  duration_ms: 0.6654
+  ...
+# Subtest: 04: a post that lost the palette colours fails
+ok 51 - 04: a post that lost the palette colours fails
+  ---
+  duration_ms: 0.4748
+  ...
+# Subtest: 04: palette not coming from workflow 01 (default fallback) fails
+ok 52 - 04: palette not coming from workflow 01 (default fallback) fails
+  ---
+  duration_ms: 0.4431
+  ...
+# Subtest: 04: a palette different from the one 01 extracted fails
+ok 53 - 04: a palette different from the one 01 extracted fails
+  ---
+  duration_ms: 0.3965
+  ...
+# Subtest: 04: image prompt without the palette colours fails
+ok 54 - 04: image prompt without the palette colours fails
+  ---
+  duration_ms: 0.4206
+  ...
+# Subtest: 06b: e-mail listing another quantity than the payload fails
+ok 55 - 06b: e-mail listing another quantity than the payload fails
+  ---
+  duration_ms: 0.9948
+  ...
+# Subtest: 06b: e-mail with a product that is not in the payload fails
+ok 56 - 06b: e-mail with a product that is not in the payload fails
+  ---
+  duration_ms: 0.9434
+  ...
+# Subtest: 06b: simulated payload that does not follow its cart fails
+ok 57 - 06b: simulated payload that does not follow its cart fails
+  ---
+  duration_ms: 0.8821
+  ...
+# Subtest: 06b: an e-mail with an invented price fails
+ok 58 - 06b: an e-mail with an invented price fails
+  ---
+  duration_ms: 0.9129
+  ...
+# Subtest: 06b: an invalid payload that still produced an e-mail fails
+ok 59 - 06b: an invalid payload that still produced an e-mail fails
+  ---
+  duration_ms: 0.885
+  ...
+# Subtest: 06b: webhook run is judged against the webhook body, not against a catalogue
+ok 60 - 06b: webhook run is judged against the webhook body, not against a catalogue
+  ---
+  duration_ms: 0.2488
+  ...
+# Subtest: 07: summary without the PDF attachments fails
+ok 61 - 07: summary without the PDF attachments fails
+  ---
+  duration_ms: 0.4611
+  ...
+# Subtest: 07: a PDF that is not named after its order fails
+ok 62 - 07: a PDF that is not named after its order fails
+  ---
+  duration_ms: 0.435
+  ...
+# Subtest: 07: a PDF with the wrong MIME type or an empty body fails
+ok 63 - 07: a PDF with the wrong MIME type or an empty body fails
+  ---
+  duration_ms: 0.4696
+  ...
+# Subtest: 07: a remito that omits an ordered item fails
+ok 64 - 07: a remito that omits an ordered item fails
+  ---
+  duration_ms: 0.4641
+  ...
+# Subtest: 07: a remito without the "not valid as invoice" mark fails
+ok 65 - 07: a remito without the "not valid as invoice" mark fails
+  ---
+  duration_ms: 2.0139
+  ...
+# Subtest: 07: items that do not add up to the backend order total fail
+ok 66 - 07: items that do not add up to the backend order total fail
+  ---
+  duration_ms: 0.5195
+  ...
+# Subtest: 07: an order whose items request failed fails
+ok 67 - 07: an order whose items request failed fails
+  ---
+  duration_ms: 0.4383
+  ...
+1..67
+# tests 67
+# suites 0
+# pass 67
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 247.5029
