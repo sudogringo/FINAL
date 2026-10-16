@@ -3,6 +3,9 @@
  * free-tier backend (it sleeps after ~15 min and takes ~1 min to wake up).
  */
 
+/** Time before telling the visitor the (free-tier) server is probably waking up. */
+export const WAKING_AFTER_MS = 4000
+
 export class HttpError extends Error {
   readonly status: number
   constructor(status: number, message: string) {

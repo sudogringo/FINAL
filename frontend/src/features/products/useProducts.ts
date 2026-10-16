@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { API_URL } from '../../config'
 import { fetchProducts, type ApiProduct } from '../admin/api'
-import { fetchWithRetry } from '../../lib/fetchWithRetry'
+import { fetchWithRetry, WAKING_AFTER_MS } from '../../lib/fetchWithRetry'
 
 export type ProductsStatus = 'loading' | 'waking' | 'ready' | 'unavailable'
-
-/** Time before we tell the visitor the (free-tier) server is probably waking up. */
-const WAKING_AFTER_MS = 4000
 
 export function useProducts() {
   const configured = API_URL !== ''

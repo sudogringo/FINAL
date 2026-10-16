@@ -9,7 +9,7 @@ import {
 
 const BASE = 'http://localhost:3001'
 
-function mockFetchOnce(response: { ok: boolean; json?: () => Promise<unknown> }) {
+function mockFetchOnce(response: { ok: boolean; status?: number; json?: () => Promise<unknown> }) {
   ;(global.fetch as jest.Mock).mockResolvedValueOnce(response)
 }
 
@@ -68,6 +68,26 @@ describe('admin/api', () => {
       mockFetchOnce({ ok: false, json: async () => ({}) })
 
       await expect(adminLogin('admin@example.com', 'wrong')).rejects.toThrow('Credenciales incorrectas')
+    })
+
+    it('rejects with the HTTP status so callers can tell bad credentials from a server failure', async () => {
+      mockFetchOnce({ ok: false, status: 401, json: async () => ({}) })
+      await expect(adminLogin('admin@example.com', 'wrong')).rejects.toMatchObject({ status: 401 })
+
+      mockFetchOnce({ ok: false, status: 503, json: async () => ({}) })
+      await expect(adminLogin('admin@example.com', 'secret123')).rejects.toMatchObject({ status: 503 })
+    })
+
+    it('forwards the abort signal to fetch so a hung attempt can be cancelled', async () => {
+      mockFetchOnce({ ok: true, json: async () => ({ token: 't' }) })
+      const ctrl = new AbortController()
+
+      await adminLogin('admin@example.com', 'password123', ctrl.signal)
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        `${BASE}/api/auth/login`,
+        expect.objectContaining({ signal: ctrl.signal }),
+      )
     })
   })
 

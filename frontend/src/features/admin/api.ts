@@ -118,13 +118,14 @@ export async function uploadImage(token: string, file: File): Promise<string> {
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 
-export async function adminLogin(email: string, password: string): Promise<string> {
+export async function adminLogin(email: string, password: string, signal?: AbortSignal): Promise<string> {
   const res = await fetch(`${BASE}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
+    ...(signal ? { signal } : {}),
   })
-  if (!res.ok) throw new Error('Credenciales incorrectas')
+  if (!res.ok) throw new HttpError(res.status, 'Credenciales incorrectas')
   const data = await res.json()
   return data.token
 }

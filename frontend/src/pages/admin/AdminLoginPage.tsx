@@ -2,6 +2,11 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAdmin } from '../../features/admin/AdminContext'
 import { adminLogin } from '../../features/admin/api'
+import { fetchWithRetry, HttpError, WAKING_AFTER_MS } from '../../lib/fetchWithRetry'
+
+function isCredentialsError(error: unknown): boolean {
+  return error instanceof HttpError && (error.status === 400 || error.status === 401)
+}
 
 export default function AdminLoginPage() {
   const { login } = useAdmin()
@@ -10,18 +15,24 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [waking, setWaking] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
     setLoading(true)
+    const wakingTimer = setTimeout(() => setWaking(true), WAKING_AFTER_MS)
     try {
-      const token = await adminLogin(email, password)
+      const token = await fetchWithRetry(signal => adminLogin(email, password, signal))
       login(token)
       navigate('/admin/productos')
-    } catch {
-      setError('Email o contraseña incorrectos')
+    } catch (err) {
+      setError(isCredentialsError(err)
+        ? 'Email o contraseña incorrectos'
+        : 'No se pudo conectar con el servidor. Probá de nuevo en unos minutos.')
     } finally {
+      clearTimeout(wakingTimer)
+      setWaking(false)
       setLoading(false)
     }
   }
@@ -61,6 +72,12 @@ export default function AdminLoginPage() {
               placeholder="••••••••"
             />
           </div>
+
+          {waking && (
+            <p role="status" aria-live="polite" className="text-white/60 text-xs font-body">
+              El servidor se está iniciando: se aloja en un servicio gratuito que tarda hasta un minuto en responder. Gracias por esperar.
+            </p>
+          )}
 
           {error && (
             <p className="text-red-400 text-xs font-body">{error}</p>
