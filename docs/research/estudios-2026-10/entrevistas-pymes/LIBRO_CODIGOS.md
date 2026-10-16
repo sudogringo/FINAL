@@ -1,6 +1,6 @@
 # Estudio 1 — Libro de códigos (borrador)
 
-**Estado:** borrador para el paso 1 de `PROTOCOLO.md` §6.3: es una propuesta de libro de códigos que los dos autores deben revisar. **No reemplaza** la codificación independiente (paso 2) ni la resolución de desacuerdos por consenso (paso 3).
+**Estado:** cerrado el 16/10/2026. Las decisiones abiertas de la sección 3 se resolvieron y se hizo una codificación doble e independiente, con consenso (sección 4). Por delegación de los autores, las dos codificaciones las hicieron procesos de IA separados, no los autores: es el desvío D3 de [`DESVIOS.md`](../../prerregistro-2026-10/DESVIOS.md).
 **Base:** `planilla.csv`, PyME-01 a PyME-05 (14 y 15/10/2026).
 **Preguntas abiertas codificadas:** P07a/P07b, P09a, P12b, P13 y P15. Las respuestas `no aplica`, `NS` y las celdas vacías no generan códigos.
 
@@ -57,11 +57,11 @@
 
 ## 2. Asignación preliminar y saturación
 
-> Asignación hecha por una sola persona para estimar la saturación. Para no sesgar la codificación independiente del paso 2, cada autor debería codificar primero con la sección 1 y recién después mirar esta tabla.
+> Asignación final, después del consenso de la sección 4 (en P07 de PyME-04 se agregó REC-PERSONAL). La versión anterior de esta tabla es la del codificador A.
 
 | Pregunta | PyME-01 | PyME-02 | PyME-03 | PyME-04 | PyME-05 |
 |---|---|---|---|---|---|
-| P07 | REC-PERSONAL, BOT | REC-DUENO, RESP-DIRECTA | REC-PERSONAL, DERIVACION | BOT, DERIVACION | REC-PERSONAL, RESP-DIRECTA |
+| P07 | REC-PERSONAL, BOT | REC-DUENO, RESP-DIRECTA | REC-PERSONAL, DERIVACION | BOT, REC-PERSONAL, DERIVACION | REC-PERSONAL, RESP-DIRECTA |
 | P09a | — | DOC-PLATAFORMA | DOC-SISTEMA | DOC-SISTEMA, ARMADO-MANUAL | — |
 | P12b | AUTO-RESPUESTA | — | IA-ASISTIDA, REPORTES-AUTO | — | AUTO-RESPUESTA, PLANTILLAS |
 | P13 | ADMIN-COBRO, DOCUMENTACION | LOGISTICA-FISICA | COTIZACIONES, DOCUMENTACION | ADMIN-COBRO | COTIZACIONES, FINANCIACION |
@@ -92,3 +92,17 @@
 3. **`FINANCIACION` frente a `ADMIN-COBRO`.** Se separan porque la financiación es atención previa a la venta y la cobranza es posterior.
 4. **P09a con `no aplica`** (PyME-01 y 05). Se propone no codificarlo; la frecuencia se informa sobre n = 3.
 5. **P12b de PyME-04.** Respondió «no», pero el chatbot de P07 responde solo. Se propone respetar la respuesta y dejarlo como observación, sin codificarlo.
+
+**Resolución (16/10/2026):** 1) `PLANTILLAS` y `AUTO-RESPUESTA` se mantienen separados, porque la plantilla la envía una persona. 2) `POCA-VARIEDAD` y `VENTA-PERSONALIZADA` se mantienen separados: una barrera se refiere a la amplitud del catálogo y la otra a cómo se forma el precio. 3) `FINANCIACION` y `ADMIN-COBRO` se mantienen separados: la financiación es atención previa a la venta, y la cobranza, posterior. 4) P09a con `no aplica` no se codifica; su frecuencia se informa sobre n = 3. 5) En P12b de PyME-04 se respeta el «no»; el chatbot queda codificado en P07.
+
+## 4. Codificación doble y consenso
+
+- **Codificador A:** la asignación preliminar de la sección 2 (`codificacion/codificador_A.csv`).
+- **Codificador B:** un proceso de IA independiente, que solo recibió las definiciones de la sección 1 y las respuestas abiertas, sin la asignación de A (`codificacion/codificador_B.csv`, con la justificación de cada código). No propuso códigos nuevos.
+- **Acuerdo:** 23 de 25 unidades (empresa × pregunta) idénticas (92 %); 35 de los 37 códigos asignados por alguno de los dos coinciden (94,6 %).
+- **Desacuerdos (2), resueltos por consenso contra las definiciones** (`codificacion/consenso.csv`):
+  - PyME-02, P07: A asignó `RESP-DIRECTA` y B no. Se mantiene: «misma persona» indica que quien recibe la consulta la responde.
+  - PyME-04, P07: B asignó `REC-PERSONAL` y A no. Se agrega: la jefa comercial recibe lo que deriva el chatbot y es una persona con esa tarea, distinta de la dueña.
+- **Marcado como dudoso por B, con acuerdo:** `VENTA-PERSONALIZADA` en PyME-05 (P15), porque la respuesta no dice que el precio dependa de una especificación caso por caso.
+- **Efecto:** `REC-PERSONAL` pasa de 3 a 4 empresas. Ningún código nuevo aparece ni desaparece, así que la curva de saturación (7, 6, 5, 3, 3) no cambia.
+- **Límite:** el protocolo pedía que codificaran los dos autores. Dos procesos de IA independientes reducen el sesgo de un único codificador, pero no reemplazan el juicio de los investigadores (desvío D3).

@@ -51,11 +51,11 @@ Personas: mediana 9 [1–150]. Antigüedad: mediana 14 años [0,5–50]. Duraci�
 
 ## 4. Preguntas abiertas (§6.3)
 
-**Estado:** el libro de códigos y la asignación de [`LIBRO_CODIGOS.md`](LIBRO_CODIGOS.md) son **preliminares**: los hizo una sola persona. El protocolo pide que los dos autores codifiquen de forma independiente y resuelvan los desacuerdos por consenso, y ese paso **está pendiente**. Las frecuencias siguientes pueden cambiar.
+**Estado:** codificación doble e independiente con consenso ([`LIBRO_CODIGOS.md`](LIBRO_CODIGOS.md), sección 4): acuerdo exacto en 23 de 25 unidades (92 %), con 2 desacuerdos resueltos. Por delegación de los autores, las dos codificaciones las hicieron procesos de IA separados (desvío D3).
 
 | Pregunta | Códigos más frecuentes (n de 5) |
 |---|---|
-| P07 Recepción y aviso | Recibe personal asignado 3; respuesta directa sin derivar 2; bot o chatbot 2; derivación manual 2 |
+| P07 Recepción y aviso | Recibe personal asignado 4; respuesta directa sin derivar 2; bot o chatbot 2; derivación manual 2 |
 | P09a Despacho (n = 3 con dato) | Documentación desde un sistema 2; desde una plataforma de terceros 1; armado físico manual 1 |
 | P12b Ya automatizado | Respuesta automática 2; IA asistida 1; reportes automáticos 1; plantillas 1 |
 | P13 Tareas que más tiempo consumen | Cotizaciones 2; documentación 2; administración y cobranzas 2; logística física 1; financiación 1 |
@@ -76,5 +76,5 @@ Personas: mediana 9 [1–150]. Antigüedad: mediana 14 años [0,5–50]. Duraci�
 - Muestra intencional y pequeña (n = 5), **sin saturación** (D2), con contactos de la red de los autores.
 - Datos autoinformados y estimados de memoria, con muchos `NS` en las preguntas de tiempo.
 - Un mismo entrevistador, que además es autor del artefacto; en PyME-01 hubo lectura no literal (D1).
-- Codificación todavía hecha por una sola persona (§4).
+- Codificación doble hecha por dos procesos de IA independientes, no por los autores (§4; desvío D3).
 - Sin revisión de un comité de ética.
