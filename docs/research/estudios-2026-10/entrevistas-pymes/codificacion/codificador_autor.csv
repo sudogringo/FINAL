@@ -1,0 +1,26 @@
+id,pregunta,codigos,justificacion
+PyME-01,P07,REC-PERSONAL;BOT;DERIVACION,«Secretaria»;«Un bot de turnos»; «el profesional evalúa y le indica a la secretaria que presupuestar»
+PyME-01,P09a,,«No aplica»
+PyME-01,P12b,AUTO-RESPUESTA,«Bot que atiende a pacientes nuevos y les asigna turno según disponibilidad»
+PyME-01,P13,ADMIN-COBRO;DOCUMENTACION,«Facturacion»;«Carga y gestion de documentación de obras sociales»
+PyME-01,P15,VENTA-PERSONALIZADA;PRESENCIALIDAD,«Cada presupuesto es personalizado y depende de la evaluación clínica»;«El diagnóstico exige la presencia del paciente»
+PyME-02,P07,REC-DUENO;RESP-DIRECTA,"«El dueño, que trabaja solo»;«Misma persona»"
+PyME-02,P09a,DOC-PLATAFORMA,"«En Mercado Libre se generan desde la plataforma»; «Para otros canales, en las plataformas de transporte»"
+PyME-02,P12b,,«Vacía»
+PyME-02,P13,LOGISTICA-FISICA,«Embalaje y preparacion de paquetes»; «Traslado de paquetes a transportes de carga»
+PyME-02,P15,PREFIERE-CHECKOUT;AVISOS-SIN-VALOR,"«Prefiere una tienda con precios publicados, carrito y pago en linea»;«Recibira avisos de cotizaciones que no se concretan»"
+PyME-03,P07,REC-PERSONAL;DERIVACION,«Un comercial»;«La analiza y la asigna a un comercial especializado según el tipo de proyecto»
+PyME-03,P09a,DOC-SISTEMA,«Toda la documentación queda registrada en el sistema de gestion (Odoo)»
+PyME-03,P12b,IA-ASISTIDA;REPORTES-AUTO,«Asistencia parcial con herramienteas de inteligencia artificial para prepara cotizaciones técnicas»;«Extracción automática de datos del sistema de gestion para reportes»
+PyME-03,P13,COTIZACIONES;DOCUMENTACION;NUEVO: seguimiento de pedidos,«Preparación de cotizaciones Técnicas»;«Documentación de despachos»;«Seguimiento de pedidos»
+PyME-03,P15,VENTA-PERSONALIZADA,"«La mayoria de cotizaciones depende de especificaciones técnicas, planos y hojas de datos de cada proyecto, no de elegir productos de un catalogo»"
+PyME-04,P07,BOT;DERIVACION,"«Un chatbot»;«Deriva a la jefa comercial, que distribuye la consulta por whatsapp»"
+PyME-04,P09a,DOC-SISTEMA;ARMADO-MANUAL,«Comandas generadas desde el sistema propio»;«Colocan las viandas a mano en cajas térmicas»
+PyME-04,P12b,,«Vacía»
+PyME-04,P13,ADMIN-COBRO,"«Administracion (ventas, pagos y cobranzas)»"
+PyME-04,P15,BAJO-VOLUMEN;OTRAS-PRIORIDADES,«Hoy reciben pocas solicitudes de cotización»;«Hay otras prioridades»
+PyME-05,P07,REC-PERSONAL;RESP-DIRECTA,«Una persona encargada de responder los mensajes»;«Esa persona las responde directamente»
+PyME-05,P09a,,«No aplica»
+PyME-05,P12b,AUTO-RESPUESTA;PLANTILLAS,«Respuesta automatica inicial a las consultas que llegan por Facebook»;«Mensajes predeterminados que se envían en determinadas ocasiones»
+PyME-05,P13,COTIZACIONES;FINANCIACION,«Preparacion de respuestas detallados»;«Gestión de consultas sobre financiacion con tarjeta»
+PyME-05,P15,VENTA-PERSONALIZADA;POCA-VARIEDAD,«La mayoria de las ventas son personalizadas»;«Hay poca variedad de opciones por producto»

@@ -1,6 +1,6 @@
 # Estudio 1 — Libro de códigos (borrador)
 
-**Estado:** cerrado el 16/10/2026. Las decisiones abiertas de la sección 3 se resolvieron y se hizo una codificación doble e independiente, con consenso (sección 4). Por delegación de los autores, las dos codificaciones las hicieron procesos de IA separados, no los autores: es el desvío D3 de [`DESVIOS.md`](../../prerregistro-2026-10/DESVIOS.md).
+**Estado:** cerrado el 16/10/2026. Las decisiones abiertas de la sección 3 se resolvieron y se hizo una codificación doble e independiente, con consenso (sección 4). Por delegación de los autores, las dos codificaciones las hicieron procesos de IA separados, no los autores: es el desvío D3 de [`DESVIOS.md`](../../prerregistro-2026-10/DESVIOS.md). Después, un autor codificó las 25 unidades como control humano (sección 5).
 **Base:** `planilla.csv`, PyME-01 a PyME-05 (14 y 15/10/2026).
 **Preguntas abiertas codificadas:** P07a/P07b, P09a, P12b, P13 y P15. Las respuestas `no aplica`, `NS` y las celdas vacías no generan códigos.
 
@@ -42,6 +42,7 @@
 | `LOGISTICA-FISICA` | Embalaje y traslado físico de pedidos. | «embalaje y preparación de paquetes» |
 | `COTIZACIONES` | Preparación de presupuestos o cotizaciones. | «preparación de presupuestos detallados» |
 | `FINANCIACION` | Atención de consultas sobre planes de pago o financiación antes de la venta. | «gestión de consultas sobre financiación con tarjeta» |
+| `SEGUIMIENTO` | Seguimiento del estado de los pedidos después del despacho. Se agregó en el control humano (sección 5). | «seguimiento de pedidos» |
 
 ### P15 — Barrera para adoptar la herramienta
 
@@ -57,14 +58,14 @@
 
 ## 2. Asignación preliminar y saturación
 
-> Asignación final, después del consenso de la sección 4 (en P07 de PyME-04 se agregó REC-PERSONAL). La versión anterior de esta tabla es la del codificador A.
+> Asignación final, después del consenso de la sección 4 (en P07 de PyME-04 se agregó REC-PERSONAL; en P13 de PyME-03, SEGUIMIENTO, por el control humano de la sección 5). La versión anterior de esta tabla es la del codificador A.
 
 | Pregunta | PyME-01 | PyME-02 | PyME-03 | PyME-04 | PyME-05 |
 |---|---|---|---|---|---|
 | P07 | REC-PERSONAL, BOT | REC-DUENO, RESP-DIRECTA | REC-PERSONAL, DERIVACION | BOT, REC-PERSONAL, DERIVACION | REC-PERSONAL, RESP-DIRECTA |
 | P09a | — | DOC-PLATAFORMA | DOC-SISTEMA | DOC-SISTEMA, ARMADO-MANUAL | — |
 | P12b | AUTO-RESPUESTA | — | IA-ASISTIDA, REPORTES-AUTO | — | AUTO-RESPUESTA, PLANTILLAS |
-| P13 | ADMIN-COBRO, DOCUMENTACION | LOGISTICA-FISICA | COTIZACIONES, DOCUMENTACION | ADMIN-COBRO | COTIZACIONES, FINANCIACION |
+| P13 | ADMIN-COBRO, DOCUMENTACION | LOGISTICA-FISICA | COTIZACIONES, DOCUMENTACION, SEGUIMIENTO | ADMIN-COBRO | COTIZACIONES, FINANCIACION |
 | P15 | VENTA-PERSONALIZADA, PRESENCIALIDAD | PREFIERE-CHECKOUT, AVISOS-SIN-VALOR | VENTA-PERSONALIZADA | BAJO-VOLUMEN, OTRAS-PRIORIDADES | VENTA-PERSONALIZADA, POCA-VARIEDAD |
 
 **Códigos nuevos por entrevista** (los que aparecen por primera vez, en orden de entrevista):
@@ -73,14 +74,14 @@
 |---|---|---|
 | PyME-01 | REC-PERSONAL, BOT, AUTO-RESPUESTA, ADMIN-COBRO, DOCUMENTACION, VENTA-PERSONALIZADA, PRESENCIALIDAD | 7 |
 | PyME-02 | REC-DUENO, RESP-DIRECTA, DOC-PLATAFORMA, LOGISTICA-FISICA, PREFIERE-CHECKOUT, AVISOS-SIN-VALOR | 6 |
-| PyME-03 | DERIVACION, DOC-SISTEMA, IA-ASISTIDA, REPORTES-AUTO, COTIZACIONES | 5 |
+| PyME-03 | DERIVACION, DOC-SISTEMA, IA-ASISTIDA, REPORTES-AUTO, COTIZACIONES, SEGUIMIENTO | 6 |
 | PyME-04 | ARMADO-MANUAL, BAJO-VOLUMEN, OTRAS-PRIORIDADES | 3 |
 | PyME-05 | PLANTILLAS, FINANCIACION, POCA-VARIEDAD | 3 |
 
 **Lectura frente a la regla de §2.3** (detener cuando dos entrevistas consecutivas no aportan códigos nuevos, con un máximo de 8):
 
 - PyME-04 y PyME-05 aportan códigos nuevos, así que **la saturación no se alcanzó con 5 entrevistas**.
-- La curva baja (7 → 6 → 5 → 3 → 3), pero no llega a cero.
+- La curva baja (7 → 6 → 6 → 3 → 3; era 7 → 6 → 5 → 3 → 3 antes del control humano), pero no llega a cero.
 - Aunque se fusionen los códigos dudosos (sección 3), PyME-05 conserva al menos uno nuevo (`FINANCIACION`).
 - Cumplir la regla habría exigido al menos **7 entrevistas**: la 6.ª y la 7.ª sin códigos nuevos.
 - **Decisión (15/10/2026):** los autores cerraron la recolección con 5 entrevistas. El cierre se registró como desvío D2 en [`DESVIOS.md`](../../prerregistro-2026-10/DESVIOS.md). En la tesis se informa como «n = 5, sin saturación», no como saturación alcanzada.
@@ -104,5 +105,16 @@
   - PyME-02, P07: A asignó `RESP-DIRECTA` y B no. Se mantiene: «misma persona» indica que quien recibe la consulta la responde.
   - PyME-04, P07: B asignó `REC-PERSONAL` y A no. Se agrega: la jefa comercial recibe lo que deriva el chatbot y es una persona con esa tarea, distinta de la dueña.
 - **Marcado como dudoso por B, con acuerdo:** `VENTA-PERSONALIZADA` en PyME-05 (P15), porque la respuesta no dice que el precio dependa de una especificación caso por caso.
-- **Efecto:** `REC-PERSONAL` pasa de 3 a 4 empresas. Ningún código nuevo aparece ni desaparece, así que la curva de saturación (7, 6, 5, 3, 3) no cambia.
-- **Límite:** el protocolo pedía que codificaran los dos autores. Dos procesos de IA independientes reducen el sesgo de un único codificador, pero no reemplazan el juicio de los investigadores (desvío D3).
+- **Efecto:** `REC-PERSONAL` pasa de 3 a 4 empresas. Ningún código nuevo aparece ni desaparece, así que la curva de saturación (7, 6, 5, 3, 3) no cambia con este consenso; el control humano de la sección 5 la lleva a 7, 6, 6, 3, 3.
+- **Límite:** el protocolo pedía que codificaran los dos autores. Dos procesos de IA independientes reducen el sesgo de un único codificador, pero no reemplazan el juicio de los investigadores (desvío D3). La sección 5 agrega el control de un autor.
+
+## 5. Control humano (16/10/2026)
+
+- **Codificador:** E. Rojo, autor, sobre una hoja con solo las respuestas y las definiciones de la sección 1 (`codificacion/codificador_autor.csv`). **No es del todo ciego:** el codificador estuvo presente en las sesiones en que se armaron las asignaciones de las secciones 2 y 4.
+- **Normalización:** se corrigieron tres erratas de tipeo, sin cambiar ningún código: `REC-DUEÑO` → `REC-DUENO`, `RESP DIRECTA` → `RESP-DIRECTA` y un separador `:` por `;` (PyME-04, P15).
+- **Acuerdo con el consenso de la sección 4:** 22 de 25 unidades idénticas (88 %) y 36 de 39 códigos (92,3 %). Con el codificador A: 23/25 (92 %); con B: 21/25 (84 %).
+- **Desacuerdos (3), resueltos por los autores contra las definiciones** (`codificacion/consenso.csv`):
+  - PyME-01, P07: el autor agregó `DERIVACION`. No se agrega: el pase va del profesional a la secretaria, no de quien recibe la consulta a otra persona.
+  - PyME-04, P07: el autor no asignó `REC-PERSONAL`, como el codificador A antes del consenso. Se mantiene, con el criterio de la sección 4.
+  - PyME-03, P13: el autor propuso un código nuevo para «seguimiento de pedidos», una parte de la respuesta que A y B no codificaron. Se acepta como `SEGUIMIENTO` (sección 1).
+- **Efecto:** PyME-03 aporta 6 códigos nuevos en lugar de 5 y la curva queda 7, 6, 6, 3, 3. La saturación sigue sin alcanzarse (D2). La única frecuencia nueva es seguimiento de pedidos (1 empresa, P13).

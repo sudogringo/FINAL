@@ -15,7 +15,7 @@ Las mediciones B y C de `PRERREGISTRO.md` no tuvieron desvíos (ver `RESULTADOS.
 ### D2. Recolección cerrada con 5 entrevistas sin saturación (15/10/2026)
 
 - **Regla:** §2.3, a partir de la 5.ª entrevista la recolección se detiene cuando dos entrevistas consecutivas no aportan códigos nuevos, con un máximo de 8.
-- **Qué pasó:** los autores cerraron la recolección después de PyME-05. Según la codificación preliminar (`LIBRO_CODIGOS.md`), PyME-04 y PyME-05 aportaron 3 códigos nuevos cada una (curva 7, 6, 5, 3, 3), así que el criterio de saturación **no se cumplió**.
+- **Qué pasó:** los autores cerraron la recolección después de PyME-05. Según la codificación preliminar (`LIBRO_CODIGOS.md`), PyME-04 y PyME-05 aportaron 3 códigos nuevos cada una (curva 7, 6, 5, 3, 3; 7, 6, 6, 3, 3 después del control humano de D3), así que el criterio de saturación **no se cumplió**.
 - **Motivo:** se combinaron tres razones.
   1. **Reclutamiento agotado:** se contactó a 8 PyMEs, el objetivo de contactos que fija el checklist del README, y 5 aceptaron participar. Seguir habría requerido abrir una nueva ronda de reclutamiento.
   2. **Plazo:** los autores apuntan a tener la tesis aprobada en noviembre de 2026.
@@ -31,3 +31,4 @@ Las mediciones B y C de `PRERREGISTRO.md` no tuvieron desvíos (ver `RESULTADOS.
 - **Qué pasó:** los autores delegaron la codificación. La primera la hizo el asistente de IA que preparó el libro de códigos; la segunda, un proceso de IA separado, que solo recibió las definiciones y las respuestas, sin la primera asignación. Los dos desacuerdos se resolvieron contra las definiciones del libro de códigos.
 - **Motivo:** decisión de los autores, el 16/10/2026, de delegar la codificación en el asistente de IA; aceptan el criterio aplicado y asumen la responsabilidad por el resultado.
 - **Efecto sobre el análisis:** acuerdo exacto en 23 de 25 unidades (92 %) y en 35 de 37 códigos (94,6 %); la única frecuencia que cambia es `REC-PERSONAL` (de 3 a 4 empresas). La codificación conserva el control de un segundo codificador independiente, pero no el juicio de dos investigadores, y así se informa en la tesis.
+- **Atenuación (16/10/2026):** un autor (E. Rojo) codificó las 25 unidades sobre una hoja con solo las respuestas y las definiciones. No fue del todo ciego, porque estuvo presente cuando se armaron las asignaciones. Coincidió con el consenso en 22 de 25 unidades (88 %) y en 36 de 39 códigos (92,3 %). Los autores resolvieron los 3 desacuerdos y agregaron el código `SEGUIMIENTO` (`LIBRO_CODIGOS.md` §5). La codificación tiene ahora el juicio de un investigador, aunque no la codificación independiente de los dos autores que pedía §6.3.

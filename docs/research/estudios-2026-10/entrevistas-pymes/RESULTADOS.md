@@ -51,14 +51,14 @@ Personas: mediana 9 [1–150]. Antigüedad: mediana 14 años [0,5–50]. Duraci�
 
 ## 4. Preguntas abiertas (§6.3)
 
-**Estado:** codificación doble e independiente con consenso ([`LIBRO_CODIGOS.md`](LIBRO_CODIGOS.md), sección 4): acuerdo exacto en 23 de 25 unidades (92 %), con 2 desacuerdos resueltos. Por delegación de los autores, las dos codificaciones las hicieron procesos de IA separados (desvío D3).
+**Estado:** codificación doble e independiente con consenso ([`LIBRO_CODIGOS.md`](LIBRO_CODIGOS.md), sección 4): acuerdo exacto en 23 de 25 unidades (92 %), con 2 desacuerdos resueltos. Por delegación de los autores, las dos codificaciones las hicieron procesos de IA separados (desvío D3). Un autor codificó después las 25 unidades como control humano (sección 5): coincide con el consenso en 22 de 25 (88 %); los autores resolvieron los 3 desacuerdos y agregaron el código `SEGUIMIENTO`.
 
 | Pregunta | Códigos más frecuentes (n de 5) |
 |---|---|
 | P07 Recepción y aviso | Recibe personal asignado 4; respuesta directa sin derivar 2; bot o chatbot 2; derivación manual 2 |
 | P09a Despacho (n = 3 con dato) | Documentación desde un sistema 2; desde una plataforma de terceros 1; armado físico manual 1 |
 | P12b Ya automatizado | Respuesta automática 2; IA asistida 1; reportes automáticos 1; plantillas 1 |
-| P13 Tareas que más tiempo consumen | Cotizaciones 2; documentación 2; administración y cobranzas 2; logística física 1; financiación 1 |
+| P13 Tareas que más tiempo consumen | Cotizaciones 2; documentación 2; administración y cobranzas 2; logística física 1; financiación 1; seguimiento de pedidos 1 |
 | **P15 Barrera para adoptar** | **Venta personalizada 3**; presencialidad 1; prefiere checkout 1; avisos sin valor 1; bajo volumen 1; otras prioridades 1; poca variedad 1 |
 
 ## 5. Lectura frente al problema de la tesis (§6.4)
@@ -76,5 +76,5 @@ Personas: mediana 9 [1–150]. Antigüedad: mediana 14 años [0,5–50]. Duraci�
 - Muestra intencional y pequeña (n = 5), **sin saturación** (D2), con contactos de la red de los autores.
 - Datos autoinformados y estimados de memoria, con muchos `NS` en las preguntas de tiempo.
 - Un mismo entrevistador, que además es autor del artefacto; en PyME-01 hubo lectura no literal (D1).
-- Codificación doble hecha por dos procesos de IA independientes, no por los autores (§4; desvío D3).
+- Codificación doble hecha por dos procesos de IA independientes, con un control humano posterior de un autor que no fue del todo ciego (LIBRO_CODIGOS §4–5; desvío D3).
 - Sin revisión de un comité de ética.
