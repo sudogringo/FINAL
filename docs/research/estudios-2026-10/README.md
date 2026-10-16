@@ -17,7 +17,8 @@ Estos dos estudios responden a dos críticas de la evaluación:
 | [`entrevistas-pymes/PROTOCOLO.md`](entrevistas-pymes/PROTOCOLO.md) | Objetivo, criterios, n = 5–8 con saturación, procedimiento, manejo de datos y plan de análisis |
 | [`entrevistas-pymes/GUIA.md`](entrevistas-pymes/GUIA.md) | Guion literal: 15 preguntas, la mayoría cuantificables y con su unidad |
 | [`entrevistas-pymes/CONSENTIMIENTO.md`](entrevistas-pymes/CONSENTIMIENTO.md) | Consentimiento para leer o enviar por mensaje, con la fórmula de aceptación |
-| [`entrevistas-pymes/planilla.csv`](entrevistas-pymes/planilla.csv) | Una fila por PyME (`PyME-01`…) |
+| [`entrevistas-pymes/planilla.csv`](entrevistas-pymes/planilla.csv) | Una fila por PyME (`PyME-01`…). **Cerrada con 5 entrevistas, sin saturación** (desvío D2 de [`DESVIOS.md`](../prerregistro-2026-10/DESVIOS.md)) |
+| [`entrevistas-pymes/LIBRO_CODIGOS.md`](entrevistas-pymes/LIBRO_CODIGOS.md) | Borrador del libro de códigos de las preguntas abiertas y conteo de códigos nuevos por entrevista |
 | **Estudio 2 — Usabilidad del catálogo** (confirmatorio) | |
 | [`usabilidad-catalogo/PROTOCOLO.md`](usabilidad-catalogo/PROTOCOLO.md) | Diseño, criterios, n ≥ 10 (objetivo 12), entorno, tareas con criterio de éxito, métricas y ética |
 | [`usabilidad-catalogo/GUION_MODERADOR.md`](usabilidad-catalogo/GUION_MODERADOR.md) | Guion literal del moderador neutral: qué decir, qué no decir, cuándo una tarea falla y cómo registrar |

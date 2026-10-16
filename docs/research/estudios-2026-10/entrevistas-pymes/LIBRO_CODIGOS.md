@@ -82,8 +82,8 @@
 - PyME-04 y PyME-05 aportan códigos nuevos, así que **la saturación no se alcanzó con 5 entrevistas**.
 - La curva baja (7 → 6 → 5 → 3 → 3), pero no llega a cero.
 - Aunque se fusionen los códigos dudosos (sección 3), PyME-05 conserva al menos uno nuevo (`FINANCIACION`).
-- Con la regla tal como está escrita, el mínimo pasa a ser **7 entrevistas**: la 6.ª y la 7.ª sin códigos nuevos. Si alguna aporta uno, se sigue hasta el tope de 8.
-- Si se cierra con 5, hay que **declararlo como desvío del protocolo** y no como saturación.
+- Cumplir la regla habría exigido al menos **7 entrevistas**: la 6.ª y la 7.ª sin códigos nuevos.
+- **Decisión (15/10/2026):** los autores cerraron la recolección con 5 entrevistas. El cierre se registró como desvío D2 en [`DESVIOS.md`](../../prerregistro-2026-10/DESVIOS.md). En la tesis se informa como «n = 5, sin saturación», no como saturación alcanzada.
 
 ## 3. Decisiones abiertas para los autores
 

@@ -1,6 +1,6 @@
 # Estudio 1 — Entrevistas estructuradas a PyMEs: protocolo
 
-**Estado:** materiales listos; datos pendientes.
+**Estado:** recolección cerrada con 5 entrevistas (14 y 15/10/2026), **sin saturación**. El cierre es un desvío de §2.3, registrado como D2 en [`DESVIOS.md`](../../prerregistro-2026-10/DESVIOS.md). Este protocolo se conserva tal como se fijó antes de los datos.
 **Investigadores:** Cunto Boberg, Tiago y Rojo, Emiliano (UTN, Tecnicatura Universitaria en Programación).
 **Directores:** Prof. Alberto Cortez y Ariel Enferrel.
 

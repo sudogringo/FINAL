@@ -4,7 +4,7 @@
 
 **Artefacto medido:** `db4954f`. El commit `89bc412` solo agrega el prerregistro y no modifica el código.
 
-**Desvíos:** ninguno. No se creó `DESVIOS.md`.
+**Desvíos:** ninguno en estas mediciones. `DESVIOS.md` se creó el 15/10/2026 y solo registra desvíos del Estudio 1 (entrevistas a PyMEs).
 
 ## Medición B: catálogo frente a `/productos` del sitio preexistente (§2)
 
