@@ -16,7 +16,10 @@ Las mediciones B y C de `PRERREGISTRO.md` no tuvieron desvíos (ver `RESULTADOS.
 
 - **Regla:** §2.3, a partir de la 5.ª entrevista la recolección se detiene cuando dos entrevistas consecutivas no aportan códigos nuevos, con un máximo de 8.
 - **Qué pasó:** los autores cerraron la recolección después de PyME-05. Según la codificación preliminar (`LIBRO_CODIGOS.md`), PyME-04 y PyME-05 aportaron 3 códigos nuevos cada una (curva 7, 6, 5, 3, 3), así que el criterio de saturación **no se cumplió**.
-- **Motivo:** [completar por los autores].
+- **Motivo:** se combinaron tres razones.
+  1. **Reclutamiento agotado:** se contactó a 8 PyMEs, el objetivo de contactos que fija el checklist del README, y 5 aceptaron participar. Seguir habría requerido abrir una nueva ronda de reclutamiento.
+  2. **Plazo:** los autores apuntan a tener la tesis aprobada en noviembre de 2026.
+  3. **Criterio de suficiencia de los autores:** consideraron que las 5 entrevistas aportaban la información necesaria para el objetivo descriptivo del estudio (§1). Es un juicio de los autores, **no** el criterio de saturación prerregistrado, que no se cumplió.
 - **Efecto sobre el análisis:**
   - El estudio se informa con n = 5 y **sin saturación**. La tesis no debe afirmar que se alcanzó.
   - Las frecuencias de los códigos describen las 5 PyMEs entrevistadas. Que siguieran apareciendo códigos nuevos indica que la variedad de procesos y de barreras **no está agotada**; puede haber temas que no aparecieron.
