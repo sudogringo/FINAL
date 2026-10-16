@@ -1,0 +1,6 @@
+Arranque en frío (PRERREGISTRO_R39.md §6.3), n = 1, descriptivo.
+Última solicitud al backend del lote: antes de 2026-10-16 00:32:48 -0300
+Solicitud: 2026-10-16 00:54:00 -0300 GET https://golden-harvest-api.onrender.com/api/products
+http_code=200 time_total=32.859416s time_starttransfer=32.859303s
+Segunda solicitud inmediata (ya despierto):
+http_code=200 time_total=0.258351s
