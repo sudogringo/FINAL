@@ -39,15 +39,15 @@ Two different things are recorded below, and they must not be confused:
 | 01 | Automated Branding | No | 7 / 13 | 3/3 · yes | 3/3 |
 | 02 | Website Health & SEO Monitor | No | 4 / 8 | 3/3 · **no** (A11y/BP/SEO shown as 0/100) | 3/3 |
 | 03 | Google Maps Review Management | No | 3 / 4 | 3/3 · yes (simulated reviews) | 3/3 |
-| 04 | Social Media Content Engine | No | 28 / 11 | 3/3 · yes | 3/3 (rerun after sharing the content sheet; the first 3 failed with 403) |
+| 04 | Social Media Content Engine | Yes (webhook, since 14/10) | 28 / 11 | 3/3 · yes | 3/3 (rerun after sharing the content sheet; the first 3 failed with 403) |
 | 05 | Monthly Activity Report | No | 6 / 8 | 3/3 · yes | 3/3 |
 | 06a | Newsletter Quincenal | No | 6 / 0 | 3/3 · yes (simulated subscribers) | 3/3 |
-| 06b | Carrito Abandonado | No | 4 / 1 | 3/3 · yes (simulated source) | 3/3 |
-| 07 | Logistics & Shipping Automation | No | 8 / 8 | 3/3 · **no** ("Remitos", localidad shown as `null`) | 3/3 |
+| 06b | Carrito Abandonado | Yes (webhook, since 14/10) | 4 / 1 | 3/3 · yes (simulated source) | 3/3 |
+| 07 | Logistics & Shipping Automation | Yes (webhook, since 14/10) | 8 / 8 | 3/3 · **no** ("Remitos", localidad shown as `null`) | 3/3 |
 
 For 03, 06a and 06b the content check can only confirm a non-empty *simulated* output: their data sources are mocks.
 
-`00. Lead Notification` was built after the development-history snapshot, as the instrument for VD2: 52 measured runs without failures (18 on 25/08, 34 on 08/10) plus 3 on 09/10 after escaping the quote-form fields in its message, all in `docs/research/quote-latency/results/`. Its Gmail node sends to `bandeja.demo@example.com`, which bounces after Gmail accepts the message, so t1 is Gmail's acceptance, not arrival in an inbox. It is the only workflow left active (`active=1`), for that measurement.
+`00. Lead Notification` was built after the development-history snapshot, as the instrument for VD2: 52 measured runs without failures (18 on 25/08, 34 on 08/10) plus 3 on 09/10 after escaping the quote-form fields in its message, all in `docs/research/quote-latency/results/`. Its Gmail node sends to `bandeja.demo@example.com`, which bounces after Gmail accepts the message, so t1 is Gmail's acceptance, not arrival in an inbox. It was the only active workflow (`active=1`) until 14/10/2026, when 04, 06b and 07 were activated with their webhook receivers (see below).
 
 Fixes applied on 2026-09-25 before the final batch (exports updated in `n8n/workflows/`):
 

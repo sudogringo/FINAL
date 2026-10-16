@@ -4,7 +4,7 @@
   "id": "Zpr1rt5YATfQix0d",
   "name": "04. Social Media Content Engine",
   "description": "Genera posts para Instagram, WhatsApp Story y Facebook desde un form o Google Sheet. TESIS: sin AI, Unsplash + hashtags rule-based. PRODUCCIÓN: AI caption + imagen (disabled).",
-  "active": false,
+  "active": true,
   "isArchived": false,
   "nodes": [
     {

@@ -1,4 +1,6 @@
-# n8n workflow runs — current state (2026-09-25)
+# n8n workflow runs
+
+Batches: 2026-09-25, 2026-10-07 (discarded), 2026-10-08, preregistered 2026-10-14 (`results/prereg-2026-10-14/`) and the exploratory receivers batch of 2026-10-14 (`results/2026-10-14-receivers/`). Content oracles: `ORACLES.md`; oracle tests: `oracle-tests-2026-10-16.txt`.
 
 Standalone scripts that execute each functional n8n workflow a fixed number of times against the
 running local stack and record whether each run succeeds. It answers a question the execution
@@ -6,7 +8,7 @@ history in `docs/architecture/n8n.md` cannot: **does each workflow work in its c
 
 ## Why this exists
 
-Tabla 7 (§5.2.4) reports success/error counts taken from the n8n execution table on 2026-08-04.
+Tabla 9 of the thesis (§5.2.4; Tabla 7 up to R38) reports success/error counts taken from the n8n execution table on 2026-08-04.
 Those counts are the **cumulative development history**: they include every failed attempt while
 each workflow was being built and debugged, and the per-execution records behind them were not
 preserved. They say nothing about the finished workflows. The 2nd-instance review asked
