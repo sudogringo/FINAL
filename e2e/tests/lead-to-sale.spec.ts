@@ -60,6 +60,8 @@ test.describe('Lead-to-Sale', () => {
     await dialog.getByLabel(/Email/).fill(`e2e-${stamp}@example.test`)
     await dialog.getByLabel('Localidad de entrega').fill('Godoy Cruz, Mendoza')
     await dialog.getByLabel('Notas adicionales').fill('Prueba automática E2E (dato sintético)')
+    // Ley 25.326: sin aceptar el aviso de privacidad el formulario no envía.
+    await dialog.getByRole('checkbox', { name: /Acepto el aviso de privacidad/ }).check()
 
     const [response] = await Promise.all([
       page.waitForResponse(r => r.url().endsWith('/api/quotes') && r.request().method() === 'POST'),
@@ -73,6 +75,7 @@ test.describe('Lead-to-Sale', () => {
     const sent = response.request().postDataJSON()
     expect(sent.items).toHaveLength(3)
     expect(sent.contact.email).toBe(`e2e-${stamp}@example.test`)
+    expect(sent.contact.consentimiento).toMatch(/^\d{4}-\d{2}-\d{2}T/)
 
     await expect(dialog.getByRole('heading', { name: '¡Cotización enviada!' })).toBeVisible()
   })
