@@ -32,3 +32,16 @@ Las mediciones B y C de `PRERREGISTRO.md` no tuvieron desvíos (ver `RESULTADOS.
 - **Motivo:** decisión de los autores, el 16/10/2026, de delegar la codificación en el asistente de IA; aceptan el criterio aplicado y asumen la responsabilidad por el resultado.
 - **Efecto sobre el análisis:** acuerdo exacto en 23 de 25 unidades (92 %) y en 35 de 37 códigos (94,6 %); la única frecuencia que cambia es `REC-PERSONAL` (de 3 a 4 empresas). La codificación conserva el control de un segundo codificador independiente, pero no el juicio de dos investigadores, y así se informa en la tesis.
 - **Atenuación (16/10/2026):** un autor (E. Rojo) codificó las 25 unidades sobre una hoja con solo las respuestas y las definiciones. No fue del todo ciego, porque estuvo presente cuando se armaron las asignaciones. Coincidió con el consenso en 22 de 25 unidades (88 %) y en 36 de 39 códigos (92,3 %). Los autores resolvieron los 3 desacuerdos y agregaron el código `SEGUIMIENTO` (`LIBRO_CODIGOS.md` §5). La codificación tiene ahora el juicio de un investigador, aunque no la codificación independiente de los dos autores que pedía §6.3.
+
+### D4. Codificación retrospectiva, no a medida (registrado el 16/10/2026)
+
+- **Regla:** §2.3 del protocolo de entrevistas, las preguntas abiertas se codifican a medida que se hacen las entrevistas, y el criterio de saturación se evalúa con esa codificación.
+- **Qué pasó:** el libro de códigos y la curva de saturación se elaboraron el 15/10/2026, después de la quinta entrevista (`LIBRO_CODIGOS.md` entra al repositorio en `8ced99d`, el mismo commit que cierra la recolección). La saturación se evaluó de forma retrospectiva.
+- **Contexto:** las cinco entrevistas se hicieron en dos noches seguidas: cuatro entre la noche del 14/10 y la madrugada del 15/10, y la quinta en la noche del 15/10, según los commits que registran cada una. El registro no documenta otro motivo.
+- **Efecto sobre el análisis:** la decisión de cerrar con cinco (D2) no se tomó mirando la curva, porque la curva no existía todavía; el cierre se apoyó en el reclutamiento, el plazo y el criterio de suficiencia de los autores (D2). La curva informada (7, 6, 5, 3, 3; 7, 6, 6, 3, 3 después del control humano de D3) describe a posteriori que la saturación no se alcanzó, y no cambia esa conclusión.
+
+### D5. Dos entrevistas superaron los 25 minutos (registrado el 16/10/2026)
+
+- **Regla:** §3 del protocolo (Modalidad), duración objetivo de 20 minutos; si se llega a 25, el entrevistador pasa directamente a la sección F.
+- **Qué pasó:** PyME-02 duró 31 minutos y PyME-04, 30 (`planilla.csv`, columna `duracion_min`). La planilla tiene respuesta en todas las secciones de ambas.
+- **Efecto sobre el análisis:** ninguno sobre los datos registrados; las dos entrevistas son las que más contexto aportaron a las preguntas abiertas, lo que puede darles más peso en la codificación que a las demás.
