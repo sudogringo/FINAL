@@ -12,6 +12,9 @@ export const contactSchema = z.object({
   // Un valor en blanco cuenta como ausente.
   localidad: z.string().trim().max(100).optional()
     .transform(v => (v ? v : undefined)),
+  // Instante en que el visitante aceptó el aviso de privacidad (Ley 25.326, art. 5). Queda en
+  // Quote.contact como constancia; es opcional para no romper clientes anteriores.
+  consentimiento: z.string().datetime().optional(),
 })
 
 export type QuoteContact = z.infer<typeof contactSchema>

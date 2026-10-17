@@ -66,3 +66,13 @@ test('without a stored customer, the form values go to create', () => {
   assert.equal(args.create.localidad, 'Maipú')
   assert.deepEqual(args.update, {})
 })
+
+test('keeps the time of consent to the privacy notice (Ley 25.326)', () => {
+  const parsed = contactSchema.parse({ ...BASE, consentimiento: '2026-10-17T03:00:00.000Z' })
+  assert.equal(parsed.consentimiento, '2026-10-17T03:00:00.000Z')
+})
+
+test('rejects a consent value that is not a timestamp', () => {
+  const parsed = contactSchema.safeParse({ ...BASE, consentimiento: 'sí' })
+  assert.equal(parsed.success, false)
+})

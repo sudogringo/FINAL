@@ -101,3 +101,8 @@
 - El elemento LCP es el mismo que en la medición B (el párrafo de presentación del encabezado en móvil y el título en escritorio) y no depende de los datos de la API. Que el LCP móvil publicado sea menor que el del entorno de pruebas (2302 frente a 2502 ms) no se atribuye a una causa: el throttling de Lighthouse es simulado y los servidores difieren (`vite preview` frente a la CDN de GitHub Pages).
 - El original varía entre mediciones: su LCP móvil fue de 9438 ms el 14/10 y de 14329 ms el 16/10.
 - **Arranque en frío** (§6.3, n = 1): tras 21 minutos sin tráfico, la primera respuesta de `/api/products` tardó 32,9 s (HTTP 200); la siguiente, 0,26 s (`coldstart.txt`).
+
+## Notas posteriores (17/10/2026)
+
+- **H1b-LCP es decisoria.** `analysis.txt` del lote remoto la rotula «no decisoria» porque `prereg_analysis.py` imprime ese rótulo fijo para todas las métricas secundarias; según §6.2 de `PRERREGISTRO_R39.md`, H1b-LCP («H2» en OSF) sí tiene regla de decisión, y se evaluó con ella.
+- **El riesgo de H1b-LCP era menor que el declarado, y podía saberse antes de registrar.** En las corridas del 14/10 (`results/prereg-catalogo-2026-10-14/`), disponibles antes del registro en OSF, el elemento LCP de `/catalogo` ya era un párrafo del encabezado en móvil y el título `h1` en escritorio: texto que no depende de la API. Las latencias de Render y Neon, en las que el prerregistro fundó el riesgo, no podían afectarlo; el resultado dependía sobre todo de la entrega del frontend y del throttling simulado de Lighthouse.

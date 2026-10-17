@@ -4,7 +4,7 @@ import heroBanner from '../assets/hero-banner.jpg'
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden bg-dark">
-      {/* Background collage — planta, línea de producción, envasado */}
+      {/* Fondo: ilustración propia generada por código (docs/assets/illustrations/generate.py) */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${heroBanner})` }}

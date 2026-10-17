@@ -17,6 +17,10 @@ const schema = z.object({
   email:    z.string().email('Email inválido'),
   notas:    z.string().max(500, 'Máximo 500 caracteres').optional(),
   localidad: z.string().max(100, 'Máximo 100 caracteres').optional(),
+  // Ley 25.326, art. 5: consentimiento libre, expreso e informado antes de enviar datos personales.
+  aceptaPrivacidad: z.boolean().refine(v => v, {
+    message: 'Tenés que aceptar el aviso de privacidad para enviar la solicitud.',
+  }),
 })
 
 type FormData = z.infer<typeof schema>
@@ -45,12 +49,15 @@ export default function QuoteForm() {
 
   const onSubmit = async (data: FormData) => {
     setStatus('sending')
+    // La casilla no viaja como dato: se registra el instante del consentimiento junto con el contacto.
+    const contact: Record<string, unknown> = { ...data, consentimiento: new Date().toISOString() }
+    delete contact.aceptaPrivacidad
     try {
       await submitQuote({
         sessionId: sessionStorage.getItem('gh_session_id') ?? crypto.randomUUID(),
         // T0 de VD2 (§3.2): capturado lo más cerca posible del click real del usuario.
         clientSubmittedAt: new Date().toISOString(),
-        contact:   data as Record<string, string>,
+        contact:   contact as Record<string, string>,
         items:     items.map(i => ({ id: i.id, name: i.name, line: i.line, size: i.size, qty: i.qty })),
       })
       setStatus('done')
@@ -160,6 +167,29 @@ export default function QuoteForm() {
               />
               <p className="text-white/20 text-[10px] font-body text-right">Máximo 500 caracteres</p>
             </Field>
+
+            <div data-testid="privacy-notice" className="bg-white/3 rounded-2xl p-4 border border-white/10 flex flex-col gap-3">
+              <p className="text-white/60 text-[11px] font-body leading-relaxed">
+                <strong className="text-white/80 font-heading">Aviso de privacidad.</strong>{' '}
+                Este sitio es una demostración académica (UTN FRM) sin vínculo con Golden Harvest S.A.: no cargues datos reales.
+                Los datos del formulario se usan solo para responder esta solicitud, no se ceden a terceros y quedan en la base
+                del proyecto, cuyos responsables son sus autores. Podés ejercer tus derechos de acceso, rectificación y supresión
+                (Ley 25.326) abriendo un pedido en github.com/sudogringo/FINAL. La Agencia de Acceso a la Información Pública es el
+                órgano de control.
+              </p>
+              <label htmlFor="aceptaPrivacidad" className="flex items-start gap-2.5 text-white/70 text-[12px] font-body cursor-pointer">
+                <input
+                  id="aceptaPrivacidad"
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 accent-[#CABC6B]"
+                  {...register('aceptaPrivacidad')}
+                />
+                Acepto el aviso de privacidad y el uso de mis datos para responder la solicitud.
+              </label>
+              {errors.aceptaPrivacidad?.message && (
+                <p role="alert" className="text-[#C0392B] text-[11px] font-body">{errors.aceptaPrivacidad.message}</p>
+              )}
+            </div>
 
             {status === 'error' && (
               <p role="alert" className="bg-[#C0392B]/10 border border-[#C0392B]/30 rounded-xl px-4 py-3 text-[#C0392B] text-[12px] font-body">

@@ -1,0 +1,211 @@
+PASS src/__tests__/ProductList.unavailable.test.tsx
+  ProductList without a configured backend (VITE_API_URL unset in production)
+    √ shows a clear "catálogo no disponible" state and never calls the API (112 ms)
+    √ does not render the misleading "no se encontraron productos" empty search state (13 ms)
+
+PASS src/__tests__/CatalogoPage.heading.test.tsx
+  CatalogoPage heading hierarchy
+    √ has one h1 and product cards are h2 (no skipped level) (195 ms)
+
+PASS src/__tests__/AcademicNotice.test.tsx
+  Aviso de proyecto académico
+    √ el pie de página declara que es un proyecto académico sin vínculo con la empresa (90 ms)
+    √ el pie de página no reclama derechos en nombre de la empresa (11 ms)
+    √ la página de contacto no enlaza el correo real de la empresa (20 ms)
+    √ index.html no declara datos estructurados de organización ni autoría de la empresa (10 ms)
+
+PASS src/__tests__/CartDrawer.test.tsx
+  CartDrawer
+    √ drawer is hidden initially (83 ms)
+    √ shows item after adding and opening the drawer (47 ms)
+    √ displays item size and quantity (19 ms)
+    √ shows empty state message when cart is empty (23 ms)
+    √ "Solicitar Cotización" button appears when items exist (16 ms)
+
+PASS src/__tests__/CartContext.test.tsx
+  CartContext
+    √ addItem is blocked at the per-size stock cap (81 ms)
+    √ setQty(0) removes the item entirely (25 ms)
+    √ setQty caps at the stock limit when set above it (17 ms)
+    √ setQty sets a valid in-range quantity normally (11 ms)
+    √ removeItem removes the specified item (21 ms)
+    √ clearCart empties the cart and resets isOpen/quoteOpen (17 ms)
+    √ totalItems sums quantities across multiple distinct items (21 ms)
+    √ openCart/closeCart/openQuote/closeQuote toggle state directly (20 ms)
+    abandoned cart webhook
+      √ fires the webhook after the abandonment threshold when the cart has items (19 ms)
+      √ does not fire the webhook when the cart is empty (8 ms)
+
+PASS src/__tests__/Production.a11y.test.tsx
+  Production carousel dots
+    √ exposes each dot as a named button (155 ms)
+    √ marks only the active dot with aria-current and follows selection (152 ms)
+    √ gives each dot a 24x24 hit area while the visible dot stays 8x8 (53 ms)
+
+PASS src/__tests__/phone.test.ts
+  PHONE_RE
+    √ accepts +54 9 11 0000-0000 (1 ms)
+    √ accepts 261 555-0000
+    √ accepts 2615550142
+    √ accepts +5492615550142
+    √ rejects 1234567
+    √ rejects +54 9 11 0000-0000-123
+    √ rejects 261-ABC-0000
+    √ rejects ++54 261 555 0000
+    √ rejects  (1 ms)
+
+PASS src/__tests__/ProductCard.test.tsx
+  ProductCard
+    √ renders product name and description (83 ms)
+    √ renders all size buttons (89 ms)
+    √ first size is selected by default (24 ms)
+    √ changes selected size on click (62 ms)
+    √ shows "Agregar al Pedido" button (9 ms)
+    √ qty cannot go below 1 (11 ms)
+    √ renders correctly for Línea Dorada (10 ms)
+    √ disables add-to-cart and shows "Sin stock" when selected size has 0 stock (11 ms)
+    √ blocks qty increment past stock cap for the selected size (19 ms)
+    √ does not disable qty controls or add-to-cart when the other size has 0 stock (22 ms)
+
+PASS src/__tests__/spaFallback.test.ts
+  GitHub Pages SPA fallback (404.html -> index.html)
+    √ 404.html turns /FINAL/catalogo into /FINAL/?/catalogo (4 ms)
+    √ index.html restores /FINAL/?/catalogo to /FINAL/catalogo (4 ms)
+    √ round-trips nested paths, query strings and hashes (6 ms)
+    √ does nothing on a normal load of /FINAL/ (no encoded path) (2 ms)
+
+PASS src/__tests__/api.test.ts
+  admin/api
+    submitQuote
+      √ sends a POST to the correct URL with serialized body (4 ms)
+      √ throws when res.ok is false (11 ms)
+    adminLogin
+      √ returns the token from the response JSON on success (1 ms)
+      √ throws the expected Spanish error message when response is not ok
+      √ rejects with the HTTP status so callers can tell bad credentials from a server failure (1 ms)
+      √ forwards the abort signal to fetch so a hung attempt can be cancelled (1 ms)
+    fetchMonthlyStats
+      √ builds the URL without the month query param when omitted
+      √ builds the URL with the month query param when provided (1 ms)
+    logInteraction
+      √ does not throw when fetch rejects (network failure)
+      √ does not throw when fetch resolves with a non-ok response
+      √ calls fetch with the correct URL and body (1 ms)
+    createProduct
+      √ happy path: calls fetch with the right method/URL and returns the created product (1 ms)
+      √ throws the expected message when res.ok is false (1 ms)
+    deleteProduct
+      √ happy path: calls fetch with the right method/URL
+      √ throws the expected message when res.ok is false
+
+PASS src/__tests__/resolveApiUrl.test.ts
+  resolveApiUrl
+    √ uses the build-time VITE_API_URL when set (trailing slash trimmed) (1 ms)
+    √ falls back to localhost in dev / test
+    √ has NO fallback in a production build: empty string means "backend not configured"
+
+PASS src/__tests__/ProductList.states.test.tsx
+  ProductList loading / cold start / failure states
+    √ shows products with no status message when the API answers fast (114 ms)
+    √ announces "despertando el servidor" (aria-live) only after a few seconds of waiting (96 ms)
+    √ recovers when the server wakes up after failed attempts (41 ms)
+    √ shows "catálogo no disponible" with a retry button once the ~70 s budget is spent, and retries on click (148 ms)
+    √ keeps the filter and search controls usable while loading (never blocks the page) (4 ms)
+
+PASS src/__tests__/contrast.test.tsx
+  text-safe gold token
+    √ defines --color-gold-text reaching 4.5:1 on cream card (#EEEBE2) and page (#FBFBFB) (11 ms)
+    √ keeps the brand gold untouched for decorative use (1 ms)
+  no low-contrast text utilities on light surfaces
+    √ Production (all tabs): no brand-gold text on light cards, no low-alpha dark text (259 ms)
+    √ Production: inactive tab text alpha >= 0.65 (39 ms)
+    √ Production: selected pill never pairs white text with a light gold background (56 ms)
+    √ Catalogo page + cards: no text-gold, no text-dark below the alpha floor (44 ms)
+    √ ProductCard: no low-alpha text, line label not in raw #A89D4F (5 ms)
+    √ About: no brand-gold text on light background (6 ms)
+  no low-contrast text utilities on dark surfaces
+    √ Certifications: white text alpha >= floor (6 ms)
+    √ Footer: white/gold text alpha >= floor (4 ms)
+
+PASS src/__tests__/AdminContext.test.tsx
+  AdminContext
+    √ starts unauthenticated with no token when localStorage is empty (67 ms)
+    √ initializes token from localStorage if present (11 ms)
+    √ login persists token to localStorage and flips isAuthenticated to true (18 ms)
+    √ logout clears localStorage and flips isAuthenticated to false (11 ms)
+    √ useAdmin throws when used outside AdminProvider (478 ms)
+
+PASS src/__tests__/AdminProductsPage.webhookConfigured.test.tsx
+  AdminProductsPage — triggerSocialMedia with VITE_N8N_WF4_WEBHOOK configured
+    √ POSTs to the configured webhook and shows the success alert (219 ms)
+
+PASS src/__tests__/fetchWithRetry.test.ts
+  fetchWithRetry
+    √ resolves immediately when the first attempt succeeds, without retrying (7 ms)
+    √ retries after a network error with exponential backoff (1s, 2s, 4s) (84 ms)
+    √ caps the delay at maxDelayMs (146 ms)
+    √ gives up once the total time budget is spent and rethrows the last error (55 ms)
+    √ retries on 5xx HttpError (31 ms)
+    √ does NOT retry on 4xx HttpError (1 ms)
+    √ aborts a hanging attempt after attemptTimeoutMs and retries (60 ms)
+    √ stops retrying and rejects when the caller aborts (30 ms)
+
+PASS src/__tests__/AdminQuotesPage.test.tsx
+  AdminQuotesPage
+    √ redirects to /admin/login when not authenticated (50 ms)
+    √ loads and displays quotes on mount (58 ms)
+    √ clicking status-advance calls updateQuoteStatus with PENDING -> CONTACTED and updates the list (155 ms)
+    √ closing a quote (CONTACTED -> CLOSED) is gated behind window.confirm: confirmed proceeds (109 ms)
+    √ closing a quote is a no-op when window.confirm is cancelled (95 ms)
+    √ CLOSED quotes have no advance action button (50 ms)
+
+PASS src/__tests__/AdminProductsPage.test.tsx
+  AdminProductsPage
+    √ redirects to /admin/login when not authenticated (49 ms)
+    √ loads and displays products on mount (active filter default) (59 ms)
+    handleSave
+      √ create branch: opens empty modal via "Nuevo producto" and calls createProduct (no id) (931 ms)
+      √ edit branch: opens modal via edit pencil (with id) and calls updateProduct with existing id (464 ms)
+    handleDelete
+      √ proceeds when window.confirm returns true (120 ms)
+      √ is a no-op when window.confirm returns false (105 ms)
+    handleRestore
+      √ calls updateProduct with active: true for an inactive product (216 ms)
+    search / line / status filters
+      √ search input narrows the list by name (204 ms)
+      √ line filter narrows the list to "roja" only (106 ms)
+      √ status filter "all" reveals inactive products, combined with line filter "roja" (203 ms)
+    triggerSocialMedia (via "Publicar en redes" button)
+      √ calls window.alert when the webhook env var is unset/empty (104 ms)
+
+PASS src/__tests__/QuoteForm.test.tsx (5.448 s)
+  QuoteForm
+    √ is not rendered when quoteOpen is false (27 ms)
+    √ renders the form when quote is open (52 ms)
+    √ shows validation error for empty nombre (89 ms)
+    √ shows validation error for invalid email (464 ms)
+    √ shows notas max 500 chars label (9 ms)
+    √ closes the form when X button is clicked (36 ms)
+    √ offers an optional Localidad field (18 ms)
+    √ sends localidad inside contact when the user fills it (1000 ms)
+    √ rejects a localidad longer than 100 characters (95 ms)
+    privacy notice and consent (Ley 25.326)
+      √ states the purpose of the data and the rights of the owner (15 ms)
+      √ does not send the quote until the notice is accepted (618 ms)
+      √ sends the time of consent with the contact once accepted (670 ms)
+
+PASS src/__tests__/AdminLoginPage.test.tsx (11.995 s)
+  AdminLoginPage
+    √ calls adminLogin with entered email/password on submit (737 ms)
+    √ success path stores the token and navigates away from login (674 ms)
+    √ failure path shows the Spanish error message and does not navigate (650 ms)
+    √ treats a 400 (missing fields) as a credentials error, without retrying (679 ms)
+    √ retries a network failure (cold start) and logs in when the server answers (1666 ms)
+    √ tells the user the server is waking up while the login is still pending (4660 ms)
+    √ shows a server error, not a credentials error, when the server fails (681 ms)
+
+Test Suites: 20 passed, 20 total
+Tests:       131 passed, 131 total
+Snapshots:   0 total
+Time:        15.287 s
+Ran all test suites.

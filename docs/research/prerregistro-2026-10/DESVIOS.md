@@ -36,7 +36,7 @@ Las mediciones B y C de `PRERREGISTRO.md` no tuvieron desvíos (ver `RESULTADOS.
 ### D4. Codificación retrospectiva, no a medida (registrado el 16/10/2026)
 
 - **Regla:** §2.3 del protocolo de entrevistas, las preguntas abiertas se codifican a medida que se hacen las entrevistas, y el criterio de saturación se evalúa con esa codificación.
-- **Qué pasó:** el libro de códigos y la curva de saturación se elaboraron el 15/10/2026, después de la quinta entrevista (`LIBRO_CODIGOS.md` entra al repositorio en `8ced99d`, el mismo commit que cierra la recolección). La saturación se evaluó de forma retrospectiva.
+- **Qué pasó:** el libro de códigos y la curva de saturación se elaboraron el 15/10/2026, después de la quinta entrevista (`LIBRO_CODIGOS.md` entra al repositorio en `e4c582d`, a las 23:32 del 15/10, un minuto antes del commit `8ced99d` que cierra la recolección). La saturación se evaluó de forma retrospectiva.
 - **Contexto:** las cinco entrevistas se hicieron en dos noches seguidas: cuatro entre la noche del 14/10 y la madrugada del 15/10, y la quinta en la noche del 15/10, según los commits que registran cada una. El registro no documenta otro motivo.
 - **Efecto sobre el análisis:** la decisión de cerrar con cinco (D2) no se tomó mirando la curva, porque la curva no existía todavía; el cierre se apoyó en el reclutamiento, el plazo y el criterio de suficiencia de los autores (D2). La curva informada (7, 6, 5, 3, 3; 7, 6, 6, 3, 3 después del control humano de D3) describe a posteriori que la saturación no se alcanzó, y no cambia esa conclusión.
 

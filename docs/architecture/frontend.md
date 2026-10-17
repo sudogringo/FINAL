@@ -34,7 +34,7 @@ Jest + `jsdom` + React Testing Library, run from `frontend/` with `npm run test`
 | `ProductCard.test.tsx` | Render, size selection, quantity limits, sold-out/at-stock-cap branches |
 | `CartDrawer.test.tsx` | Drawer open/close, item display, empty state |
 | `CartContext.test.tsx` | Reducer: stock-capped `addItem`, `setQty` (incl. remove-on-zero and cap), `removeItem`, `clearCart`, `totalItems`, open/close toggles, and the 2-hour abandoned-cart webhook timer (via `jest.useFakeTimers()`) |
-| `QuoteForm.test.tsx` | Modal open/close, Zod validation (name, email, notes length) |
+| `QuoteForm.test.tsx` | Modal open/close, Zod validation (name, email, notes length), privacy notice (Ley 25.326) and required consent, sent as a `consentimiento` timestamp inside `contact` |
 | `api.test.ts` | `submitQuote`, `adminLogin`, `fetchMonthlyStats`, and `logInteraction`'s fire-and-forget behavior (never rejects even on network failure) |
 | `AdminContext.test.tsx` | Login/logout persist to and clear `localStorage`, `isAuthenticated` derivation |
 | `AdminLoginPage.test.tsx` | Submit → `adminLogin`, success navigates + stores token, failure shows error and doesn't navigate |

@@ -96,6 +96,7 @@ describe('QuoteForm', () => {
     await user.type(screen.getByLabelText(/Nombre completo/i), 'Juan García')
     await user.type(screen.getByLabelText(/Email/i), 'juan@example.com')
     await user.type(screen.getByLabelText(/Localidad/i), 'Godoy Cruz, Mendoza')
+    await user.click(screen.getByRole('checkbox', { name: /Acepto el aviso de privacidad/i }))
     await user.click(screen.getByRole('button', { name: /Enviar Cotización/i }))
     await waitFor(() => expect(submitQuote).toHaveBeenCalled())
     const payload = (submitQuote as jest.Mock).mock.calls.at(-1)[0]
@@ -110,5 +111,47 @@ describe('QuoteForm', () => {
     fireEvent.change(screen.getByLabelText(/Localidad/i), { target: { value: 'x'.repeat(101) } })
     await user.click(screen.getByRole('button', { name: /Enviar Cotización/i }))
     expect(await screen.findByText(/Máximo 100 caracteres/i)).toBeInTheDocument()
+  })
+
+  describe('privacy notice and consent (Ley 25.326)', () => {
+    async function openFilled(user: ReturnType<typeof userEvent.setup>) {
+      sessionStorage.setItem('gh_session_id', 'test-session')
+      renderForm()
+      act(() => { fireEvent.click(screen.getByText('Abrir formulario')) })
+      await screen.findByRole('dialog')
+      await user.type(screen.getByLabelText(/Nombre completo/i), 'Juan García')
+      await user.type(screen.getByLabelText(/Email/i), 'juan@example.com')
+    }
+
+    it('states the purpose of the data and the rights of the owner', async () => {
+      renderForm()
+      act(() => { fireEvent.click(screen.getByText('Abrir formulario')) })
+      await screen.findByRole('dialog')
+      const notice = screen.getByTestId('privacy-notice')
+      expect(notice).toHaveTextContent(/Ley 25\.326/)
+      expect(notice).toHaveTextContent(/acceso, rectificación y supresión/i)
+      expect(notice).toHaveTextContent(/demostración académica/i)
+    })
+
+    it('does not send the quote until the notice is accepted', async () => {
+      const user = userEvent.setup()
+      ;(submitQuote as jest.Mock).mockClear()
+      await openFilled(user)
+      await user.click(screen.getByRole('button', { name: /Enviar Cotización/i }))
+      expect(await screen.findByText(/aceptar el aviso de privacidad/i)).toBeInTheDocument()
+      expect(submitQuote).not.toHaveBeenCalled()
+    })
+
+    it('sends the time of consent with the contact once accepted', async () => {
+      const user = userEvent.setup()
+      ;(submitQuote as jest.Mock).mockClear()
+      await openFilled(user)
+      await user.click(screen.getByRole('checkbox', { name: /Acepto el aviso de privacidad/i }))
+      await user.click(screen.getByRole('button', { name: /Enviar Cotización/i }))
+      await waitFor(() => expect(submitQuote).toHaveBeenCalledTimes(1))
+      const { contact } = (submitQuote as jest.Mock).mock.calls[0][0]
+      expect(contact.consentimiento).toMatch(/^\d{4}-\d{2}-\d{2}T/)
+      expect(contact).not.toHaveProperty('aceptaPrivacidad')
+    })
   })
 })
