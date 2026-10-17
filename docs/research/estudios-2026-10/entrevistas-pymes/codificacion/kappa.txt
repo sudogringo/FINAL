@@ -1,2 +1,3 @@
 IA (A) frente a IA (B): exacto 23/25; sin unidades vacías en ambos 19/21; κ (presencia de código, 120 celdas) = 0.96
 Autor frente al consenso previo: exacto 22/25; sin unidades vacías en ambos 18/21; κ (presencia de código, 120 celdas) = 0.96
+Autor frente al consenso previo, con el código nuevo: exacto 22/25; sin unidades vacías en ambos 18/21; κ (presencia de código, 125 celdas) = 0.94

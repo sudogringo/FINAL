@@ -51,7 +51,7 @@ Personas: mediana 9 [1–150]. Antigüedad: mediana 14 años [0,5–50]. Duraci�
 
 ## 4. Preguntas abiertas (§6.3)
 
-**Estado:** codificación doble e independiente con consenso ([`LIBRO_CODIGOS.md`](LIBRO_CODIGOS.md), sección 4): acuerdo exacto en 23 de 25 unidades (92 %), con 2 desacuerdos resueltos. Por delegación de los autores, las dos codificaciones las hicieron procesos de IA separados (desvío D3). Un autor codificó después las 25 unidades como control humano (sección 5): coincide con el consenso en 22 de 25 (88 %; 18 de 21 sin unidades vacías; κ = 0,96 por presencia de código, `codificacion/kappa.txt`); los autores resolvieron los 3 desacuerdos (dos a favor del consenso, uno a favor del autor) y agregaron el código `SEGUIMIENTO`.
+**Estado:** codificación doble e independiente con consenso ([`LIBRO_CODIGOS.md`](LIBRO_CODIGOS.md), sección 4): acuerdo exacto en 23 de 25 unidades (92 %), con 2 desacuerdos resueltos. Por delegación de los autores, las dos codificaciones las hicieron procesos de IA separados (desvío D3). Un autor codificó después las 25 unidades como control humano (sección 5): coincide con el consenso en 22 de 25 (88 %; 18 de 21 sin unidades vacías; κ = 0,96 por presencia de código, 0,94 contando el código nuevo, `codificacion/kappa.txt`); los autores resolvieron los 3 desacuerdos (dos a favor del consenso, uno a favor del autor) y agregaron el código `SEGUIMIENTO`.
 
 | Pregunta | Códigos más frecuentes (n de 5) |
 |---|---|

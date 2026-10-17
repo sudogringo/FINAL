@@ -30,7 +30,7 @@ for line in lib.splitlines():
 Q['P13'] = [c for c in Q['P13'] if c != 'SEGUIMIENTO']  # creado después del control humano
 
 
-def report(X, Y, label, X_exact=None):
+def report(X, Y, label, X_exact=None, codes=None):
     """X_exact: conjuntos para el acuerdo exacto (con la propuesta NUEVO); X, para κ (sin ella)."""
     Xe = X_exact or X
     units = sorted(Y)
@@ -39,7 +39,7 @@ def report(X, Y, label, X_exact=None):
     exact_ne = sum(Xe[k] == Y[k] for k in nonempty)
     a = b = c = d = 0
     for k in units:
-        for code in Q[k[1]]:
+        for code in (codes or Q)[k[1]]:
             x, y = code in X[k], code in Y[k]
             a += x and y; b += x and not y; c += y and not x; d += not x and not y
     n = a + b + c + d
@@ -55,3 +55,7 @@ H = {k: {c for c in v if not c.startswith('NUEVO')} for k, v in H_raw.items()}
 C = load('consenso_previo_control.csv')
 report(A, B, 'IA (A) frente a IA (B)')
 report(H, C, 'Autor frente al consenso previo', X_exact=H_raw)
+# Variante: la propuesta del autor cuenta como el código SEGUIMIENTO, ausente en el consenso previo.
+H_new = {k: {('SEGUIMIENTO' if c.startswith('NUEVO') else c) for c in v} for k, v in H_raw.items()}
+Q_new = {**Q, 'P13': Q['P13'] + ['SEGUIMIENTO']}
+report(H_new, C, 'Autor frente al consenso previo, con el código nuevo', codes=Q_new)
