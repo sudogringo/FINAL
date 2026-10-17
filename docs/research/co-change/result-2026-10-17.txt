@@ -1,0 +1,25 @@
+# git HEAD 61c6acc (etiqueta entrega-R47), 2026-10-17
+# Nota: los cambios coordinados del 14/10 (595fe95 backend, 1da4ee3 frontend, 8eb9e5a n8n) se versionaron por capa en tres commits del mismo minuto (18:24), de modo que este conteo no registra ese acoplamiento.
+commits: 146
+frontend: 23
+n8n: 21
+backend: 17
+frontend + n8n: 4
+    3b853c3 2026-10-08 feat: capture an optional delivery localidad and fix the 07 dispatch summary
+    57760e8 2026-08-25 added workflow and timer setup
+    2b61930 2026-07-02 feat: favicon GH, ubicación Mendoza, sidebar responsive con overlay mobile
+    0a4593c 2026-07-01 fix: integración completa backend-n8n y correcciones de flujo
+frontend + backend: 7
+    07c8e91 2026-10-17 feat: privacy notice and required consent on the quote form; own illustrations replace third-party product photos and hero collage
+    3b853c3 2026-10-08 feat: capture an optional delivery localidad and fix the 07 dispatch summary
+    57760e8 2026-08-25 added workflow and timer setup
+    0a4593c 2026-07-01 fix: integración completa backend-n8n y correcciones de flujo
+    336cce0 2026-06-30 feat: integración backend-frontend + rutas n8n-ready
+    fd3018f 2026-06-26 feat: imágenes de producto con upload desde el admin
+    608aff9 2026-06-26 feat: backend Express+Prisma+PostgreSQL y panel admin React
+n8n + backend: 5
+    3b853c3 2026-10-08 feat: capture an optional delivery localidad and fix the 07 dispatch summary
+    88b1d33 2026-10-07 feat(backend): require admin JWT or n8n service key on order and stats reads
+    dfc07b1 2026-09-25 some fixes to workflows
+    57760e8 2026-08-25 added workflow and timer setup
+    0a4593c 2026-07-01 fix: integración completa backend-n8n y correcciones de flujo
