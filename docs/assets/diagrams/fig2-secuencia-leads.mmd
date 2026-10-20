@@ -1,4 +1,4 @@
-%%{init: {"theme":"neutral","sequence":{"mirrorActors":false,"actorFontSize":20,"messageFontSize":20,"noteFontSize":19,"actorMargin":14,"width":118,"boxMargin":6,"messageMargin":22,"wrap":false,"noteAlign":"left"},"themeVariables":{"fontFamily":"Arial"}}}%%
+%%{init: {"theme":"neutral","fontSize":22,"sequence":{"mirrorActors":false,"actorMargin":6,"width":118,"boxMargin":4,"messageMargin":8,"wrap":false,"noteAlign":"left"},"themeVariables":{"fontFamily":"Arial"}}}%%
 sequenceDiagram
     participant C as Cliente<br/>(navegador)
     participant FE as Frontend<br/>(QuoteForm,<br/>CartContext)
@@ -12,7 +12,7 @@ sequenceDiagram
         FE->>BE: POST /api/quotes
         BE->>DB: upsert Customer
         BE->>DB: create Quote
-        BE->>DB: registra el aviso<br/>(outbox, misma transacción)
+        BE->>DB: registra el aviso<br/>(outbox, misma<br/>transacción)
         BE-->>FE: 201 { id }
         BE-)N8N: N8N_QUOTE_WEBHOOK<br/>(outbox, con reintentos)
         Note over BE,N8N: Workflow 00 (TESIS): aviso<br/>por Gmail. PRODUCCIÓN, no<br/>activada: WhatsApp + SendGrid.
