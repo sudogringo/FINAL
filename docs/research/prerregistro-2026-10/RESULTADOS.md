@@ -106,3 +106,17 @@
 
 - **H1b-LCP es decisoria.** `analysis.txt` del lote remoto la rotula «no decisoria» porque `prereg_analysis.py` imprime ese rótulo fijo para todas las métricas secundarias; según §6.2 de `PRERREGISTRO_R39.md`, H1b-LCP («H2» en OSF) sí tiene regla de decisión, y se evaluó con ella.
 - **El riesgo de H1b-LCP era menor que el declarado, y podía saberse antes de registrar.** En las corridas del 14/10 (`results/prereg-catalogo-2026-10-14/`), disponibles antes del registro en OSF, el elemento LCP de `/catalogo` ya era un párrafo del encabezado en móvil y el título `h1` en escritorio: texto que no depende de la API. Las latencias de Render y Neon, en las que el prerregistro fundó el riesgo, no podían afectarlo; el resultado dependía sobre todo de la entrega del frontend y del throttling simulado de Lighthouse.
+
+## Trazabilidad de las mediciones (20/10/2026)
+
+Una fila por medición: qué se midió, sobre qué commit, con qué regla y qué resultó. «Exploratoria» significa sin regla previa de decisión.
+
+| Medición | Fecha | Commit medido | Regla | Resultado |
+|---|---|---|---|---|
+| Portada, pareada (Tabla 5 de la tesis) | 08/10 | no registrado | fijada después de ver los datos (exploratoria) | H1b parcial: mejoran 6 de 7 métricas en móvil; Accessibility empeora |
+| VD2, latencia del aviso | 25/08 y 08/10 | 99c9d5b (lotes del 08/10) | criterio de 15 s fijado en el diseño | 52 de 52 sin fallos; medianas de 746,5 a 898,5 ms |
+| Medición B: catálogo en el entorno de pruebas | 14/10 | db4954f | prerregistro 89bc412 | H1b-cat confirmado (4/4) |
+| Remedición de la portada (accesibilidad) | 14/10 | db4954f | prerregistro 89bc412 | regresión resuelta (Accessibility 100 en ambos perfiles) |
+| Medición C: oráculos de n8n | 14/10 | db4954f | prerregistro 89bc412 | 24 de 24 corridas pasan; Objetivo 3 cumplido |
+| Medición D: catálogo publicado | 16/10 | frontend a573423; backend 6cd304c (Render) | OSF (https://osf.io/fu58z) y e35056e, antes de medir | H1b-rem confirmado (4/4); H1b-LCP confirmada (2302 ms) |
+| Portada publicada | 20/10 | c0fc89b | ninguna (exploratoria) | Performance 86 / 96; LCP móvil 3851 ms («Necesita mejora»); Accessibility 100 (`../lighthouse/results/exploratorio-portada-2026-10-20/`) |
