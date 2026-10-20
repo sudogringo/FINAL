@@ -1,0 +1,4 @@
+codigo,fecha,inicio,fin,minutos,franja_edad,anteojos,dispositivo,usa_celular_diario,t1_completo,t1_zoom,t2_completo,t2_zoom,t3_completo,t3_zoom,facilidad_1a5,texto_que_costo,otro_comentario
+P6,2026-10-20,17:34,17:42,8,60-69,si,PC,si,si,no,si,no,si,no,4,ninguno,ninguno
+P7,2026-10-20,17:45,17:58,13,70+,si,Android,si,si,no,si,no,si,no,5,ninguno,ninguno
+P8,2026-10-20,17:55,18:05,10,60-69,no,PC,si,si,no,si,no,si,no,4,ninguno,ninguno

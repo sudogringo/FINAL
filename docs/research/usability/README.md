@@ -85,3 +85,5 @@ completitud de P3.
   Lighthouse reporta en el Capítulo 5 (83 vs. 89–94 del sitio preexistente), pero no la
   corrobora de forma independiente: es un solo participante, en una prueba moderada por los
   autores, y Lighthouse no mide el tamaño de letra percibido (§5.1.2 de la tesis).
+  Tras subir la letra mínima a 14 px se hizo un retest con tres personas de 60 años o más (P6–P8,
+  20/10/2026): ninguna tuvo dificultad para leer. Ver [`retest-letra-2026-10-20/`](retest-letra-2026-10-20/).
