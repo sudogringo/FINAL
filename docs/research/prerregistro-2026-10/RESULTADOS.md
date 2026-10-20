@@ -113,10 +113,11 @@ Una fila por medición: qué se midió, sobre qué commit, con qué regla y qué
 
 | Medición | Fecha | Commit medido | Regla | Resultado |
 |---|---|---|---|---|
-| Portada, pareada (Tabla 5 de la tesis) | 08/10 | no registrado | fijada después de ver los datos (exploratoria) | H1b parcial: mejoran 6 de 7 métricas en móvil; Accessibility empeora |
+| Portada, pareada (Tabla 5 de la tesis) | 08/10 | 6b63bfd, deducido: no se registró al medir; es el último despliegue de GitHub Pages antes de las corridas (Actions, 01:13 UTC del 09/10; corridas desde las 01:39 UTC), con el frontend de 3b853c3 | fijada después de ver los datos (exploratoria) | H1b parcial: mejoran 6 de 7 métricas en móvil; Accessibility empeora |
 | VD2, latencia del aviso | 25/08 y 08/10 | 99c9d5b (lotes del 08/10) | criterio de 15 s fijado en el diseño | 52 de 52 sin fallos; medianas de 746,5 a 898,5 ms |
 | Medición B: catálogo en el entorno de pruebas | 14/10 | db4954f | prerregistro 89bc412 | H1b-cat confirmado (4/4) |
 | Remedición de la portada (accesibilidad) | 14/10 | db4954f | prerregistro 89bc412 | regresión resuelta (Accessibility 100 en ambos perfiles) |
 | Medición C: oráculos de n8n | 14/10 | db4954f | prerregistro 89bc412 | 24 de 24 corridas pasan; Objetivo 3 cumplido |
 | Medición D: catálogo publicado | 16/10 | frontend a573423; backend 6cd304c (Render) | OSF (https://osf.io/fu58z) y e35056e, antes de medir | H1b-rem confirmado (4/4); H1b-LCP confirmada (2302 ms) |
 | Portada publicada | 20/10 | c0fc89b | ninguna (exploratoria) | Performance 86 / 96; LCP móvil 3851 ms («Necesita mejora»); Accessibility 100 (`../lighthouse/results/exploratorio-portada-2026-10-20/`) |
+| Réplica de la medición D: catálogo publicado | 20/10 | c0fc89b (frontend y backend; HEAD 66c2ef3, sin cambios de código) | ninguna (réplica exploratoria del protocolo de D, sin prerregistro) | 4/4 otra vez, p = 0,0040 en cada comparación; LCP móvil 2373 ms («Bueno») (`../lighthouse/results/replica-remoto-2026-10-20/`) |
