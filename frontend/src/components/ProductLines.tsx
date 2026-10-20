@@ -11,7 +11,7 @@ export default function ProductLines() {
         {/* Header */}
         <div className="text-center mb-20">
           <span
-            className="inline-block text-[#CABC6B] text-xs font-semibold tracking-[0.35em] uppercase mb-4"
+            className="inline-block text-[#CABC6B] text-sm font-semibold tracking-[0.35em] uppercase mb-4"
             style={{ fontFamily: 'Quicksand, sans-serif' }}
           >
             Lo que ofrecemos
@@ -43,7 +43,7 @@ export default function ProductLines() {
             <div className="p-8 lg:p-10">
               {/* Tag */}
               <span
-                className="inline-block text-[10px] font-bold tracking-[0.35em] uppercase px-3 py-1.5 rounded-full mb-6 text-[#C0392B] border border-[#C0392B]/40 bg-[#C0392B]/10"
+                className="inline-block text-[14px] font-bold tracking-[0.35em] uppercase px-3 py-1.5 rounded-full mb-6 text-[#C0392B] border border-[#C0392B]/40 bg-[#C0392B]/10"
                 style={{ fontFamily: 'Quicksand, sans-serif' }}
               >
                 LÍNEA ROJA
@@ -63,7 +63,7 @@ export default function ProductLines() {
                   <div className="w-16 h-16 rounded-2xl bg-[#C0392B]/20 border border-[#C0392B]/40 flex items-center justify-center text-3xl">
                     🍅
                   </div>
-                  <span className="text-[#C0392B]/80 text-xs font-semibold tracking-widest uppercase"
+                  <span className="text-[#C0392B]/80 text-sm font-semibold tracking-widest uppercase"
                     style={{ fontFamily: 'Quicksand, sans-serif' }}>
                     Conservas de Tomate
                   </span>
@@ -117,7 +117,7 @@ export default function ProductLines() {
             <div className="p-8 lg:p-10">
               {/* Tag */}
               <span
-                className="inline-block text-[10px] font-bold tracking-[0.35em] uppercase px-3 py-1.5 rounded-full mb-6 text-[#CABC6B] border border-[#CABC6B]/40 bg-[#CABC6B]/10"
+                className="inline-block text-[14px] font-bold tracking-[0.35em] uppercase px-3 py-1.5 rounded-full mb-6 text-[#CABC6B] border border-[#CABC6B]/40 bg-[#CABC6B]/10"
                 style={{ fontFamily: 'Quicksand, sans-serif' }}
               >
                 LÍNEA DORADA
@@ -137,7 +137,7 @@ export default function ProductLines() {
                   <div className="w-16 h-16 rounded-2xl bg-[#CABC6B]/20 border border-[#CABC6B]/40 flex items-center justify-center text-3xl">
                     🍑
                   </div>
-                  <span className="text-[#CABC6B]/80 text-xs font-semibold tracking-widest uppercase"
+                  <span className="text-[#CABC6B]/80 text-sm font-semibold tracking-widest uppercase"
                     style={{ fontFamily: 'Quicksand, sans-serif' }}>
                     Conservas de Durazno
                   </span>

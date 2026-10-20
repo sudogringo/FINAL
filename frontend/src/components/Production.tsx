@@ -100,7 +100,7 @@ export default function Production() {
         {/* Header */}
         <div className="text-center mb-16">
           <span
-            className="inline-block text-gold-text text-xs font-semibold tracking-[0.35em] uppercase mb-4"
+            className="inline-block text-gold-text text-sm font-semibold tracking-[0.35em] uppercase mb-4"
             style={{ fontFamily: 'Quicksand, sans-serif' }}
           >
             Cómo lo hacemos
@@ -151,7 +151,7 @@ export default function Production() {
             <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${tab.accent}60, ${tab.accent})` }} />
             <div className="p-7">
               <span
-                className="text-[10px] font-bold tracking-[0.3em] uppercase mb-5 block"
+                className="text-[14px] font-bold tracking-[0.3em] uppercase mb-5 block"
                 style={{ color: tab.textLight, fontFamily: 'Quicksand, sans-serif' }}
               >
                 {tab.materias.title}
@@ -191,7 +191,7 @@ export default function Production() {
             <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${tab.accent}60, ${tab.accent})` }} />
             <div className="p-7">
               <span
-                className="text-[10px] font-bold tracking-[0.3em] uppercase mb-3 block"
+                className="text-[14px] font-bold tracking-[0.3em] uppercase mb-3 block"
                 style={{ color: tab.textLight, fontFamily: 'Quicksand, sans-serif' }}
               >
                 {tab.proceso.title}
@@ -206,7 +206,7 @@ export default function Production() {
                 {tab.proceso.steps.map((step, i) => (
                   <div key={step} className="flex items-start gap-3">
                     <div
-                      className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold mt-0.5"
+                      className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold mt-0.5"
                       style={{ background: tab.accent, color: tab.onAccent, fontFamily: 'Quicksand, sans-serif' }}
                     >
                       {i + 1}
@@ -228,7 +228,7 @@ export default function Production() {
             <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${tab.accent}60, ${tab.accent})` }} />
             <div className="p-7">
               <span
-                className="text-[10px] font-bold tracking-[0.3em] uppercase mb-3 block"
+                className="text-[14px] font-bold tracking-[0.3em] uppercase mb-3 block"
                 style={{ color: tab.textDark, fontFamily: 'Quicksand, sans-serif' }}
               >
                 {tab.extras.title}
@@ -254,7 +254,7 @@ export default function Production() {
                 ))}
               </div>
               <p
-                className="text-white/55 text-xs leading-relaxed italic"
+                className="text-white/55 text-sm leading-relaxed italic"
                 style={{ fontFamily: 'Source Sans 3, sans-serif' }}
               >
                 {tab.extras.note}

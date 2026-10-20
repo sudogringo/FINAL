@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
           className="bg-[#1a1610] border border-white/8 rounded-2xl p-6 flex flex-col gap-4"
         >
           <div className="flex flex-col gap-1">
-            <label className="text-white/60 text-xs font-body">Email</label>
+            <label className="text-white/60 text-sm font-body">Email</label>
             <input
               type="email"
               value={email}
@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-white/60 text-xs font-body">Contraseña</label>
+            <label className="text-white/60 text-sm font-body">Contraseña</label>
             <input
               type="password"
               value={password}
@@ -74,13 +74,13 @@ export default function AdminLoginPage() {
           </div>
 
           {waking && (
-            <p role="status" aria-live="polite" className="text-white/60 text-xs font-body">
+            <p role="status" aria-live="polite" className="text-white/60 text-sm font-body">
               El servidor se está iniciando: se aloja en un servicio gratuito que tarda hasta un minuto en responder. Gracias por esperar.
             </p>
           )}
 
           {error && (
-            <p className="text-red-400 text-xs font-body">{error}</p>
+            <p className="text-red-400 text-sm font-body">{error}</p>
           )}
 
           <button

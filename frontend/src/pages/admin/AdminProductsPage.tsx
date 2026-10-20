@@ -119,7 +119,7 @@ export default function AdminProductsPage() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-white font-heading font-bold text-2xl">Productos</h1>
-            <p className="text-white/30 text-[13px] font-body mt-1">
+            <p className="text-white/30 text-[14px] font-body mt-1">
               {counts.active} activos · {counts.inactive} inactivos
             </p>
           </div>
@@ -129,7 +129,7 @@ export default function AdminProductsPage() {
             </button>
             <button
               onClick={() => setModalProduct(null)}
-              className="flex items-center gap-2 bg-gold hover:bg-gold-dark text-dark font-heading font-bold px-4 py-2 rounded-xl text-[13px] transition-colors"
+              className="flex items-center gap-2 bg-gold hover:bg-gold-dark text-dark font-heading font-bold px-4 py-2 rounded-xl text-[14px] transition-colors"
             >
               <Plus size={15} /> Nuevo producto
             </button>
@@ -144,7 +144,7 @@ export default function AdminProductsPage() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Buscar por nombre, descripción o etiqueta..."
-              className="w-full bg-white/5 border border-white/10 text-white placeholder:text-white/25 rounded-xl pl-8 pr-8 py-2 text-xs font-body focus:outline-none focus:border-gold/40 transition-colors"
+              className="w-full bg-white/5 border border-white/10 text-white placeholder:text-white/25 rounded-xl pl-8 pr-8 py-2 text-sm font-body focus:outline-none focus:border-gold/40 transition-colors"
             />
             {search && (
               <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white">
@@ -158,7 +158,7 @@ export default function AdminProductsPage() {
               <button
                 key={v}
                 onClick={() => setLineFilter(v)}
-                className={`px-3 py-1.5 rounded-lg text-[11px] font-heading font-bold transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-[14px] font-heading font-bold transition-all ${
                   lineFilter === v
                     ? v === 'roja'   ? 'bg-red-900/60 text-red-300'
                     : v === 'dorada' ? 'bg-yellow-900/60 text-yellow-300'
@@ -180,7 +180,7 @@ export default function AdminProductsPage() {
               <button
                 key={v}
                 onClick={() => setStatusFilter(v)}
-                className={`px-3 py-1.5 rounded-lg text-[11px] font-heading font-bold transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-[14px] font-heading font-bold transition-all ${
                   statusFilter === v ? 'bg-white/10 text-white' : 'text-white/35 hover:text-white/60'
                 }`}
               >
@@ -192,7 +192,7 @@ export default function AdminProductsPage() {
           {hasFilters && (
             <button
               onClick={() => { setSearch(''); setLineFilter('all'); setStatusFilter('active') }}
-              className="flex items-center gap-1.5 text-white/30 hover:text-white text-[11px] font-body transition-colors self-center"
+              className="flex items-center gap-1.5 text-white/30 hover:text-white text-[14px] font-body transition-colors self-center"
             >
               <X size={11} /> Limpiar
             </button>
@@ -231,26 +231,26 @@ export default function AdminProductsPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <p className="text-white font-heading font-bold text-sm truncate">{product.name}</p>
-                    <span className={`text-[10px] font-heading font-bold px-2 py-0.5 rounded-full shrink-0 ${LINE_COLOR[product.line]}`}>
+                    <span className={`text-[14px] font-heading font-bold px-2 py-0.5 rounded-full shrink-0 ${LINE_COLOR[product.line]}`}>
                       {LINE_LABEL[product.line]}
                     </span>
                     {product.tag && (
-                      <span className="text-[10px] font-heading font-bold px-2 py-0.5 rounded-full bg-gold/10 text-gold/60 shrink-0">
+                      <span className="text-[14px] font-heading font-bold px-2 py-0.5 rounded-full bg-gold/10 text-gold/60 shrink-0">
                         {product.tag}
                       </span>
                     )}
                     {!product.active && (
-                      <span className="text-[10px] font-heading font-bold px-2 py-0.5 rounded-full bg-white/10 text-white/40 shrink-0">
+                      <span className="text-[14px] font-heading font-bold px-2 py-0.5 rounded-full bg-white/10 text-white/40 shrink-0">
                         Inactivo
                       </span>
                     )}
                   </div>
-                  <p className="text-white/40 text-xs font-body truncate">{product.description}</p>
+                  <p className="text-white/40 text-sm font-body truncate">{product.description}</p>
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
                     {product.sizes.map(s => {
                       const qty = (product.stockBySize ?? {})[s] ?? 0
                       return (
-                        <span key={s} className={`text-[10px] font-heading font-bold px-2 py-0.5 rounded-full ${
+                        <span key={s} className={`text-[14px] font-heading font-bold px-2 py-0.5 rounded-full ${
                           qty > 100 ? 'bg-green-900/40 text-green-400'   :
                           qty > 0   ? 'bg-yellow-900/40 text-yellow-400' :
                                       'bg-red-900/40 text-red-400'
@@ -304,7 +304,7 @@ export default function AdminProductsPage() {
               </div>
             ))}
 
-            <p className="text-white/20 text-xs font-body text-right mt-2">
+            <p className="text-white/20 text-sm font-body text-right mt-2">
               {filtered.length} de {products.length} productos
             </p>
           </div>

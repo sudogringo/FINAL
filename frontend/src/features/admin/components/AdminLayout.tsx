@@ -25,7 +25,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         {(!collapsed || mobile) && (
           <div>
             <span className="font-heading font-bold text-gold text-[15px] tracking-wider">Golden Harvest</span>
-            <span className="block text-white/30 text-[11px] font-body mt-0.5">Panel Admin</span>
+            <span className="block text-white/30 text-[14px] font-body mt-0.5">Panel Admin</span>
           </div>
         )}
         {mobile ? (
@@ -53,7 +53,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             onClick={mobile ? closeMobile : undefined}
             title={collapsed && !mobile ? label : undefined}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-body transition-colors ${
+              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-[14px] font-body transition-colors ${
                 collapsed && !mobile ? 'justify-center' : ''
               } ${
                 isActive
@@ -73,7 +73,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <button
           onClick={handleLogout}
           title={collapsed && !mobile ? 'Cerrar sesión' : undefined}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-body text-white/30 hover:text-red-400 hover:bg-red-400/5 transition-colors ${
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[14px] font-body text-white/30 hover:text-red-400 hover:bg-red-400/5 transition-colors ${
             collapsed && !mobile ? 'justify-center' : ''
           }`}
         >

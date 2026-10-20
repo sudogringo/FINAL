@@ -28,7 +28,7 @@ export default function CartDrawer() {
             <ShoppingCart size={18} className="text-gold" />
             <span className="text-white font-heading font-bold text-[16px]">Mi Pedido</span>
             {totalItems > 0 && (
-              <span className="bg-gold text-dark text-[10px] font-heading font-bold px-2 py-0.5 rounded-full">
+              <span className="bg-gold text-dark text-[14px] font-heading font-bold px-2 py-0.5 rounded-full">
                 {totalItems}
               </span>
             )}
@@ -51,7 +51,7 @@ export default function CartDrawer() {
               </div>
               <div>
                 <p className="text-white/40 text-[14px] font-body mb-1">Tu pedido está vacío.</p>
-                <p className="text-white/20 text-[12px] font-body">Explorá el catálogo y agregá productos.</p>
+                <p className="text-white/20 text-[14px] font-body">Explorá el catálogo y agregá productos.</p>
               </div>
             </div>
           ) : (
@@ -74,8 +74,8 @@ export default function CartDrawer() {
                     </div>
 
                     <div className="flex-1 min-w-0">
-                      <p className="text-white text-[13px] font-heading font-bold leading-tight truncate">{item.name}</p>
-                      <p className="text-white/35 text-[11px] font-body mt-0.5">{item.size}</p>
+                      <p className="text-white text-[14px] font-heading font-bold leading-tight truncate">{item.name}</p>
+                      <p className="text-white/35 text-[14px] font-body mt-0.5">{item.size}</p>
                       {/* Qty controls */}
                       <div className="flex items-center gap-2 mt-2">
                         <button
@@ -85,7 +85,7 @@ export default function CartDrawer() {
                         >
                           <Minus size={10} className="text-white/60" />
                         </button>
-                        <span className="text-white text-[13px] font-heading font-bold w-5 text-center">{item.qty}</span>
+                        <span className="text-white text-[14px] font-heading font-bold w-5 text-center">{item.qty}</span>
                         <button
                           onClick={() => setQty(item.id, item.size, item.qty + 1)}
                           aria-label="Aumentar"
@@ -96,7 +96,7 @@ export default function CartDrawer() {
                         </button>
                       </div>
                       {item.stockForSize > 0 && item.qty >= item.stockForSize && (
-                        <p className="text-yellow-400/60 text-[9px] font-body mt-1">Límite de stock</p>
+                        <p className="text-yellow-400/60 text-[14px] font-body mt-1">Límite de stock</p>
                       )}
                     </div>
 
@@ -118,18 +118,18 @@ export default function CartDrawer() {
         {items.length > 0 && (
           <div className="px-6 py-5 border-t border-white/8">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-white/40 text-[12px] font-body">
+              <span className="text-white/40 text-[14px] font-body">
                 {totalItems} {totalItems === 1 ? 'producto' : 'productos'}
               </span>
-              <span className="text-gold text-[12px] font-heading font-semibold">Cotización personalizada</span>
+              <span className="text-gold text-[14px] font-heading font-semibold">Cotización personalizada</span>
             </div>
             <button
               onClick={openQuote}
-              className="w-full bg-gold hover:bg-gold-dark text-dark font-heading font-bold py-4 rounded-2xl transition-colors duration-300 shadow-lg shadow-gold/20 text-[13px] tracking-wide"
+              className="w-full bg-gold hover:bg-gold-dark text-dark font-heading font-bold py-4 rounded-2xl transition-colors duration-300 shadow-lg shadow-gold/20 text-[14px] tracking-wide"
             >
               Solicitar Cotización
             </button>
-            <p className="text-white/25 text-[11px] text-center mt-3 font-body">
+            <p className="text-white/25 text-[14px] text-center mt-3 font-body">
               Un asesor responde en minutos por WhatsApp o email.
             </p>
           </div>

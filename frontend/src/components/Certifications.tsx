@@ -39,7 +39,7 @@ export default function Certifications() {
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
           <div>
             <span
-              className="inline-block text-[#CABC6B] text-xs font-semibold tracking-[0.35em] uppercase mb-4"
+              className="inline-block text-[#CABC6B] text-sm font-semibold tracking-[0.35em] uppercase mb-4"
               style={{ fontFamily: 'Quicksand, sans-serif' }}
             >
               Respaldo oficial
@@ -83,7 +83,7 @@ export default function Certifications() {
                   {s.value}<span className="text-xl">{s.sub}</span>
                 </div>
                 <div
-                  className="text-white/55 text-xs uppercase tracking-wide mt-2"
+                  className="text-white/55 text-sm uppercase tracking-wide mt-2"
                   style={{ fontFamily: 'Source Sans 3, sans-serif' }}
                 >
                   {s.label}
@@ -123,7 +123,7 @@ export default function Certifications() {
                       {cert.name}
                     </h3>
                     <span
-                      className="text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 rounded-full"
+                      className="text-[14px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 rounded-full"
                       style={{
                         color: cert.tagText,
                         background: `${cert.tagColor}18`,

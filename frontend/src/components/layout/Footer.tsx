@@ -11,8 +11,8 @@ export default function Footer() {
     <footer className="bg-[#111111] border-t border-white/5 py-10">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex flex-col items-center md:items-start">
-          <span className="text-[10px] text-gold font-heading tracking-[0.4em] uppercase">Golden Harvest S.A.</span>
-          <span className="text-white/70 text-[12px] font-body mt-0.5 text-center md:text-left">
+          <span className="text-[14px] text-gold font-heading tracking-[0.4em] uppercase">Golden Harvest S.A.</span>
+          <span className="text-white/70 text-[14px] font-body mt-0.5 text-center md:text-left">
             Proyecto académico (UTN FRM, {new Date().getFullYear()}). Sitio de demostración sin vínculo con Golden Harvest S.A.
           </span>
         </div>
@@ -21,7 +21,7 @@ export default function Footer() {
             <Link
               key={l.to}
               to={l.to}
-              className="text-white/55 hover:text-gold text-[10px] font-heading font-bold tracking-[0.2em] uppercase transition-colors duration-200"
+              className="text-white/55 hover:text-gold text-[14px] font-heading font-bold tracking-[0.2em] uppercase transition-colors duration-200"
             >
               {l.label}
             </Link>

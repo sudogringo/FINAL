@@ -30,11 +30,11 @@ function Field({
 }: { id: string; label: string; error?: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-white/60 text-[11px] font-heading font-semibold tracking-[0.15em] uppercase">
+      <label htmlFor={id} className="text-white/60 text-[14px] font-heading font-semibold tracking-[0.15em] uppercase">
         {label}{required && <span className="text-[#C0392B] ml-0.5">*</span>}
       </label>
       {children}
-      {error && <p role="alert" className="text-[#C0392B] text-[11px] font-body">{error}</p>}
+      {error && <p role="alert" className="text-[#C0392B] text-[14px] font-body">{error}</p>}
     </div>
   )
 }
@@ -72,7 +72,7 @@ export default function QuoteForm() {
   if (!quoteOpen) return null
 
   const inputCls = (hasErr: boolean) =>
-    `w-full bg-white/5 border rounded-xl px-4 py-3 text-white text-[13px] font-body placeholder:text-white/20 focus:outline-none transition-colors ${
+    `w-full bg-white/5 border rounded-xl px-4 py-3 text-white text-[14px] font-body placeholder:text-white/20 focus:outline-none transition-colors ${
       hasErr ? 'border-[#C0392B]/50 focus:border-[#C0392B]' : 'border-white/10 focus:border-gold/40'
     }`
 
@@ -93,7 +93,7 @@ export default function QuoteForm() {
         <div className="flex items-center justify-between px-7 pt-7 pb-5 border-b border-white/8">
           <div>
             <h2 className="text-white font-heading font-bold text-[18px]">Solicitar Cotización</h2>
-            <p className="text-white/30 text-[12px] font-body mt-0.5">
+            <p className="text-white/30 text-[14px] font-body mt-0.5">
               {items.length} producto{items.length !== 1 ? 's' : ''} en tu pedido
             </p>
           </div>
@@ -110,13 +110,13 @@ export default function QuoteForm() {
             </div>
             <div>
               <h3 className="text-white font-heading font-bold text-[18px] mb-2">¡Cotización enviada!</h3>
-              <p className="text-white/40 text-[13px] font-body leading-relaxed">
+              <p className="text-white/40 text-[14px] font-body leading-relaxed">
                 Un asesor de Golden Harvest se va a comunicar con vos en los próximos minutos por WhatsApp o email.
               </p>
             </div>
             <button
               onClick={handleClose}
-              className="bg-gold hover:bg-gold-dark text-dark font-heading font-bold px-8 py-3 rounded-xl transition-colors text-[13px] tracking-wide"
+              className="bg-gold hover:bg-gold-dark text-dark font-heading font-bold px-8 py-3 rounded-xl transition-colors text-[14px] tracking-wide"
             >
               Cerrar
             </button>
@@ -127,11 +127,11 @@ export default function QuoteForm() {
 
             {/* Items summary */}
             <div className="bg-white/3 rounded-2xl p-4 flex flex-col gap-2 border border-white/5">
-              <p className="text-white/25 text-[9px] font-heading font-bold tracking-[0.4em] uppercase mb-1">Productos solicitados</p>
+              <p className="text-white/25 text-[14px] font-heading font-bold tracking-[0.4em] uppercase mb-1">Productos solicitados</p>
               {items.map(i => (
                 <div key={`${i.id}-${i.size}`} className="flex justify-between items-center">
-                  <span className="text-white/60 text-[12px] font-body">{i.name} — {i.size}</span>
-                  <span className="text-gold/60 text-[12px] font-heading font-bold">×{i.qty}</span>
+                  <span className="text-white/60 text-[14px] font-body">{i.name} — {i.size}</span>
+                  <span className="text-gold/60 text-[14px] font-heading font-bold">×{i.qty}</span>
                 </div>
               ))}
             </div>
@@ -165,11 +165,11 @@ export default function QuoteForm() {
                 className={`${inputCls(!!errors.notas)} resize-none`}
                 {...register('notas')}
               />
-              <p className="text-white/20 text-[10px] font-body text-right">Máximo 500 caracteres</p>
+              <p className="text-white/20 text-[14px] font-body text-right">Máximo 500 caracteres</p>
             </Field>
 
             <div data-testid="privacy-notice" className="bg-white/3 rounded-2xl p-4 border border-white/10 flex flex-col gap-3">
-              <p className="text-white/60 text-[11px] font-body leading-relaxed">
+              <p className="text-white/60 text-[14px] font-body leading-relaxed">
                 <strong className="text-white/80 font-heading">Aviso de privacidad.</strong>{' '}
                 Este sitio es una demostración académica (UTN FRM) sin vínculo con Golden Harvest S.A.: no cargues datos reales.
                 Los datos del formulario se usan solo para responder esta solicitud, no se ceden a terceros y quedan en la base
@@ -178,7 +178,7 @@ export default function QuoteForm() {
                 supresión (Ley 25.326) escribiendo a rojoemiliano515@gmail.com. La Agencia de Acceso a la Información Pública es el
                 órgano de control.
               </p>
-              <label htmlFor="aceptaPrivacidad" className="flex items-start gap-2.5 text-white/70 text-[12px] font-body cursor-pointer">
+              <label htmlFor="aceptaPrivacidad" className="flex items-start gap-2.5 text-white/70 text-[14px] font-body cursor-pointer">
                 <input
                   id="aceptaPrivacidad"
                   type="checkbox"
@@ -188,12 +188,12 @@ export default function QuoteForm() {
                 Acepto el aviso de privacidad y el uso de mis datos para responder la solicitud.
               </label>
               {errors.aceptaPrivacidad?.message && (
-                <p role="alert" className="text-[#C0392B] text-[11px] font-body">{errors.aceptaPrivacidad.message}</p>
+                <p role="alert" className="text-[#C0392B] text-[14px] font-body">{errors.aceptaPrivacidad.message}</p>
               )}
             </div>
 
             {status === 'error' && (
-              <p role="alert" className="bg-[#C0392B]/10 border border-[#C0392B]/30 rounded-xl px-4 py-3 text-[#C0392B] text-[12px] font-body">
+              <p role="alert" className="bg-[#C0392B]/10 border border-[#C0392B]/30 rounded-xl px-4 py-3 text-[#C0392B] text-[14px] font-body">
                 Error al enviar la cotización. Intentá nuevamente o contactanos directamente por WhatsApp.
               </p>
             )}
@@ -201,7 +201,7 @@ export default function QuoteForm() {
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="w-full flex items-center justify-center gap-2 bg-gold hover:bg-gold-dark disabled:opacity-60 text-dark font-heading font-bold py-4 rounded-2xl transition-colors duration-300 shadow-lg shadow-gold/20 text-[13px] tracking-wide"
+              className="w-full flex items-center justify-center gap-2 bg-gold hover:bg-gold-dark disabled:opacity-60 text-dark font-heading font-bold py-4 rounded-2xl transition-colors duration-300 shadow-lg shadow-gold/20 text-[14px] tracking-wide"
             >
               {status === 'sending'
                 ? <><Loader2 size={16} className="animate-spin" />Enviando...</>
@@ -209,7 +209,7 @@ export default function QuoteForm() {
               }
             </button>
 
-            <p className="text-white/20 text-[11px] text-center font-body">
+            <p className="text-white/20 text-[14px] text-center font-body">
               Al enviar aceptás que un asesor se comunique con vos para completar la venta.
             </p>
           </form>

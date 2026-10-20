@@ -28,7 +28,7 @@ export default function Navbar() {
   }
 
   const linkCls = ({ isActive }: { isActive: boolean }) =>
-    `text-[11px] font-heading font-bold tracking-[0.2em] uppercase transition-colors duration-300 ${
+    `text-[14px] font-heading font-bold tracking-[0.2em] uppercase transition-colors duration-300 ${
       isActive ? 'text-gold' : 'text-white/70 hover:text-white'
     }`
 
@@ -43,7 +43,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link to="/" onClick={() => scrollToTopIfSamePage('/')} className="flex flex-col leading-none group">
-            <span className="text-[10px] font-heading font-semibold tracking-[0.35em] text-gold uppercase">
+            <span className="text-[14px] font-heading font-semibold tracking-[0.35em] text-gold uppercase">
               Golden Harvest
             </span>
             <span className="text-2xl font-heading font-bold text-white tracking-widest group-hover:text-gold transition-colors duration-300">
@@ -71,12 +71,12 @@ export default function Navbar() {
             <button
               onClick={openCart}
               aria-label={`Ver pedido${totalItems > 0 ? ` (${totalItems} items)` : ''}`}
-              className="relative flex items-center gap-2 bg-gold hover:bg-gold-dark text-dark font-heading font-bold text-[11px] px-4 py-2.5 rounded-full transition-all duration-300 shadow-lg shadow-gold/20 hover:shadow-gold/40 hover:scale-[1.03]"
+              className="relative flex items-center gap-2 bg-gold hover:bg-gold-dark text-dark font-heading font-bold text-[14px] px-4 py-2.5 rounded-full transition-all duration-300 shadow-lg shadow-gold/20 hover:shadow-gold/40 hover:scale-[1.03]"
             >
               <ShoppingCart size={15} />
               <span className="hidden sm:inline">Mi Pedido</span>
               {totalItems > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-[#C0392B] text-white text-[9px] font-heading font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 w-6 h-6 bg-[#C0392B] text-white text-[14px] font-heading font-bold rounded-full flex items-center justify-center">
                   {totalItems}
                 </span>
               )}

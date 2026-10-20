@@ -31,7 +31,7 @@ export default function About() {
           {/* Left: Text */}
           <div>
             <span
-              className="inline-block text-gold-text text-xs font-semibold tracking-[0.35em] uppercase mb-4"
+              className="inline-block text-gold-text text-sm font-semibold tracking-[0.35em] uppercase mb-4"
               style={{ fontFamily: 'Quicksand, sans-serif' }}
             >
               Nuestra Historia
@@ -81,7 +81,7 @@ export default function About() {
                     {s.n}
                   </div>
                   <div
-                    className="text-[#1B1B1B]/65 text-xs uppercase tracking-wide mt-1"
+                    className="text-[#1B1B1B]/65 text-sm uppercase tracking-wide mt-1"
                     style={{ fontFamily: 'Source Sans 3, sans-serif' }}
                   >
                     {s.label}
@@ -104,7 +104,7 @@ export default function About() {
                 <div>
                   <div className="flex items-center gap-3 mb-2">
                     <span
-                      className="text-[10px] font-bold text-gold-text tracking-widest"
+                      className="text-[14px] font-bold text-gold-text tracking-widest"
                       style={{ fontFamily: 'Quicksand, sans-serif' }}
                     >
                       0{i + 1}

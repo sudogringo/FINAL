@@ -80,9 +80,9 @@ export default function AdminQuotesPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-white font-heading font-bold text-2xl">Cotizaciones</h1>
-            <p className="text-white/30 text-[13px] font-body mt-1">{quotes.length} solicitudes en total</p>
+            <p className="text-white/30 text-[14px] font-body mt-1">{quotes.length} solicitudes en total</p>
           </div>
-          <button onClick={load} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/50 hover:text-white text-[13px] font-body transition-colors">
+          <button onClick={load} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/50 hover:text-white text-[14px] font-body transition-colors">
             <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
             Actualizar
           </button>
@@ -94,7 +94,7 @@ export default function AdminQuotesPage() {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-1.5 rounded-full text-[12px] font-heading font-semibold transition-colors border ${
+              className={`px-4 py-1.5 rounded-full text-[14px] font-heading font-semibold transition-colors border ${
                 filter === f
                   ? 'bg-gold/20 text-gold border-gold/40'
                   : 'bg-white/5 text-white/40 border-white/10 hover:text-white/70'
@@ -105,7 +105,7 @@ export default function AdminQuotesPage() {
           ))}
         </div>
 
-        {error && <p className="text-red-400 text-[13px] mb-4">{error}</p>}
+        {error && <p className="text-red-400 text-[14px] mb-4">{error}</p>}
 
         {loading ? (
           <div className="flex flex-col gap-3">
@@ -125,22 +125,22 @@ export default function AdminQuotesPage() {
                   {/* Row */}
                   <div className="flex items-center gap-4 px-5 py-4">
                     {/* Status badge */}
-                    <span className={`shrink-0 px-2.5 py-0.5 rounded-full text-[11px] font-heading font-bold border ${STATUS_COLOR[q.status]}`}>
+                    <span className={`shrink-0 px-2.5 py-0.5 rounded-full text-[14px] font-heading font-bold border ${STATUS_COLOR[q.status]}`}>
                       {STATUS_LABEL[q.status]}
                     </span>
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
                       <p className="text-white font-heading font-semibold text-[14px] truncate">{q.contact.nombre}</p>
-                      <p className="text-white/35 text-[12px] font-body truncate">
+                      <p className="text-white/35 text-[14px] font-body truncate">
                         {q.contact.email}{q.contact.empresa ? ` · ${q.contact.empresa}` : ''}{q.contact.telefono ? ` · ${q.contact.telefono}` : ''}
                       </p>
                     </div>
 
                     {/* Items count + date */}
                     <div className="shrink-0 text-right">
-                      <p className="text-white/50 text-[12px] font-body">{q.items.length} producto{q.items.length !== 1 ? 's' : ''}</p>
-                      <p className="text-white/25 text-[11px] font-body">{new Date(q.createdAt).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</p>
+                      <p className="text-white/50 text-[14px] font-body">{q.items.length} producto{q.items.length !== 1 ? 's' : ''}</p>
+                      <p className="text-white/25 text-[14px] font-body">{new Date(q.createdAt).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</p>
                     </div>
 
                     {/* Action button */}
@@ -148,7 +148,7 @@ export default function AdminQuotesPage() {
                       <button
                         disabled={updating === q.id}
                         onClick={() => handleStatus(q)}
-                        className={`shrink-0 px-3 py-1.5 rounded-xl text-[11px] font-heading font-bold transition-colors disabled:opacity-50 ${
+                        className={`shrink-0 px-3 py-1.5 rounded-xl text-[14px] font-heading font-bold transition-colors disabled:opacity-50 ${
                           next === 'CLOSED'
                             ? 'bg-green-500/15 text-green-300 hover:bg-green-500/25 border border-green-500/30'
                             : 'bg-blue-500/15 text-blue-300 hover:bg-blue-500/25 border border-blue-500/30'
@@ -173,12 +173,12 @@ export default function AdminQuotesPage() {
                       <div className="grid sm:grid-cols-2 gap-6">
                         {/* Productos */}
                         <div>
-                          <p className="text-white/25 text-[10px] font-heading font-bold tracking-widest uppercase mb-3">Productos solicitados</p>
+                          <p className="text-white/25 text-[14px] font-heading font-bold tracking-widest uppercase mb-3">Productos solicitados</p>
                           <div className="flex flex-col gap-2">
                             {q.items.map((item, i) => (
                               <div key={i} className="flex justify-between items-center">
-                                <span className="text-white/60 text-[13px] font-body">{item.name} — {item.size}</span>
-                                <span className="text-gold/60 text-[13px] font-heading font-bold">×{item.qty}</span>
+                                <span className="text-white/60 text-[14px] font-body">{item.name} — {item.size}</span>
+                                <span className="text-gold/60 text-[14px] font-heading font-bold">×{item.qty}</span>
                               </div>
                             ))}
                           </div>
@@ -186,8 +186,8 @@ export default function AdminQuotesPage() {
 
                         {/* Contacto */}
                         <div>
-                          <p className="text-white/25 text-[10px] font-heading font-bold tracking-widest uppercase mb-3">Datos de contacto</p>
-                          <div className="flex flex-col gap-1.5 text-[13px] font-body">
+                          <p className="text-white/25 text-[14px] font-heading font-bold tracking-widest uppercase mb-3">Datos de contacto</p>
+                          <div className="flex flex-col gap-1.5 text-[14px] font-body">
                             {[
                               ['Nombre',   q.contact.nombre],
                               ['Email',    q.contact.email],

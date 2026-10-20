@@ -14,9 +14,9 @@ function StatCard({ icon: Icon, label, value, sub, color }: {
         <Icon size={18} />
       </div>
       <div>
-        <p className="text-white/35 text-[11px] font-heading font-semibold tracking-widest uppercase">{label}</p>
+        <p className="text-white/35 text-[14px] font-heading font-semibold tracking-widest uppercase">{label}</p>
         <p className="text-white font-heading font-bold text-3xl mt-1">{value}</p>
-        {sub && <p className="text-white/30 text-[12px] font-body mt-0.5">{sub}</p>}
+        {sub && <p className="text-white/30 text-[14px] font-body mt-0.5">{sub}</p>}
       </div>
     </div>
   )
@@ -44,7 +44,7 @@ export default function AdminDashboardPage() {
       <div className="p-8">
         <div className="mb-8">
           <h1 className="text-white font-heading font-bold text-2xl">Dashboard</h1>
-          <p className="text-white/30 text-[13px] font-body mt-1 capitalize">{monthLabel}</p>
+          <p className="text-white/30 text-[14px] font-body mt-1 capitalize">{monthLabel}</p>
         </div>
 
         {loading ? (
@@ -93,16 +93,16 @@ export default function AdminDashboardPage() {
                   <h2 className="text-white font-heading font-semibold text-[14px]">Productos más solicitados</h2>
                 </div>
                 {stats.topProducts.length === 0 ? (
-                  <p className="text-white/25 text-[13px] font-body">Sin datos aún este mes</p>
+                  <p className="text-white/25 text-[14px] font-body">Sin datos aún este mes</p>
                 ) : (
                   <div className="flex flex-col gap-3">
                     {stats.topProducts.map((p, i) => (
                       <div key={p.nombre} className="flex items-center gap-3">
-                        <span className="text-white/20 font-heading font-bold text-[11px] w-4">{i + 1}</span>
+                        <span className="text-white/20 font-heading font-bold text-[14px] w-4">{i + 1}</span>
                         <div className="flex-1">
                           <div className="flex justify-between mb-1">
-                            <span className="text-white/70 text-[13px] font-body">{p.nombre}</span>
-                            <span className="text-gold/60 text-[12px] font-heading font-bold">{p.units} u.</span>
+                            <span className="text-white/70 text-[14px] font-body">{p.nombre}</span>
+                            <span className="text-gold/60 text-[14px] font-heading font-bold">{p.units} u.</span>
                           </div>
                           <div className="h-1 bg-white/5 rounded-full overflow-hidden">
                             <div
@@ -124,14 +124,14 @@ export default function AdminDashboardPage() {
                   <h2 className="text-white font-heading font-semibold text-[14px]">Actividad web este mes</h2>
                 </div>
                 {stats.webInteractions.length === 0 ? (
-                  <p className="text-white/25 text-[13px] font-body">Sin interacciones registradas aún</p>
+                  <p className="text-white/25 text-[14px] font-body">Sin interacciones registradas aún</p>
                 ) : (
                   <div className="flex flex-col gap-4">
                     {stats.webInteractions.map(i => (
                       <div key={i.tipo} className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <div className="w-2 h-2 rounded-full bg-gold/50" />
-                          <span className="text-white/60 text-[13px] font-body capitalize">{i.tipo}s de producto</span>
+                          <span className="text-white/60 text-[14px] font-body capitalize">{i.tipo}s de producto</span>
                         </div>
                         <span className="text-white font-heading font-bold text-[16px]">{i.count}</span>
                       </div>
@@ -142,7 +142,7 @@ export default function AdminDashboardPage() {
             </div>
           </>
         ) : (
-          <p className="text-white/30 text-[13px] font-body">Error al cargar las métricas</p>
+          <p className="text-white/30 text-[14px] font-body">Error al cargar las métricas</p>
         )}
       </div>
     </AdminLayout>

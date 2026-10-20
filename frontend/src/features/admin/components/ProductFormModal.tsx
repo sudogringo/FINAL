@@ -179,7 +179,7 @@ export default function ProductFormModal({ product, onClose, onSave }: Props) {
                     type="button"
                     onClick={() => fileRef.current?.click()}
                     disabled={uploading}
-                    className="flex items-center gap-1 bg-white/10 hover:bg-white/20 text-white text-[11px] font-heading px-2 py-1 rounded-lg transition-colors disabled:opacity-50"
+                    className="flex items-center gap-1 bg-white/10 hover:bg-white/20 text-white text-[14px] font-heading px-2 py-1 rounded-lg transition-colors disabled:opacity-50"
                   >
                     <ImagePlus size={11} />
                     {uploading ? 'Subiendo...' : 'Cambiar'}
@@ -187,7 +187,7 @@ export default function ProductFormModal({ product, onClose, onSave }: Props) {
                   <button
                     type="button"
                     onClick={() => setForm(f => ({ ...f, imageUrl: null }))}
-                    className="flex items-center gap-1 bg-red-900/40 hover:bg-red-900/70 text-red-400 text-[11px] font-heading px-2 py-1 rounded-lg transition-colors"
+                    className="flex items-center gap-1 bg-red-900/40 hover:bg-red-900/70 text-red-400 text-[14px] font-heading px-2 py-1 rounded-lg transition-colors"
                   >
                     <Trash2 size={11} />
                     Quitar
@@ -223,7 +223,7 @@ export default function ProductFormModal({ product, onClose, onSave }: Props) {
             </Field>
           ))}
 
-          <label className="flex items-center gap-2 text-white/60 text-xs font-body cursor-pointer">
+          <label className="flex items-center gap-2 text-white/60 text-sm font-body cursor-pointer">
             <input
               type="checkbox"
               checked={form.active}
@@ -233,7 +233,7 @@ export default function ProductFormModal({ product, onClose, onSave }: Props) {
             Producto activo (visible en el catálogo)
           </label>
 
-          {error && <p className="text-red-400 text-xs">{error}</p>}
+          {error && <p className="text-red-400 text-sm">{error}</p>}
 
           <div className="flex gap-2 mt-2">
             <button
@@ -262,7 +262,7 @@ const inputCls = 'bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-wh
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-white/60 text-xs font-body">{label}</label>
+      <label className="text-white/60 text-sm font-body">{label}</label>
       {children}
     </div>
   )

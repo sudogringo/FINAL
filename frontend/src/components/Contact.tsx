@@ -9,16 +9,16 @@ export default function Contact() {
       {/* Header */}
       <div className="pb-8 border-b border-dark/15 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <span className="text-[11px] font-heading font-bold tracking-[0.35em] text-gold uppercase">
+          <span className="text-[14px] font-heading font-bold tracking-[0.35em] text-gold uppercase">
             Golden Harvest S.A.
           </span>
           <h1 className="text-4xl font-heading font-bold text-dark mt-2">SILVIA</h1>
         </div>
         <div className="sm:text-right">
-          <p className="text-dark/40 text-[11px] font-heading font-semibold tracking-[0.2em] uppercase">
+          <p className="text-dark/40 text-[14px] font-heading font-semibold tracking-[0.2em] uppercase">
             Mendoza · Argentina
           </p>
-          <p className="text-dark/40 text-[11px] font-heading font-semibold tracking-[0.2em] uppercase mt-1">
+          <p className="text-dark/40 text-[14px] font-heading font-semibold tracking-[0.2em] uppercase mt-1">
             Atención a comercios y distribuidores
           </p>
         </div>
@@ -58,7 +58,7 @@ export default function Contact() {
           {/* Info row */}
           <div className="mt-20 pt-8 border-t border-dark/10 flex flex-wrap gap-x-16 gap-y-6">
             <div>
-              <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
+              <p className="text-dark/35 text-[14px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
                 Correo
               </p>
               <span className="flex items-center gap-2 text-dark/70 text-sm">
@@ -67,7 +67,7 @@ export default function Contact() {
               </span>
             </div>
             <div className="border-l border-dark/10 pl-16">
-              <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
+              <p className="text-dark/35 text-[14px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
                 Planta
               </p>
               <span className="flex items-center gap-2 text-dark/70 text-sm">
@@ -76,7 +76,7 @@ export default function Contact() {
               </span>
             </div>
             <div className="border-l border-dark/10 pl-16">
-              <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
+              <p className="text-dark/35 text-[14px] font-heading font-bold tracking-[0.25em] uppercase mb-2">
                 Seguinos
               </p>
               <a
@@ -97,17 +97,17 @@ export default function Contact() {
             <div className="absolute -inset-5 rounded-full border border-dashed border-gold/25 animate-spin-slow" />
             <div className="relative w-full h-full rounded-full border border-[#25D366]/30 bg-white/40 flex flex-col items-center justify-center text-center gap-1.5 shadow-sm">
               <MessageCircle size={20} className="text-[#25D366] mb-1" />
-              <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase">
+              <p className="text-dark/35 text-[14px] font-heading font-bold tracking-[0.25em] uppercase">
                 Respuesta
               </p>
               <p className="text-dark font-heading font-bold text-2xl">en minutos</p>
               <span className="h-px w-10 bg-dark/15 my-1.5" />
-              <p className="text-dark/40 text-xs font-body">Lun a Vie · 9 a 18h</p>
+              <p className="text-dark/40 text-sm font-body">Lun a Vie · 9 a 18h</p>
             </div>
           </div>
 
           <div className="w-full border border-dark/10 rounded-3xl p-7 bg-white/50">
-            <p className="text-dark/35 text-[10px] font-heading font-bold tracking-[0.25em] uppercase mb-3">
+            <p className="text-dark/35 text-[14px] font-heading font-bold tracking-[0.25em] uppercase mb-3">
               Cómo trabajamos
             </p>
             <p className="text-dark/60 text-sm font-body leading-relaxed">

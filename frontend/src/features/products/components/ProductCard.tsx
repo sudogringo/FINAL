@@ -63,7 +63,7 @@ export default function ProductCard({ product }: Props) {
           <div className="flex items-center gap-2 mb-1.5">
             <span className="w-2 h-2" style={{ background: accent }} />
             <span
-              className="text-[10px] font-heading font-bold tracking-[0.2em] uppercase"
+              className="text-[14px] font-heading font-bold tracking-[0.2em] uppercase"
               style={{ color: accentText }}
             >
               {product.line === 'roja' ? 'Línea Roja' : 'Línea Dorada'}
@@ -74,13 +74,13 @@ export default function ProductCard({ product }: Props) {
           </h2>
         </div>
 
-        <p className="text-dark/70 text-[13px] font-body leading-relaxed flex-1">
+        <p className="text-dark/70 text-[14px] font-body leading-relaxed flex-1">
           {product.description}
         </p>
 
         {/* Size selector */}
         <div>
-          <p className="text-dark/65 text-[9px] font-heading font-bold tracking-[0.3em] uppercase mb-2">
+          <p className="text-dark/65 text-[14px] font-heading font-bold tracking-[0.3em] uppercase mb-2">
             Presentación
           </p>
           <div className="flex gap-2">
@@ -89,7 +89,7 @@ export default function ProductCard({ product }: Props) {
                 key={s}
                 onClick={() => setSize(s)}
                 aria-pressed={size === s}
-                className={`flex-1 py-2 rounded-xl text-[12px] font-heading font-bold border transition-all duration-200 ${
+                className={`flex-1 py-2 rounded-xl text-[14px] font-heading font-bold border transition-all duration-200 ${
                   size === s
                     ? 'bg-dark text-white border-dark'
                     : 'bg-white text-dark/70 border-dark/15 hover:border-dark/30'
@@ -136,13 +136,13 @@ export default function ProductCard({ product }: Props) {
               <Plus size={12} />
             </button>
             {stockForSize > 0 && (
-              <p className="ml-auto text-dark/65 text-[10px] font-body">
+              <p className="ml-auto text-dark/65 text-[14px] font-body">
                 Disponible: <span className={atLimit ? 'text-red-line' : 'text-dark/65'}>{stockForSize.toLocaleString('es-AR')}</span>
               </p>
             )}
           </div>
           {atLimit && !noStock && (
-            <p className="text-red-line text-[9px] font-body mt-1.5">Límite de stock alcanzado</p>
+            <p className="text-red-line text-[14px] font-body mt-1.5">Límite de stock alcanzado</p>
           )}
         </div>
 
@@ -151,7 +151,7 @@ export default function ProductCard({ product }: Props) {
           onClick={handleAdd}
           data-testid="add-to-cart"
           disabled={added || noStock}
-          className={`w-full py-3.5 rounded-full font-heading font-bold text-[13px] transition-all duration-200 disabled:cursor-not-allowed ${
+          className={`w-full py-3.5 rounded-full font-heading font-bold text-[14px] transition-all duration-200 disabled:cursor-not-allowed ${
             noStock
               ? 'bg-white text-dark/30'
               : added

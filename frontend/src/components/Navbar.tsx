@@ -36,7 +36,7 @@ export default function Navbar() {
           {/* Logo */}
           <a href="#" className="flex flex-col leading-none group">
             <span
-              className="text-[11px] font-semibold tracking-[0.3em] text-[#CABC6B] uppercase"
+              className="text-[14px] font-semibold tracking-[0.3em] text-[#CABC6B] uppercase"
               style={{ fontFamily: 'Quicksand, sans-serif' }}
             >
               Golden Harvest
