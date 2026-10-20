@@ -5,7 +5,7 @@ import { persistQuote } from './quoteCreate'
 const INPUT = {
   sessionId: 's1',
   clientSubmittedAt: '2026-10-14T12:00:00.000Z',
-  contact: { nombre: 'Ana', email: 'ana@example.com' } as any,
+  contact: { nombre: 'Ana', email: 'ana@example.com', consentimiento: '2026-10-14T11:59:00.000Z' } as any,
   items: [{ id: 'p1', name: 'Tomate', line: 'roja', size: '1kg', qty: 2 }],
 }
 
@@ -18,7 +18,7 @@ function fakeDb(opts: { failDelivery?: boolean } = {}) {
       upsert: async () => { log.push({ client, op: 'customer.upsert' }); return { id: 'c1' } },
     },
     quote: {
-      create: async ({ data }: any) => { log.push({ client, op: 'quote.create' }); return { id: 'q1', sessionId: data.sessionId, createdAt: new Date('2026-10-14T12:00:01.000Z') } },
+      create: async ({ data }: any) => { log.push({ client, op: 'quote.create', data }); return { id: 'q1', sessionId: data.sessionId, createdAt: new Date('2026-10-14T12:00:01.000Z') } },
     },
     webhookDelivery: {
       create: async ({ data }: any) => {
@@ -60,4 +60,11 @@ test('a delivery for the measurement mode is parked until the synchronous attemp
   await persistQuote(db as any, INPUT, { nextAttemptAt: later })
   const d = log.find(l => l.op === 'webhookDelivery.create')!
   assert.deepEqual(d.data.nextAttemptAt, later)
+})
+
+test('the consent timestamp is stored in Quote.contact', async () => {
+  const { db, log } = fakeDb()
+  await persistQuote(db as any, INPUT)
+  const created = log.find(l => l.op === 'quote.create')!
+  assert.equal(created.data.contact.consentimiento, '2026-10-14T11:59:00.000Z')
 })

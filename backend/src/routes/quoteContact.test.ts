@@ -2,7 +2,8 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { contactSchema, customerUpsertArgs } from './quoteContact'
 
-const BASE = { nombre: 'Ana Pérez', email: 'ana@example.com' }
+const CONSENT = '2026-10-17T03:00:00.000Z'
+const BASE = { nombre: 'Ana Pérez', email: 'ana@example.com', consentimiento: CONSENT }
 
 test('accepts a contact without localidad (the field is optional)', () => {
   const parsed = contactSchema.safeParse(BASE)
@@ -37,7 +38,7 @@ const STORED = { nombre: 'Ana Pérez', empresa: 'Conservas Ana', telefono: '2610
 
 test('never overwrites the data of an existing customer', () => {
   const args = customerUpsertArgs(
-    { nombre: 'Impostor', email: 'ana@example.com', empresa: 'Otra', telefono: '1100000000', localidad: 'Otra ciudad' },
+    { nombre: 'Impostor', email: 'ana@example.com', consentimiento: CONSENT, empresa: 'Otra', telefono: '1100000000', localidad: 'Otra ciudad' },
     STORED,
   )
   assert.deepEqual(args.update, {})
@@ -74,5 +75,16 @@ test('keeps the time of consent to the privacy notice (Ley 25.326)', () => {
 
 test('rejects a consent value that is not a timestamp', () => {
   const parsed = contactSchema.safeParse({ ...BASE, consentimiento: 'sí' })
+  assert.equal(parsed.success, false)
+})
+
+test('rejects a contact without the consent timestamp (required)', () => {
+  const { consentimiento: _omitted, ...withoutConsent } = BASE
+  const parsed = contactSchema.safeParse(withoutConsent)
+  assert.equal(parsed.success, false)
+})
+
+test('rejects a date-only consent (needs a full ISO 8601 date-time)', () => {
+  const parsed = contactSchema.safeParse({ ...BASE, consentimiento: '2026-10-17' })
   assert.equal(parsed.success, false)
 })
