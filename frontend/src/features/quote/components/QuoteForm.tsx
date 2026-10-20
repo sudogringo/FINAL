@@ -173,8 +173,9 @@ export default function QuoteForm() {
                 <strong className="text-white/80 font-heading">Aviso de privacidad.</strong>{' '}
                 Este sitio es una demostración académica (UTN FRM) sin vínculo con Golden Harvest S.A.: no cargues datos reales.
                 Los datos del formulario se usan solo para responder esta solicitud, no se ceden a terceros y quedan en la base
-                del proyecto, cuyos responsables son sus autores. Podés ejercer tus derechos de acceso, rectificación y supresión
-                (Ley 25.326) abriendo un pedido en github.com/sudogringo/FINAL. La Agencia de Acceso a la Información Pública es el
+                del proyecto, cuyos responsables son sus autores. Se alojan en servidores de Render y Neon ubicados en EE. UU.
+                (transferencia internacional, art. 12 de la Ley 25.326). Podés ejercer tus derechos de acceso, rectificación y
+                supresión (Ley 25.326) escribiendo a rojoemiliano515@gmail.com. La Agencia de Acceso a la Información Pública es el
                 órgano de control.
               </p>
               <label htmlFor="aceptaPrivacidad" className="flex items-start gap-2.5 text-white/70 text-[12px] font-body cursor-pointer">

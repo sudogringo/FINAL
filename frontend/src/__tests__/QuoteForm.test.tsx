@@ -133,6 +133,20 @@ describe('QuoteForm', () => {
       expect(notice).toHaveTextContent(/demostración académica/i)
     })
 
+    it('names the e-mail for exercising rights and the US hosting (art. 12), with no GitHub issue', async () => {
+      renderForm()
+      act(() => { fireEvent.click(screen.getByText('Abrir formulario')) })
+      await screen.findByRole('dialog')
+      const notice = screen.getByTestId('privacy-notice')
+      expect(notice).toHaveTextContent('rojoemiliano515@gmail.com')
+      expect(notice).toHaveTextContent(/Render/)
+      expect(notice).toHaveTextContent(/Neon/)
+      expect(notice).toHaveTextContent(/EE\. ?UU\./)
+      expect(notice).toHaveTextContent(/art\. 12/)
+      expect(notice).not.toHaveTextContent(/issue|github/i)
+      expect(notice).not.toHaveTextContent(/pedido en/i)
+    })
+
     it('does not send the quote until the notice is accepted', async () => {
       const user = userEvent.setup()
       ;(submitQuote as jest.Mock).mockClear()
