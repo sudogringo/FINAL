@@ -1,4 +1,4 @@
-# git HEAD 61c6acc (etiqueta entrega-R47), 2026-10-17
+# git HEAD 61c6acc, padre de la etiqueta entrega-R47 (176de14, que solo agrega este archivo), 2026-10-17
 # Nota: los cambios coordinados del 14/10 (595fe95 backend, 1da4ee3 frontend, 8eb9e5a n8n) se versionaron por capa en tres commits del mismo minuto (18:24), de modo que este conteo no registra ese acoplamiento.
 commits: 146
 frontend: 23

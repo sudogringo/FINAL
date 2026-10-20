@@ -1,0 +1,234 @@
+PASS src/__tests__/ProductList.unavailable.test.tsx (9.138 s)
+  ProductList without a configured backend (VITE_API_URL unset in production)
+    √ shows a clear "catálogo no disponible" state and never calls the API (142 ms)
+    √ does not render the misleading "no se encontraron productos" empty search state (21 ms)
+
+PASS src/__tests__/CartDrawer.test.tsx (9.201 s)
+  CartDrawer
+    √ drawer is hidden initially (105 ms)
+    √ shows item after adding and opening the drawer (48 ms)
+    √ displays item size and quantity (24 ms)
+    √ shows empty state message when cart is empty (25 ms)
+    √ "Solicitar Cotización" button appears when items exist (21 ms)
+
+PASS src/__tests__/CatalogoPage.heading.test.tsx (9.224 s)
+  CatalogoPage heading hierarchy
+    √ has one h1 and product cards are h2 (no skipped level) (247 ms)
+
+PASS src/__tests__/CartContext.test.tsx (9.249 s)
+  CartContext
+    √ addItem is blocked at the per-size stock cap (80 ms)
+    √ setQty(0) removes the item entirely (25 ms)
+    √ setQty caps at the stock limit when set above it (21 ms)
+    √ setQty sets a valid in-range quantity normally (15 ms)
+    √ removeItem removes the specified item (32 ms)
+    √ clearCart empties the cart and resets isOpen/quoteOpen (18 ms)
+    √ totalItems sums quantities across multiple distinct items (21 ms)
+    √ openCart/closeCart/openQuote/closeQuote toggle state directly (35 ms)
+    abandoned cart webhook
+      √ fires the webhook after the abandonment threshold when the cart has items (18 ms)
+      √ does not fire the webhook when the cart is empty (5 ms)
+
+PASS src/__tests__/Production.a11y.test.tsx (9.362 s)
+  Production carousel dots
+    √ exposes each dot as a named button (159 ms)
+    √ marks only the active dot with aria-current and follows selection (190 ms)
+    √ gives each dot a 24x24 hit area while the visible dot stays 8x8 (38 ms)
+
+PASS src/__tests__/ProductList.states.test.tsx (9.398 s)
+  ProductList loading / cold start / failure states
+    √ shows products with no status message when the API answers fast (134 ms)
+    √ announces "despertando el servidor" (aria-live) only after a few seconds of waiting (58 ms)
+    √ recovers when the server wakes up after failed attempts (57 ms)
+    √ shows "catálogo no disponible" with a retry button once the ~70 s budget is spent, and retries on click (160 ms)
+    √ keeps the filter and search controls usable while loading (never blocks the page) (14 ms)
+
+PASS src/__tests__/ProductCard.test.tsx (9.455 s)
+  ProductCard
+    √ renders product name and description (104 ms)
+    √ renders all size buttons (134 ms)
+    √ first size is selected by default (26 ms)
+    √ changes selected size on click (88 ms)
+    √ shows "Agregar al Pedido" button (10 ms)
+    √ qty cannot go below 1 (12 ms)
+    √ renders correctly for Línea Dorada (9 ms)
+    √ disables add-to-cart and shows "Sin stock" when selected size has 0 stock (12 ms)
+    √ blocks qty increment past stock cap for the selected size (22 ms)
+    √ does not disable qty controls or add-to-cart when the other size has 0 stock (45 ms)
+
+PASS src/__tests__/fetchWithRetry.test.ts
+  fetchWithRetry
+    √ resolves immediately when the first attempt succeeds, without retrying (5 ms)
+    √ retries after a network error with exponential backoff (1s, 2s, 4s) (103 ms)
+    √ caps the delay at maxDelayMs (42 ms)
+    √ gives up once the total time budget is spent and rethrows the last error (29 ms)
+    √ retries on 5xx HttpError (34 ms)
+    √ does NOT retry on 4xx HttpError (2 ms)
+    √ aborts a hanging attempt after attemptTimeoutMs and retries (30 ms)
+    √ stops retrying and rejects when the caller aborts (30 ms)
+
+PASS src/__tests__/api.test.ts
+  admin/api
+    submitQuote
+      √ sends a POST to the correct URL with serialized body (2 ms)
+      √ throws when res.ok is false (16 ms)
+    adminLogin
+      √ returns the token from the response JSON on success (1 ms)
+      √ throws the expected Spanish error message when response is not ok (2 ms)
+      √ rejects with the HTTP status so callers can tell bad credentials from a server failure (1 ms)
+      √ forwards the abort signal to fetch so a hung attempt can be cancelled (1 ms)
+    fetchMonthlyStats
+      √ builds the URL without the month query param when omitted (1 ms)
+      √ builds the URL with the month query param when provided (1 ms)
+    logInteraction
+      √ does not throw when fetch rejects (network failure) (2 ms)
+      √ does not throw when fetch resolves with a non-ok response
+      √ calls fetch with the correct URL and body (1 ms)
+    createProduct
+      √ happy path: calls fetch with the right method/URL and returns the created product (1 ms)
+      √ throws the expected message when res.ok is false (1 ms)
+    deleteProduct
+      √ happy path: calls fetch with the right method/URL (1 ms)
+      √ throws the expected message when res.ok is false (1 ms)
+
+PASS src/__tests__/phone.test.ts
+  PHONE_RE
+    √ accepts +54 9 11 0000-0000 (2 ms)
+    √ accepts 261 555-0000
+    √ accepts 2615550142 (1 ms)
+    √ accepts +5492615550142
+    √ rejects 1234567
+    √ rejects +54 9 11 0000-0000-123 (1 ms)
+    √ rejects 261-ABC-0000
+    √ rejects ++54 261 555 0000
+    √ rejects 
+
+PASS src/__tests__/spaFallback.test.ts
+  GitHub Pages SPA fallback (404.html -> index.html)
+    √ 404.html turns /FINAL/catalogo into /FINAL/?/catalogo (4 ms)
+    √ index.html restores /FINAL/?/catalogo to /FINAL/catalogo (5 ms)
+    √ round-trips nested paths, query strings and hashes (5 ms)
+    √ does nothing on a normal load of /FINAL/ (no encoded path) (4 ms)
+
+PASS src/__tests__/fontSize.test.ts
+  readable text size (>= 14 px)
+    √ detects text-xs and arbitrary sizes below 14 px, and accepts 14 px or more (3 ms)
+    √ finds source files to scan (3 ms)
+    √ no .tsx under src/ uses text smaller than 14 px (50 ms)
+
+PASS src/__tests__/Production.tabs.test.tsx
+  Production - fila de pestañas en móvil
+    √ la fila de botones hace wrap para no desbordar la página (113 ms)
+    √ las 3 pestañas están en la misma fila contenedora (61 ms)
+
+PASS src/__tests__/Hero.test.tsx
+  Hero - marca y aviso
+    √ no afirma "marca registrada" (22 ms)
+    √ muestra la ubicación neutra MENDOZA · ARGENTINA (10 ms)
+    √ muestra el aviso de prototipo académico sin vínculo comercial (11 ms)
+    √ el aviso no usa text-xs ni tamaños menores a 14px (18 ms)
+  Hero - LCP
+    √ el contenedor del h1 y sus ancestros dentro del hero no animan ni parten con opacidad 0 (71 ms)
+
+PASS src/__tests__/AdminContext.test.tsx (9.748 s)
+  AdminContext
+    √ starts unauthenticated with no token when localStorage is empty (51 ms)
+    √ initializes token from localStorage if present (9 ms)
+    √ login persists token to localStorage and flips isAuthenticated to true (18 ms)
+    √ logout clears localStorage and flips isAuthenticated to false (27 ms)
+    √ useAdmin throws when used outside AdminProvider (666 ms)
+
+PASS src/__tests__/resolveApiUrl.test.ts
+  resolveApiUrl
+    √ uses the build-time VITE_API_URL when set (trailing slash trimmed) (1 ms)
+    √ falls back to localhost in dev / test (1 ms)
+    √ has NO fallback in a production build: empty string means "backend not configured"
+
+PASS src/__tests__/AcademicNotice.test.tsx (9.778 s)
+  Aviso de proyecto académico
+    √ el pie de página declara que es un proyecto académico sin vínculo con la empresa (87 ms)
+    √ el pie de página enlaza los créditos de las fotos con licencia CC BY (90 ms)
+    √ los créditos enlazados existen en el repositorio (2 ms)
+    √ el pie de página no reclama derechos en nombre de la empresa (11 ms)
+    √ la página de contacto no enlaza el correo real de la empresa (16 ms)
+    √ index.html no declara datos estructurados de organización ni autoría de la empresa (2 ms)
+
+PASS src/__tests__/contrast.test.tsx (10.018 s)
+  text-safe gold token
+    √ defines --color-gold-text reaching 4.5:1 on cream card (#EEEBE2) and page (#FBFBFB) (14 ms)
+    √ keeps the brand gold untouched for decorative use (1 ms)
+  no low-contrast text utilities on light surfaces
+    √ Production (all tabs): no brand-gold text on light cards, no low-alpha dark text (216 ms)
+    √ Production: inactive tab text alpha >= 0.65 (17 ms)
+    √ Production: selected pill never pairs white text with a light gold background (43 ms)
+    √ Catalogo page + cards: no text-gold, no text-dark below the alpha floor (40 ms)
+    √ ProductCard: no low-alpha text, line label not in raw #A89D4F (7 ms)
+    √ About: no brand-gold text on light background (14 ms)
+  no low-contrast text utilities on dark surfaces
+    √ Certifications: white text alpha >= floor (10 ms)
+    √ Footer: white/gold text alpha >= floor (6 ms)
+
+PASS src/__tests__/AdminProductsPage.webhookConfigured.test.tsx (11.426 s)
+  AdminProductsPage — triggerSocialMedia with VITE_N8N_WF4_WEBHOOK configured
+    √ POSTs to the configured webhook and shows the success alert (288 ms)
+
+PASS src/__tests__/AdminQuotesPage.test.tsx (11.775 s)
+  AdminQuotesPage
+    √ redirects to /admin/login when not authenticated (50 ms)
+    √ loads and displays quotes on mount (80 ms)
+    √ clicking status-advance calls updateQuoteStatus with PENDING -> CONTACTED and updates the list (185 ms)
+    √ closing a quote (CONTACTED -> CLOSED) is gated behind window.confirm: confirmed proceeds (135 ms)
+    √ closing a quote is a no-op when window.confirm is cancelled (128 ms)
+    √ CLOSED quotes have no advance action button (70 ms)
+
+PASS src/__tests__/AdminProductsPage.test.tsx (13.913 s)
+  AdminProductsPage
+    √ redirects to /admin/login when not authenticated (63 ms)
+    √ loads and displays products on mount (active filter default) (101 ms)
+    handleSave
+      √ create branch: opens empty modal via "Nuevo producto" and calls createProduct (no id) (990 ms)
+      √ edit branch: opens modal via edit pencil (with id) and calls updateProduct with existing id (528 ms)
+    handleDelete
+      √ proceeds when window.confirm returns true (124 ms)
+      √ is a no-op when window.confirm returns false (110 ms)
+    handleRestore
+      √ calls updateProduct with active: true for an inactive product (224 ms)
+    search / line / status filters
+      √ search input narrows the list by name (198 ms)
+      √ line filter narrows the list to "roja" only (110 ms)
+      √ status filter "all" reveals inactive products, combined with line filter "roja" (217 ms)
+    triggerSocialMedia (via "Publicar en redes" button)
+      √ calls window.alert when the webhook env var is unset/empty (105 ms)
+
+PASS src/__tests__/QuoteForm.test.tsx (16.106 s)
+  QuoteForm
+    √ is not rendered when quoteOpen is false (39 ms)
+    √ renders the form when quote is open (66 ms)
+    √ shows validation error for empty nombre (127 ms)
+    √ shows validation error for invalid email (468 ms)
+    √ shows notas max 500 chars label (13 ms)
+    √ closes the form when X button is clicked (46 ms)
+    √ offers an optional Localidad field (17 ms)
+    √ sends localidad inside contact when the user fills it (1033 ms)
+    √ rejects a localidad longer than 100 characters (93 ms)
+    privacy notice and consent (Ley 25.326)
+      √ states the purpose of the data and the rights of the owner (15 ms)
+      √ names the e-mail for exercising rights and the US hosting (art. 12), with no GitHub issue (13 ms)
+      √ does not send the quote until the notice is accepted (541 ms)
+      √ sends the time of consent with the contact once accepted (681 ms)
+
+PASS src/__tests__/AdminLoginPage.test.tsx (20.848 s)
+  AdminLoginPage
+    √ calls adminLogin with entered email/password on submit (752 ms)
+    √ success path stores the token and navigates away from login (670 ms)
+    √ failure path shows the Spanish error message and does not navigate (685 ms)
+    √ treats a 400 (missing fields) as a credentials error, without retrying (682 ms)
+    √ retries a network failure (cold start) and logs in when the server answers (1668 ms)
+    √ tells the user the server is waking up while the login is still pending (4622 ms)
+    √ shows a server error, not a credentials error, when the server fails (644 ms)
+
+Test Suites: 23 passed, 23 total
+Tests:       144 passed, 144 total
+Snapshots:   0 total
+Time:        47.694 s
+Ran all test suites.
