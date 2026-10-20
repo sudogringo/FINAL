@@ -122,7 +122,7 @@ export default function Production() {
         </div>
 
         {/* Tabs */}
-        <div className="flex justify-center gap-3 mb-14">
+        <div className="flex flex-wrap justify-center gap-3 mb-14">
           {tabs.map((t, i) => (
             <button
               key={t.id}
