@@ -17,6 +17,20 @@ describe('Aviso de proyecto académico', () => {
     expect(screen.getByText(/sin vínculo con Golden Harvest S\.A\./i)).toBeInTheDocument()
   })
 
+  it('el pie de página enlaza los créditos de las fotos con licencia CC BY', () => {
+    render(<MemoryRouter><Footer /></MemoryRouter>)
+    const link = screen.getByRole('link', { name: /créditos de fotos/i })
+    expect(link).toHaveAttribute('href', 'https://github.com/sudogringo/FINAL/blob/main/docs/assets/photos/CREDITS.md')
+    expect(link).toHaveAttribute('target', '_blank')
+    expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'))
+  })
+
+  it('los créditos enlazados existen en el repositorio', () => {
+    const credits = readFileSync(join(process.cwd(), '..', 'docs', 'assets', 'photos', 'CREDITS.md'), 'utf8')
+    expect(credits).toMatch(/hero-banner\.jpg/)
+    expect(credits).toMatch(/CC BY 2\.0/)
+  })
+
   it('el pie de página no reclama derechos en nombre de la empresa', () => {
     render(<MemoryRouter><Footer /></MemoryRouter>)
     expect(screen.queryByText(/derechos reservados/i)).not.toBeInTheDocument()

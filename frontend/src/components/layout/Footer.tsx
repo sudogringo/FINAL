@@ -6,6 +6,9 @@ const LINKS = [
   { label: 'Contacto', to: '/contacto' },
 ]
 
+// Three photos are CC BY 2.0, which requires visible attribution.
+const PHOTO_CREDITS_URL = 'https://github.com/sudogringo/FINAL/blob/main/docs/assets/photos/CREDITS.md'
+
 export default function Footer() {
   return (
     <footer className="bg-[#111111] border-t border-white/5 py-10">
@@ -15,6 +18,14 @@ export default function Footer() {
           <span className="text-white/70 text-[14px] font-body mt-0.5 text-center md:text-left">
             Proyecto académico (UTN FRM, {new Date().getFullYear()}). Sitio de demostración sin vínculo con Golden Harvest S.A.
           </span>
+          <a
+            href={PHOTO_CREDITS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/70 hover:text-gold text-[14px] font-body underline underline-offset-2 mt-1 transition-colors duration-200"
+          >
+            Créditos de fotos (licencias CC0, CC BY y dominio público)
+          </a>
         </div>
         <nav className="flex gap-6" aria-label="Links del footer">
           {LINKS.map(l => (
