@@ -1,0 +1,10 @@
+11:35:43 idx=1 dev=mobile t=42.713069s body={"status":"ok","db":"up"}
+11:36:23 idx=1 dev=desktop t=0.288613s body={"status":"ok","db":"up"}
+11:37:03 idx=2 dev=mobile t=0.272549s body={"status":"ok","db":"up"}
+11:37:42 idx=2 dev=desktop t=0.292022s body={"status":"ok","db":"up"}
+11:38:17 idx=3 dev=mobile t=0.275372s body={"status":"ok","db":"up"}
+11:39:04 idx=3 dev=desktop t=0.462432s body={"status":"ok","db":"up"}
+11:39:41 idx=4 dev=mobile t=0.266275s body={"status":"ok","db":"up"}
+11:40:21 idx=4 dev=desktop t=0.449522s body={"status":"ok","db":"up"}
+11:41:01 idx=5 dev=mobile t=0.292096s body={"status":"ok","db":"up"}
+11:41:40 idx=5 dev=desktop t=0.260661s body={"status":"ok","db":"up"}

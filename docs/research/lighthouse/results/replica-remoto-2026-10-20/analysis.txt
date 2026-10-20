@@ -1,0 +1,15 @@
+== replica-remoto-2026-10-20: new-catalogo-remoto vs original-productos (α por comparación = 0.0125)
+-- mobile: n = 5/5, Lighthouse ['12.8.2']
+   performance  original      47 [46–58]  nueva      94 [84–95]  p unilateral = 0.0040  SIGNIFICATIVA
+   lcp          original   13783 [11213–14655]  nueva    2373 [2331–3283]  p unilateral = 0.0040  SIGNIFICATIVA
+   accessibility original 90  nueva 100  (no decisoria)
+   cls          original 0.0  nueva 0.01  (no decisoria)
+   tbt          original 498  nueva 16  (no decisoria)
+   LCP móvil de la página nueva: 2373 ms → Bueno (no decisoria)
+-- desktop: n = 5/5, Lighthouse ['12.8.2']
+   performance  original      72 [70–77]  nueva      98 [96–98]  p unilateral = 0.0040  SIGNIFICATIVA
+   lcp          original    2858 [2299–3211]  nueva     930 [895–983]  p unilateral = 0.0040  SIGNIFICATIVA
+   accessibility original 86  nueva 100  (no decisoria)
+   cls          original 0.0  nueva 0.006  (no decisoria)
+   tbt          original 11  nueva 0  (no decisoria)
+== Comparaciones significativas: 4/4 → hipótesis CONFIRMADA
