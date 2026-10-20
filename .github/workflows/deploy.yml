@@ -32,6 +32,22 @@ jobs:
       - run: npm run lint
         working-directory: ./frontend
 
+      - run: npm run test
+        working-directory: ./frontend
+        env:
+          CI: 'true'
+
+      # Backend unit tests: node:test with fakes, no database needed. `prisma generate`
+      # only builds the client (no connection) so the Prisma imports resolve.
+      - run: npm ci
+        working-directory: ./backend
+
+      - run: npx prisma generate
+        working-directory: ./backend
+
+      - run: npm run test
+        working-directory: ./backend
+
       # VITE_API_URL is a public URL (not a secret): set it under
       # Settings > Secrets and variables > Actions > Variables (e.g. https://<service>.onrender.com).
       # If unset, the build still succeeds and /catalogo shows "catálogo no disponible".
