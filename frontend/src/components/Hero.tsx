@@ -22,7 +22,7 @@ export default function Hero() {
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 pt-28 pb-14 text-center">
         {/* Óvalo — marca. Sin animación de entrada: contiene el h1 (elemento LCP) y
             debe pintarse en el primer render, no desde opacidad 0. */}
-        <div className="animate-fade-in-up relative w-[92vw] max-w-[300px] sm:max-w-[520px] md:max-w-[640px] aspect-square sm:aspect-[3/2]">
+        <div className="relative w-[92vw] max-w-[300px] sm:max-w-[520px] md:max-w-[640px] aspect-square sm:aspect-[3/2]">
           <div className="w-full h-full rounded-[3rem] sm:rounded-[50%] overflow-hidden bg-cream/95 backdrop-blur-lg border border-gold/40 shadow-2xl shadow-black/20 flex flex-col items-center justify-center px-8 sm:px-14">
             <span className="text-dark/70 text-[14px] sm:text-sm font-heading font-semibold tracking-[0.3em] uppercase">
               Mendoza · Argentina

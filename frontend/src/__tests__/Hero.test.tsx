@@ -30,3 +30,16 @@ describe('Hero - marca y aviso', () => {
     expect(notice.className).not.toMatch(/text-xs|text-\[(\d|1[0-3])px\]/)
   })
 })
+
+describe('Hero - LCP', () => {
+  it('el contenedor del h1 y sus ancestros dentro del hero no animan ni parten con opacidad 0', () => {
+    renderHero()
+    const h1 = screen.getByRole('heading', { level: 1, name: 'SILVIA' })
+    let el: HTMLElement | null = h1
+    while (el && el.tagName !== 'SECTION') {
+      expect(el.className).not.toMatch(/animate-|opacity-0/)
+      el = el.parentElement
+    }
+    expect(el?.tagName).toBe('SECTION')
+  })
+})
