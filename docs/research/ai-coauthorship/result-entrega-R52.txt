@@ -1,0 +1,17 @@
+Output of ai-coauthorship.py at the commit tagged entrega-R52 (this file's own commit, which is counted).
+
+commits: 174
+con coautoria de Claude: 124 (71.3 %)
+sin coautoria de Claude: 50
+  2026-03: 0 de 3
+  2026-04: 0 de 11
+  2026-06: 3 de 10
+  2026-07: 2 de 2
+  2026-08: 5 de 29
+  2026-09: 9 de 11
+  2026-10: 105 de 108
+por autor (nombre registrado en git):
+  RojoEmiliano: 134 commits, 119 con coautoria de Claude
+  Tiago Cunto: 30 commits, 5 con coautoria de Claude
+  Tiago Cunto Boberg: 9 commits, 0 con coautoria de Claude
+  copilot-swe-agent[bot]: 1 commits, 0 con coautoria de Claude
