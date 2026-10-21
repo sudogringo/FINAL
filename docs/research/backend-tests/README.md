@@ -10,3 +10,10 @@ Salidas completas de las corridas del backend (node:test vía tsx).
 
 - Archivo: `test-run-2026-10-16.txt` (`cd backend && npm test`).
 - Resultado: 72 pruebas, 72 pasan (incluye el outbox de webhooks, el límite de tasa, CORS y /api/health, agregados el 14/10).
+
+## Segunda corrida del 20/10/2026
+
+- Archivo: `test-run-2026-10-20b.txt` (`cd backend && npm test`).
+- Resultado: 78 pruebas, 78 pasan. Agrega una a `quoteContact.test.ts`: el contacto que arma el arnés de
+  VD2 (`docs/research/quote-latency/fixtures.mjs`) tiene que pasar el esquema del endpoint. Desde
+  `5f631b4` el backend exige `consentimiento`, y el arnés no lo enviaba: todas sus corridas terminaban en 400.

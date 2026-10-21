@@ -88,3 +88,13 @@ test('rejects a date-only consent (needs a full ISO 8601 date-time)', () => {
   const parsed = contactSchema.safeParse({ ...BASE, consentimiento: '2026-10-17' })
   assert.equal(parsed.success, false)
 })
+
+// The VD2 latency harness (docs/research/quote-latency/) posts to the same endpoint.
+// Since 5f631b4 the contact needs the consent timestamp, or every run ends in 400.
+test('the VD2 latency harness builds contacts the endpoint accepts', async () => {
+  const { buildQuotePayload } = await import('../../../docs/research/quote-latency/fixtures.mjs')
+  for (const run of [1, 2, 3]) {
+    const parsed = contactSchema.safeParse(buildQuotePayload(run).contact)
+    assert.equal(parsed.success, true, JSON.stringify(parsed.error?.flatten()))
+  }
+})

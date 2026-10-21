@@ -44,6 +44,9 @@ export function buildQuotePayload(runIndex) {
       telefono: `+54911${randomInt(10000000, 99999999)}`,
       email,
       notas: 'Solicitud generada por script de medición VD2 (docs/research/quote-latency) — no es un lead real.',
+      // Desde el 19/10/2026 (commit 5f631b4) el backend exige el instante del consentimiento
+      // (aviso de privacidad). Los lotes de VD2 del 25/08 y del 08/10 son anteriores y no lo enviaban.
+      consentimiento: new Date().toISOString(),
     },
     items,
   };

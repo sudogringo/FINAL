@@ -1,0 +1,405 @@
+
+> golden-harvest-backend@1.0.0 test
+> tsx --test src/middleware/auth.test.ts src/middleware/errors.test.ts src/routes/quoteContact.test.ts src/routes/quoteClose.test.ts src/seedAdmin.test.ts src/routes/productSchema.test.ts src/webhooks/outbox.test.ts src/webhooks/dispatcher.test.ts src/webhooks/store.test.ts src/routes/quoteCreate.test.ts src/routes/health.test.ts src/routes/webhookDeliveries.test.ts src/middleware/rateLimit.test.ts src/middleware/cors.test.ts
+
+TAP version 13
+# Subtest: rejects a request without credentials
+ok 1 - rejects a request without credentials
+  ---
+  duration_ms: 1.3863
+  ...
+# Subtest: accepts a valid admin JWT
+ok 2 - accepts a valid admin JWT
+  ---
+  duration_ms: 6.8866
+  ...
+# Subtest: rejects a JWT signed with another secret
+ok 3 - rejects a JWT signed with another secret
+  ---
+  duration_ms: 2.4718
+  ...
+# Subtest: accepts the configured service key (n8n workflows)
+ok 4 - accepts the configured service key (n8n workflows)
+  ---
+  duration_ms: 0.4282
+  ...
+# Subtest: rejects a wrong service key
+ok 5 - rejects a wrong service key
+  ---
+  duration_ms: 0.7375
+  ...
+# Subtest: fails closed when SERVICE_API_KEY is not configured
+ok 6 - fails closed when SERVICE_API_KEY is not configured
+  ---
+  duration_ms: 0.3056
+  ...
+# Subtest: parses a comma-separated FRONTEND_URL, trimming spaces and trailing slashes
+ok 7 - parses a comma-separated FRONTEND_URL, trimming spaces and trailing slashes
+  ---
+  duration_ms: 2.1644
+  ...
+# Subtest: allows listed origins and rejects others
+ok 8 - allows listed origins and rejects others
+  ---
+  duration_ms: 1.3891
+  ...
+# Subtest: localhost is allowed outside production only
+ok 9 - localhost is allowed outside production only
+  ---
+  duration_ms: 0.3294
+  ...
+# Subtest: requests without Origin (curl, n8n, server to server) are allowed
+ok 10 - requests without Origin (curl, n8n, server to server) are allowed
+  ---
+  duration_ms: 0.1972
+  ...
+# Subtest: a rejected async handler reaches next(err) instead of crashing the process
+ok 11 - a rejected async handler reaches next(err) instead of crashing the process
+  ---
+  duration_ms: 4.0929
+  ...
+# Subtest: wraps every handler of a route, including the ones after a middleware
+ok 12 - wraps every handler of a route, including the ones after a middleware
+  ---
+  duration_ms: 1.8756
+  ...
+# Subtest: a foreign-key violation (Prisma P2003) is a client error: 400
+ok 13 - a foreign-key violation (Prisma P2003) is a client error: 400
+  ---
+  duration_ms: 0.1937
+  ...
+# Subtest: a missing record (Prisma P2025) is 404
+ok 14 - a missing record (Prisma P2025) is 404
+  ---
+  duration_ms: 0.067
+  ...
+# Subtest: any other error is 500
+ok 15 - any other error is 500
+  ---
+  duration_ms: 0.065
+  ...
+# Subtest: an error that already carries a 4xx status keeps it (status or statusCode)
+ok 16 - an error that already carries a 4xx status keeps it (status or statusCode)
+  ---
+  duration_ms: 0.1214
+  ...
+# Subtest: 5xx, non-integer or out-of-range statuses stay 500
+ok 17 - 5xx, non-integer or out-of-range statuses stay 500
+  ---
+  duration_ms: 0.1317
+  ...
+# Subtest: a unique-constraint violation (Prisma P2002) is 409
+ok 18 - a unique-constraint violation (Prisma P2002) is 409
+  ---
+  duration_ms: 0.0682
+  ...
+# Subtest: the JSON message follows the status: 404, 409, other 4xx, 500
+ok 19 - the JSON message follows the status: 404, 409, other 4xx, 500
+  ---
+  duration_ms: 0.8704
+  ...
+# Subtest: only 500s are logged
+ok 20 - only 500s are logged
+  ---
+  duration_ms: 0.3111
+  ...
+# Subtest: a malformed JSON body answers 400, not 500
+ok 21 - a malformed JSON body answers 400, not 500
+  ---
+  duration_ms: 47.1579
+  ...
+# Subtest: allows up to max requests per window and then answers 429 with Retry-After
+ok 22 - allows up to max requests per window and then answers 429 with Retry-After
+  ---
+  duration_ms: 1.4051
+  ...
+# Subtest: the counter is per client IP
+ok 23 - the counter is per client IP
+  ---
+  duration_ms: 0.3869
+  ...
+# Subtest: the window resets after windowMs
+ok 24 - the window resets after windowMs
+  ---
+  duration_ms: 0.2103
+  ...
+# Subtest: skip() bypasses the limiter
+ok 25 - skip() bypasses the limiter
+  ---
+  duration_ms: 0.1579
+  ...
+# Subtest: reports ok/up when the database answers
+ok 26 - reports ok/up when the database answers
+  ---
+  duration_ms: 6.2829
+  ...
+# Subtest: reports 503 degraded/down when the database fails
+ok 27 - reports 503 degraded/down when the database fails
+  ---
+  duration_ms: 0.302
+  ...
+# Subtest: keeps the imageUrl the admin panel sends when saving a product
+ok 28 - keeps the imageUrl the admin panel sends when saving a product
+  ---
+  duration_ms: 7.3811
+  ...
+# Subtest: accepts null to remove the image ("Quitar" in the panel)
+ok 29 - accepts null to remove the image ("Quitar" in the panel)
+  ---
+  duration_ms: 0.5856
+  ...
+# Subtest: a product can still be created without an image
+ok 30 - a product can still be created without an image
+  ---
+  duration_ms: 2.0745
+  ...
+# Subtest: rejects an imageUrl that is not a URL
+ok 31 - rejects an imageUrl that is not a URL
+  ---
+  duration_ms: 1.3505
+  ...
+# Subtest: deducts each item from the stock of its size, never below zero
+ok 32 - deducts each item from the stock of its size, never below zero
+  ---
+  duration_ms: 2.1008
+  ...
+# Subtest: builds one order item per quote item
+ok 33 - builds one order item per quote item
+  ---
+  duration_ms: 0.4202
+  ...
+# Subtest: closing a quote that already has an order changes nothing (no double deduction)
+ok 34 - closing a quote that already has an order changes nothing (no double deduction)
+  ---
+  duration_ms: 0.2855
+  ...
+# Subtest: reports items whose product no longer exists and plans nothing
+ok 35 - reports items whose product no longer exists and plans nothing
+  ---
+  duration_ms: 0.2003
+  ...
+# Subtest: unknownProductIds lists the quote items that are not in the catalog
+ok 36 - unknownProductIds lists the quote items that are not in the catalog
+  ---
+  duration_ms: 0.1676
+  ...
+# Subtest: two sizes of the same product end up in a single stock update
+ok 37 - two sizes of the same product end up in a single stock update
+  ---
+  duration_ms: 0.3067
+  ...
+# Subtest: accepts a contact without localidad (the field is optional)
+ok 38 - accepts a contact without localidad (the field is optional)
+  ---
+  duration_ms: 2.9108
+  ...
+# Subtest: keeps a trimmed localidad when provided
+ok 39 - keeps a trimmed localidad when provided
+  ---
+  duration_ms: 0.9985
+  ...
+# Subtest: treats a blank localidad as absent
+ok 40 - treats a blank localidad as absent
+  ---
+  duration_ms: 0.4349
+  ...
+# Subtest: rejects a localidad longer than 100 characters
+ok 41 - rejects a localidad longer than 100 characters
+  ---
+  duration_ms: 0.8689
+  ...
+# Subtest: writes localidad when creating the customer
+ok 42 - writes localidad when creating the customer
+  ---
+  duration_ms: 1.0117
+  ...
+# Subtest: never overwrites the data of an existing customer
+ok 43 - never overwrites the data of an existing customer
+  ---
+  duration_ms: 0.1931
+  ...
+# Subtest: fills the fields an existing customer is still missing
+ok 44 - fills the fields an existing customer is still missing
+  ---
+  duration_ms: 0.2269
+  ...
+# Subtest: treats an empty stored value as missing
+ok 45 - treats an empty stored value as missing
+  ---
+  duration_ms: 0.1535
+  ...
+# Subtest: does not fill a missing field with an absent form value
+ok 46 - does not fill a missing field with an absent form value
+  ---
+  duration_ms: 0.2779
+  ...
+# Subtest: without a stored customer, the form values go to create
+ok 47 - without a stored customer, the form values go to create
+  ---
+  duration_ms: 0.3968
+  ...
+# Subtest: keeps the time of consent to the privacy notice (Ley 25.326)
+ok 48 - keeps the time of consent to the privacy notice (Ley 25.326)
+  ---
+  duration_ms: 0.4493
+  ...
+# Subtest: rejects a consent value that is not a timestamp
+ok 49 - rejects a consent value that is not a timestamp
+  ---
+  duration_ms: 0.2771
+  ...
+# Subtest: rejects a contact without the consent timestamp (required)
+ok 50 - rejects a contact without the consent timestamp (required)
+  ---
+  duration_ms: 0.1918
+  ...
+# Subtest: rejects a date-only consent (needs a full ISO 8601 date-time)
+ok 51 - rejects a date-only consent (needs a full ISO 8601 date-time)
+  ---
+  duration_ms: 0.1702
+  ...
+# Subtest: the VD2 latency harness builds contacts the endpoint accepts
+ok 52 - the VD2 latency harness builds contacts the endpoint accepts
+  ---
+  duration_ms: 12.9009
+  ...
+# Subtest: creating a quote enqueues exactly one delivery inside the same transaction
+ok 53 - creating a quote enqueues exactly one delivery inside the same transaction
+  ---
+  duration_ms: 1.1317
+  ...
+# Subtest: if the outbox write fails the whole persist rejects (the transaction rolls back)
+ok 54 - if the outbox write fails the whole persist rejects (the transaction rolls back)
+  ---
+  duration_ms: 0.5428
+  ...
+# Subtest: a delivery for the measurement mode is parked until the synchronous attempt
+ok 55 - a delivery for the measurement mode is parked until the synchronous attempt
+  ---
+  duration_ms: 0.4865
+  ...
+# Subtest: the consent timestamp is stored in Quote.contact
+ok 56 - the consent timestamp is stored in Quote.contact
+  ---
+  duration_ms: 0.1622
+  ...
+# Subtest: lists deliveries filtered by a valid status
+ok 57 - lists deliveries filtered by a valid status
+  ---
+  duration_ms: 4.7361
+  ...
+# Subtest: no status means no filter
+ok 58 - no status means no filter
+  ---
+  duration_ms: 0.2096
+  ...
+# Subtest: rejects an unknown status with 400
+ok 59 - rejects an unknown status with 400
+  ---
+  duration_ms: 0.1179
+  ...
+# Subtest: uses SEED_ADMIN_PASSWORD when it is long enough
+ok 60 - uses SEED_ADMIN_PASSWORD when it is long enough
+  ---
+  duration_ms: 1.8753
+  ...
+# Subtest: generates a random password when the variable is missing
+ok 61 - generates a random password when the variable is missing
+  ---
+  duration_ms: 0.2848
+  ...
+# Subtest: rejects a SEED_ADMIN_PASSWORD shorter than 12 characters
+ok 62 - rejects a SEED_ADMIN_PASSWORD shorter than 12 characters
+  ---
+  duration_ms: 0.5182
+  ...
+# Subtest: never falls back to the old hardcoded default
+ok 63 - never falls back to the old hardcoded default
+  ---
+  duration_ms: 0.2401
+  ...
+# {"event":"webhook_dispatch_error","id":"d1","error":"Error: db down"}
+# Subtest: fails twice then succeeds: DELIVERED after 3 attempts, honouring the backoff
+ok 64 - fails twice then succeeds: DELIVERED after 3 attempts, honouring the backoff
+  ---
+  duration_ms: 22.413
+  ...
+# Subtest: sends the payload as JSON with the Idempotency-Key header and an abort signal
+ok 65 - sends the payload as JSON with the Idempotency-Key header and an abort signal
+  ---
+  duration_ms: 0.9714
+  ...
+# Subtest: gives up with FAILED once the attempts are exhausted
+ok 66 - gives up with FAILED once the attempts are exhausted
+  ---
+  duration_ms: 0.2749
+  ...
+# Subtest: an unset webhook URL marks the delivery SKIPPED without calling fetch
+ok 67 - an unset webhook URL marks the delivery SKIPPED without calling fetch
+  ---
+  duration_ms: 0.2526
+  ...
+# Subtest: a cycle keeps going when one delivery throws unexpectedly in the store
+ok 68 - a cycle keeps going when one delivery throws unexpectedly in the store
+  ---
+  duration_ms: 1.2239
+  ...
+# Subtest: attemptDelivery returns the parsed response body of n8n
+ok 69 - attemptDelivery returns the parsed response body of n8n
+  ---
+  duration_ms: 0.4306
+  ...
+# Subtest: backoff doubles from 30 s and is capped at 1 h
+ok 70 - backoff doubles from 30 s and is capped at 1 h
+  ---
+  duration_ms: 1.0919
+  ...
+# Subtest: idempotency keys are derived from the event and the entity id
+ok 71 - idempotency keys are derived from the event and the entity id
+  ---
+  duration_ms: 0.3126
+  ...
+# Subtest: success marks DELIVERED and counts the attempt
+ok 72 - success marks DELIVERED and counts the attempt
+  ---
+  duration_ms: 0.6971
+  ...
+# Subtest: failure keeps PENDING and schedules the next attempt with backoff
+ok 73 - failure keeps PENDING and schedules the next attempt with backoff
+  ---
+  duration_ms: 0.2054
+  ...
+# Subtest: failure on the last allowed attempt marks FAILED
+ok 74 - failure on the last allowed attempt marks FAILED
+  ---
+  duration_ms: 0.261
+  ...
+# Subtest: status filter accepts known statuses case-insensitively and rejects others
+ok 75 - status filter accepts known statuses case-insensitively and rejects others
+  ---
+  duration_ms: 0.1861
+  ...
+# Subtest: the same event cannot be enqueued twice (idempotency key is unique)
+ok 76 - the same event cannot be enqueued twice (idempotency key is unique)
+  ---
+  duration_ms: 1.2718
+  ...
+# Subtest: different event types for related entities do not collide
+ok 77 - different event types for related entities do not collide
+  ---
+  duration_ms: 0.2022
+  ...
+# Subtest: stores the env var name as target, never a URL
+ok 78 - stores the env var name as target, never a URL
+  ---
+  duration_ms: 0.2177
+  ...
+1..78
+# tests 78
+# suites 0
+# pass 78
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 677.0899

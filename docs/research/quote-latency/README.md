@@ -5,6 +5,11 @@ end-to-end time from a customer submitting a quote request to the sales team bei
 against the local demo stack. Not a workspace member of `frontend/` or `backend/`; run
 independently.
 
+> **Consent field (20/10/2026).** Since commit `5f631b4` (19/10) `POST /api/quotes` requires
+> `contact.consentimiento` (ISO date-time, privacy notice). `fixtures.mjs` sends it from 20/10 on.
+> The published batches (25/08 and 08/10) predate the requirement and did not send it; a backend
+> test (`backend/src/routes/quoteContact.test.ts`) keeps the harness and the schema in step.
+
 ## What this measures
 
 VD2's design criterion (§3.2 of the thesis) is a latency of 15 s or less from the moment the
