@@ -1,0 +1,16 @@
+Hodges-Lehmann (nueva - original), intervalo exacto del 96,8 % = [d(3), d(23)] de las 25 diferencias
+== prereg-catalogo-2026-10-14
+   mobile  performance HL =      39   IC 96,8 % [38, 42]   medianas 56 → 95
+   mobile  lcp         HL =   -6936   IC 96,8 % [-8647, -5533]   medianas 9438 → 2502
+   desktop performance HL =      23   IC 96,8 % [22, 27]   medianas 76 → 99
+   desktop lcp         HL =   -1651   IC 96,8 % [-2364, -1591]   medianas 2465 → 823
+== prereg-remoto-2026-10-16
+   mobile  performance HL =      38   IC 96,8 % [35, 41]   medianas 57 → 96
+   mobile  lcp         HL =  -11982   IC 96,8 % [-12313, -9008]   medianas 14329 → 2302
+   desktop performance HL =      26   IC 96,8 % [20, 26]   medianas 72 → 98
+   desktop lcp         HL =   -2172   IC 96,8 % [-2282, -1276]   medianas 3079 → 891
+== replica-remoto-2026-10-20
+   mobile  performance HL =      38   IC 96,8 % [34, 49]   medianas 47 → 94
+   mobile  lcp         HL =  -11168   IC 96,8 % [-12282, -8840]   medianas 13783 → 2373
+   desktop performance HL =      25   IC 96,8 % [21, 28]   medianas 72 → 98
+   desktop lcp         HL =   -1929   IC 96,8 % [-2282, -1370]   medianas 2858 → 930
