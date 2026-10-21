@@ -17,3 +17,10 @@ Salidas completas de las corridas del backend (node:test vía tsx).
 - Resultado: 78 pruebas, 78 pasan. Agrega una a `quoteContact.test.ts`: el contacto que arma el arnés de
   VD2 (`docs/research/quote-latency/fixtures.mjs`) tiene que pasar el esquema del endpoint. Desde
   `5f631b4` el backend exige `consentimiento`, y el arnés no lo enviaba: todas sus corridas terminaban en 400.
+
+## Corrida del 21/10/2026
+
+- Archivo: `test-run-2026-10-21.txt` (`cd backend && npm test`).
+- Resultado: 80 pruebas, 80 pasan. Agrega dos a `health.test.ts`: `/api/health` informa el commit
+  desplegado (los siete primeros caracteres de `RENDER_GIT_COMMIT`, que Render define en cada deploy),
+  también cuando la base no responde. Sin esa variable, la respuesta no cambia.
