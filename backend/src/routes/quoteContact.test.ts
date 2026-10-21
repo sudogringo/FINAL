@@ -91,8 +91,10 @@ test('rejects a date-only consent (needs a full ISO 8601 date-time)', () => {
 
 // The VD2 latency harness (docs/research/quote-latency/) posts to the same endpoint.
 // Since 5f631b4 the contact needs the consent timestamp, or every run ends in 400.
+// The path is a variable so tsc (rootDir src) does not try to type the untyped .mjs.
+const VD2_HARNESS = '../../../docs/research/quote-latency/fixtures.mjs'
 test('the VD2 latency harness builds contacts the endpoint accepts', async () => {
-  const { buildQuotePayload } = await import('../../../docs/research/quote-latency/fixtures.mjs')
+  const { buildQuotePayload } = await import(VD2_HARNESS)
   for (const run of [1, 2, 3]) {
     const parsed = contactSchema.safeParse(buildQuotePayload(run).contact)
     assert.equal(parsed.success, true, JSON.stringify(parsed.error?.flatten()))

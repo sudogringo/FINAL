@@ -48,6 +48,10 @@ jobs:
       - run: npm run test
         working-directory: ./backend
 
+      # tsx runs the tests without type-checking; the Dockerfile and Render run tsc.
+      - run: npm run build
+        working-directory: ./backend
+
       # VITE_API_URL is a public URL (not a secret): set it under
       # Settings > Secrets and variables > Actions > Variables (e.g. https://<service>.onrender.com).
       # If unset, the build still succeeds and /catalogo shows "catálogo no disponible".
