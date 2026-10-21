@@ -53,6 +53,10 @@ están en [`resultados.csv`](resultados.csv).
   El moderador la escribió después de la sesión, fuera de la casilla. Las fotos tomadas antes,
   sin esa fecha, se conservan en el respaldo privado. La fecha de la sesión consta en cada
   planilla (20/10/2026). En P8, la fecha también está fuera de la casilla.
+- **Sesiones superpuestas (P7 y P8).** P7 y P8 llegaron juntos. Mientras P7 hacía sus tareas,
+  el moderador le explicó la prueba a P8, que empezó a las 17:55; entre las 17:55 y las 17:58
+  los dos trabajaron en paralelo con un solo moderador. En esos minutos la observación de cada
+  uno fue parcial, y P8 pudo ver parte de la sesión de P7.
 - **n = 3**, muestra intencional y un solo moderador, que además es autor. Hay riesgo de
   deseabilidad social. El resultado dice que la queja de P5 no se repitió en estas tres
   personas; no permite generalizar a la población de 60 años o más.
